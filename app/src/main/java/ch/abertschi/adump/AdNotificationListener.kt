@@ -7,6 +7,10 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.support.v4.app.NotificationCompat
 import android.media.AudioManager
+import ch.abertschi.adump.detector.AdDetectable
+import ch.abertschi.adump.detector.AdPayload
+import ch.abertschi.adump.detector.SpotifyTitleDetector
+import ch.abertschi.adump.model.PreferencesFactory
 
 
 /**
@@ -18,16 +22,16 @@ class AdNotificationListener : NotificationListenerService() {
     private val notificationId = 1
     private var musicStreamVolume = 0
     private var isMuted = false
+    private val preferences: PreferencesFactory = PreferencesFactory.providePrefernecesFactory(this)
 
-    fun getDetectors(): List<AdDetectable> {
-        return listOf<AdDetectable>(SpotifyTitleDetector())
-    }
 
     init {
         println("created")
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
+        if (!preferences.isBlockingEnabled()) return
+
         println("new notification")
 
         val payload: AdPayload = AdPayload(sbn)
@@ -36,7 +40,7 @@ class AdNotificationListener : NotificationListenerService() {
 
         val activeDetectors = getDetectors()
         println("Active detectros: " + activeDetectors.size)
-        val isSpotify = activeDetectors.size > 0
+//        val isSpotify = activeDetectors.size > 0
 
         activeDetectors.forEach {
             if (it.flagAsMusic(payload)) {
@@ -56,6 +60,10 @@ class AdNotificationListener : NotificationListenerService() {
             muteAudio()
         }
         super.onNotificationPosted(sbn)
+    }
+
+    fun getDetectors(): List<AdDetectable> {
+        return listOf<AdDetectable>(SpotifyTitleDetector())
     }
 
     private fun muteAudio() {

@@ -1,4 +1,4 @@
-package ch.abertschi.adump
+package ch.abertschi.adump.detector
 
 import android.service.notification.StatusBarNotification
 

@@ -1,4 +1,6 @@
-package ch.abertschi.adump
+package ch.abertschi.adump.detector
+
+import ch.abertschi.adump.detector.AdPayload
 
 /**
  * Created by abertschi on 13.12.16.

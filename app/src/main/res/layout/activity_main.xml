@@ -17,7 +17,7 @@
         android:layout_margin="30dp"
 
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adump.MainActivity"
+        tools:context="ch.abertschi.adump.view.ControlActivity"
 
 
         tools:layout_editor_absoluteX="8dp"
