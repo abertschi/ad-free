@@ -21,6 +21,8 @@ class PreferencesFactory(context: Context) {
         prefs.edit().putBoolean(prefIsEnabled, enabled).commit()
     }
 
+    fun getPreferences(): SharedPreferences = prefs
+
     companion object {
         private var instance: PreferencesFactory? = null
 

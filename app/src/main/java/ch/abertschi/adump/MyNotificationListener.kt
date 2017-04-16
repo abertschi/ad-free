@@ -12,6 +12,7 @@ import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
+import ch.abertschi.adump.model.TrackRepository
 
 
 /**
@@ -22,7 +23,7 @@ class MyNotificationListener : NotificationListenerService() {
     lateinit var preferences: PreferencesFactory
     private var muteManager: MuteManager = MuteManager.instance
 
-    val detectors: List<AdDetectable> = listOf<AdDetectable>(SpotifyTitleDetector())
+    lateinit var detectors: List<AdDetectable>
     private var init: Boolean = false
     private var handler: Handler? = Handler()
 
@@ -34,6 +35,7 @@ class MyNotificationListener : NotificationListenerService() {
 
     private fun intiVars() {
         preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
+        detectors = listOf<AdDetectable>(SpotifyTitleDetector(TrackRepository(applicationContext, preferences)))
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -56,13 +58,19 @@ class MyNotificationListener : NotificationListenerService() {
 
         println("Active detectros: " + detectors.size)
 
+        val activeDetectors: ArrayList<AdDetectable> = ArrayList()
         detectors.forEach {
+            if (it.canHandle(payload)){
+                activeDetectors.add(it)
+            }
+        }
+        activeDetectors.forEach {
             if (it.flagAsMusic(payload)) {
                 isMusic = true
             }
         }
         if (!isMusic) {
-            detectors.forEach {
+            activeDetectors.forEach {
                 if (it.flagAsAdvertisement(payload)) {
                     isAd = true
                 }
@@ -70,13 +78,13 @@ class MyNotificationListener : NotificationListenerService() {
         }
         if (isAd) {
             print("ad detected")
-            muteAudio()
+            muteAudio(payload)
         }
     }
 
-    private fun muteAudio() {
+    private fun muteAudio(payload: AdPayload) {
         muteManager.doMute(this)
-        notificationUtils.showBlockingNotification(this)
+        notificationUtils.showBlockingNotification(this, payload.spotifyTitleKey!!)
 
         handler!!.postDelayed({
             println("post delayed over")
@@ -84,7 +92,6 @@ class MyNotificationListener : NotificationListenerService() {
             muteManager.doUnmute(this)
         }, 30000)
     }
-
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         super.onNotificationRemoved(sbn)

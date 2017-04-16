@@ -1,6 +1,7 @@
 # ad-free
 An ad free spotify music experience for Android
-  
-<img src=".github/ad_free.png" width="500">
 
+<img src=".github/cover.png" width="700">
 
+## Features
+- Mute audio when there are Spotify ads

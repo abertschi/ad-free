@@ -6,6 +6,8 @@ import android.support.v4.app.NotificationCompat
 import android.app.PendingIntent
 import android.content.Intent
 import android.support.v4.app.NotificationManagerCompat
+import ch.abertschi.adump.model.PreferencesFactory
+import ch.abertschi.adump.model.TrackRepository
 
 
 /**
@@ -17,19 +19,25 @@ class NotificationUtils {
         val actionDismiss = "actionDismiss"
         val actionIgnore = "actionIgnore"
         val blockingNotificationId = 1
+        val ignoreIntentExtraKey = "notificationTitle"
     }
 
-    fun showBlockingNotification(context: Context) {
+    fun showBlockingNotification(context: Context, ignoreKey: String = "") {
         println("showing notification " + System.currentTimeMillis())
+
+        println("showBlockingNotification with ignoreKey: " + ignoreKey)
+        val ignoreIntent = Intent(context
+                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKey)
+
         val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
-                PendingIntent.getService(context, 0, Intent(context
-                        , NotificationInteractionService::class.java).setAction(actionIgnore)
+                PendingIntent.getService(context, 0, ignoreIntent
                         , PendingIntent.FLAG_ONE_SHOT)).build()
 
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
                         , NotificationInteractionService::class.java).setAction(actionDismiss)
                         , PendingIntent.FLAG_ONE_SHOT)
+
 
         val notification = NotificationCompat.Builder(context)
                 .setContentTitle("Blocking advertisement")
@@ -53,6 +61,7 @@ class NotificationUtils {
 class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName) {
 
     private val utils: NotificationUtils = NotificationUtils()
+    private val trackRepository: TrackRepository = TrackRepository(this, PreferencesFactory.providePrefernecesFactory(this)) // TODO: singelton?
 
     init {
         print("Notification action service created")
@@ -70,6 +79,15 @@ class NotificationInteractionService : IntentService(NotificationInteractionServ
         } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
             MuteManager.instance.doUnmute(this)
             utils.hideBlockingNotification(this)
+
+            intent.extras.keySet().forEach {
+                println("key: " + it)
+            }
+
+            val ignoreKey = intent.getStringExtra(NotificationUtils.ignoreIntentExtraKey)
+            if (ignoreKey != null && !ignoreKey.isEmpty()) {
+                trackRepository.addTrack(ignoreKey)
+            }
         }
     }
 }

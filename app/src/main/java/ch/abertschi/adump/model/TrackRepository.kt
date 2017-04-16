@@ -12,9 +12,9 @@ open class TrackRepository {
     private val TRACKS: String = "tracks"
     private var sharedPreferences: SharedPreferences
 
-    constructor(context: Context, sharedPreferences: SharedPreferences) {
+    constructor(context: Context, sharedPreferences: PreferencesFactory) {
         this.context = context
-        this.sharedPreferences = sharedPreferences
+        this.sharedPreferences = sharedPreferences.getPreferences()
     }
 
     private fun getTracks(): MutableSet<String> {
@@ -22,6 +22,7 @@ open class TrackRepository {
     }
 
     open fun addTrack(content: String) {
+        print("storing track: " + content)
         val tracks = getTracks()
         tracks.add(content)
         sharedPreferences.edit().putStringSet(TRACKS, tracks).commit()

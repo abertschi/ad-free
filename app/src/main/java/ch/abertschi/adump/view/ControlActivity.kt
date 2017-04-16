@@ -44,6 +44,9 @@ class ControlActivity : AppCompatActivity(), ControlView {
         mTypeFace = Typeface.createFromAsset(assets, "fonts/Raleway-ExtraLight.ttf")
         mEnjoySloganText = findViewById(R.id.enjoy) as TextView
 
+        val author = findViewById(R.id.author) as TextView
+        author.typeface = mTypeFace
+
         mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
             controlPresenter.enabledStatusChanged(isChecked)
             println("checked: " + isChecked)
