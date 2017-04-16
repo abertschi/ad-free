@@ -7,7 +7,10 @@ An ad free spotify music experience for Android
 - [x] Turn off sound when advertisement is playing
 - [ ] Play local music instead when advertisement is playing
 
+## Implementation notes
+Advertisment detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisment or not.
 
+As for now, an `AdDetectable` which [parses notification content](./app/src/main/java/ch/abertschi/adump/detector/SpotifyTitleDetector.kt) for the keyword _Spotify_ is implemented. False positive matches can be manually filtered out.
 
 
 
