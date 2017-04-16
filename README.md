@@ -18,4 +18,4 @@ A more sophisticated `AdDetectable` might use reflection to scan the Spotify not
 ### [v0.0.1, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.1)
 Initial release
 - Turns off sound when advertisement is playing
-- Adds notification action to filter out false postive matches
+- Adds notification action to filter out false positive matches
