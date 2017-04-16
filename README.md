@@ -14,4 +14,8 @@ As for now, an `AdDetectable` which [parses notification content](./app/src/main
 
 A more sophisticated `AdDetectable` might use reflection to scan the Spotify notification for properties which are always present when advertisment is played.
 
-
+## Release notes
+### [v0.0.1, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.1)
+Initial release
+- Turns off sound when advertisement is playing
+- Adds notification action to filter out false postive matches
