@@ -13,6 +13,7 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
 
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
+        controlView.setPowerState(preferencesFactory.isBlockingEnabled())
     }
 
     fun onResume(context: Context) {
@@ -23,11 +24,6 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
     private fun showPermissionRequiredIfNecessary(context: Context) {
         if (hasNotificationPermission(context)) {
             controlView.showEnjoyAdFree()
-            if (preferencesFactory.isBlockingEnabled()) {
-                controlView.showDisabledText()
-            } else {
-                controlView.showEnabledText()
-            }
         } else {
             controlView.showPermissionRequired()
         }
@@ -42,11 +38,6 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
     }
 
     fun enabledStatusChanged() {
-        if (preferencesFactory.isBlockingEnabled()) {
-            controlView.showDisabledText()
-        } else {
-            controlView.showEnabledText()
-        }
         preferencesFactory.setBlockingEnabled(!preferencesFactory.isBlockingEnabled())
     }
 

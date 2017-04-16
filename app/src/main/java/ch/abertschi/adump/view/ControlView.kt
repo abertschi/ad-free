@@ -8,6 +8,5 @@ interface ControlView {
     fun showNotificationPermissionSettings()
     fun showPermissionRequired()
     fun showEnjoyAdFree()
-    fun showEnabledText()
-    fun showDisabledText()
+    fun setPowerState(state: Boolean)
 }

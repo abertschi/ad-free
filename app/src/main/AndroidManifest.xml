@@ -17,8 +17,8 @@
         </activity>
 
         <service
-            android:name=".AdNotificationListener"
-            android:label="Spotify Notification Blocker"
+            android:name=".MyNotificationListener"
+            android:label="Spotify Ads Blocker"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService"/>

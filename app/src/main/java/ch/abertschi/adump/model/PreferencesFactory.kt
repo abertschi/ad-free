@@ -16,7 +16,6 @@ class PreferencesFactory() {
         this.context = context
     }
 
-
     fun getPreferences(): SharedPreferences = context.getSharedPreferences(prefs, Context.MODE_PRIVATE)
 
     fun isBlockingEnabled(): Boolean {
