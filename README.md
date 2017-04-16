@@ -12,5 +12,6 @@ Advertisment detectors are modularized into implementations of [AdDetectable](./
 
 As for now, an `AdDetectable` which [parses notification content](./app/src/main/java/ch/abertschi/adump/detector/SpotifyTitleDetector.kt) for the keyword _Spotify_ is implemented. False positive matches can be manually filtered out.
 
+A more sophisticated `AdDetectable` might use reflection to scan the Spotify notification for properties which are always present when advertisment is played.
 
 
