@@ -7,23 +7,18 @@ import android.content.SharedPreferences
  * Created by abertschi on 15.04.17.
  */
 
-class PreferencesFactory() {
-    private val prefs = "PREFS"
-    val prefIsEnabled = "IS_ENABLED"
-    lateinit var context: Context
-
-    private constructor(context: Context) : this() {
-        this.context = context
-    }
-
-    fun getPreferences(): SharedPreferences = context.getSharedPreferences(prefs, Context.MODE_PRIVATE)
+class PreferencesFactory(context: Context) {
+    private val prefsKey = "PREFS"
+    private val prefIsEnabled = "IS_ENABLED"
+    private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
     fun isBlockingEnabled(): Boolean {
-        return getPreferences().getBoolean(prefIsEnabled, true)
+        return prefs.getBoolean(prefIsEnabled, true)
     }
 
     fun setBlockingEnabled(enabled: Boolean) {
-        getPreferences().edit().putBoolean(prefIsEnabled, enabled).commit()
+        println("setting power status to " + enabled)
+        prefs.edit().putBoolean(prefIsEnabled, enabled).commit()
     }
 
     companion object {
@@ -34,7 +29,8 @@ class PreferencesFactory() {
         }
 
         private fun preferenceFactory(context: Context): PreferencesFactory {
-            return PreferencesFactory(context)
+            instance = PreferencesFactory(context)
+            return instance!!
         }
     }
 }

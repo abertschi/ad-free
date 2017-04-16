@@ -37,8 +37,7 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
         return true
     }
 
-    fun enabledStatusChanged() {
-        preferencesFactory.setBlockingEnabled(!preferencesFactory.isBlockingEnabled())
+    fun enabledStatusChanged(status: Boolean) {
+        preferencesFactory.setBlockingEnabled(status)
     }
-
 }

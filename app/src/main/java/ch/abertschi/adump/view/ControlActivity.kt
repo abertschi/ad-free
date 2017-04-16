@@ -27,9 +27,12 @@ class ControlActivity : AppCompatActivity(), ControlView {
     lateinit var mEnjoySloganText: TextView
     lateinit var controlPresenter: ControlPresenter
     var isInit: Boolean = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val controlModul = ControlModul(this, this)
         controlPresenter = controlModul.provideControlPresenter()
 
@@ -42,11 +45,10 @@ class ControlActivity : AppCompatActivity(), ControlView {
         mEnjoySloganText = findViewById(R.id.enjoy) as TextView
 
         mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            controlPresenter.enabledStatusChanged()
+            controlPresenter.enabledStatusChanged(isChecked)
             println("checked: " + isChecked)
 
         }
-
         controlPresenter.onCreate(this)
         isInit = true
     }
@@ -82,7 +84,6 @@ class ControlActivity : AppCompatActivity(), ControlView {
         setSloganText(text)
         mEnjoySloganText.setOnClickListener(null)
         mPowerButton.visibility = View.VISIBLE
-
     }
 
     override fun setPowerState(state: Boolean) {

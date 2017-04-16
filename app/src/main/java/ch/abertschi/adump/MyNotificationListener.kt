@@ -2,15 +2,15 @@ package ch.abertschi.adump
 
 import android.app.NotificationManager
 import android.content.Context
+import android.media.AudioManager
 import android.os.Handler
+import android.os.Looper
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.support.v4.app.NotificationCompat
-import android.media.AudioManager
-import android.os.Looper
+import android.support.annotation.MainThread
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
-import ch.abertschi.adump.detector.DetectorService
+import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
 
 
@@ -19,30 +19,74 @@ import ch.abertschi.adump.model.PreferencesFactory
  */
 class MyNotificationListener : NotificationListenerService() {
 
-    var detectorService: DetectorService? = null
-    var preferences: PreferencesFactory? = null
+    lateinit var preferences: PreferencesFactory
+    private var muteManager: MuteManager = MuteManager.instance
+
+    val detectors: List<AdDetectable> = listOf<AdDetectable>(SpotifyTitleDetector())
+    private var init: Boolean = false
+    private var handler: Handler? = Handler()
+
+    private var notificationUtils: NotificationUtils = NotificationUtils()
 
     init {
         println("Spotify Ad listener online")
     }
 
-    override fun onNotificationPosted(sbn: StatusBarNotification) {
-        println("notification appearing") // TODO: Problem with prefs, stored power value not available
-//        if (preferences == null) {
-//            preferences = PreferencesFactory.providePrefernecesFactory(this)
-//            println(preferences?.isBlockingEnabled())
-//        }
-//        if (!preferences!!.isBlockingEnabled()) return
-
-        if (detectorService == null) {
-            detectorService = DetectorService(this)
-        }
-        val p: AdPayload = AdPayload(sbn)
-        detectorService!!.muteAds(p)
+    private fun intiVars() {
+        preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
     }
 
+    override fun onNotificationPosted(sbn: StatusBarNotification) {
+        if (!init) {
+            init = true
+            intiVars()
+        }
+        println("status: " + preferences?.isBlockingEnabled())
+
+        if (muteManager.isAudioMuted() || !preferences.isBlockingEnabled()) {
+            return
+        }
+
+        applyDetectors(AdPayload(sbn))
+    }
+
+    fun applyDetectors(payload: AdPayload) {
+        var isMusic = false
+        var isAd = false
+
+        println("Active detectros: " + detectors.size)
+
+        detectors.forEach {
+            if (it.flagAsMusic(payload)) {
+                isMusic = true
+            }
+        }
+        if (!isMusic) {
+            detectors.forEach {
+                if (it.flagAsAdvertisement(payload)) {
+                    isAd = true
+                }
+            }
+        }
+        if (isAd) {
+            print("ad detected")
+            muteAudio()
+        }
+    }
+
+    private fun muteAudio() {
+        muteManager.doMute(this)
+        notificationUtils.showBlockingNotification(this)
+
+        handler!!.postDelayed({
+            println("post delayed over")
+            notificationUtils.hideBlockingNotification(this)
+            muteManager.doUnmute(this)
+        }, 30000)
+    }
+
+
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
-        println("Notification removed")
         super.onNotificationRemoved(sbn)
     }
 }
