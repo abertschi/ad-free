@@ -5,7 +5,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
-import ch.abertschi.adump.detector.ReflectionDetector
+import ch.abertschi.adump.detector.NotificationActionDetector
 import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
@@ -36,7 +36,7 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
     private fun intiVars() {
         preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
         trackRepository = TrackRepository(applicationContext, preferences)
-        detectors = listOf<AdDetectable>(SpotifyTitleDetector(trackRepository), ReflectionDetector(trackRepository))
+        detectors = listOf<AdDetectable>(SpotifyTitleDetector(trackRepository), NotificationActionDetector(trackRepository))
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
