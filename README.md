@@ -2,7 +2,7 @@
 [![GitHub release](https://img.shields.io/github/release/abertschi/ad-free.svg)]()
 
 # ad-free
-An ad free Spotify music experience for Android  
+An ad free Spotify music experience for Android
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
@@ -13,6 +13,7 @@ _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premi
 - [x] Turn off sound when advertisement is playing
 - [ ] Play local music instead when advertisement is playing
 - [x] Check for app updates
+- [x] No root required
 
 ## Implementation notes
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
