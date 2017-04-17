@@ -1,3 +1,6 @@
+[![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()
+[![GitHub release](https://img.shields.io/github/release/abertschi/ad-free.svg)]()
+
 # ad-free
 An ad free spotify music experience for Android
 
