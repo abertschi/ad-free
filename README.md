@@ -6,6 +6,7 @@ An ad free Spotify music experience for Android
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
+  
 <img src=".github/cover.png" width="900">
 
 ## Features
