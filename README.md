@@ -12,6 +12,7 @@ An ad free spotify music experience for Android
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
 
 ## Release notes
+Download latest release [here](https://github.com/abertschi/ad-free/releases/latest)
 
 ### [v0.0.2.2, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.2)
 Minor release
