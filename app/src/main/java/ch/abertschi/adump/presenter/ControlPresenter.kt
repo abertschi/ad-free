@@ -6,13 +6,15 @@ import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.view.ControlView
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.Duration
 import com.github.javiersantos.appupdater.enums.UpdateFrom
+import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
-class ControlPresenter(val controlView: ControlView, val preferencesFactory: PreferencesFactory) {
+class ControlPresenter(val controlView: ControlView, val preferencesFactory: PreferencesFactory) : AnkoLogger {
 
     lateinit private var mAppUpdater: AppUpdater
 
@@ -21,9 +23,11 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
         controlView.setPowerState(preferencesFactory.isBlockingEnabled())
         mAppUpdater = AppUpdater(context)
                 .setUpdateFrom(UpdateFrom.GITHUB)
+                .setDuration(Duration.INDEFINITE)
                 .setGitHubUserAndRepo("abertschi", "ad-free")
                 .setDisplay(Display.SNACKBAR)
         mAppUpdater.start()
+
     }
 
     fun onResume(context: Context) {
