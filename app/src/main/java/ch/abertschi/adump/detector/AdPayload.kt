@@ -7,5 +7,9 @@ import android.service.notification.StatusBarNotification
  */
 
 data class AdPayload(val statusbarNotification: StatusBarNotification) {
+
+    /**
+     * Keys set by implementations of AdDetectable to exclude tracks from being matched as ad
+     */
     val ignoreKeys: ArrayList<String> = ArrayList()
 }

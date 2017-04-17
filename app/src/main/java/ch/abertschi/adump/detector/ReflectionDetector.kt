@@ -3,6 +3,8 @@ package ch.abertschi.adump.detector
 import ch.abertschi.adump.model.TrackRepository
 
 /**
+ * AdDetectable that uses reflection
+ *
  * Created by abertschi on 17.04.17.
  */
 class ReflectionDetector(var trackRepository: TrackRepository) : AbstractStatusBarDetector() {

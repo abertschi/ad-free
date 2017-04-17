@@ -17,7 +17,6 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
     }
 
     fun onResume(context: Context) {
-        println("on resume called")
         showPermissionRequiredIfNecessary(context)
     }
 

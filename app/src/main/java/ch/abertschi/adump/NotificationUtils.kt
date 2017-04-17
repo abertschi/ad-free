@@ -8,12 +8,15 @@ import android.content.Intent
 import android.support.v4.app.NotificationManagerCompat
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
+import org.jetbrains.anko.info
 
 
 /**
  * Created by abertschi on 16.04.17.
  */
-class NotificationUtils {
+class NotificationUtils : AnkoLogger {
 
     companion object {
         val actionDismiss = "actionDismiss"
@@ -23,11 +26,10 @@ class NotificationUtils {
     }
 
     fun showBlockingNotification(context: Context, ignoreKeys: ArrayList<String> = ArrayList<String>()) {
-        println("showing notification " + System.currentTimeMillis())
-
         ignoreKeys.forEach {
-            println("showBlockingNotification with ignoreKey: " + it)
+            debug("ignore keys:" + it)
         }
+
         val ignoreIntent = Intent(context
                 , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
 
@@ -60,17 +62,16 @@ class NotificationUtils {
     }
 }
 
-class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName) {
+class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
 
     private val utils: NotificationUtils = NotificationUtils()
     private val trackRepository: TrackRepository = TrackRepository(this, PreferencesFactory.providePrefernecesFactory(this)) // TODO: singelton?
 
     init {
-        print("Notification action service created")
+        info("NotificationInteractionService created")
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        print("actionKey: " + intent.toString())
         if (intent == null || intent.action == null) {
             return
         }
@@ -81,10 +82,6 @@ class NotificationInteractionService : IntentService(NotificationInteractionServ
         } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
             MuteManager.instance.doUnmute(this)
             utils.hideBlockingNotification(this)
-
-            intent.extras.keySet().forEach {
-                println("key: " + it)
-            }
 
             val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
             if (ignoreKeys != null && ignoreKeys.size > 0) {

@@ -1,25 +1,23 @@
 package ch.abertschi.adump
 
-import android.app.NotificationManager
-import android.content.Context
-import android.media.AudioManager
 import android.os.Handler
-import android.os.Looper
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import android.support.annotation.MainThread
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.ReflectionDetector
 import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
+import org.jetbrains.anko.info
 
 
 /**
  * Created by abertschi on 11.12.16.
  */
-class MyNotificationListener : NotificationListenerService() {
+class MyNotificationListener : NotificationListenerService(), AnkoLogger {
 
     lateinit var preferences: PreferencesFactory
     private var muteManager: MuteManager = MuteManager.instance
@@ -32,7 +30,7 @@ class MyNotificationListener : NotificationListenerService() {
     private var notificationUtils: NotificationUtils = NotificationUtils()
 
     init {
-        println("Spotify Ad listener online")
+        info("Spotify Ad listener online")
     }
 
     private fun intiVars() {
@@ -46,20 +44,18 @@ class MyNotificationListener : NotificationListenerService() {
             init = true
             intiVars()
         }
-        println("status: " + preferences?.isBlockingEnabled())
 
         if (muteManager.isAudioMuted() || !preferences.isBlockingEnabled()) {
             return
         }
 
+        debug("Spotify Ad Listener is active")
         applyDetectors(AdPayload(sbn))
     }
 
     fun applyDetectors(payload: AdPayload) {
         var isMusic = false
         var isAd = false
-
-        println("Active detectros: " + detectors.size)
 
         val activeDetectors: ArrayList<AdDetectable> = ArrayList()
         detectors.forEach {
@@ -80,7 +76,6 @@ class MyNotificationListener : NotificationListenerService() {
             }
         }
         if (isAd) {
-            print("ad detected")
             muteAudio(payload)
         }
     }
@@ -90,7 +85,6 @@ class MyNotificationListener : NotificationListenerService() {
         notificationUtils.showBlockingNotification(this, payload.ignoreKeys)
 
         handler!!.postDelayed({
-            println("post delayed over")
             notificationUtils.hideBlockingNotification(this)
             muteManager.doUnmute(this)
         }, 30000)

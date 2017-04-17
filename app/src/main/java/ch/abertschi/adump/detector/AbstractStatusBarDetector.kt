@@ -12,7 +12,6 @@ abstract class AbstractStatusBarDetector() : AdDetectable {
     }
 
     override fun canHandle(payload: AdPayload): Boolean {
-        println("can handle")
         return payload != null &&
                 payload.statusbarNotification != null
                 && payload.statusbarNotification.key != null

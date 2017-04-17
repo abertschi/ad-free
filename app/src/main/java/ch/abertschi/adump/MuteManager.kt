@@ -3,11 +3,14 @@ package ch.abertschi.adump
 import android.content.Context
 import android.media.AudioManager
 import android.os.Handler
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 16.04.17.
  */
-class MuteManager private constructor() {
+class MuteManager private constructor() : AnkoLogger {
 
     private object Holder {
         val INSTANCE = MuteManager()
@@ -28,7 +31,8 @@ class MuteManager private constructor() {
         audioIsMuted = true
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         musicStreamVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
-        println("current volume " + musicStreamVolume)
+        debug("current volume " + musicStreamVolume)
+        info("muting audio")
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
     }
 
@@ -36,7 +40,7 @@ class MuteManager private constructor() {
         if (!audioIsMuted) {
             return
         }
-        print("Unmuting audio....")
+        info("Unmuting audio....")
         audioIsMuted = false
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.setStreamVolume(AudioManager.STREAM_MUSIC, musicStreamVolume, 0)

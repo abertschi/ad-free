@@ -49,8 +49,6 @@ class ControlActivity : AppCompatActivity(), ControlView {
 
         mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
             controlPresenter.enabledStatusChanged(isChecked)
-            println("checked: " + isChecked)
-
         }
         controlPresenter.onCreate(this)
         isInit = true
@@ -68,7 +66,6 @@ class ControlActivity : AppCompatActivity(), ControlView {
         setSloganText(text)
         mPowerButton.visibility = View.GONE
         mEnjoySloganText.setOnClickListener {
-            println("pressed")
             showNotificationPermissionSettings()
         }
     }

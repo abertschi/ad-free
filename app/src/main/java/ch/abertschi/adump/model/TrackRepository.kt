@@ -2,11 +2,13 @@ package ch.abertschi.adump.model
 
 import android.content.Context
 import android.content.SharedPreferences
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 15.04.17.
  */
-open class TrackRepository {
+open class TrackRepository: AnkoLogger {
 
     private val context: Context
     private val TRACKS: String = "tracks"
@@ -22,7 +24,8 @@ open class TrackRepository {
     }
 
     open fun addTrack(content: String) {
-        print("storing track: " + content)
+        info("storing track: " + content)
+
         val tracks = getTracks()
         tracks.add(content)
         sharedPreferences.edit().putStringSet(TRACKS, tracks).commit()
