@@ -11,29 +11,16 @@ import org.jetbrains.anko.AnkoLogger
 class SpotifyTitleDetector(val trackRepository: TrackRepository) : AbstractStatusBarDetector(), AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean {
-        val title = getTitle(payload)
-        if (title != null) {
-            payload.ignoreKeys.add(title)
-        }
+        getTitle(payload).let { payload.ignoreKeys.add(it!!) }
         return super.canHandle(payload)
     }
 
-    override fun flagAsAdvertisement(payload: AdPayload): Boolean {
-        val title = getTitle(payload)
-        return title != null && title.toLowerCase()
-                .trim().contains("spotify")
-    }
+    override fun flagAsAdvertisement(payload: AdPayload): Boolean
+            = getTitle(payload)?.toLowerCase()?.trim()?.contains("spotify") ?: false
 
-    fun getTitle(payload: AdPayload): String? {
-        val notification = payload.statusbarNotification.notification
-        if (notification != null && notification.tickerText != null) {
-            return notification.tickerText.toString()
-        }
-        return ""
-    }
+    override fun flagAsMusic(payload: AdPayload): Boolean
+            = getTitle(payload).let { trackRepository.getAllTracks().contains(it) }
 
-    override fun flagAsMusic(payload: AdPayload): Boolean {
-        val title = getTitle(payload)
-        return title != null && trackRepository.getAllTracks().contains(title)
-    }
+    fun getTitle(payload: AdPayload): String?
+            = payload?.statusbarNotification?.notification?.tickerText?.toString() ?: ""
 }
