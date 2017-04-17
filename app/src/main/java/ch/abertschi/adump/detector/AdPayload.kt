@@ -7,5 +7,5 @@ import android.service.notification.StatusBarNotification
  */
 
 data class AdPayload(val statusbarNotification: StatusBarNotification) {
-    var spotifyTitleKey: String? = ""
+    val ignoreKeys: ArrayList<String> = ArrayList()
 }

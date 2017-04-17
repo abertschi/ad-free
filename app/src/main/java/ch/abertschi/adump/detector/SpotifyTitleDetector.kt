@@ -8,8 +8,11 @@ import ch.abertschi.adump.model.TrackRepository
 class SpotifyTitleDetector(val trackRepository: TrackRepository) : AbstractStatusBarDetector() {
 
     override fun canHandle(payload: AdPayload): Boolean {
-        payload.spotifyTitleKey = getTitle(payload)
-        println("SpotifyTitleDetector: " + payload.spotifyTitleKey)
+        val title = getTitle(payload)
+        if (title != null) {
+            payload.ignoreKeys.add(title)
+        }
+        println("SpotifyTitleDetector: " + title)
         return super.canHandle(payload)
     }
 

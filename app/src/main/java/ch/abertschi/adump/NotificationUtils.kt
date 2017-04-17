@@ -22,12 +22,14 @@ class NotificationUtils {
         val ignoreIntentExtraKey = "notificationTitle"
     }
 
-    fun showBlockingNotification(context: Context, ignoreKey: String = "") {
+    fun showBlockingNotification(context: Context, ignoreKeys: ArrayList<String> = ArrayList<String>()) {
         println("showing notification " + System.currentTimeMillis())
 
-        println("showBlockingNotification with ignoreKey: " + ignoreKey)
+        ignoreKeys.forEach {
+            println("showBlockingNotification with ignoreKey: " + it)
+        }
         val ignoreIntent = Intent(context
-                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKey)
+                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
 
         val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
                 PendingIntent.getService(context, 0, ignoreIntent
@@ -84,9 +86,11 @@ class NotificationInteractionService : IntentService(NotificationInteractionServ
                 println("key: " + it)
             }
 
-            val ignoreKey = intent.getStringExtra(NotificationUtils.ignoreIntentExtraKey)
-            if (ignoreKey != null && !ignoreKey.isEmpty()) {
-                trackRepository.addTrack(ignoreKey)
+            val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
+            if (ignoreKeys != null && ignoreKeys.size > 0) {
+                ignoreKeys.forEach {
+                    trackRepository.addTrack(it)
+                }
             }
         }
     }

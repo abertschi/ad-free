@@ -10,6 +10,7 @@ import android.service.notification.StatusBarNotification
 import android.support.annotation.MainThread
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
+import ch.abertschi.adump.detector.ReflectionDetector
 import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
@@ -26,6 +27,7 @@ class MyNotificationListener : NotificationListenerService() {
     lateinit var detectors: List<AdDetectable>
     private var init: Boolean = false
     private var handler: Handler? = Handler()
+    lateinit var trackRepository: TrackRepository
 
     private var notificationUtils: NotificationUtils = NotificationUtils()
 
@@ -35,7 +37,8 @@ class MyNotificationListener : NotificationListenerService() {
 
     private fun intiVars() {
         preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
-        detectors = listOf<AdDetectable>(SpotifyTitleDetector(TrackRepository(applicationContext, preferences)))
+        trackRepository = TrackRepository(applicationContext, preferences)
+        detectors = listOf<AdDetectable>(SpotifyTitleDetector(trackRepository), ReflectionDetector(trackRepository))
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -60,7 +63,7 @@ class MyNotificationListener : NotificationListenerService() {
 
         val activeDetectors: ArrayList<AdDetectable> = ArrayList()
         detectors.forEach {
-            if (it.canHandle(payload)){
+            if (it.canHandle(payload)) {
                 activeDetectors.add(it)
             }
         }
@@ -84,7 +87,7 @@ class MyNotificationListener : NotificationListenerService() {
 
     private fun muteAudio(payload: AdPayload) {
         muteManager.doMute(this)
-        notificationUtils.showBlockingNotification(this, payload.spotifyTitleKey!!)
+        notificationUtils.showBlockingNotification(this, payload.ignoreKeys)
 
         handler!!.postDelayed({
             println("post delayed over")
