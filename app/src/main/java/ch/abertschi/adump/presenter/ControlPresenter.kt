@@ -4,6 +4,9 @@ import android.content.Context
 import android.provider.Settings
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.view.ControlView
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 
 /**
  * Created by abertschi on 15.04.17.
@@ -11,9 +14,16 @@ import ch.abertschi.adump.view.ControlView
 
 class ControlPresenter(val controlView: ControlView, val preferencesFactory: PreferencesFactory) {
 
+    lateinit private var mAppUpdater: AppUpdater
+
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
         controlView.setPowerState(preferencesFactory.isBlockingEnabled())
+        mAppUpdater = AppUpdater(context)
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("abertschi", "ad-free")
+                .setDisplay(Display.SNACKBAR)
+        mAppUpdater.start()
     }
 
     fun onResume(context: Context) {

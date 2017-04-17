@@ -33,6 +33,7 @@ dependencies {
     compile 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
     compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile 'com.github.javiersantos:AppUpdater:2.6.1'
 }
 repositories {
     mavenCentral()
