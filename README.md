@@ -20,6 +20,9 @@ Advertisement detectors are modularized into implementations of [AdDetectable](.
 
 In case of ad detection, the music stream is muted. Ads are thus still being played but simply can not be heard.
 
+## Compatibility
+Ad Free is currently not compatible with Android TV.
+
 ## Release notes
 Download latest app-release.apk [here](https://github.com/abertschi/ad-free/releases/latest)
 
