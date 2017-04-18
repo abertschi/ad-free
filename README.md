@@ -18,6 +18,8 @@ _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premi
 ## Implementation notes
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
 
+In case of ad detection, the music stream is muted. Ads are thus still being played but simply can not be heard.
+
 ## Release notes
 Download latest app-release.apk [here](https://github.com/abertschi/ad-free/releases/latest)
 
