@@ -26,6 +26,10 @@ Ad Free is currently not compatible with Android TV.
 ## Release notes
 Download latest app-release.apk [here](https://github.com/abertschi/ad-free/releases/latest)
 
+
+### [v0.0.2.3, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.3)
+- Sign apk with Signature Scheme v2 and v1 to be compatible with older devices
+
 ### [v0.0.2.2, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.2)
 Minor release
 Fixing issues with Auto Updater
