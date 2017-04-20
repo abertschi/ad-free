@@ -4,13 +4,14 @@
 # ad-free
 An ad free Spotify music experience for Android
 
+
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
   
 <img src=".github/cover.png" width="900">
 
 ## Download
-Download latest [app-release.apk here](https://github.com/abertschi/ad-free/releases/latest)
+Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/latest) :fire:
 
 ## Features
 - [x] Turn off sound when advertisement is playing
@@ -29,11 +30,14 @@ Ad Free is currently not compatible with Android TV.
 ## Release notes
 
 ### [v0.0.2.3, 2017-04-20](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.3)
-- Sign apk with Signature Scheme v2 and v1 to be compatible with older devices
+Minor release:
+- Sign apk with Signature Scheme v2 and v1
+
+If you update from a previous version to this version, you need to manually uninstall Ad Free on your phone first before you install this version. Starting with this version, Ad Free is signed with the Signature Scheme v2 __and__ V1 to be compatible with more devices.
 
 ### [v0.0.2.2, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.2)
 Minor release
-Fixing issues with Auto Updater
+- Fixing issues with Auto Updater
 
 ### [v0.0.2, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2)
 - More sophisticated Ad detector implemented.
