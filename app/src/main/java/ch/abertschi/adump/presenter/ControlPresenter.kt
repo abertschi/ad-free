@@ -3,7 +3,7 @@ package ch.abertschi.adump.presenter
 import android.content.Context
 import android.provider.Settings
 import ch.abertschi.adump.model.PreferencesFactory
-import ch.abertschi.adump.view.ControlView
+import ch.abertschi.adump.view.home.ControlView
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.Duration

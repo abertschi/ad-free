@@ -1,4 +1,4 @@
-package ch.abertschi.adump.view
+package ch.abertschi.adump.view.home
 
 /**
  * Created by abertschi on 15.04.17.

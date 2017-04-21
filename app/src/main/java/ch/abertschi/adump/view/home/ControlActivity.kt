@@ -1,24 +1,25 @@
-package ch.abertschi.adump.view
+package ch.abertschi.adump.view.home
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
 import android.support.v7.widget.SwitchCompat
 import android.text.Html
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adump.R
 import ch.abertschi.adump.di.ControlModul
 import ch.abertschi.adump.presenter.ControlPresenter
+import ch.abertschi.adump.view.CommonViewSettings
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
-class ControlActivity : AppCompatActivity(), ControlView {
+class ControlActivity : Fragment(), ControlView {
     lateinit var mTypeFace: Typeface
 
     lateinit var mPowerButton: SwitchCompat
@@ -27,34 +28,31 @@ class ControlActivity : AppCompatActivity(), ControlView {
     var isInit: Boolean = false
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.activity_main, container, false)
+    }
 
-        val controlModul = ControlModul(this, this)
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val controlModul = ControlModul(this.context, this)
         controlPresenter = controlModul.provideControlPresenter()
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.navigationBarColor = Color.parseColor("#252A2E")
-        }
+        mPowerButton = view?.findViewById(R.id.switch1) as SwitchCompat
+        mTypeFace = CommonViewSettings.instance(this.context).typeFace
 
-        mPowerButton = findViewById(R.id.switch1) as SwitchCompat
-        mTypeFace = Typeface.createFromAsset(assets, "fonts/Raleway-ExtraLight.ttf")
-        mEnjoySloganText = findViewById(R.id.enjoy) as TextView
-
-        val author = findViewById(R.id.author) as TextView
-        author.typeface = mTypeFace
+        mEnjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
         mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
             controlPresenter.enabledStatusChanged(isChecked)
         }
-        controlPresenter.onCreate(this)
+        controlPresenter.onCreate(this.context)
         isInit = true
     }
 
     override fun onResume() {
         if (isInit) {
-            controlPresenter.onResume(this)
+            controlPresenter.onResume(this.context)
         }
         super.onResume()
     }

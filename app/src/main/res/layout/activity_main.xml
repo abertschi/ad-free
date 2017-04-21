@@ -17,22 +17,11 @@
         android:layout_margin="30dp"
 
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adump.view.ControlActivity"
+        tools:context="ch.abertschi.adump.view.home.ControlActivity"
 
 
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
-
-        <!--<TextView-->
-            <!--android:id="@+id/permission"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="disable"-->
-            <!--/>-->
-
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch1"
@@ -56,16 +45,6 @@
             android:textColor="#C4BCAF"
             android:textSize="30sp"
             android:textStyle="italic"/>
-
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:text="made with &lt;3 by abertschi"
-            android:textColor="#4bc4bcaf"
-            android:textStyle="italic"/>
-
 
     </FrameLayout>
 
