@@ -1,10 +1,10 @@
 package ch.abertschi.adump
 
 import android.app.IntentService
-import android.content.Context
-import android.support.v4.app.NotificationCompat
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
@@ -30,12 +30,13 @@ class NotificationUtils : AnkoLogger {
             debug("ignore keys:" + it)
         }
 
-        val ignoreIntent = Intent(context
-                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
-
-        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
-                PendingIntent.getService(context, 0, ignoreIntent
-                        , PendingIntent.FLAG_ONE_SHOT)).build()
+// As long as NotificationActionDetector works reliably, no need to filter out false positives
+//        val ignoreIntent = Intent(context
+//                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
+//
+//        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
+//                PendingIntent.getService(context, 0, ignoreIntent
+//                        , PendingIntent.FLAG_ONE_SHOT)).build()
 
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
@@ -47,7 +48,6 @@ class NotificationUtils : AnkoLogger {
                 .setContentTitle("Blocking advertisement")
                 .setContentText("Touch to unmute")
                 .setSmallIcon(R.mipmap.icon)
-                .addAction(ignoreAction)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(dismissIntent)
                 .build()

@@ -6,7 +6,6 @@ import android.service.notification.StatusBarNotification
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.NotificationActionDetector
-import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
 import org.jetbrains.anko.AnkoLogger
@@ -36,7 +35,7 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
     private fun intiVars() {
         preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
         trackRepository = TrackRepository(applicationContext, preferences)
-        detectors = listOf<AdDetectable>(SpotifyTitleDetector(trackRepository), NotificationActionDetector(trackRepository))
+        detectors = listOf<AdDetectable>(NotificationActionDetector())
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -82,7 +81,7 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
 
     private fun muteAudio(payload: AdPayload) {
         muteManager.doMute(this)
-        notificationUtils.showBlockingNotification(this, payload.ignoreKeys)
+        notificationUtils.showBlockingNotification(this)
 
         handler!!.postDelayed({
             notificationUtils.hideBlockingNotification(this)

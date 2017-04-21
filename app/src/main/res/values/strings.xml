@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Ad Free</string>
     <string name="enjoy">enjoy your <b>ad free</b> music experience</string>
+    <string name="country_prompt">Choose a country</string>
+
+    <string-array name="test">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

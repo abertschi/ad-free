@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SwitchCompat
 import android.text.Html
@@ -14,7 +13,6 @@ import android.widget.TextView
 import ch.abertschi.adump.R
 import ch.abertschi.adump.di.ControlModul
 import ch.abertschi.adump.presenter.ControlPresenter
-import org.jetbrains.anko.toast
 
 /**
  * Created by abertschi on 15.04.17.

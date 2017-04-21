@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252A2E"
+    android:id="@+id/container"
+
+    >
+
+    <FrameLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+
+        android:gravity="center_vertical"
+        tools:context="ch.abertschi.adump.view.SettingsActivity"
+
+
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="made with &lt;3 by abertschi"
+            android:textColor="#4bc4bcaf"
+            android:textStyle="italic"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center|left"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/settingsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
+                android:text="what do you want to do while ads are being played"
+                android:textColor="#C4BCAF"
+                android:textSize="30sp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="40dp"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:entries="@array/test"
+                    android:layout_height="50dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </FrameLayout>
+</LinearLayout>
+
+
+

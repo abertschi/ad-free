@@ -59,12 +59,12 @@
 
         <TextView
             android:id="@+id/author"
-            android:layout_gravity="bottom|center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
+            android:layout_gravity="bottom|center"
+            android:text="made with &lt;3 by abertschi"
             android:textColor="#4bc4bcaf"
-            android:text="made with &lt;3 by bean"/>
+            android:textStyle="italic"/>
 
 
     </FrameLayout>
