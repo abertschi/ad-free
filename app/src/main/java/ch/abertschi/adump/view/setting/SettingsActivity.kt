@@ -10,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adump.R
+import ch.abertschi.adump.plugin.interdimcable.InterdimCablePlugin
+import ch.abertschi.adump.plugin.PluginContet
 import ch.abertschi.adump.view.AppSettings
-import ch.abertschi.adump.view.setting.ReplacerSpinnerAdapter
 
 /**
  * Created by abertschi on 21.04.17.
@@ -36,6 +37,10 @@ class SettingsActivity : Fragment() {
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
         mSettingsTitle?.text = Html.fromHtml(text)
         val spinner: Spinner = view?.findViewById(R.id.spinner) as Spinner
+
+        val plugin = InterdimCablePlugin()
+        plugin.onPluginActivated(PluginContet(this.context))
+
         val list: List<String> = listOf("mute audio", "local music", "soundcloud", "interdimensional cable", "joke time", "meh", "suggest something ...")
 
         spinner.adapter = ReplacerSpinnerAdapter(this.activity, R.layout.replacer_setting_item, list.toTypedArray())

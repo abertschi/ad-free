@@ -34,6 +34,10 @@ dependencies {
     compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'com.github.javiersantos:AppUpdater:2.6.1'
+
+    compile 'com.github.kittinunf.fuel:fuel-android:1.5.0'
+//    compile 'com.github.kittinunf.fuel:fuel-rxjava:<latest-version>' //for RxJava support
+    compile 'com.github.bmoliveira:snake-yaml:v1.18-android'
 }
 repositories {
     mavenCentral()
