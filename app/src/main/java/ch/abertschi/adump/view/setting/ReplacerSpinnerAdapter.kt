@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import ch.abertschi.adump.R
-import ch.abertschi.adump.view.CommonViewSettings
+import ch.abertschi.adump.view.AppSettings
 
 /**
  * Created by abertschi on 21.04.17.
@@ -33,7 +33,7 @@ class ReplacerSpinnerAdapter(context: Context, textViewResourceId: Int,
         val view = inflater.inflate(R.layout.replacer_setting_item, parent, false)
         val textView = view.findViewById(R.id.setting_spinner_item) as TextView
         textView.text = objects[position]
-        textView.typeface = CommonViewSettings.instance(context).typeFace
+        textView.typeface = AppSettings.instance(context).typeFace
         return view
     }
 }

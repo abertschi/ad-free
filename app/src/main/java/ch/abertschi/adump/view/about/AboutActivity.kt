@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adump.R
-import ch.abertschi.adump.view.CommonViewSettings
+import ch.abertschi.adump.view.AppSettings
 
 /**
  * Created by abertschi on 21.04.17.
@@ -26,7 +26,7 @@ class AboutActivity : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mTypeFace = CommonViewSettings.instance(this.context).typeFace
+        mTypeFace = AppSettings.instance(this.context).typeFace
 
         val textView = view?.findViewById(R.id.authorTitle) as TextView
         textView.typeface = mTypeFace

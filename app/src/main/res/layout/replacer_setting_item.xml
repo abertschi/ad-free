@@ -14,7 +14,6 @@
         android:layout_marginTop="7dp"
         android:layout_marginLeft="10dp"
 
-
         android:text="item name"
         android:textColor="#C4BCAF"
         android:textSize="20sp"

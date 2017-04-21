@@ -3,7 +3,7 @@ package ch.abertschi.adump.presenter
 import android.content.Context
 import android.provider.Settings
 import ch.abertschi.adump.model.PreferencesFactory
-import ch.abertschi.adump.view.home.ControlView
+import ch.abertschi.adump.view.home.HomeView
 import com.github.javiersantos.appupdater.AppUpdater
 import com.github.javiersantos.appupdater.enums.Display
 import com.github.javiersantos.appupdater.enums.Duration
@@ -14,13 +14,13 @@ import org.jetbrains.anko.AnkoLogger
  * Created by abertschi on 15.04.17.
  */
 
-class ControlPresenter(val controlView: ControlView, val preferencesFactory: PreferencesFactory) : AnkoLogger {
+class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory) : AnkoLogger {
 
     lateinit private var mAppUpdater: AppUpdater
 
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
-        controlView.setPowerState(preferencesFactory.isBlockingEnabled())
+        homeView.setPowerState(preferencesFactory.isBlockingEnabled())
         mAppUpdater = AppUpdater(context)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setDuration(Duration.INDEFINITE)
@@ -36,9 +36,9 @@ class ControlPresenter(val controlView: ControlView, val preferencesFactory: Pre
 
     private fun showPermissionRequiredIfNecessary(context: Context) {
         if (hasNotificationPermission(context)) {
-            controlView.showEnjoyAdFree()
+            homeView.showEnjoyAdFree()
         } else {
-            controlView.showPermissionRequired()
+            homeView.showPermissionRequired()
         }
     }
 

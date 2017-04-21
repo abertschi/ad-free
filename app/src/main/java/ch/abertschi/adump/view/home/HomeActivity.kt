@@ -11,48 +11,48 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adump.R
-import ch.abertschi.adump.di.ControlModul
-import ch.abertschi.adump.presenter.ControlPresenter
-import ch.abertschi.adump.view.CommonViewSettings
+import ch.abertschi.adump.di.HomeModul
+import ch.abertschi.adump.presenter.HomePresenter
+import ch.abertschi.adump.view.AppSettings
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
-class ControlActivity : Fragment(), ControlView {
+class HomeActivity : Fragment(), HomeView {
     lateinit var mTypeFace: Typeface
 
     lateinit var mPowerButton: SwitchCompat
     lateinit var mEnjoySloganText: TextView
-    lateinit var controlPresenter: ControlPresenter
+    lateinit var homePresenter: HomePresenter
     var isInit: Boolean = false
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.activity_main, container, false)
+        return inflater?.inflate(R.layout.home_view, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val controlModul = ControlModul(this.context, this)
-        controlPresenter = controlModul.provideControlPresenter()
+        val controlModul = HomeModul(this.context, this)
+        homePresenter = controlModul.provideControlPresenter()
 
         mPowerButton = view?.findViewById(R.id.switch1) as SwitchCompat
-        mTypeFace = CommonViewSettings.instance(this.context).typeFace
+        mTypeFace = AppSettings.instance(this.context).typeFace
 
         mEnjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
         mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            controlPresenter.enabledStatusChanged(isChecked)
+            homePresenter.enabledStatusChanged(isChecked)
         }
-        controlPresenter.onCreate(this.context)
+        homePresenter.onCreate(this.context)
         isInit = true
     }
 
     override fun onResume() {
         if (isInit) {
-            controlPresenter.onResume(this.context)
+            homePresenter.onResume(this.context)
         }
         super.onResume()
     }

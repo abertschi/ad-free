@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adump.R
-import ch.abertschi.adump.view.CommonViewSettings
+import ch.abertschi.adump.view.AppSettings
 import ch.abertschi.adump.view.setting.ReplacerSpinnerAdapter
 
 /**
@@ -23,14 +23,14 @@ class SettingsActivity : Fragment() {
     private var mSettingsTitle: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.music_setting, container, false)
+        return inflater?.inflate(R.layout.setting_view, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        mTypeFace = CommonViewSettings.instance(this.activity).typeFace
+        mTypeFace = AppSettings.instance(this.activity).typeFace
         mSettingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         mSettingsTitle?.typeface = mTypeFace
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
