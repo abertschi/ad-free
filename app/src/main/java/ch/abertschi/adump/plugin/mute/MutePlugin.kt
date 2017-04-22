@@ -9,6 +9,7 @@ import ch.abertschi.adump.plugin.PluginContet
 class MutePlugin : AdPlugin {
 
     override fun title() = "mute audio"
+
     override fun hasSettingsView() = false
 
     override fun play(context: PluginContet) {}

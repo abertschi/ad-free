@@ -8,6 +8,8 @@ import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.NotificationActionDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
+import ch.abertschi.adump.plugin.PluginContet
+import ch.abertschi.adump.plugin.PluginHandler
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -20,6 +22,7 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
 
     lateinit var preferences: PreferencesFactory
     private var muteManager: MuteManager = MuteManager.instance
+    private var mPluginHandler: PluginHandler = PluginHandler.instance
 
     lateinit var detectors: List<AdDetectable>
     private var init: Boolean = false
@@ -74,18 +77,21 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
                 }
             }
         }
-        if (isAd) {
+        if (isAd || true) {
             muteAudio(payload)
         }
     }
 
     private fun muteAudio(payload: AdPayload) {
         muteManager.doMute(this)
+        mPluginHandler.runPlugin(PluginContet(this))
         notificationUtils.showBlockingNotification(this)
 
         handler!!.postDelayed({
-            notificationUtils.hideBlockingNotification(this)
-            muteManager.doUnmute(this)
+            mPluginHandler.requestPluginStop(PluginContet(this), onStoped = {
+                notificationUtils.hideBlockingNotification(this)
+                muteManager.doUnmute(this)
+            })
         }, 30000)
     }
 

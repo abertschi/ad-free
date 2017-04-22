@@ -1,7 +1,8 @@
 package ch.abertschi.adump.presenter
 
 import ch.abertschi.adump.plugin.AdPlugin
-import ch.abertschi.adump.plugin.PluginFactory
+import ch.abertschi.adump.plugin.PluginContet
+import ch.abertschi.adump.plugin.PluginHandler
 import ch.abertschi.adump.view.setting.SettingsView
 import org.jetbrains.anko.AnkoLogger
 
@@ -13,30 +14,44 @@ import org.jetbrains.anko.AnkoLogger
 class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
     //        val list: List<String> = listOf("mute audio", "local music", "soundcloud", "interdimensional cable", "joke time", "meh", "suggest something ...")
 
-    val pluginFactory: PluginFactory = PluginFactory()
+    val pluginHandler: PluginHandler = PluginHandler.instance
 
-    val mPlugins: List<AdPlugin> = pluginFactory.getPlugins()
+    val mPlugins: List<AdPlugin> = pluginHandler.getPlugins()
     var mActivePlugin: AdPlugin? = null
+    var mActivePluginIndex: Int = 0
 
     fun onCreate() {
+        setActivePlugin(mActivePluginIndex)
+        println("created")
     }
 
     fun onResume() {
+        setActivePlugin(mActivePluginIndex)
     }
 
     fun getPlugins(): List<AdPlugin> {
-        return pluginFactory.getPlugins()
+        return pluginHandler.getPlugins()
     }
 
     fun onPluginSelected(index: Int) {
-        if (index >= mPlugins.size) settingView.showSuggestNewPlugin()
-        else {
+        if (index >= mPlugins.size) {
+            settingView.showSuggestNewPlugin()
+            setActivePlugin(mActivePluginIndex)
+        } else {
             setActivePlugin(index)
         }
     }
 
     private fun setActivePlugin(index: Int) {
+        val context = PluginContet(settingView.getContext())
+        val plugin = mPlugins[index]
+        if (mActivePlugin != plugin) {
+            mActivePlugin?.onPluginDeactivated(context)
+        }
+        plugin.onPluginActivated(PluginContet(settingView.getContext()))
+        mActivePlugin = plugin
         settingView.setActivePlugin(index)
+        mActivePluginIndex = index
     }
 
     fun getStringEntriesOfModel(): Array<String> {

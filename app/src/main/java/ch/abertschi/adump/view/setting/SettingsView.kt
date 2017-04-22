@@ -9,7 +9,6 @@ import android.content.Context
 interface SettingsView {
 
     fun setActivePlugin(index: Int)
-
     fun getContext(): Context
     fun showSuggestNewPlugin()
 }

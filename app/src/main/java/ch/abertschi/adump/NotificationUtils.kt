@@ -8,6 +8,8 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
+import ch.abertschi.adump.plugin.PluginContet
+import ch.abertschi.adump.plugin.PluginHandler
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -76,20 +78,22 @@ class NotificationInteractionService : IntentService(NotificationInteractionServ
             return
         }
         val actionKey: String = intent!!.action
-        if (actionKey.equals(NotificationUtils.actionDismiss)) {
-            MuteManager.instance.doUnmute(this)
-            utils.hideBlockingNotification(this)
-        } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
-            MuteManager.instance.doUnmute(this)
-            utils.hideBlockingNotification(this)
+        PluginHandler.instance.requestPluginStop(PluginContet(this), onStoped = {
+            if (actionKey.equals(NotificationUtils.actionDismiss)) {
+                MuteManager.instance.doUnmute(this)
+                utils.hideBlockingNotification(this)
+            } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
+                MuteManager.instance.doUnmute(this)
+                utils.hideBlockingNotification(this)
 
-            val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
-            if (ignoreKeys != null && ignoreKeys.size > 0) {
-                ignoreKeys.forEach {
-                    trackRepository.addTrack(it)
+                val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
+                if (ignoreKeys != null && ignoreKeys.size > 0) {
+                    ignoreKeys.forEach {
+                        trackRepository.addTrack(it)
+                    }
                 }
             }
-        }
+        })
     }
 }
 
