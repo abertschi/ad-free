@@ -70,7 +70,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
     override fun playTrial(context: PluginContet) {
         play(context)
     }
-    
+
     private fun playAudio(url: String, context: Context) {
         // TODO: add feature to download everyting at once when of WIFI
         val proxy = AppSettings.instance(context).getHttpProxy()
@@ -83,6 +83,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         mPlayer?.setDataSource(proxyUrl)
         mPlayer?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
         mPlayer?.prepare()
+        info("Playing: " + proxyUrl)
         mPlayer?.start()
         isPlaying = true
         mPlayer?.setOnCompletionListener {

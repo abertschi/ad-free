@@ -21,4 +21,4 @@ interface AdPlugin {
     fun onPluginDeactivated(context: PluginContet)
 }
 
-class PluginContet(val applicationContext: Context)
+data class PluginContet(val applicationContext: Context)
