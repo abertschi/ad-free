@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".NotificationInteractionService" />
+        <service android:name=".NotificationUtils$NotificationInteractionService" />
 
         <service
             android:name=".MyNotificationListener"

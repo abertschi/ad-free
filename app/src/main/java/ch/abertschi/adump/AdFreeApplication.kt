@@ -1,6 +1,7 @@
 package ch.abertschi.adump
 
 import android.app.Application
+import ch.abertschi.adump.model.PreferencesFactory
 
 
 /**
@@ -8,6 +9,8 @@ import android.app.Application
  */
 
 class AdFreeApplication : Application() {
+
+    private val prefs: PreferencesFactory = PreferencesFactory.providePrefernecesFactory(this)
 
     override fun onCreate() {
         super.onCreate()

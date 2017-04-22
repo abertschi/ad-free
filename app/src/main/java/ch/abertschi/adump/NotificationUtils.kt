@@ -6,12 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
-import ch.abertschi.adump.model.PreferencesFactory
-import ch.abertschi.adump.model.TrackRepository
-import ch.abertschi.adump.plugin.PluginContet
-import ch.abertschi.adump.plugin.PluginHandler
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
 
 
@@ -22,15 +17,13 @@ class NotificationUtils : AnkoLogger {
 
     companion object {
         val actionDismiss = "actionDismiss"
-        val actionIgnore = "actionIgnore"
         val blockingNotificationId = 1
-        val ignoreIntentExtraKey = "notificationTitle"
+
+        private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
+
     }
 
-    fun showBlockingNotification(context: Context, ignoreKeys: ArrayList<String> = ArrayList<String>()) {
-        ignoreKeys.forEach {
-            debug("ignore keys:" + it)
-        }
+    fun showBlockingNotification(context: Context, dismissCallable: () -> Unit) {
 
 // As long as NotificationActionDetector works reliably, no need to filter out false positives
 //        val ignoreIntent = Intent(context
@@ -54,6 +47,9 @@ class NotificationUtils : AnkoLogger {
                 .setContentIntent(dismissIntent)
                 .build()
 
+        synchronized(actionDismissCallables) {
+            actionDismissCallables.add(dismissCallable)
+        }
         val manager = NotificationManagerCompat.from(context)
         manager.notify(blockingNotificationId, notification)
     }
@@ -62,38 +58,42 @@ class NotificationUtils : AnkoLogger {
         val manager = NotificationManagerCompat.from(context)
         manager.cancel(blockingNotificationId)
     }
-}
 
-class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
-
-    private val utils: NotificationUtils = NotificationUtils()
-    private val trackRepository: TrackRepository = TrackRepository(this, PreferencesFactory.providePrefernecesFactory(this)) // TODO: singelton?
-
-    init {
-        info("NotificationInteractionService created")
-    }
-
-    override fun onHandleIntent(intent: Intent?) {
-        if (intent == null || intent.action == null) {
-            return
+    class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
+        init {
+            info("NotificationInteractionService created")
         }
-        val actionKey: String = intent!!.action
-        PluginHandler.instance.stopPlugin(PluginContet(this))
-        if (actionKey.equals(NotificationUtils.actionDismiss)) {
-            MuteManager.instance.doUnmute(this)
-            utils.hideBlockingNotification(this)
-        } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
-            MuteManager.instance.doUnmute(this)
-            utils.hideBlockingNotification(this)
 
-            val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
-            if (ignoreKeys != null && ignoreKeys.size > 0) {
-                ignoreKeys.forEach {
-                    trackRepository.addTrack(it)
+        override fun onHandleIntent(intent: Intent?) {
+            if (intent == null || intent.action == null) {
+                return
+            }
+            val actionKey: String = intent!!.action
+            if (actionKey.equals(NotificationUtils.actionDismiss)) {
+                synchronized(NotificationUtils.actionDismissCallables) {
+                    actionDismissCallables.forEach {
+                        it()
+                        info { "CALLING DISMISS CALLABLES" }
+                    }
+                    actionDismissCallables.clear()
                 }
             }
         }
+
     }
+
+//
+//    else if (actionKey.equals(NotificationUtils.actionIgnore)) {
+//        AudioController.instance.unmuteMusicStream(this)
+//        utils.hideBlockingNotification(this)
+//
+//        val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
+//        if (ignoreKeys != null && ignoreKeys.size > 0) {
+//            ignoreKeys.forEach {
+//                trackRepository.addTrack(it)
+//            }
+//        }
+//    }
 }
 
 

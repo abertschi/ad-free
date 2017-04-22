@@ -1,6 +1,5 @@
 package ch.abertschi.adump
 
-import android.os.Handler
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adump.detector.AdDetectable
@@ -8,8 +7,6 @@ import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.NotificationActionDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
-import ch.abertschi.adump.plugin.PluginContet
-import ch.abertschi.adump.plugin.PluginHandler
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -21,15 +18,11 @@ import org.jetbrains.anko.info
 class MyNotificationListener : NotificationListenerService(), AnkoLogger {
 
     lateinit var preferences: PreferencesFactory
-    private var muteManager: MuteManager = MuteManager.instance
-    private var mPluginHandler: PluginHandler = PluginHandler.instance
+    private var audioController: AudioController = AudioController.instance
 
     lateinit var detectors: List<AdDetectable>
     private var init: Boolean = false
-    private var handler: Handler? = Handler()
     lateinit var trackRepository: TrackRepository
-
-    private var notificationUtils: NotificationUtils = NotificationUtils()
 
     init {
         info("Spotify Ad listener online")
@@ -46,11 +39,9 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
             init = true
             intiVars()
         }
-
-        if (muteManager.isAudioMuted() || !preferences.isBlockingEnabled()) {
+        if (audioController.isMusicStreamMuted() || !preferences.isBlockingEnabled()) {
             return
         }
-
         debug("Spotify Ad Listener is active")
         applyDetectors(AdPayload(sbn))
     }
@@ -78,21 +69,8 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
             }
         }
         if (isAd) {
-            muteAudio(payload)
+            audioController.muteMusicAndRunActivePlugin(this)
         }
-    }
-
-    private fun muteAudio(payload: AdPayload) {
-        muteManager.doMute(this)
-        mPluginHandler.runPlugin(PluginContet(this))
-        notificationUtils.showBlockingNotification(this)
-
-        handler!!.postDelayed({
-            mPluginHandler.requestPluginStop(PluginContet(this), onStoped = {
-                notificationUtils.hideBlockingNotification(this)
-                muteManager.doUnmute(this)
-            })
-        }, 30000)
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {

@@ -55,6 +55,11 @@ class SettingsActivity : Fragment(), SettingsView {
         mSpinner?.onItemSelectedListener {
             onItemSelected { adapterView, view, i, l -> if (!mInit) mSettingPresenter.onPluginSelected(i) }
         }
+
+        view.findViewById(R.id.try_plugin_button).setOnClickListener {
+            mSettingPresenter.tryPlugin()
+        }
+
         mSettingPresenter.onCreate()
         mInit = false
     }
@@ -65,7 +70,7 @@ class SettingsActivity : Fragment(), SettingsView {
     }
 
     override fun setActivePlugin(index: Int) {
-        mSpinner?.setSelection(index)
+        mSpinner?.setSelection(index, true)
     }
 
     override fun getContext(): Context = this.activity

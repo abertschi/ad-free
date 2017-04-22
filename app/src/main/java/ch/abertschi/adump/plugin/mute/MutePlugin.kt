@@ -7,6 +7,7 @@ import ch.abertschi.adump.plugin.PluginContet
  * Created by abertschi on 21.04.17.
  */
 class MutePlugin : AdPlugin {
+    override fun playTrial(context: PluginContet) {}
 
     override fun title() = "mute audio"
 

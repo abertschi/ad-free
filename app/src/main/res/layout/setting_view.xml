@@ -25,6 +25,7 @@
 
 
         <ImageView
+            android:id="@+id/try_plugin_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="top|right"

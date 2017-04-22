@@ -13,6 +13,7 @@ interface AdPlugin {
     fun settingsView(): View? = null
 
     fun play(context: PluginContet): Unit
+    fun playTrial(context: PluginContet): Unit
     fun requestStop(contet: PluginContet, onStoped: () -> Unit)
     fun forceStop(context: PluginContet)
 
