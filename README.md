@@ -7,7 +7,7 @@ An ad free Spotify music experience for Android
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
-  
+
 <img src=".github/cover.png" width="900">
 
 ## Download
@@ -15,7 +15,8 @@ Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/
 
 ## Features
 - [x] Turn off sound when advertisement is playing
-- [ ] Play local music instead when advertisement is playing
+- [x] Listen to interdimensional cable featured in Rick and Morty while ads are being played :D
+
 - [x] Check for app updates
 - [x] No root required
 
