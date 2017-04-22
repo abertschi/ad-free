@@ -77,7 +77,7 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
                 }
             }
         }
-        if (isAd || true) {
+        if (isAd) {
             muteAudio(payload)
         }
     }

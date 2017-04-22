@@ -28,6 +28,7 @@ class InterdimCablePlugin : AdPlugin {
     private var mPlayer: MediaPlayer? = null
 
     var isPlaying: Boolean = false
+    private var onStopCallables: ArrayList<() -> Unit> = ArrayList()
 
     override fun title(): String = "interdimensional cable"
 
@@ -39,7 +40,7 @@ class InterdimCablePlugin : AdPlugin {
             println("RUNNING")
             mModel = it.first
             println(it.second)
-            play(context)
+//            play(context)
         }
     }
 
@@ -48,26 +49,35 @@ class InterdimCablePlugin : AdPlugin {
 
     override fun play(context: PluginContet) {
         if (isPlaying) return
+        if (mModel == null) {
+            onPluginActivated(context)
+            return
+        }
 
         val url = BASE_URL + mModel!!.channels!![(Math.random() * mModel!!.channels!!.size).toInt()].path + RAW_SUFFIX
         println(url)
 
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.mode = AudioManager.MODE_NORMAL
+        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, am.getStreamVolume(AudioManager.STREAM_MUSIC), 0)
         mPlayer = MediaPlayer()
         mPlayer?.setDataSource(url)
         mPlayer?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
         mPlayer?.prepare()
         mPlayer?.start()
         isPlaying = true
+        mPlayer?.setOnCompletionListener {
+            closePlayer()
+            synchronized(onStopCallables) {
+                onStopCallables?.forEach { it() }
+                onStopCallables.clear()
+            }
+        }
     }
 
     override fun requestStop(contet: PluginContet, onStoped: () -> Unit) {
         if (!isPlaying) onStoped()
-        mPlayer?.setOnCompletionListener {
-            closePlayer()
-            onStoped()
-        }
+        else onStopCallables.add(onStoped)
     }
 
     override fun forceStop(context: PluginContet) {

@@ -2,7 +2,6 @@ package ch.abertschi.adump
 
 import android.content.Context
 import android.media.AudioManager
-import android.os.Handler
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -33,8 +32,13 @@ class MuteManager private constructor() : AnkoLogger {
         musicStreamVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
         debug("current volume " + musicStreamVolume)
         info("muting audio")
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
+//        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
+//        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE);
+//        am.adjustVolume(AudioManager.ADJUST_LOWER,
+//                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE)
+        am.setStreamMute(AudioManager.STREAM_MUSIC, true)
     }
+
 
     fun doUnmute(context: Context) {
         if (!audioIsMuted) {
@@ -43,7 +47,9 @@ class MuteManager private constructor() : AnkoLogger {
         info("Unmuting audio....")
         audioIsMuted = false
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, musicStreamVolume, 0)
+//        am.setStreamVolume(AudioManager.STREAM_MUSIC, musicStreamVolume, 0)
+        am.setStreamMute(AudioManager.STREAM_MUSIC, false)
+//        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE);
     }
 
     fun isAudioMuted(): Boolean = audioIsMuted

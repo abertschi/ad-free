@@ -78,22 +78,21 @@ class NotificationInteractionService : IntentService(NotificationInteractionServ
             return
         }
         val actionKey: String = intent!!.action
-        PluginHandler.instance.requestPluginStop(PluginContet(this), onStoped = {
-            if (actionKey.equals(NotificationUtils.actionDismiss)) {
-                MuteManager.instance.doUnmute(this)
-                utils.hideBlockingNotification(this)
-            } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
-                MuteManager.instance.doUnmute(this)
-                utils.hideBlockingNotification(this)
+        PluginHandler.instance.stopPlugin(PluginContet(this))
+        if (actionKey.equals(NotificationUtils.actionDismiss)) {
+            MuteManager.instance.doUnmute(this)
+            utils.hideBlockingNotification(this)
+        } else if (actionKey.equals(NotificationUtils.actionIgnore)) {
+            MuteManager.instance.doUnmute(this)
+            utils.hideBlockingNotification(this)
 
-                val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
-                if (ignoreKeys != null && ignoreKeys.size > 0) {
-                    ignoreKeys.forEach {
-                        trackRepository.addTrack(it)
-                    }
+            val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
+            if (ignoreKeys != null && ignoreKeys.size > 0) {
+                ignoreKeys.forEach {
+                    trackRepository.addTrack(it)
                 }
             }
-        })
+        }
     }
 }
 
