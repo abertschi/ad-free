@@ -14,9 +14,13 @@ import ch.abertschi.adump.view.AppSettings
  */
 
 class ReplacerSpinnerAdapter(context: Context, textViewResourceId: Int,
-                             val objects: Array<String>)
+                             var objects: Array<String>)
     : ArrayAdapter<String>(context, textViewResourceId, objects) {
 
+
+    fun setModel(objects: Array<String>) {
+        this.objects = objects
+    }
 
     override fun getDropDownView(position: Int, convertView: View?,
                                  parent: ViewGroup): View {
@@ -26,6 +30,7 @@ class ReplacerSpinnerAdapter(context: Context, textViewResourceId: Int,
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getCustomView(position, convertView, parent)
     }
+
 
     fun getCustomView(position: Int, convertView: View?, parent: ViewGroup): View {
 

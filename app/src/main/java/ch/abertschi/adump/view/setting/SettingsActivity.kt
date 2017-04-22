@@ -1,6 +1,9 @@
 package ch.abertschi.adump.view.setting
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
@@ -10,18 +13,25 @@ import android.view.ViewGroup
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adump.R
-import ch.abertschi.adump.plugin.interdimcable.InterdimCablePlugin
-import ch.abertschi.adump.plugin.PluginContet
+import ch.abertschi.adump.presenter.SettingsPresenter
 import ch.abertschi.adump.view.AppSettings
+import org.jetbrains.anko.onItemSelectedListener
 
 /**
  * Created by abertschi on 21.04.17.
  */
 
-class SettingsActivity : Fragment() {
+class SettingsActivity : Fragment(), SettingsView {
 
     lateinit var mTypeFace: Typeface
     private var mSettingsTitle: TextView? = null
+    private var mSpinner: Spinner? = null;
+
+    private var mAdapter: ReplacerSpinnerAdapter? = null
+
+    private var mInit: Boolean = true
+
+    lateinit var mSettingPresenter: SettingsPresenter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.setting_view, container, false)
@@ -30,19 +40,38 @@ class SettingsActivity : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         mTypeFace = AppSettings.instance(this.activity).typeFace
         mSettingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         mSettingsTitle?.typeface = mTypeFace
+
+        mSettingPresenter = SettingsPresenter(this)
+
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
         mSettingsTitle?.text = Html.fromHtml(text)
-        val spinner: Spinner = view?.findViewById(R.id.spinner) as Spinner
 
-        val plugin = InterdimCablePlugin()
-        plugin.onPluginActivated(PluginContet(this.context))
+        mSpinner = view?.findViewById(R.id.spinner) as Spinner
+        mAdapter = ReplacerSpinnerAdapter(this.activity, R.layout.replacer_setting_item, mSettingPresenter.getStringEntriesOfModel())
+        mSpinner?.adapter = mAdapter
+        mSpinner?.onItemSelectedListener {
+            onItemSelected { adapterView, view, i, l -> if (!mInit) mSettingPresenter.onPluginSelected(i) }
+        }
+        mSettingPresenter.onCreate()
+        mInit = false
+    }
 
-        val list: List<String> = listOf("mute audio", "local music", "soundcloud", "interdimensional cable", "joke time", "meh", "suggest something ...")
+    override fun onResume() {
+        super.onResume()
+        mSettingPresenter.onResume()
+    }
 
-        spinner.adapter = ReplacerSpinnerAdapter(this.activity, R.layout.replacer_setting_item, list.toTypedArray())
+    override fun setActivePlugin(index: Int) {
+        mSpinner?.setSelection(index)
+    }
+
+    override fun getContext(): Context = this.activity
+
+    override fun showSuggestNewPlugin() {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
+        this.getContext().startActivity(browserIntent)
     }
 }

@@ -53,6 +53,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/website"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:scaleType="fitCenter"
@@ -62,6 +63,7 @@
                 />
 
             <ImageView
+                android:id="@+id/twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:scaleType="fitCenter"
