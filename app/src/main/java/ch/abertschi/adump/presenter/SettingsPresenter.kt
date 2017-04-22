@@ -14,34 +14,44 @@ import org.jetbrains.anko.info
  */
 
 class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
-    //        val list: List<String> = listOf("mute audio", "local music", "soundcloud", "interdimensional cable", "joke time", "meh", "suggest something ...")
 
     private val pluginHandler: PluginHandler = PluginHandler.instance
     private val mPlugins: List<AdPlugin> = pluginHandler.getPlugins()
-    private var mActivePlugin: AdPlugin? = null
-    private var mActivePluginIndex: Int = 0
+    private var activePlugin: AdPlugin? = null
+    private var activePluginIndex: Int = 0
+
+    //        val list: List<String> = listOf("mute audio", "local music", "soundcloud", "interdimensional cable", "joke time", "meh", "suggest something ...")
 
     init {
-        mActivePlugin = pluginHandler.getActivePlugin(settingView.getContext())
+        activePlugin = pluginHandler.getActivePlugin(settingView.getContext())
         var index: Int = 0
         mPlugins.forEach {
             info { it.toString() }
-            if (it == mActivePlugin) {
-                mActivePluginIndex = index
+            if (it == activePlugin) {
+                activePluginIndex = index
             }
             index++
         }
-        if (mActivePluginIndex >= mPlugins.size) {
-            mActivePluginIndex = 0
+        if (activePluginIndex >= mPlugins.size) {
+            activePluginIndex = 0
         }
     }
 
     fun onCreate() {
-        setActivePlugin(mActivePluginIndex)
+        setActivePlugin(activePluginIndex)
+        setPluginView()
+    }
+
+    private fun setPluginView() {
+        settingView.clearPluginView()
+        if (activePlugin?.hasSettingsView() ?: false) {
+            settingView.setPluginView(activePlugin?.settingsView(settingView.getContext())!!)
+        }
     }
 
     fun onResume() {
-        setActivePlugin(mActivePluginIndex)
+        setActivePlugin(activePluginIndex)
+        setPluginView()
     }
 
     fun getPlugins(): List<AdPlugin> {
@@ -51,10 +61,11 @@ class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
     fun onPluginSelected(index: Int) {
         if (index >= mPlugins.size) {
             settingView.showSuggestNewPlugin()
-            setActivePlugin(mActivePluginIndex)
+            setActivePlugin(activePluginIndex)
         } else {
             setActivePlugin(index)
         }
+        setPluginView()
     }
 
     fun tryPlugin() {
@@ -65,20 +76,19 @@ class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
     private fun setActivePlugin(index: Int) {
         val context = PluginContet(settingView.getContext())
         val plugin = mPlugins[index]
-        if (mActivePlugin != plugin) {
-            mActivePlugin?.onPluginDeactivated(context)
+        if (activePlugin != plugin) {
+            activePlugin?.onPluginDeactivated(context)
         }
-        mActivePlugin = plugin
-        mActivePlugin?.onPluginActivated(PluginContet(settingView.getContext()))
-        mActivePluginIndex = index
-        settingView.setActivePlugin(mActivePluginIndex)
-        pluginHandler.setActivePlugin(mActivePlugin!!)
+        activePlugin = plugin
+        activePlugin?.onPluginActivated(PluginContet(settingView.getContext()))
+        activePluginIndex = index
+        settingView.setActivePlugin(activePluginIndex)
+        pluginHandler.setActivePlugin(activePlugin!!)
     }
 
     fun getStringEntriesOfModel(): Array<String> {
-        var result: ArrayList<String> = ArrayList<String>()
+        var result: ArrayList<String> = ArrayList()
         getPlugins().forEach { result.add(it.title()) }
-//        result.add("suggest something ...")
         result.add("more soon to come ...")
         return result.toTypedArray()
     }

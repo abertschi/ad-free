@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/plugin_interdim_cable_audio_volume_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+
+        android:text="configure audio volume"
+        android:textColor="#C4BCAF"
+        android:textSize="20sp"
+        />
+
+</RelativeLayout>

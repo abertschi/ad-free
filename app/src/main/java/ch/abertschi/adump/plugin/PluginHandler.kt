@@ -21,49 +21,42 @@ class PluginHandler private constructor() {
     }
 
     private var initPlugin: AdPlugin = MutePlugin()
-    private var mPlugins: List<AdPlugin> = listOf(initPlugin, InterdimCablePlugin()) // ()
-    private var mActivePlugin: AdPlugin? = initPlugin
-
-    fun getPlugins(): List<AdPlugin> {
-        return mPlugins
-    }
+    private var plugins: List<AdPlugin> = listOf(initPlugin, InterdimCablePlugin()) // ()
+    private var activePlugin: AdPlugin? = initPlugin
 
     fun getActivePlugin(context: Context): AdPlugin {
         val prefs = PreferencesFactory.providePrefernecesFactory(context)
         val activeKey = prefs.getPreferences().getString(ACTVIE_PLUGIN_KEY, null)
-        println("active KEY: " + activeKey)
-        var active: AdPlugin? = mActivePlugin
+        var active: AdPlugin? = activePlugin
         if (activeKey != null) {
-            mPlugins.forEach {
+            plugins.forEach {
                 // TODO: this is hacky
                 if (serializeActivePluginId(it).equals(activeKey)) {
                     active = it
                 }
             }
         }
-        mActivePlugin = active
-        return mActivePlugin!!
+        activePlugin = active
+        return activePlugin!!
     }
-
-    private fun serializeActivePluginId(plugin: AdPlugin): String = plugin.javaClass.canonicalName
 
     fun setActivePlugin(plugin: AdPlugin): AdPlugin {
         val prefs = PreferencesFactory.providePrefernecesFactory()
         prefs.getPreferences().edit().putString(ACTVIE_PLUGIN_KEY, serializeActivePluginId(plugin)).commit()
-        val oldPlugin = mActivePlugin
-        mActivePlugin = plugin
+        val oldPlugin = activePlugin
+        activePlugin = plugin
         return oldPlugin!!
     }
 
-    fun runPlugin(context: PluginContet) {
-        mActivePlugin?.play(context)
-    }
+    fun getPlugins(): List<AdPlugin> = plugins
 
-    fun requestPluginStop(context: PluginContet, onStoped: () -> Unit) {
-        mActivePlugin?.requestStop(context, onStoped)
-    }
+    fun runPlugin(context: PluginContet) = activePlugin?.play(context)
 
-    fun stopPlugin(context: PluginContet) {
-        mActivePlugin?.forceStop(context)
-    }
+    fun trialRunPlugin(context: PluginContet) = activePlugin?.playTrial(context)
+
+    fun requestPluginStop(context: PluginContet, onStoped: () -> Unit) = activePlugin?.requestStop(context, onStoped)
+
+    fun stopPlugin(context: PluginContet) = activePlugin?.forceStop(context)
+
+    private fun serializeActivePluginId(plugin: AdPlugin): String = plugin.javaClass.canonicalName
 }

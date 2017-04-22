@@ -10,7 +10,7 @@ interface AdPlugin {
 
     fun title(): String
     fun hasSettingsView(): Boolean = false
-    fun settingsView(): View? = null
+    fun settingsView(context: Context): View? = null
 
     fun play(context: PluginContet): Unit
     fun playTrial(context: PluginContet): Unit
