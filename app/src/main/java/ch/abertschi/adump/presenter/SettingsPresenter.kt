@@ -58,6 +58,7 @@ class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
     }
 
     fun tryPlugin() {
+        AudioController.instance.unmuteMusicAndStopActivePlugin(settingView.getContext())
         AudioController.instance.muteMusicAndRunActivePlugin(settingView.getContext())
     }
 

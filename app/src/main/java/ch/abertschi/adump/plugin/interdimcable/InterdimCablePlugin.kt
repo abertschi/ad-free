@@ -12,9 +12,9 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.representer.Representer
 
@@ -36,7 +36,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
     override fun title(): String = "interdimensional cable"
 
     override fun onPluginActivated(context: PluginContet) {
-        context.applicationContext.toast("It's time to get schwifty")
+//        context.applicationContext.toast("It's time to get schwifty")
         mModel = loadPluginSettingsFromLocalStorage(context.applicationContext)
         updatePluginSettings(context.applicationContext)
     }
@@ -45,6 +45,8 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         getPluginObservable().subscribe {
             info("Interdimensional cable plugin settings updated")
             mModel = it.first
+            info("downloaded meta data for " + mModel?.channels?.size + " channels")
+
             storePluginSettingsInLocalStorage(context.applicationContext, it.first)
         }
     }
@@ -54,8 +56,9 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
 
     override fun play(context: PluginContet) {
         if (isPlaying) return
-        updatePluginSettings(context.applicationContext)
+
         if (mModel == null) {
+            updatePluginSettings(context.applicationContext)
             return
         }
         if (mModel?.channels?.size!! > 0) {
@@ -78,10 +81,12 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
 
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.mode = AudioManager.MODE_NORMAL
-        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, am.getStreamVolume(AudioManager.STREAM_MUSIC), 0)
+        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, am.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL), 0)
+
         mPlayer = MediaPlayer()
         mPlayer?.setDataSource(proxyUrl)
-        mPlayer?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
+        mPlayer?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
+
         mPlayer?.prepare()
         info("Playing: " + proxyUrl)
         mPlayer?.start()
