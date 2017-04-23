@@ -17,7 +17,6 @@ import ch.abertschi.adump.R
 import ch.abertschi.adump.presenter.SettingsPresenter
 import ch.abertschi.adump.view.AppSettings
 import org.jetbrains.anko.onItemSelectedListener
-import org.jetbrains.anko.onTouch
 
 
 /**
@@ -75,7 +74,7 @@ class SettingsActivity : Fragment(), SettingsView {
                 }
             }
         }
-        mSpinner?.onTouch { view, motionEvent -> mSpinner?.performClick()!! }
+//        mSpinner?.onTouch { view, motionEvent -> mSpinner?.performClick()!! }
 
 
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
