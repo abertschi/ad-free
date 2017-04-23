@@ -17,6 +17,7 @@ import ch.abertschi.adump.R
 import ch.abertschi.adump.presenter.SettingsPresenter
 import ch.abertschi.adump.view.AppSettings
 import org.jetbrains.anko.onItemSelectedListener
+import org.jetbrains.anko.onTouch
 
 
 /**
@@ -67,12 +68,20 @@ class SettingsActivity : Fragment(), SettingsView {
         spinnerAdapter = ReplacerSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel())
         mSpinner?.adapter = spinnerAdapter
         mSpinner?.onItemSelectedListener {
-            onItemSelected { adapterView, view, i, l -> if (!init) settingPresenter.onPluginSelected(i) }
+            onItemSelected { adapterView, view, i, l ->
+                run {
+                    if (!init) settingPresenter.onPluginSelected(i)
+                    spinnerAdapter?.notifyDataSetChanged()
+                }
+            }
         }
+        mSpinner?.onTouch { view, motionEvent -> mSpinner?.performClick()!! }
+
 
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
+
 
         settingPresenter.onCreate()
         init = false
