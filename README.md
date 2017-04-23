@@ -4,21 +4,16 @@
 # ad-free
 An ad free Spotify music experience for Android
 
-
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
-
-<img src=".github/cover.png" width="900">
+<img src=".github/cover2.png" width="900">
 
 ## Download
 Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/latest) :fire:
 
 ## Features
-- [x] Turn off sound when advertisement is playing
-- [x] Listen to interdimensional cable featured in Rick and Morty while ads are being played :D
-
-- [x] Check for app updates
-- [x] No root required
+- Turn off sound when advertisement is playing
+- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads :D
 
 ## Implementation notes
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
@@ -29,6 +24,12 @@ In case of ad detection, the music stream is muted. Ads are thus still being pla
 Ad Free is currently not compatible with Android TV.
 
 ## Release notes
+
+### [v0.0.3.0, 2017-04-23](https://github.com/abertschi/ad-free/releases/tag/v0.0.3.0)
+This major release extends the user interface with plugins. Plugins run while ads are being played and
+add some level of entertainment to your music experience.
+
+- Listen to interdimensional cable advertisement featured in Rick and Morty instead of casual ads
 
 ### [v0.0.2.3, 2017-04-20](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.3)
 Minor release:
