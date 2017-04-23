@@ -6,14 +6,14 @@ An ad free Spotify music experience for Android
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
-<img src=".github/cover2.png" width="800">
+<img src=".github/cover2.png" width="900">
 
 ## Download
 Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/latest) :fire:
 
 ## Features
 - Turn off sound when advertisement is playing
-- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads :D
+- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads. Wubalubadubdub!
 - No ROOT required
 - Update reminder
 
@@ -31,7 +31,7 @@ Ad Free is currently not compatible with Android TV.
 This major release extends the user interface with plugins. Plugins run while ads are being played and
 add some level of entertainment to your music experience.
 
-- Listen to interdimensional cable advertisement featured in Rick and Morty instead of casual ads
+- Listen to interdimensional cable advertisement featured in Rick and Morty instead of casual ads. Wubalubadubdub!
 
 ### [v0.0.2.3, 2017-04-20](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.3)
 Minor release:
