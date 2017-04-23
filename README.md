@@ -2,7 +2,7 @@
 [![GitHub release](https://img.shields.io/github/release/abertschi/ad-free.svg)]()
 
 # ad-free
-An ad free Spotify music experience for Android
+Ad Free is an app for Android that mutes your phone audio whenever there are ads on Spotify.
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
