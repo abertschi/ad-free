@@ -74,7 +74,6 @@ class SettingsActivity : Fragment(), SettingsView {
                     spinnerAdapter?.notifyDataSetChanged()
                 }
             }
-
         }
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
