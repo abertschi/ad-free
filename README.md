@@ -14,6 +14,8 @@ Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/
 ## Features
 - Turn off sound when advertisement is playing
 - Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads :D
+- No ROOT required
+- Update reminder
 
 ## Implementation notes
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
