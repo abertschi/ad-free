@@ -6,7 +6,7 @@ An ad free Spotify music experience for Android
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
-<img src=".github/cover2.png" width="700">
+<img src=".github/cover2.png" width="800">
 
 ## Download
 Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/latest) :fire:
