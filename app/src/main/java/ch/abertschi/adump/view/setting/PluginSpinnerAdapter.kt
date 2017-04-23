@@ -11,6 +11,7 @@ import ch.abertschi.adump.R
 import ch.abertschi.adump.view.AppSettings
 import org.jetbrains.anko.AnkoLogger
 
+
 /**
  * Created by abertschi on 21.04.17.
  */
@@ -28,10 +29,6 @@ class PluginSpinnerAdapter
         this.viewToClickOnToDismissPopup = viewToClickOnToDismissPopup
     }
 
-    fun setModel(objects: Array<String>) {
-        this.objects = objects
-    }
-
     override fun getDropDownView(position: Int, convertView: View?,
                                  parent: ViewGroup): View {
         return getCustomView(position, convertView, parent)
@@ -42,24 +39,42 @@ class PluginSpinnerAdapter
     }
 
     fun getCustomView(position: Int, convertView: View?, parent: ViewGroup): View {
-
         val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.replacer_setting_item, parent, false)
         val textView = view.findViewById(R.id.setting_spinner_item) as TextView
         textView.text = objects[position]
         textView.typeface = AppSettings.instance(context).typeFace
         view.setOnClickListener {
-            spinner.setSelection(position)
             spinner.performClick()
-//            spinner.onDetechedFromWindow()
+            spinner.setSelection(position)
+            hideSpinnerDropDown(spinner)
         }
         textView.setOnClickListener {
-            spinner.setSelection(position)
             spinner.performClick()
-//            spinner.onDetechedFromWindow()
+            spinner.setSelection(position)
+            hideSpinnerDropDown(spinner)
         }
 
         return view
+    }
+
+    fun setModel(objects: Array<String>) {
+        this.objects = objects
+    }
+
+    /*
+     * This is super ugly, but creating a custom spinner class got me into issues with default styling.
+     * So this is the simplest workaround
+     * http://stackoverflow.com/questions/17965611/how-to-hide-spinner-dropdown-android
+     */
+    fun hideSpinnerDropDown(spinner: Spinner) {
+        try {
+            val method = Spinner::class.java.getDeclaredMethod("onDetachedFromWindow")
+            method.isAccessible = true
+            method.invoke(spinner)
+        } catch (e: Exception) {
+            error("Can not hide spinner dialog, " + e)
+        }
     }
 }
 

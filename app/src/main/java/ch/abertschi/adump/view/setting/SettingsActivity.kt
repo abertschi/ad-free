@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -83,15 +84,12 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
-
-//        view.findViewById(R.id.spinner_container)?.setOnTouchListener(object: View.OnTouchListener {
-//            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-//                info("touched in activitz ")
-//                spinner?.performClick()
-//                spinnerAdapter?.notifyDataSetChanged()
-//
-//            }
-//        })
+        view.findViewById(R.id.setting_spinner_item_container)?.setOnTouchListener(object: View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                spinner?.performClick()
+                return false
+            }
+        })
 
         settingPresenter.onCreate()
         init = true

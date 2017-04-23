@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:id="@+id/setting_spinner_item_container"
+              android:paddingRight="30dp"
               android:layout_height="match_parent">
 
     <TextView

@@ -7,19 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#252A2E"
-
     >
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="30dp"
-
         android:gravity="center_vertical"
         tools:context="ch.abertschi.adump.view.setting.SettingsActivity"
-
-
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -32,9 +27,9 @@
 
             <TextView
                 android:id="@+id/authorTitle"
+                style="@style/AppTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/AppTextView"
                 android:inputType="textMultiLine"
                 android:scrollHorizontally="false"
                 android:text=""
@@ -46,19 +41,17 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/aboutLayout"
-            android:layout_marginTop="70dp"
             android:layout_centerHorizontal="true"
-
-            android:layout_height="wrap_content">
+            android:layout_marginTop="70dp">
 
             <ImageView
                 android:id="@+id/website"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:scaleType="fitCenter"
                 android:layout_gravity="top|right"
-
+                android:scaleType="fitCenter"
                 android:src="@mipmap/web"
                 />
 
@@ -66,15 +59,12 @@
                 android:id="@+id/twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:scaleType="fitCenter"
                 android:layout_gravity="top|right"
+                android:scaleType="fitCenter"
                 android:src="@mipmap/bird"
                 />
 
         </LinearLayout>
-
-
-
     </RelativeLayout>
 </LinearLayout>
 

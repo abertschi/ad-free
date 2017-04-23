@@ -89,7 +89,7 @@ class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
     fun getStringEntriesOfModel(): Array<String> {
         var result: ArrayList<String> = ArrayList()
         getPlugins().forEach { result.add(it.title()) }
-        result.add("more soon to come ...")
+        result.add("suggest something ...")
         return result.toTypedArray()
     }
 }
