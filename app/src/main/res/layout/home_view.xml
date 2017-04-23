@@ -37,13 +37,13 @@
             android:id="@+id/enjoy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            style="@style/AppTextView"
             android:layout_gravity="center"
             android:inputType="textMultiLine"
             android:scrollHorizontally="false"
             android:text="@string/enjoy"
             android:textColor="#C4BCAF"
-            android:textSize="30sp"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="italic"/>
 
     </FrameLayout>

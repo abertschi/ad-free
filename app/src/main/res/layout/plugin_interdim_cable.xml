@@ -15,7 +15,7 @@
 
         android:text="configure audio volume"
         android:textColor="#C4BCAF"
-        android:textSize="20sp"
+        android:textSize="@dimen/normal_text_size"
         />
 
 </RelativeLayout>

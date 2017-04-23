@@ -15,7 +15,7 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 11.12.16.
  */
-class MyNotificationListener : NotificationListenerService(), AnkoLogger {
+class NotificationListener : NotificationListenerService(), AnkoLogger {
 
     lateinit var preferences: PreferencesFactory
     private var audioController: AudioController = AudioController.instance

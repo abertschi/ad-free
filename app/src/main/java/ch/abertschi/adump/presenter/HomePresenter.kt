@@ -26,8 +26,8 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
                 .setDuration(Duration.INDEFINITE)
                 .setGitHubUserAndRepo("abertschi", "ad-free")
                 .setDisplay(Display.SNACKBAR)
+//                .showAppUpdated(true)
         mAppUpdater.start()
-
     }
 
     fun onResume(context: Context) {

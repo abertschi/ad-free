@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adump.R
 import ch.abertschi.adump.view.AppSettings
@@ -13,10 +14,16 @@ import ch.abertschi.adump.view.AppSettings
  * Created by abertschi on 21.04.17.
  */
 
-class ReplacerSpinnerAdapter(context: Context, textViewResourceId: Int,
-                             var objects: Array<String>)
-    : ArrayAdapter<String>(context, textViewResourceId, objects) {
+class PluginSpinnerAdapter
+    : ArrayAdapter<String> {
 
+    private var objects: Array<String>
+    private var spinner: Spinner
+
+    constructor(context: Context, textViewResourceId: Int, objects: Array<String>, spinner: Spinner) : super(context, textViewResourceId, objects) {
+        this.objects = objects
+        this.spinner = spinner
+    }
 
     fun setModel(objects: Array<String>) {
         this.objects = objects
@@ -31,7 +38,6 @@ class ReplacerSpinnerAdapter(context: Context, textViewResourceId: Int,
         return getCustomView(position, convertView, parent)
     }
 
-
     fun getCustomView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -39,6 +45,11 @@ class ReplacerSpinnerAdapter(context: Context, textViewResourceId: Int,
         val textView = view.findViewById(R.id.setting_spinner_item) as TextView
         textView.text = objects[position]
         textView.typeface = AppSettings.instance(context).typeFace
+        view.setOnClickListener {
+            println("TOUCHED")
+            spinner.performClick()
+        }
+
         return view
     }
 }

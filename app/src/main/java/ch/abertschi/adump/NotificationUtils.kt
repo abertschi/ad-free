@@ -20,24 +20,13 @@ class NotificationUtils : AnkoLogger {
         val blockingNotificationId = 1
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
-
     }
 
     fun showBlockingNotification(context: Context, dismissCallable: () -> Unit) {
-
-// As long as NotificationActionDetector works reliably, no need to filter out false positives
-//        val ignoreIntent = Intent(context
-//                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
-//
-//        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
-//                PendingIntent.getService(context, 0, ignoreIntent
-//                        , PendingIntent.FLAG_ONE_SHOT)).build()
-
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
                         , NotificationInteractionService::class.java).setAction(actionDismiss)
                         , PendingIntent.FLAG_ONE_SHOT)
-
 
         val notification = NotificationCompat.Builder(context)
                 .setContentTitle("Blocking advertisement")
@@ -73,7 +62,6 @@ class NotificationUtils : AnkoLogger {
                 synchronized(NotificationUtils.actionDismissCallables) {
                     actionDismissCallables.forEach {
                         it()
-                        info { "CALLING DISMISS CALLABLES" }
                     }
                     actionDismissCallables.clear()
                 }
@@ -94,6 +82,16 @@ class NotificationUtils : AnkoLogger {
 //            }
 //        }
 //    }
+
+// As long as NotificationActionDetector works reliably, no need to filter out false positives
+//        val ignoreIntent = Intent(context
+//                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
+//
+//        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
+//                PendingIntent.getService(context, 0, ignoreIntent
+//                        , PendingIntent.FLAG_ONE_SHOT)).build()
+
+
 }
 
 

@@ -53,21 +53,23 @@
 
             <TextView
                 android:id="@+id/settingsTitle"
+                style="@style/AppTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:gravity="left"
                 android:inputType="textMultiLine"
                 android:scrollHorizontally="false"
                 android:text="what do you want to do while ads are being played"
                 android:textColor="#C4BCAF"
-                android:textSize="30sp"
+                android:textSize="@dimen/title_text_size"
                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:orientation="vertical">
 
                 <Spinner
@@ -81,21 +83,18 @@
         </LinearLayout>
     </FrameLayout>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_below="@id/frame"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="20dp"
-
-        android:layout_below="@id/frame">
+        android:layout_marginRight="20dp">
 
         <LinearLayout
             android:id="@+id/setting_plugin_view"
             android:layout_width="match_parent"
-            android:layout_gravity="center"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
 
 
             android:orientation="vertical"></LinearLayout>

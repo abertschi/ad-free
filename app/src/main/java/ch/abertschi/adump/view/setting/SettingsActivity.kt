@@ -25,13 +25,13 @@ import org.jetbrains.anko.onItemSelectedListener
 
 class SettingsActivity : Fragment(), SettingsView {
 
-    private lateinit var mTypeFace: Typeface
+    private lateinit var typeFace: Typeface
     private var rootView: View? = null
-    private var mSettingsTitle: TextView? = null
-    private var mSpinner: Spinner? = null
+    private var settingsTitle: TextView? = null
+    private var spinner: Spinner? = null
     private var pluginViewContainer: LinearLayout? = null
-    private var spinnerAdapter: ReplacerSpinnerAdapter? = null
-    private var init: Boolean = true
+    private var spinnerAdapter: PluginSpinnerAdapter? = null
+    private var init: Boolean = false
 
     lateinit var settingPresenter: SettingsPresenter
 
@@ -54,36 +54,34 @@ class SettingsActivity : Fragment(), SettingsView {
         super.onCreate(savedInstanceState)
         this.rootView = view
 
-        mTypeFace = AppSettings.instance(this.activity).typeFace
-        mSettingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
-        mSettingsTitle?.typeface = mTypeFace
+        typeFace = AppSettings.instance(this.activity).typeFace
+        settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
+        settingsTitle?.typeface = typeFace
 
         settingPresenter = SettingsPresenter(this)
 
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
-        mSettingsTitle?.text = Html.fromHtml(text)
+        settingsTitle?.text = Html.fromHtml(text)
 
-        mSpinner = view?.findViewById(R.id.spinner) as Spinner
-        spinnerAdapter = ReplacerSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel())
-        mSpinner?.adapter = spinnerAdapter
-        mSpinner?.onItemSelectedListener {
+        spinner = view?.findViewById(R.id.spinner) as Spinner
+        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel(), spinner!!)
+        spinner?.adapter = spinnerAdapter
+
+        spinner?.onItemSelectedListener {
             onItemSelected { adapterView, view, i, l ->
                 run {
-                    if (!init) settingPresenter.onPluginSelected(i)
+                    if (init) settingPresenter.onPluginSelected(i)
                     spinnerAdapter?.notifyDataSetChanged()
                 }
             }
+
         }
-//        mSpinner?.onTouch { view, motionEvent -> mSpinner?.performClick()!! }
-
-
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
 
-
         settingPresenter.onCreate()
-        init = false
+        init = true
     }
 
     override fun onResume() {
@@ -92,7 +90,7 @@ class SettingsActivity : Fragment(), SettingsView {
     }
 
     override fun setActivePlugin(index: Int) {
-        mSpinner?.setSelection(index, true)
+        spinner?.setSelection(index, true)
     }
 
     override fun getContext(): Context = this.activity

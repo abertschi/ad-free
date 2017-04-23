@@ -34,12 +34,12 @@
                 android:id="@+id/authorTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                style="@style/AppTextView"
                 android:inputType="textMultiLine"
                 android:scrollHorizontally="false"
                 android:text=""
                 android:textColor="#C4BCAF"
-                android:textSize="30sp"
+                android:textSize="@dimen/title_text_size"
                 />
 
         </LinearLayout>
