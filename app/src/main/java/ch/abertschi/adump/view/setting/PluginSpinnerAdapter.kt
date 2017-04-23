@@ -9,20 +9,23 @@ import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adump.R
 import ch.abertschi.adump.view.AppSettings
+import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by abertschi on 21.04.17.
  */
 
 class PluginSpinnerAdapter
-    : ArrayAdapter<String> {
+    : ArrayAdapter<String>, AnkoLogger {
 
     private var objects: Array<String>
     private var spinner: Spinner
+    private var viewToClickOnToDismissPopup: View?
 
-    constructor(context: Context, textViewResourceId: Int, objects: Array<String>, spinner: Spinner) : super(context, textViewResourceId, objects) {
+    constructor(context: Context, textViewResourceId: Int, objects: Array<String>, spinner: Spinner, viewToClickOnToDismissPopup: View? = null) : super(context, textViewResourceId, objects) {
         this.objects = objects
         this.spinner = spinner
+        this.viewToClickOnToDismissPopup = viewToClickOnToDismissPopup
     }
 
     fun setModel(objects: Array<String>) {
@@ -46,8 +49,14 @@ class PluginSpinnerAdapter
         textView.text = objects[position]
         textView.typeface = AppSettings.instance(context).typeFace
         view.setOnClickListener {
-            println("TOUCHED")
+            spinner.setSelection(position)
             spinner.performClick()
+//            spinner.onDetechedFromWindow()
+        }
+        textView.setOnClickListener {
+            spinner.setSelection(position)
+            spinner.performClick()
+//            spinner.onDetechedFromWindow()
         }
 
         return view

@@ -16,6 +16,8 @@ import android.widget.TextView
 import ch.abertschi.adump.R
 import ch.abertschi.adump.presenter.SettingsPresenter
 import ch.abertschi.adump.view.AppSettings
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.onItemSelectedListener
 
 
@@ -23,7 +25,7 @@ import org.jetbrains.anko.onItemSelectedListener
  * Created by abertschi on 21.04.17.
  */
 
-class SettingsActivity : Fragment(), SettingsView {
+class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
 
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
@@ -64,20 +66,32 @@ class SettingsActivity : Fragment(), SettingsView {
         settingsTitle?.text = Html.fromHtml(text)
 
         spinner = view?.findViewById(R.id.spinner) as Spinner
-        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel(), spinner!!)
+        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel(), spinner!!, view)
         spinner?.adapter = spinnerAdapter
 
         spinner?.onItemSelectedListener {
             onItemSelected { adapterView, view, i, l ->
                 run {
+                    info("SELECT")
                     if (init) settingPresenter.onPluginSelected(i)
                     spinnerAdapter?.notifyDataSetChanged()
+//                    spinner?.onDetechedFromWindow()
+
                 }
             }
         }
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
+
+//        view.findViewById(R.id.spinner_container)?.setOnTouchListener(object: View.OnTouchListener {
+//            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+//                info("touched in activitz ")
+//                spinner?.performClick()
+//                spinnerAdapter?.notifyDataSetChanged()
+//
+//            }
+//        })
 
         settingPresenter.onCreate()
         init = true
