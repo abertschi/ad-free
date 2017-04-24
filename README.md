@@ -32,6 +32,7 @@ This major release extends the user interface with plugins. Plugins run while ad
 add some level of entertainment to your music experience.
 
 - Listen to interdimensional cable advertisement featured in Rick and Morty instead of casual ads. Wubalubadubdub!
+- Remove notification action to filter out false positives because ad detection got sophisticated enough
 
 ### [v0.0.2.3, 2017-04-20](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.3)
 Minor release:
