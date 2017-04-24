@@ -28,7 +28,7 @@ Detector which parses Spotify notifications for properties which are only presen
 
 #### Plugins
 
-Currently, an [instance](./app/src/main/java/ch/abertschi/adump/plugin/interdimcable/InterdimCablePlugin.kt) of `AdPlugin` is implemented which replaces Spotify advertisements with interdimensional cable advertisements featured in [Adult Swims's Rick and Morty TV series](https://www.youtube.com/watch?v=ESab_umifCU&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP).
+Currently, an [instance](./app/src/main/java/ch/abertschi/adump/plugin/interdimcable/InterdimCablePlugin.kt) of `AdPlugin` is implemented which replaces Spotify advertisements with interdimensional cable advertisements featured in [Adult Swims's Rick and Morty TV series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP).
 
 ## Compatibility
 Due to the lack of notifications on Android TV, Ad Free is currently not compatible with Android TV.
