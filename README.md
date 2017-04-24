@@ -38,7 +38,7 @@ Due to the lack of notifications on Android TV, Ad Free is currently not compati
 This major release extends the user interface with plugins. Plugins run while ads are being played and
 add some level of entertainment to your music experience.
 
-- Replace Spotify advertisements with interdimensional cable advertisement featured in Adult Swims's Rick and Morty TV series.
+- Replace Spotify advertisements with interdimensional cable advertisement featured in Adult Swim's Rick and Morty TV series.
 - SpotifyTitleDetector is deprecated. NotificationActionDetector is capable to detect all ads.
 - Optimized for Tablets
 
