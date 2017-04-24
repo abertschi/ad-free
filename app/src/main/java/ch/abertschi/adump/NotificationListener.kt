@@ -69,6 +69,7 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
             }
         }
         if (isAd) {
+
             audioController.muteMusicAndRunActivePlugin(this)
         }
     }

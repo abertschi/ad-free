@@ -2,12 +2,10 @@ package ch.abertschi.adump.presenter
 
 import android.content.Context
 import android.provider.Settings
+import ch.abertschi.adump.UpdateManager
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.view.home.HomeView
 import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.Duration
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import org.jetbrains.anko.AnkoLogger
 
 /**
@@ -21,12 +19,7 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
         homeView.setPowerState(preferencesFactory.isBlockingEnabled())
-        mAppUpdater = AppUpdater(context)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setDuration(Duration.INDEFINITE)
-                .setGitHubUserAndRepo("abertschi", "ad-free")
-                .setDisplay(Display.SNACKBAR)
-//                .showAppUpdated(true)
+        mAppUpdater = UpdateManager().appUpdaterForInAppUse(context)
         mAppUpdater.start()
     }
 
