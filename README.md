@@ -1,56 +1,63 @@
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()
-[![GitHub release](https://img.shields.io/github/release/abertschi/ad-free.svg)]()
-
 # ad-free
->An App for Android that mutes your phone audio when it detects Spotify ads
 
-_Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
+Ad Free is a research project attempting to show flaws in the way how _Spotify for Android_ presents audio advertisement. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
 
 <img src=".github/cover2.png" width="900">
 
-## Download
-Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/latest) :fire:
-
 ## Features
 - Turn off sound when advertisement is playing
-- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads.
+- Play arbitrary audio instead of Spotify advertisement
 - No ROOT required
-- Update reminder
+- Plugin based design
 
 ## Implementation notes
+### Ad detection
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
 
-In case of ad detection, the music stream is muted. Ads are thus still being played but simply can not be heard.
+Ad Free registers an [NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html) an is therefore able to parse all incoming notifications on Android. Notifications shown by Spotify are parsed by implementations of `AdDetectable`:
+
+- `SpotifyTitleDetector`:  
+Detector which parses Spotify notifications for the keyword _Spotify_. This keyword is present in most advertisements. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
+
+- `NotificationActionDetector`:  
+Detector which parses Spotify notifications for properties which are only present on advertisement. This approach detects all advertisement.
+
+### Ad blocking
+[AudioManager](https://developer.android.com/reference/android/media/AudioManager.html), Android's Audio System provides several streams on which audio can be played. Spotify, alike many music players, plays audio on the stream [STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC). In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls an [AdPlugin](.app/src/main/java/ch/abertschi/adump/plugin/AdPlugin.kt). `AdPlugins` aim to replace Spotify's advertisement. They play music on the alternative audio stream _STREAM VOICE CALL_ and are therefore not affected by the mute of _STREAM MUSIC_.
+
+#### Plugins
+
+Currently, an [instance](./app/src/main/java/ch/abertschi/adump/plugin/interdimcable/InterdimCablePlugin.kt) of `AdPlugin` is implemented which replaces Spotify advertisements with interdimensional cable advertisements featured in [Adult Swims's Rick and Morty TV series](https://en.wikipedia.org/wiki/Rick_and_Morty).
 
 ## Compatibility
-Ad Free is currently not compatible with Android TV.
+Due to the lack of notifications on Android TV, Ad Free is currently not compatible with Android TV.
 
 ## Release notes
-
-### [v0.0.3.0, 2017-04-23](https://github.com/abertschi/ad-free/releases/tag/v0.0.3.0)
+### v0.0.3.0, 2017-04-23
 This major release extends the user interface with plugins. Plugins run while ads are being played and
 add some level of entertainment to your music experience.
 
-- Listen to interdimensional cable advertisement featured in Rick and Morty instead of casual ads. Wubalubadubdub!
-- Remove notification action to filter out false positives because ad detection got sophisticated enough
-- Optimised for Tablets
+- Replace Spotify advertisements with interdimensional cable advertisement featured in Adult Swims's Rick and Morty TV series.
+- SpotifyTitleDetector is deprecated. NotificationActionDetector is capable to detect all ads.
+- Optimized for Tablets
 
-### [v0.0.2.3, 2017-04-20](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.3)
+### v0.0.2.3, 2017-04-20
 Minor release:
 - Sign apk with Signature Scheme v2 and v1
 
 If you update from a previous version to this version, you need to manually uninstall Ad Free on your phone first before you install this version. Starting with this version, Ad Free is signed with the Signature Scheme v2 __and__ V1 to be compatible with more devices.
 
-### [v0.0.2.2, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2.2)
+### v0.0.2.2, 2017-04-17
 Minor release
 - Fixing issues with Auto Updater
 
-### [v0.0.2, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.2)
+### v0.0.2, 2017-04-17
 - More sophisticated Ad detector implemented.
 - Auto update feature available with [AppUpdater](https://github.com/javiersantos/AppUpdater)
 - Bug fixing
 
-### [v0.0.1, 2017-04-17](https://github.com/abertschi/ad-free/releases/tag/v0.0.1)
+### v0.0.1, 2017-04-17
 Initial release
 - Turns off sound when advertisement is playing
 - Adds notification action to filter out false positive matches
@@ -63,9 +70,6 @@ Initial release
 - [Videocache](https://github.com/danikula/AndroidVideoCache/blob/master/LICENSE) is made by danikula and is licensed by the Apache License 2.0
 
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid) by the RxAndroid authors is licensed by the Apache License 2.0
-
 - [Fuel](https://github.com/kittinunf/Fuel) is made by Kittinun Vantasin and is licensed by MIT
 
 - [snakeyaml](https://bitbucket.org/asomov/snakeyaml) is licensed by the Apache License 2.0
-
-Thanks!
