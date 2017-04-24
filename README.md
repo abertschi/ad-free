@@ -2,7 +2,7 @@
 [![GitHub release](https://img.shields.io/github/release/abertschi/ad-free.svg)]()
 
 # ad-free
-An App for Android that mutes your phone audio when it detects Spotify ads
+>An App for Android that mutes your phone audio when it detects Spotify ads
 
 _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premium and support their products._  
 
