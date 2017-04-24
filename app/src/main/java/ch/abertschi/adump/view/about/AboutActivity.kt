@@ -40,7 +40,7 @@ class AboutActivity : Fragment() {
         val textView = view?.findViewById(R.id.authorTitle) as TextView
         textView.typeface = mTypeFace
         val text =
-                "built with &lt;3 by <font color=#FFFFFF>abertschi</font>. this is aimed for research purpose."
+        "built with much &lt;3 by <font color=#FFFFFF>abertschi</font>. get my latest hacks and follow me on twitter."
 
         textView?.text = Html.fromHtml(text)
 
