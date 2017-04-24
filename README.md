@@ -13,7 +13,7 @@ Download latest [app-release.apk](https://github.com/abertschi/ad-free/releases/
 
 ## Features
 - Turn off sound when advertisement is playing
-- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads. Wubalubadubdub!
+- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads.
 - No ROOT required
 - Update reminder
 
