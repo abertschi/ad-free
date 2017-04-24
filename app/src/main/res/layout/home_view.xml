@@ -17,22 +17,11 @@
         android:layout_margin="30dp"
 
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adump.view.ControlActivity"
+        tools:context="ch.abertschi.adump.view.home.HomeActivity"
 
 
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
-
-        <!--<TextView-->
-            <!--android:id="@+id/permission"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:text="disable"-->
-            <!--/>-->
-
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch1"
@@ -48,24 +37,14 @@
             android:id="@+id/enjoy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            style="@style/AppTextView"
             android:layout_gravity="center"
             android:inputType="textMultiLine"
             android:scrollHorizontally="false"
             android:text="@string/enjoy"
             android:textColor="#C4BCAF"
-            android:textSize="30sp"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="italic"/>
-
-        <TextView
-            android:id="@+id/author"
-            android:layout_gravity="bottom|center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:textColor="#4bc4bcaf"
-            android:text="made with &lt;3 by bean"/>
-
 
     </FrameLayout>
 

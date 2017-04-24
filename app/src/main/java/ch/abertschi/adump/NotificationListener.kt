@@ -1,12 +1,10 @@
 package ch.abertschi.adump
 
-import android.os.Handler
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.NotificationActionDetector
-import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.TrackRepository
 import org.jetbrains.anko.AnkoLogger
@@ -17,17 +15,14 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 11.12.16.
  */
-class MyNotificationListener : NotificationListenerService(), AnkoLogger {
+class NotificationListener : NotificationListenerService(), AnkoLogger {
 
     lateinit var preferences: PreferencesFactory
-    private var muteManager: MuteManager = MuteManager.instance
+    private var audioController: AudioController = AudioController.instance
 
     lateinit var detectors: List<AdDetectable>
     private var init: Boolean = false
-    private var handler: Handler? = Handler()
     lateinit var trackRepository: TrackRepository
-
-    private var notificationUtils: NotificationUtils = NotificationUtils()
 
     init {
         info("Spotify Ad listener online")
@@ -36,7 +31,7 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
     private fun intiVars() {
         preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
         trackRepository = TrackRepository(applicationContext, preferences)
-        detectors = listOf<AdDetectable>(SpotifyTitleDetector(trackRepository), NotificationActionDetector(trackRepository))
+        detectors = listOf<AdDetectable>(NotificationActionDetector())
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -44,11 +39,9 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
             init = true
             intiVars()
         }
-
-        if (muteManager.isAudioMuted() || !preferences.isBlockingEnabled()) {
+        if (audioController.isMusicStreamMuted() || !preferences.isBlockingEnabled()) {
             return
         }
-
         debug("Spotify Ad Listener is active")
         applyDetectors(AdPayload(sbn))
     }
@@ -76,18 +69,8 @@ class MyNotificationListener : NotificationListenerService(), AnkoLogger {
             }
         }
         if (isAd) {
-            muteAudio(payload)
+            audioController.muteMusicAndRunActivePlugin(this)
         }
-    }
-
-    private fun muteAudio(payload: AdPayload) {
-        muteManager.doMute(this)
-        notificationUtils.showBlockingNotification(this, payload.ignoreKeys)
-
-        handler!!.postDelayed({
-            notificationUtils.hideBlockingNotification(this)
-            muteManager.doUnmute(this)
-        }, 30000)
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {

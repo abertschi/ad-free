@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<ScrollView-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content">-->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252A2E"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/try_plugin_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/audio_gray"
+        />
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+
+        android:gravity="center_vertical"
+        tools:context="ch.abertschi.adump.view.setting.SettingsActivity"
+
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/settingsTitle"
+                style="@style/AppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="left"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
+                android:text="what do you want to do while ads are being played"
+                android:textColor="#C4BCAF"
+                android:textSize="@dimen/title_text_size"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:entries="@array/test"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp">
+
+        <LinearLayout
+            android:id="@+id/setting_plugin_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+
+
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
+
+

@@ -1,62 +1,58 @@
-package ch.abertschi.adump.view
+package ch.abertschi.adump.view.home
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
 import android.support.v7.widget.SwitchCompat
 import android.text.Html
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adump.R
-import ch.abertschi.adump.di.ControlModul
-import ch.abertschi.adump.presenter.ControlPresenter
-import org.jetbrains.anko.toast
+import ch.abertschi.adump.di.HomeModul
+import ch.abertschi.adump.presenter.HomePresenter
+import ch.abertschi.adump.view.AppSettings
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
-class ControlActivity : AppCompatActivity(), ControlView {
+class HomeActivity : Fragment(), HomeView {
     lateinit var mTypeFace: Typeface
 
     lateinit var mPowerButton: SwitchCompat
     lateinit var mEnjoySloganText: TextView
-    lateinit var controlPresenter: ControlPresenter
+    lateinit var homePresenter: HomePresenter
     var isInit: Boolean = false
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.home_view, container, false)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val controlModul = ControlModul(this, this)
-        controlPresenter = controlModul.provideControlPresenter()
+        val controlModul = HomeModul(this.context, this)
+        homePresenter = controlModul.provideControlPresenter()
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.navigationBarColor = Color.parseColor("#252A2E")
-        }
+        mPowerButton = view?.findViewById(R.id.switch1) as SwitchCompat
+        mTypeFace = AppSettings.instance(this.context).typeFace
 
-        mPowerButton = findViewById(R.id.switch1) as SwitchCompat
-        mTypeFace = Typeface.createFromAsset(assets, "fonts/Raleway-ExtraLight.ttf")
-        mEnjoySloganText = findViewById(R.id.enjoy) as TextView
-
-        val author = findViewById(R.id.author) as TextView
-        author.typeface = mTypeFace
+        mEnjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
         mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            controlPresenter.enabledStatusChanged(isChecked)
+            homePresenter.enabledStatusChanged(isChecked)
         }
-        controlPresenter.onCreate(this)
+        homePresenter.onCreate(this.context)
         isInit = true
     }
 
     override fun onResume() {
         if (isInit) {
-            controlPresenter.onResume(this)
+            homePresenter.onResume(this.context)
         }
         super.onResume()
     }

@@ -9,9 +9,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ControlActivity">
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -19,10 +22,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".NotificationInteractionService" />
+        <service android:name=".NotificationUtils$NotificationInteractionService"/>
 
         <service
-            android:name=".MyNotificationListener"
+            android:name=".NotificationListener"
             android:label="Spotify Ad Blocker"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
