@@ -10,9 +10,7 @@ _Note: Spotify is an awesome company. I recommend you subscribe to Spotify Premi
 
 ## Features
 - Turn off sound when advertisement is playing
-- Listen to interdimensional cable ads featured in Rick and Morty instead of Spotify ads.
 - No ROOT required
-- Update reminder
 
 ## Implementation notes
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.
