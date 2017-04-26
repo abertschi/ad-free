@@ -1,3 +1,9 @@
+/*
+ * Ad Free
+ * Copyright (c) 2017 by abertschi, www.abertschi.ch
+ * See the file "LICENSE" for the full license governing this code.
+ */
+
 package ch.abertschi.adump.view.setting
 
 import android.content.Intent
@@ -34,7 +40,7 @@ class AboutActivity : Fragment() {
         val textView = view?.findViewById(R.id.authorTitle) as TextView
         textView.typeface = mTypeFace
         val text =
-                "built with &lt;3, a keyboard, and coffee by <font color=#FFFFFF>abertschi</font>. get my latest hacks and follow me on twitter"
+        "built with much &lt;3 by <font color=#FFFFFF>abertschi</font>. get my latest hacks and follow me on twitter."
 
         textView?.text = Html.fromHtml(text)
 
