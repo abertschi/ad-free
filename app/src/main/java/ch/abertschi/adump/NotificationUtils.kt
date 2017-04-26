@@ -29,7 +29,7 @@ class NotificationUtils : AnkoLogger {
                         , PendingIntent.FLAG_ONE_SHOT)
 
         val notification = NotificationCompat.Builder(context)
-                .setContentTitle("Blocking advertisement")
+                .setContentTitle("Ad detected")
                 .setContentText("Touch to unmute")
                 .setSmallIcon(R.mipmap.icon)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
