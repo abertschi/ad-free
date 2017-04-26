@@ -13,14 +13,12 @@ import android.view.View
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.plugin.AdPlugin
 import ch.abertschi.adump.plugin.PluginContet
+import ch.abertschi.adump.setting.YamlConfigFactory
 import ch.abertschi.adump.view.AppSettings
-import com.github.kittinunf.fuel.httpGet
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.*
-import org.yaml.snakeyaml.Yaml
-import org.yaml.snakeyaml.representer.Representer
 import java.util.concurrent.TimeUnit
 
 
@@ -36,6 +34,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
     private val BASE_URL: String = AppSettings.AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
     private val PLUGIN_FILE_PATH: String = BASE_URL + "plugin.yaml" + RAW_SUFFIX
 
+    private lateinit var configFactory: YamlConfigFactory<InterdimCableModel>
     private var model: InterdimCableModel? = null
     private var player: MediaPlayer? = null
     private var isPlaying: Boolean = false
@@ -53,19 +52,20 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
     }
 
     override fun onPluginActivated(context: PluginContet) {
-        model = loadPluginSettingsFromLocalStorage(context.applicationContext)
+        configFactory = YamlConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, context.applicationContext)
+        model = configFactory.loadFromLocalStore()
         updatePluginSettings(context.applicationContext)
     }
 
     override fun onPluginDeactivated(context: PluginContet) {}
 
     private fun updatePluginSettings(context: Context) {
-        getPluginObservable().subscribe(
+        configFactory.downloadObservable().subscribe(
                 { pair ->
                     model = pair.first
                     info("Interdimensional cable plugin settings updated")
                     info("downloaded meta data for " + model?.channels?.size + " channels")
-                    storePluginSettingsInLocalStorage(context.applicationContext, model!!)
+                    configFactory.storeToLocalStore(model!!)
                 },
                 { error ->
                     context.applicationContext.longToast("Can not load interdimensional cable commercials. Did you check your internet?")
@@ -183,49 +183,49 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         })
     }
 
-    private fun getPluginObservable(): Observable<Pair<InterdimCableModel, String>>
-            = Observable.create<Pair<InterdimCableModel, String>> { source ->
+//    private fun getPluginObservable(): Observable<Pair<InterdimCableModel, String>>
+//            = Observable.create<Pair<InterdimCableModel, String>> { source ->
+//
+//        PLUGIN_FILE_PATH.httpGet().responseString { _, _, result ->
+//            val (data, error) = result
+//            if (error == null) {
+//                try {
+//                    val yaml = createYamlInstance()
+//                    val model = yaml.loadAs(data, InterdimCableModel::class.java)
+//                    source.onNext(Pair<InterdimCableModel, String>(model, yaml.dump(model)))
+//                } catch (exception: Exception) {
+//                    source.onError(exception)
+//                }
+//            } else {
+//                source.onError(error)
+//            }
+//            source.onComplete()
+//        }
+//    }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
-        PLUGIN_FILE_PATH.httpGet().responseString { _, _, result ->
-            val (data, error) = result
-            if (error == null) {
-                try {
-                    val yaml = createYamlInstance()
-                    val model = yaml.loadAs(data, InterdimCableModel::class.java)
-                    source.onNext(Pair<InterdimCableModel, String>(model, yaml.dump(model)))
-                } catch (exception: Exception) {
-                    source.onError(exception)
-                }
-            } else {
-                source.onError(error)
-            }
-            source.onComplete()
-        }
-    }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//    private fun loadPluginSettingsFromLocalStorage(context: Context): InterdimCableModel? {
+//        val prefs = PreferencesFactory.providePrefernecesFactory(context)
+//        val yaml = createYamlInstance()
+//        val content = prefs.getPreferences().getString(PLUGIN_PERSISTED_LOCALLY_KEY, null)
+//        if (content == null) {
+//            return null
+//        } else {
+//            return yaml.loadAs(content, InterdimCableModel::class.java)
+//        }
+//    }
+//
+//    private fun storePluginSettingsInLocalStorage(context: Context, model: InterdimCableModel) {
+//        val prefs = PreferencesFactory.providePrefernecesFactory(context)
+//        val yaml = createYamlInstance()
+//        prefs.getPreferences().edit().putString(PLUGIN_PERSISTED_LOCALLY_KEY, yaml.dump(model)).commit()
+//    }
 
-    private fun loadPluginSettingsFromLocalStorage(context: Context): InterdimCableModel? {
-        val prefs = PreferencesFactory.providePrefernecesFactory(context)
-        val yaml = createYamlInstance()
-        val content = prefs.getPreferences().getString(PLUGIN_PERSISTED_LOCALLY_KEY, null)
-        if (content == null) {
-            return null
-        } else {
-            return yaml.loadAs(content, InterdimCableModel::class.java)
-        }
-    }
-
-    private fun storePluginSettingsInLocalStorage(context: Context, model: InterdimCableModel) {
-        val prefs = PreferencesFactory.providePrefernecesFactory(context)
-        val yaml = createYamlInstance()
-        prefs.getPreferences().edit().putString(PLUGIN_PERSISTED_LOCALLY_KEY, yaml.dump(model)).commit()
-    }
-
-    private fun createYamlInstance(): Yaml {
-        val representer = Representer()
-        representer.propertyUtils.setSkipMissingProperties(true)
-        val yaml: Yaml = Yaml(representer)
-        return yaml
-    }
+//    private fun createYamlInstance(): Yaml {
+//        val representer = Representer()
+//        representer.propertyUtils.setSkipMissingProperties(true)
+//        val yaml: Yaml = Yaml(representer)
+//        return yaml
+//    }
 
     private fun storeAudioVolume(volume: Int, context: Context)
             = PreferencesFactory.providePrefernecesFactory(context).getPreferences().edit().putInt(PLUGIN_STORED_AUDIO_KEY, volume).commit()
