@@ -21,7 +21,7 @@ Ad Free registers an [NotificationListenerService](https://developer.android.com
 Detector which parses Spotify notifications for certain keywords. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
 
 - `NotificationActionDetector`:  
-Detector which inspects Spotify track navigation bar which appears to be different when ads are present.
+Detector which inspects Spotify notifications for properties which appear to be set when ads are present.
 
 
 ### Ad blocking
