@@ -17,6 +17,4 @@ class NotificationActionDetector : AbstractStatusBarDetector() {
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
             = payload.statusbarNotification.notification.actions.size <= 3
 
-    override fun flagAsMusic(payload: AdPayload): Boolean
-            = payload.statusbarNotification.notification.actions.size > 3
 }

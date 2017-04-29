@@ -1,7 +1,7 @@
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()
 # ad-free
 
-Ad Free is a research project attempting to show flaws in the way how _Spotify for Android_ presents audio advertisement. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
+Ad Free is a research project attempting to show flaws in the way how Spotify for Android presents audio advertisement. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
 
 <img src=".github/cover2.png" width="900">
 
@@ -18,10 +18,11 @@ Advertisement detectors are modularized into implementations of [AdDetectable](.
 Ad Free registers an [NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html) and is therefore able to parse all incoming notifications on Android. Notifications shown by Spotify are parsed by implementations of `AdDetectable`:
 
 - `SpotifyTitleDetector`:  
-Detector which parses Spotify notifications for the keyword _Spotify_. This keyword is present in most advertisements. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
+Detector which parses Spotify notifications for certain keywords. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
 
 - `NotificationActionDetector`:  
-Detector which parses Spotify notifications for properties which are only present on advertisement. This approach detects all advertisement.
+Detector which inspects Spotify track navigation bar which appears to be different when ads are present.
+
 
 ### Ad blocking
 [AudioManager](https://developer.android.com/reference/android/media/AudioManager.html), Android's Audio System provides several streams on which audio can be played. Spotify, alike many music players, plays audio on the stream [STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC). In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls a configured [AdPlugin](./app/src/main/java/ch/abertschi/adump/plugin/AdPlugin.kt). `AdPlugins` aim to replace Spotify's advertisement. They play music on an alternative stream and are therefore not affected by the mute of _STREAM MUSIC_.

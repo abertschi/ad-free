@@ -22,7 +22,7 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) : AbstractStatu
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = getTitle(payload)?.toLowerCase()?.trim()?.contains("spotify") ?: false
+            = getTitle(payload)?.toLowerCase()?.trim()?.equals("spotify") ?: false
 
     override fun flagAsMusic(payload: AdPayload): Boolean
             = getTitle(payload).let { trackRepository.getAllTracks().contains(it) }

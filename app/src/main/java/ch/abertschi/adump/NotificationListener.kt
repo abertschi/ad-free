@@ -11,8 +11,15 @@ import android.service.notification.StatusBarNotification
 import ch.abertschi.adump.detector.AdDetectable
 import ch.abertschi.adump.detector.AdPayload
 import ch.abertschi.adump.detector.NotificationActionDetector
+import ch.abertschi.adump.detector.SpotifyTitleDetector
 import ch.abertschi.adump.model.PreferencesFactory
+import ch.abertschi.adump.model.RemoteManager
 import ch.abertschi.adump.model.TrackRepository
+import ch.abertschi.adump.setting.RemoteSetting
+import com.github.javiersantos.appupdater.AppUpdater
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -23,21 +30,28 @@ import org.jetbrains.anko.info
  */
 class NotificationListener : NotificationListenerService(), AnkoLogger {
 
-    lateinit var preferences: PreferencesFactory
-    private var audioController: AudioController = AudioController.instance
-
-    lateinit var detectors: List<AdDetectable>
     private var init: Boolean = false
-    lateinit var trackRepository: TrackRepository
+    private var audioController: AudioController = AudioController.instance
+    private var remoteSetting: RemoteSetting = RemoteSetting()
+
+    lateinit var remoteManager: RemoteManager
+    lateinit var preferences: PreferencesFactory
+    lateinit var detectors: List<AdDetectable>
 
     init {
         info("Spotify Ad listener online")
     }
 
     private fun intiVars() {
-        preferences = PreferencesFactory.providePrefernecesFactory(applicationContext)
-        trackRepository = TrackRepository(applicationContext, preferences)
-        detectors = listOf<AdDetectable>(NotificationActionDetector())
+        preferences = PreferencesFactory.providePrefernecesFactory(this)
+        detectors = listOf<AdDetectable>(NotificationActionDetector(), SpotifyTitleDetector(TrackRepository(applicationContext, preferences)))
+        remoteManager = RemoteManager(preferences)
+        remoteManager.getRemoteSettingsObservable().subscribe({
+            remoteSetting = it
+            info { "Downloaded remote settings ..." }
+            info { remoteSetting }
+
+        })
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
@@ -52,7 +66,7 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
         applyDetectors(AdPayload(sbn))
     }
 
-    fun applyDetectors(payload: AdPayload) {
+    private fun applyDetectors(payload: AdPayload) {
         var isMusic = false
         var isAd = false
 
@@ -75,8 +89,24 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
             }
         }
         if (isAd) {
+            info("Ad detected")
+            if (remoteSetting.enabled) {
+                checkForUpdatesWithNotification()
+                audioController.muteMusicAndRunActivePlugin(this)
+            }
+        }
+    }
 
-            audioController.muteMusicAndRunActivePlugin(this)
+    private fun checkForUpdatesWithNotification() {
+        val updateManager = UpdateManager(preferences)
+        if (remoteSetting.showNotificationOnUpdate
+                && remoteSetting.useGithubReleasesForUpdateReminder
+                && updateManager.isAppUpdaterForInServiceUseFrequencyDue()) {
+            Observable.create<AppUpdater> { source ->
+                val updater = updateManager.appUpdaterForInServiceUse(this)
+                updater.start()
+                source.onComplete()
+            }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
         }
     }
 

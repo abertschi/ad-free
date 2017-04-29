@@ -10,8 +10,12 @@ import android.content.Context
 import android.provider.Settings
 import ch.abertschi.adump.UpdateManager
 import ch.abertschi.adump.model.PreferencesFactory
+import ch.abertschi.adump.model.RemoteManager
 import ch.abertschi.adump.view.home.HomeView
 import com.github.javiersantos.appupdater.AppUpdater
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 
 /**
@@ -20,13 +24,21 @@ import org.jetbrains.anko.AnkoLogger
 
 class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory) : AnkoLogger {
 
-    lateinit private var mAppUpdater: AppUpdater
-
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
         homeView.setPowerState(preferencesFactory.isBlockingEnabled())
-        mAppUpdater = UpdateManager().appUpdaterForInAppUse(context)
-        mAppUpdater.start()
+
+        RemoteManager(preferencesFactory)
+                .getRemoteSettingsObservable()
+                .subscribe({
+                    if (it.useGithubReleasesForUpdateReminder && it.showSeakbarOnUpdate) {
+                        Observable.create<AppUpdater> { source ->
+                            val updater = UpdateManager(preferencesFactory).appUpdaterForInAppUse(context)
+                            updater.start()
+                            source.onComplete()
+                        }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+                    }
+                })
     }
 
     fun onResume(context: Context) {

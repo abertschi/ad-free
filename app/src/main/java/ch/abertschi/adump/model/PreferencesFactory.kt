@@ -9,6 +9,7 @@ package ch.abertschi.adump.model
 import android.content.Context
 import android.content.SharedPreferences
 import org.jetbrains.anko.AnkoLogger
+import java.util.*
 
 /**
  * Created by abertschi on 15.04.17.
@@ -17,6 +18,8 @@ import org.jetbrains.anko.AnkoLogger
 class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsKey = "PREFS"
     private val prefIsEnabled = "IS_ENABLED"
+    private val prefsLastUpdateInServiceDate = "LAST_UPDATE_IN_SERVICE"
+
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
     fun isBlockingEnabled(): Boolean {
@@ -25,6 +28,14 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     fun setBlockingEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(prefIsEnabled, enabled).commit()
+    }
+
+    fun getLastUpdateInServiceDate(): Date {
+        return Date(prefs.getLong(prefsLastUpdateInServiceDate, Date().time) * 1000)
+    }
+
+    fun setLastUpdateInServiceDate(date: Date) {
+        prefs.edit().putLong(prefsLastUpdateInServiceDate, date.time).commit()
     }
 
     fun getPreferences(): SharedPreferences = prefs

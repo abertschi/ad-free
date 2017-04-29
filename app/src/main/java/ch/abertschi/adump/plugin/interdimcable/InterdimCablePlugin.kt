@@ -13,7 +13,7 @@ import android.view.View
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.plugin.AdPlugin
 import ch.abertschi.adump.plugin.PluginContet
-import ch.abertschi.adump.setting.YamlConfigFactory
+import ch.abertschi.adump.setting.YamlRemoteConfigFactory
 import ch.abertschi.adump.view.AppSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,15 +26,13 @@ import java.util.concurrent.TimeUnit
  * Created by abertschi on 21.04.17.
  */
 class InterdimCablePlugin : AdPlugin, AnkoLogger {
-
-    private val PLUGIN_PERSISTED_LOCALLY_KEY: String = "INTERDIM_CABLE_PLUGIN"
     private val PLUGIN_STORED_AUDIO_KEY: String = "INTERDIM_CABLE_PLUGIN_AUDIO"
 
-    private val RAW_SUFFIX: String = "?raw=true"
     private val BASE_URL: String = AppSettings.AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
-    private val PLUGIN_FILE_PATH: String = BASE_URL + "plugin.yaml" + RAW_SUFFIX
+    private val PLUGIN_FILE_PATH: String = BASE_URL + "plugin.yaml" + AppSettings.GITHUB_RAW_SUFFIX
 
-    private lateinit var configFactory: YamlConfigFactory<InterdimCableModel>
+    lateinit var configFactory: YamlRemoteConfigFactory<InterdimCableModel>
+
     private var model: InterdimCableModel? = null
     private var player: MediaPlayer? = null
     private var isPlaying: Boolean = false
@@ -52,7 +50,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
     }
 
     override fun onPluginActivated(context: PluginContet) {
-        configFactory = YamlConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, context.applicationContext)
+        configFactory = YamlRemoteConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, PreferencesFactory.providePrefernecesFactory(context.applicationContext))
         model = configFactory.loadFromLocalStore()
         updatePluginSettings(context.applicationContext)
     }
@@ -79,7 +77,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
             return
         }
         if (model?.channels?.size!! > 0) {
-            val url = BASE_URL + model!!.channels!![(Math.random() * model!!.channels!!.size).toInt()].path + RAW_SUFFIX
+            val url = BASE_URL + model!!.channels!![(Math.random() * model!!.channels!!.size).toInt()].path + AppSettings.GITHUB_RAW_SUFFIX
             playAudio(url, context.applicationContext)
         } else {
             context.applicationContext.longToast("No channels to play. You can not listen to interdimensional tv :(")

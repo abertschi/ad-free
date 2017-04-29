@@ -7,6 +7,7 @@
 package ch.abertschi.adump
 
 import android.app.IntentService
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -24,8 +25,21 @@ class NotificationUtils : AnkoLogger {
     companion object {
         val actionDismiss = "actionDismiss"
         val blockingNotificationId = 1
+        val textgNotificationId = 2
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
+    }
+
+    fun showTextNotification(context: Context, title: String, content: String = "") {
+        val notification = NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(R.mipmap.icon)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .build()
+
+        val manager = NotificationManagerCompat.from(context)
+        manager.notify(textgNotificationId, notification)
     }
 
     fun showBlockingNotification(context: Context, dismissCallable: () -> Unit) {
@@ -41,6 +55,8 @@ class NotificationUtils : AnkoLogger {
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(dismissIntent)
                 .build()
+
+        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT)
 
         synchronized(actionDismissCallables) {
             actionDismissCallables.add(dismissCallable)
@@ -73,10 +89,8 @@ class NotificationUtils : AnkoLogger {
                 }
             }
         }
-
     }
 
-//
 //    else if (actionKey.equals(NotificationUtils.actionIgnore)) {
 //        AudioController.instance.unmuteMusicStream(this)
 //        utils.hideBlockingNotification(this)
@@ -96,8 +110,6 @@ class NotificationUtils : AnkoLogger {
 //        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
 //                PendingIntent.getService(context, 0, ignoreIntent
 //                        , PendingIntent.FLAG_ONE_SHOT)).build()
-
-
 }
 
 

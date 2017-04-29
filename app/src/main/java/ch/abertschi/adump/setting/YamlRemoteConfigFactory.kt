@@ -6,7 +6,6 @@
 
 package ch.abertschi.adump.setting
 
-import android.content.Context
 import ch.abertschi.adump.model.PreferencesFactory
 import com.github.kittinunf.fuel.httpGet
 import io.reactivex.Observable
@@ -19,7 +18,7 @@ import org.yaml.snakeyaml.representer.Representer
  * Created by abertschi on 26.04.17.
  */
 
-class YamlConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MODEL>, val context: Context) {
+class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MODEL>, val preferences: PreferencesFactory) {
 
     private val SETTING_PERSISTENCE_LOCAL_KEY: String = "YAML_CONFIG_FACTORY_PERSISTENCE_"
 
@@ -35,7 +34,7 @@ class YamlConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MOD
                 try {
                     val yaml = createYamlInstance()
                     val model = yaml.loadAs(data, modelType)
-                    source.onNext(Pair<MODEL, String>(model, yaml.dump(model)))
+                    source.onNext(Pair<MODEL, String>(model, data ?: ""))
                 } catch (exception: Exception) {
                     source.onError(exception)
                 }
@@ -46,21 +45,19 @@ class YamlConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MOD
         }
     }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
-    fun loadFromLocalStore(): MODEL? {
-        val prefs = PreferencesFactory.providePrefernecesFactory(context)
+    fun loadFromLocalStore(defaultReturn: MODEL? = null): MODEL? {
         val yaml = createYamlInstance()
-        val content = prefs.getPreferences().getString(SETTING_PERSISTENCE_LOCAL_KEY, null)
+        val content = preferences.getPreferences().getString(SETTING_PERSISTENCE_LOCAL_KEY, null)
         if (content == null) {
-            return null
+            return defaultReturn
         } else {
             return yaml.loadAs(content, modelType)
         }
     }
 
     fun storeToLocalStore(model: MODEL) {
-        val prefs = PreferencesFactory.providePrefernecesFactory(context)
         val yaml = createYamlInstance()
-        prefs.getPreferences().edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).commit()
+        preferences.getPreferences().edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).commit()
     }
 
     private fun createYamlInstance(): Yaml {
