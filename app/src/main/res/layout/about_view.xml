@@ -60,10 +60,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/icons_first_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/aboutLayout"
             android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
             android:layout_marginTop="70dp">
 
             <ImageView
@@ -75,6 +77,15 @@
                 android:src="@mipmap/web"
                 />
 
+            <!--<ImageView-->
+                <!--android:id="@+id/github"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@mipmap/github"-->
+                <!--/>-->
+
             <ImageView
                 android:id="@+id/twitter"
                 android:layout_width="wrap_content"
@@ -85,6 +96,13 @@
                 />
 
         </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/icons_first_row"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--&gt;-->
+
     </RelativeLayout>
 </LinearLayout>
 
