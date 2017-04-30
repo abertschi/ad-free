@@ -4,7 +4,7 @@
  * See the file "LICENSE" for the full license governing this code.
  */
 
-package ch.abertschi.adump
+package ch.abertschi.adump.util
 
 import android.app.IntentService
 import android.app.Notification
@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import ch.abertschi.adump.R
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
@@ -80,8 +81,8 @@ class NotificationUtils : AnkoLogger {
                 return
             }
             val actionKey: String = intent!!.action
-            if (actionKey.equals(NotificationUtils.actionDismiss)) {
-                synchronized(NotificationUtils.actionDismissCallables) {
+            if (actionKey.equals(actionDismiss)) {
+                synchronized(actionDismissCallables) {
                     actionDismissCallables.forEach {
                         it()
                     }

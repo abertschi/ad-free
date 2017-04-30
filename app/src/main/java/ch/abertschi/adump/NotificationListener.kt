@@ -8,14 +8,12 @@ package ch.abertschi.adump
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import ch.abertschi.adump.detector.AdDetectable
-import ch.abertschi.adump.detector.AdPayload
-import ch.abertschi.adump.detector.NotificationActionDetector
-import ch.abertschi.adump.detector.SpotifyTitleDetector
+import ch.abertschi.adump.detector.*
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.RemoteManager
 import ch.abertschi.adump.model.TrackRepository
-import ch.abertschi.adump.setting.RemoteSetting
+import ch.abertschi.adump.model.RemoteSetting
+import ch.abertschi.adump.util.UpdateManager
 import com.github.javiersantos.appupdater.AppUpdater
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -44,13 +42,15 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
 
     private fun intiVars() {
         preferences = PreferencesFactory.providePrefernecesFactory(this)
-        detectors = listOf<AdDetectable>(NotificationActionDetector(), SpotifyTitleDetector(TrackRepository(applicationContext, preferences)))
+        detectors = listOf<AdDetectable>(NotificationActionDetector()
+                , SpotifyTitleDetector(TrackRepository(applicationContext, preferences))
+                , NotificationBundleAndroidTextDetector())
+
         remoteManager = RemoteManager(preferences)
         remoteManager.getRemoteSettingsObservable().subscribe({
             remoteSetting = it
             info { "Downloaded remote settings ..." }
-            info { remoteSetting }
-
+            debug { remoteSetting }
         })
     }
 
@@ -76,6 +76,9 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
                 activeDetectors.add(it)
             }
         }
+        if (activeDetectors.size > 0) {
+            info("${activeDetectors.size} detectors are active for current track")
+        }
         activeDetectors.forEach {
             if (it.flagAsMusic(payload)) {
                 isMusic = true
@@ -92,6 +95,7 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
             info("Ad detected")
             if (remoteSetting.enabled) {
                 checkForUpdatesWithNotification()
+                //println(Serializer.instance.prettyPrint(payload))
                 audioController.muteMusicAndRunActivePlugin(this)
             }
         }

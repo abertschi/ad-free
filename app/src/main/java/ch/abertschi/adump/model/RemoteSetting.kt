@@ -4,9 +4,9 @@
  * See the file "LICENSE" for the full license governing this code.
  */
 
-package ch.abertschi.adump.setting
+package ch.abertschi.adump.model
 
-import ch.abertschi.adump.Serializer
+import ch.abertschi.adump.util.Serializer
 
 /**
  * Created by abertschi on 26.04.17.

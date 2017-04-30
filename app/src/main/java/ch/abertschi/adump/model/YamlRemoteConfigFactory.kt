@@ -4,21 +4,15 @@
  * See the file "LICENSE" for the full license governing this code.
  */
 
-package ch.abertschi.adump.setting
+package ch.abertschi.adump.model
 
-import ch.abertschi.adump.model.PreferencesFactory
 import com.github.kittinunf.fuel.httpGet
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.yaml.snakeyaml.Yaml
-import org.yaml.snakeyaml.representer.Representer
 
 /**
  * Created by abertschi on 26.04.17.
  */
 
-class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MODEL>, val preferences: PreferencesFactory) {
+class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MODEL>, val preferences: ch.abertschi.adump.model.PreferencesFactory) {
 
     private val SETTING_PERSISTENCE_LOCAL_KEY: String = "YAML_CONFIG_FACTORY_PERSISTENCE_"
 
@@ -26,8 +20,8 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Cla
         SETTING_PERSISTENCE_LOCAL_KEY + modelType.canonicalName
     }
 
-    fun downloadObservable(): Observable<Pair<MODEL, String>>
-            = Observable.create<Pair<MODEL, String>> { source ->
+    fun downloadObservable(): io.reactivex.Observable<Pair<MODEL, String>>
+            = io.reactivex.Observable.create<Pair<MODEL, String>> { source ->
         downloadUrl.httpGet().responseString { _, _, result ->
             val (data, error) = result
             if (error == null) {
@@ -43,7 +37,7 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Cla
             }
             source.onComplete()
         }
-    }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }.observeOn(io.reactivex.schedulers.Schedulers.io()).observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
 
     fun loadFromLocalStore(defaultReturn: MODEL? = null): MODEL? {
         val yaml = createYamlInstance()
@@ -60,9 +54,9 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Cla
         preferences.getPreferences().edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).commit()
     }
 
-    private fun createYamlInstance(): Yaml {
-        val representer = Representer()
+    private fun createYamlInstance(): org.yaml.snakeyaml.Yaml {
+        val representer = org.yaml.snakeyaml.representer.Representer()
         representer.propertyUtils.setSkipMissingProperties(true)
-        return Yaml(representer)
+        return org.yaml.snakeyaml.Yaml(representer)
     }
 }

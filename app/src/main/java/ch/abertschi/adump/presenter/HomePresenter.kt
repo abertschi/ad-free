@@ -8,7 +8,7 @@ package ch.abertschi.adump.presenter
 
 import android.content.Context
 import android.provider.Settings
-import ch.abertschi.adump.UpdateManager
+import ch.abertschi.adump.util.UpdateManager
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.RemoteManager
 import ch.abertschi.adump.view.home.HomeView

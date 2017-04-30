@@ -6,8 +6,6 @@
 
 package ch.abertschi.adump.model
 
-import ch.abertschi.adump.setting.RemoteSetting
-import ch.abertschi.adump.setting.YamlRemoteConfigFactory
 import ch.abertschi.adump.view.AppSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,7 +33,7 @@ class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
                     .doOnNext { configFactory.storeToLocalStore(it) }
                     .subscribe({ _ -> source.onNext(remoteSettings) },
                             { err ->
-                                error(err)
+                                info(err)
                                 source.onNext(remoteSettings)
                             })
         }

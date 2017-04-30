@@ -4,7 +4,7 @@
  * See the file "LICENSE" for the full license governing this code.
  */
 
-package ch.abertschi.adump
+package ch.abertschi.adump.util
 
 import com.thoughtworks.xstream.XStream
 
@@ -14,14 +14,14 @@ import com.thoughtworks.xstream.XStream
 class Serializer {
 
     private object Holder {
-        val INSTANCE = Serializer()
+        val INSTANCE = ch.abertschi.adump.util.Serializer()
     }
 
     companion object {
-        val instance: Serializer by lazy { Holder.INSTANCE }
+        val instance: ch.abertschi.adump.util.Serializer by lazy { ch.abertschi.adump.util.Serializer.Holder.INSTANCE }
     }
 
-    private val xstream: XStream = XStream()
+    private val xstream: com.thoughtworks.xstream.XStream = com.thoughtworks.xstream.XStream()
 
     fun prettyPrint(obj: Any): String {
         return xstream.toXML(obj)

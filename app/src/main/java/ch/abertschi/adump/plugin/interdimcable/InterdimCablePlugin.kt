@@ -13,7 +13,7 @@ import android.view.View
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.plugin.AdPlugin
 import ch.abertschi.adump.plugin.PluginContet
-import ch.abertschi.adump.setting.YamlRemoteConfigFactory
+import ch.abertschi.adump.model.YamlRemoteConfigFactory
 import ch.abertschi.adump.view.AppSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

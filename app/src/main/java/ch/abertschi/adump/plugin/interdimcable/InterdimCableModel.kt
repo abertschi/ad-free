@@ -6,15 +6,28 @@
 
 package ch.abertschi.adump.plugin.interdimcable
 
+import ch.abertschi.adump.util.Serializer
+
 /**
  * Created by abertschi on 22.04.17.
  */
-data class InterdimCableModel(val channels: List<Channel>? = null) {
-    constructor() : this(listOf<Channel>())
+
+// Dont use data class attribute because yaml needs default constructor
+
+class InterdimCableModel {
+    val channels: List<Channel>? = null
+    override fun toString(): String {
+        return Serializer.instance.prettyPrint(this)
+    }
 }
 
-data class Channel(var path: String? = null, var name: String? = null, var version: Int? = null) {
-    constructor() : this(null, null, null)
-    constructor(path: String?) : this(path, null, null)
+class Channel {
+    var path: String? = null
+    var name: String? = null
+    var version: Int? = null
+
+    override fun toString(): String {
+        return Serializer.instance.prettyPrint(this)
+    }
 }
 
