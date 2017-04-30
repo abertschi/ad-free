@@ -11,16 +11,15 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.view.View
 import ch.abertschi.adump.model.PreferencesFactory
+import ch.abertschi.adump.model.YamlRemoteConfigFactory
 import ch.abertschi.adump.plugin.AdPlugin
 import ch.abertschi.adump.plugin.PluginContet
-import ch.abertschi.adump.model.YamlRemoteConfigFactory
 import ch.abertschi.adump.view.AppSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.*
 import java.util.concurrent.TimeUnit
-
 
 /**
  * Created by abertschi on 21.04.17.
@@ -66,7 +65,8 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
                     configFactory.storeToLocalStore(model!!)
                 },
                 { error ->
-                    context.applicationContext.longToast("Can not load interdimensional cable commercials. Did you check your internet?")
+                    context.applicationContext.longToast(
+                            "Can not load interdimensional cable commercials. Did you check your internet?")
                 }
         )
     }
@@ -85,12 +85,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         }
     }
 
-    override fun playTrial(context: PluginContet) {
-        play(context)
-        context.applicationContext.runOnUiThread {
-            longToast("It's time to get schwifty")
-        }
-    }
+    override fun playTrial(context: PluginContet) = play(context)
 
     fun configureAudioVolume(context: Context) {
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -99,13 +94,13 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
             val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
+
             info("Storing audio volume with value " + volume)
             storeAudioVolume(volume, context)
         }
     }
 
     private fun playAudio(url: String, context: Context) {
-        // TODO: add feature to download everyting at once when of WIFI
         runAndCatchException(context, {
             val proxy = AppSettings.instance(context).getHttpProxy()
             val proxyUrl = proxy.getProxyUrl(url)
@@ -180,50 +175,6 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
             player = null
         })
     }
-
-//    private fun getPluginObservable(): Observable<Pair<InterdimCableModel, String>>
-//            = Observable.create<Pair<InterdimCableModel, String>> { source ->
-//
-//        PLUGIN_FILE_PATH.httpGet().responseString { _, _, result ->
-//            val (data, error) = result
-//            if (error == null) {
-//                try {
-//                    val yaml = createYamlInstance()
-//                    val model = yaml.loadAs(data, InterdimCableModel::class.java)
-//                    source.onNext(Pair<InterdimCableModel, String>(model, yaml.dump(model)))
-//                } catch (exception: Exception) {
-//                    source.onError(exception)
-//                }
-//            } else {
-//                source.onError(error)
-//            }
-//            source.onComplete()
-//        }
-//    }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-
-//    private fun loadPluginSettingsFromLocalStorage(context: Context): InterdimCableModel? {
-//        val prefs = PreferencesFactory.providePrefernecesFactory(context)
-//        val yaml = createYamlInstance()
-//        val content = prefs.getPreferences().getString(PLUGIN_PERSISTED_LOCALLY_KEY, null)
-//        if (content == null) {
-//            return null
-//        } else {
-//            return yaml.loadAs(content, InterdimCableModel::class.java)
-//        }
-//    }
-//
-//    private fun storePluginSettingsInLocalStorage(context: Context, model: InterdimCableModel) {
-//        val prefs = PreferencesFactory.providePrefernecesFactory(context)
-//        val yaml = createYamlInstance()
-//        prefs.getPreferences().edit().putString(PLUGIN_PERSISTED_LOCALLY_KEY, yaml.dump(model)).commit()
-//    }
-
-//    private fun createYamlInstance(): Yaml {
-//        val representer = Representer()
-//        representer.propertyUtils.setSkipMissingProperties(true)
-//        val yaml: Yaml = Yaml(representer)
-//        return yaml
-//    }
 
     private fun storeAudioVolume(volume: Int, context: Context)
             = PreferencesFactory.providePrefernecesFactory(context).getPreferences().edit().putInt(PLUGIN_STORED_AUDIO_KEY, volume).commit()

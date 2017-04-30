@@ -24,7 +24,6 @@ import ch.abertschi.adump.R
 import ch.abertschi.adump.presenter.SettingsPresenter
 import ch.abertschi.adump.view.AppSettings
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.jetbrains.anko.onItemSelectedListener
 
 
@@ -79,10 +78,8 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         spinner?.onItemSelectedListener {
             onItemSelected { adapterView, view, i, l ->
                 run {
-                    info("SELECT")
                     if (init) settingPresenter.onPluginSelected(i)
                     spinnerAdapter?.notifyDataSetChanged()
-//                    spinner?.onDetechedFromWindow()
 
                 }
             }
@@ -90,7 +87,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
-        view.findViewById(R.id.setting_spinner_item_container)?.setOnTouchListener(object: View.OnTouchListener {
+        view.findViewById(R.id.setting_spinner_item_container)?.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 spinner?.performClick()
                 return false

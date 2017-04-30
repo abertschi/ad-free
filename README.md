@@ -11,6 +11,9 @@ Ad Free is a research project attempting to show flaws in the way how Spotify fo
 - No ROOT required
 - Plugin based design
 
+## Download
+[Download the latest binary from the release tab](https://github.com/abertschi/ad-free/releases/latest)  :fire:
+
 ## Implementation notes
 ### Ad detection
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adump/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is a Spotify advertisement or not.

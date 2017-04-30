@@ -8,9 +8,9 @@ package ch.abertschi.adump.presenter
 
 import android.content.Context
 import android.provider.Settings
-import ch.abertschi.adump.util.UpdateManager
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.RemoteManager
+import ch.abertschi.adump.util.UpdateManager
 import ch.abertschi.adump.view.home.HomeView
 import com.github.javiersantos.appupdater.AppUpdater
 import io.reactivex.Observable
@@ -27,7 +27,14 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
         homeView.setPowerState(preferencesFactory.isBlockingEnabled())
+        checkForUpdates(context)
+    }
 
+    fun onResume(context: Context) {
+        showPermissionRequiredIfNecessary(context)
+    }
+
+    private fun checkForUpdates(context: Context) {
         RemoteManager(preferencesFactory)
                 .getRemoteSettingsObservable()
                 .subscribe({
@@ -39,10 +46,6 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
                         }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
                     }
                 })
-    }
-
-    fun onResume(context: Context) {
-        showPermissionRequiredIfNecessary(context)
     }
 
     private fun showPermissionRequiredIfNecessary(context: Context) {

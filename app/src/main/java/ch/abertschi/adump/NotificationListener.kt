@@ -11,8 +11,8 @@ import android.service.notification.StatusBarNotification
 import ch.abertschi.adump.detector.*
 import ch.abertschi.adump.model.PreferencesFactory
 import ch.abertschi.adump.model.RemoteManager
-import ch.abertschi.adump.model.TrackRepository
 import ch.abertschi.adump.model.RemoteSetting
+import ch.abertschi.adump.model.TrackRepository
 import ch.abertschi.adump.util.UpdateManager
 import com.github.javiersantos.appupdater.AppUpdater
 import io.reactivex.Observable

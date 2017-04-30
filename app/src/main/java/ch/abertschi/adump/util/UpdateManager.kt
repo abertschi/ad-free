@@ -6,14 +6,6 @@
 
 package ch.abertschi.adump.util
 
-import android.content.Context
-import ch.abertschi.adump.model.PreferencesFactory
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.Duration
-import com.github.javiersantos.appupdater.enums.UpdateFrom
-import java.util.*
-
 /**
  * Created by abertschi on 24.04.17.
  */
@@ -23,7 +15,7 @@ class UpdateManager(val prefs: ch.abertschi.adump.model.PreferencesFactory) {
     fun appUpdaterForInAppUse(context: android.content.Context): com.github.javiersantos.appupdater.AppUpdater {
         return com.github.javiersantos.appupdater.AppUpdater(context)
                 .setUpdateFrom(com.github.javiersantos.appupdater.enums.UpdateFrom.GITHUB)
-                .setDuration(com.github.javiersantos.appupdater.enums.Duration.NORMAL)
+                .setDuration(com.github.javiersantos.appupdater.enums.Duration.INDEFINITE)
                 .setGitHubUserAndRepo("abertschi", "ad-free")
                 .setDisplay(com.github.javiersantos.appupdater.enums.Display.SNACKBAR)
     }

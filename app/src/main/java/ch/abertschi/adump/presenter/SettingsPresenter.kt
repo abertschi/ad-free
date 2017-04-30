@@ -12,7 +12,6 @@ import ch.abertschi.adump.plugin.PluginContet
 import ch.abertschi.adump.plugin.PluginHandler
 import ch.abertschi.adump.view.setting.SettingsView
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 
 /**
@@ -26,13 +25,13 @@ class SettingsPresenter(val settingView: SettingsView) : AnkoLogger {
     private var activePlugin: AdPlugin? = null
     private var activePluginIndex: Int = 0
 
+    // ideas for plugins:
     //        val list: List<String> = listOf("mute audio", "local music", "soundcloud", "interdimensional cable", "joke time", "meh", "suggest something ...")
 
     init {
         activePlugin = pluginHandler.getActivePlugin(settingView.getContext())
         var index: Int = 0
         mPlugins.forEach {
-            info { it.toString() }
             if (it == activePlugin) {
                 activePluginIndex = index
             }
