@@ -47,7 +47,7 @@ Tested with the following Spotify versions
 
 ### v0.0.3.3, 2017-04-30
 - Various bug fixes
-- Improve ad detection. Ad blocker now bocks ads shown in 'Your Daily mix' with new ad detector NotificationBundleAndroidTextDetector.
+- Improve ad detection. Ad blocker now blocks ads shown in 'Your Daily mix' with new ad detector NotificationBundleAndroidTextDetector.
 
 ### v0.0.3.0, 2017-04-23
 This major release extends the user interface with plugins. Plugins run while ads are being played and
