@@ -8,6 +8,8 @@ package ch.abertschi.adump.detector
 
 /**
  * Created by abertschi on 17.04.17.
+ *
+ * Detector which checks for number of control buttons
  */
 class NotificationActionDetector : AbstractStatusBarDetector() {
 
