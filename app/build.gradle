@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
 android {
     compileSdkVersion 24
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "ch.abertschi.adump"
+        applicationId "ch.abertschi.adfree"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 9
@@ -51,7 +52,11 @@ dependencies {
     compile('com.thoughtworks.xstream:xstream:1.4.7') {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
+
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
 }
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'com.google.gms.google-services'

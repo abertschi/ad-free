@@ -33,7 +33,7 @@
         android:layout_height="match_parent"
         android:layout_margin="30dp"
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adump.view.setting.SettingsActivity"
+        tools:context="ch.abertschi.adfree.view.setting.SettingsActivity"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 

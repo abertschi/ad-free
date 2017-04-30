@@ -17,7 +17,7 @@
         android:layout_margin="30dp"
 
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adump.view.home.HomeActivity"
+        tools:context="ch.abertschi.adfree.view.home.HomeActivity"
 
 
         tools:layout_editor_absoluteX="8dp"
