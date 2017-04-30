@@ -9,11 +9,13 @@ package ch.abertschi.adump.presenter
 import android.content.Context
 import android.provider.Settings
 import ch.abertschi.adump.model.PreferencesFactory
+import ch.abertschi.adump.model.RemoteManager
+import ch.abertschi.adump.util.UpdateManager
 import ch.abertschi.adump.view.home.HomeView
 import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.Duration
-import com.github.javiersantos.appupdater.enums.UpdateFrom
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 
 /**
@@ -22,22 +24,28 @@ import org.jetbrains.anko.AnkoLogger
 
 class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory) : AnkoLogger {
 
-    lateinit private var mAppUpdater: AppUpdater
-
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
         homeView.setPowerState(preferencesFactory.isBlockingEnabled())
-        mAppUpdater = AppUpdater(context)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setDuration(Duration.INDEFINITE)
-                .setGitHubUserAndRepo("abertschi", "ad-free")
-                .setDisplay(Display.SNACKBAR)
-//                .showAppUpdated(true)
-        mAppUpdater.start()
+        checkForUpdates(context)
     }
 
     fun onResume(context: Context) {
         showPermissionRequiredIfNecessary(context)
+    }
+
+    private fun checkForUpdates(context: Context) {
+        RemoteManager(preferencesFactory)
+                .getRemoteSettingsObservable()
+                .subscribe({
+                    if (it.useGithubReleasesForUpdateReminder && it.showSeakbarOnUpdate) {
+                        Observable.create<AppUpdater> { source ->
+                            val updater = UpdateManager(preferencesFactory).appUpdaterForInAppUse(context)
+                            updater.start()
+                            source.onComplete()
+                        }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+                    }
+                })
     }
 
     private fun showPermissionRequiredIfNecessary(context: Context) {

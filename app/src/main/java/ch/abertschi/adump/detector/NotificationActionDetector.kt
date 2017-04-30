@@ -8,6 +8,8 @@ package ch.abertschi.adump.detector
 
 /**
  * Created by abertschi on 17.04.17.
+ *
+ * Detector which checks for number of control buttons
  */
 class NotificationActionDetector : AbstractStatusBarDetector() {
 
@@ -17,6 +19,4 @@ class NotificationActionDetector : AbstractStatusBarDetector() {
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
             = payload.statusbarNotification.notification.actions.size <= 3
 
-    override fun flagAsMusic(payload: AdPayload): Boolean
-            = payload.statusbarNotification.notification.actions.size > 3
 }

@@ -4,14 +4,16 @@
  * See the file "LICENSE" for the full license governing this code.
  */
 
-package ch.abertschi.adump
+package ch.abertschi.adump.util
 
 import android.app.IntentService
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import ch.abertschi.adump.R
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
@@ -24,8 +26,21 @@ class NotificationUtils : AnkoLogger {
     companion object {
         val actionDismiss = "actionDismiss"
         val blockingNotificationId = 1
+        val textgNotificationId = 2
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
+    }
+
+    fun showTextNotification(context: Context, title: String, content: String = "") {
+        val notification = NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setSmallIcon(R.mipmap.icon)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .build()
+
+        val manager = NotificationManagerCompat.from(context)
+        manager.notify(textgNotificationId, notification)
     }
 
     fun showBlockingNotification(context: Context, dismissCallable: () -> Unit) {
@@ -35,12 +50,14 @@ class NotificationUtils : AnkoLogger {
                         , PendingIntent.FLAG_ONE_SHOT)
 
         val notification = NotificationCompat.Builder(context)
-                .setContentTitle("Blocking advertisement")
+                .setContentTitle("Ad detected")
                 .setContentText("Touch to unmute")
                 .setSmallIcon(R.mipmap.icon)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(dismissIntent)
                 .build()
+
+        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT)
 
         synchronized(actionDismissCallables) {
             actionDismissCallables.add(dismissCallable)
@@ -64,8 +81,8 @@ class NotificationUtils : AnkoLogger {
                 return
             }
             val actionKey: String = intent!!.action
-            if (actionKey.equals(NotificationUtils.actionDismiss)) {
-                synchronized(NotificationUtils.actionDismissCallables) {
+            if (actionKey.equals(actionDismiss)) {
+                synchronized(actionDismissCallables) {
                     actionDismissCallables.forEach {
                         it()
                     }
@@ -73,10 +90,8 @@ class NotificationUtils : AnkoLogger {
                 }
             }
         }
-
     }
 
-//
 //    else if (actionKey.equals(NotificationUtils.actionIgnore)) {
 //        AudioController.instance.unmuteMusicStream(this)
 //        utils.hideBlockingNotification(this)
@@ -96,8 +111,6 @@ class NotificationUtils : AnkoLogger {
 //        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
 //                PendingIntent.getService(context, 0, ignoreIntent
 //                        , PendingIntent.FLAG_ONE_SHOT)).build()
-
-
 }
 
 

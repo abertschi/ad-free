@@ -21,8 +21,6 @@ import ch.abertschi.adump.view.home.HomeActivity
 import ch.abertschi.adump.view.setting.AboutActivity
 import ch.abertschi.adump.view.setting.SettingsActivity
 
-
-
 /**
  * Created by abertschi on 21.04.17.
  */

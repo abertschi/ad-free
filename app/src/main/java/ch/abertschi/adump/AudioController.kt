@@ -10,6 +10,7 @@ import android.content.Context
 import android.media.AudioManager
 import ch.abertschi.adump.plugin.PluginContet
 import ch.abertschi.adump.plugin.PluginHandler
+import ch.abertschi.adump.util.NotificationUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

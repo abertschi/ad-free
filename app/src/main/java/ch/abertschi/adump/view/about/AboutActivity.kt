@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import ch.abertschi.adump.BuildConfig
 import ch.abertschi.adump.R
 import ch.abertschi.adump.view.AppSettings
 import org.jetbrains.anko.onClick
@@ -34,7 +35,6 @@ class AboutActivity : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mTypeFace = AppSettings.instance(this.context).typeFace
 
         val textView = view?.findViewById(R.id.authorTitle) as TextView
@@ -43,6 +43,10 @@ class AboutActivity : Fragment() {
         "built with much &lt;3 by <font color=#FFFFFF>abertschi</font>. get my latest hacks and follow me on twitter."
 
         textView?.text = Html.fromHtml(text)
+
+        val versionView = view?.findViewById(R.id.version) as TextView
+        versionView?.typeface = mTypeFace
+        versionView?.text = "v${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
 
         view?.findViewById(R.id.twitter).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/andrinbertschi"))

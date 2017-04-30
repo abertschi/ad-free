@@ -24,6 +24,7 @@ class AppSettings private constructor(val context: Context) {
 
     companion object {
         val AD_FREE_RESOURCE_ADRESS: String = "https://github.com/abertschi/ad-free-resources/blob/master/"
+        val GITHUB_RAW_SUFFIX: String = "?raw=true"
 
         private lateinit var httpProxy: HttpProxyCacheServer
 
