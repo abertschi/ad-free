@@ -26,7 +26,7 @@ Detector which parses Spotify notifications for certain keywords. In order to av
 - `NotificationActionDetector`:  
 Detector which inspects Spotify notifications for properties set in the track navigation bar.
 
-- `NotificationBundleAndroidTextDetector`:
+- `NotificationBundleAndroidTextDetector`:  
 Detector which checks for properties set in the notification bundle.
 
 
@@ -45,8 +45,8 @@ Tested with the following Spotify versions
 
 ## Release notes
 
-### v0.0.3.3, 2017-04-30
-- Various bug fixes
+### v0.0.3.4, 2017-04-30
+- Various bug fixes and internal refactoring
 - Improve ad detection. Ad blocker now blocks ads shown in 'Your Daily mix' with new ad detector NotificationBundleAndroidTextDetector.
 
 ### v0.0.3.0, 2017-04-23
