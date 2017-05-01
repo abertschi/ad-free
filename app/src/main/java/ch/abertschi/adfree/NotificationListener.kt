@@ -95,7 +95,7 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
             info("Ad detected")
             if (remoteSetting.enabled) {
                 checkForUpdatesWithNotification()
-                //println(Serializer.instance.prettyPrint(payload))
+                (applicationContext as AdFreeApplication).getFeedback().feedbackAdBlock()
                 audioController.muteMusicAndRunActivePlugin(this)
             }
         }

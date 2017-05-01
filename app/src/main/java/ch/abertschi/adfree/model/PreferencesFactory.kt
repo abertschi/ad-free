@@ -19,6 +19,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsKey = "PREFS"
     private val prefIsEnabled = "IS_ENABLED"
     private val prefsLastUpdateInServiceDate = "LAST_UPDATE_IN_SERVICE"
+    private val prefsFirstRun = "FIRST_RUN"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -37,6 +38,12 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     fun setLastUpdateInServiceDate(date: Date) {
         prefs.edit().putLong(prefsLastUpdateInServiceDate, date.time).commit()
     }
+
+    fun setFirstRun() {
+        prefs.edit().putBoolean(prefsFirstRun, true).commit()
+    }
+
+    fun isFirstRun(): Boolean = prefs.getBoolean(prefsFirstRun, false)
 
     fun getPreferences(): SharedPreferences = prefs
 

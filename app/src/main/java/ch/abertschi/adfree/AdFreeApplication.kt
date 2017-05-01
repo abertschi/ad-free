@@ -8,6 +8,7 @@ package ch.abertschi.adfree
 
 import android.app.Application
 import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.util.UsageFeedback
 
 
 /**
@@ -16,11 +17,17 @@ import ch.abertschi.adfree.model.PreferencesFactory
 
 class AdFreeApplication : Application() {
 
-    private val prefs: PreferencesFactory = PreferencesFactory.providePrefernecesFactory(this)
+    lateinit private var prefs: PreferencesFactory
+    lateinit private var feedback: UsageFeedback
 
     override fun onCreate() {
         super.onCreate()
+        prefs = PreferencesFactory.providePrefernecesFactory(applicationContext)
+        feedback = UsageFeedback(applicationContext, prefs)
+        feedback.trackFirstRun()
     }
 
+    fun getPreferencesFactory(): PreferencesFactory = prefs
 
+    fun getFeedback(): UsageFeedback = feedback
 }

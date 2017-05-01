@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "1026621468391",
+    "project_id": "firebase-ad-free"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026621468391:android:03a85da2c48ee9be",
+        "android_client_info": {
+          "package_name": "ch.abertschi.adfree"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgJ5YzaU60JV5m7s6Xj_tnqLtdcu3vSuc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-63061525-3"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026621468391:android:a64f870ad8f56d7b",
+        "android_client_info": {
+          "package_name": "ch.abertschi.addump"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgJ5YzaU60JV5m7s6Xj_tnqLtdcu3vSuc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-63061525-4"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
