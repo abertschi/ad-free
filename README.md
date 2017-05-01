@@ -12,7 +12,7 @@ Ad Free is a research project attempting to show flaws in the way how Spotify fo
 - Plugin based design
 
 ## Download
-[Download the latest binary from the release tab](https://github.com/abertschi/ad-free/releases/latest)  :fire:
+- Coming soon :fire:
 
 ## Implementation notes
 ### Ad detection
@@ -40,13 +40,14 @@ Currently, an [instance](./app/src/main/java/ch/abertschi/adump/plugin/interdimc
 ## Compatibility
 Due to the lack of notifications on Android TV, Ad Free is currently not compatible with Android TV.
 
-Tested with Spotify version 8.3.0.681 armV7
+Tested with the following Spotify versions
+- 2017-04-19: 8.3.0.681 armV7
 
 ## Release notes
 
 ### v0.0.3.3, 2017-04-30
 - Various bug fixes
-- Improve ad detection. Ad blocker support for Ads shown in 'Your Daily mix'
+- Improve ad detection. Ad blocker now blocks ads shown in 'Your Daily mix' with new ad detector NotificationBundleAndroidTextDetector.
 
 ### v0.0.3.0, 2017-04-23
 This major release extends the user interface with plugins. Plugins run while ads are being played and
