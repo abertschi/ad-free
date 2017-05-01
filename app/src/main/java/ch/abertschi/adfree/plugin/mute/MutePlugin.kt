@@ -21,7 +21,9 @@ class MutePlugin : AdPlugin {
 
     override fun play(context: PluginContet) {}
 
-    override fun requestStop(contet: PluginContet, onStoped: () -> Unit) {}
+    override fun requestStop(contet: PluginContet, onStoped: () -> Unit) {
+        onStoped()
+    }
 
     override fun forceStop(context: PluginContet) {}
 
