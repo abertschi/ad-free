@@ -12,7 +12,7 @@ Ad Free is a research project attempting to show flaws in the way how Spotify fo
 - Plugin based design
 
 ## Download
-- Coming soon :fire:
+This is OpenSource. [Download the latest binary from the release tab](https://github.com/abertschi/ad-free/releases/latest) or clone and build it yourself :fire:
 
 ## Implementation notes
 ### Ad detection
@@ -28,7 +28,6 @@ Detector which inspects Spotify notifications for properties set in the track na
 
 - `NotificationBundleAndroidTextDetector`:  
 Detector which checks for properties set in the notification bundle.
-
 
 ### Ad blocking
 [AudioManager](https://developer.android.com/reference/android/media/AudioManager.html), Android's Audio System provides several streams on which audio can be played. Spotify, alike many music players, plays audio on the stream [STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC). In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls a configured [AdPlugin](./app/src/main/java/ch/abertschi/adump/plugin/AdPlugin.kt). `AdPlugins` aim to replace Spotify's advertisement. They play music on an alternative stream and are therefore not affected by the mute of _STREAM MUSIC_.
