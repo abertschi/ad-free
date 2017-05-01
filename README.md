@@ -73,6 +73,8 @@ Initial release
 ## Credits
 - The bird and website icons used in this app are made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
 
+- This app is written in Kotlin. [Kotlin](https://github.com/JetBrains/kotlin) by Jetbrains is lisenced by the Apache Lisence 2.0
+
 - [AppUpdater](https://github.com/javiersantos/AppUpdater) by javiersantos is licensed by the Apache License 2.0
 
 - [Videocache](https://github.com/danikula/AndroidVideoCache/blob/master/LICENSE) is made by danikula and is licensed by the Apache License 2.0
@@ -81,3 +83,5 @@ Initial release
 - [Fuel](https://github.com/kittinunf/Fuel) is made by Kittinun Vantasin and is licensed by MIT
 
 - [snakeyaml](https://bitbucket.org/asomov/snakeyaml) is licensed by the Apache License 2.0
+
+- [XStream](http://x-stream.github.io/license.html) by Joe Walnes and the XStream Committers is lisenced by BSD license.
