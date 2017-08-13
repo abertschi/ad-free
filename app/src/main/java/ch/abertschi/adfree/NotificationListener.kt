@@ -29,15 +29,16 @@ import org.jetbrains.anko.info
 class NotificationListener : NotificationListenerService(), AnkoLogger {
 
     private var init: Boolean = false
-    private var audioController: AudioController = AudioController.instance
     private var remoteSetting: RemoteSetting = RemoteSetting()
 
     lateinit var remoteManager: RemoteManager
     lateinit var preferences: PreferencesFactory
     lateinit var detectors: List<AdDetectable>
+    lateinit var adDetector: AdDetector
 
     init {
         info("Spotify Ad listener online")
+        intiVars()
     }
 
     private fun intiVars() {
@@ -46,59 +47,28 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
                 , SpotifyTitleDetector(TrackRepository(applicationContext, preferences))
                 , NotificationBundleAndroidTextDetector())
 
+        adDetector = AdDetector(detectors)
+
         remoteManager = RemoteManager(preferences)
-        remoteManager.getRemoteSettingsObservable().subscribe({
-            remoteSetting = it
-            info { "Downloaded remote settings ..." }
-            debug { remoteSetting }
-        })
+        remoteManager.getRemoteSettingsObservable()
+                .subscribe({
+                    remoteSetting = it
+                    info { "Downloaded remote settings ..." }
+                    debug { remoteSetting }
+                })
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         if (!init) {
             init = true
-            intiVars()
+            checkForUpdatesWithNotification()
         }
-        if (audioController.isMusicStreamMuted() || !preferences.isBlockingEnabled()) {
-            return
-        }
-        debug("Spotify Ad Listener is active")
-        applyDetectors(AdPayload(sbn))
+
+        adDetector.applyDetectors(AdPayload(sbn))
     }
 
-    private fun applyDetectors(payload: AdPayload) {
-        var isMusic = false
-        var isAd = false
-
-        val activeDetectors: ArrayList<AdDetectable> = ArrayList()
-        detectors.forEach {
-            if (it.canHandle(payload)) {
-                activeDetectors.add(it)
-            }
-        }
-        if (activeDetectors.size > 0) {
-            info("${activeDetectors.size} detectors are active for current track")
-        }
-        activeDetectors.forEach {
-            if (it.flagAsMusic(payload)) {
-                isMusic = true
-            }
-        }
-        if (!isMusic) {
-            activeDetectors.forEach {
-                if (it.flagAsAdvertisement(payload)) {
-                    isAd = true
-                }
-            }
-        }
-        if (isAd) {
-            info("Ad detected")
-            if (remoteSetting.enabled) {
-                checkForUpdatesWithNotification()
-                (applicationContext as AdFreeApplication).getFeedback().feedbackAdBlock()
-                audioController.muteMusicAndRunActivePlugin(this)
-            }
-        }
+    override fun onNotificationRemoved(sbn: StatusBarNotification) {
+        super.onNotificationRemoved(sbn)
     }
 
     private fun checkForUpdatesWithNotification() {
@@ -110,11 +80,9 @@ class NotificationListener : NotificationListenerService(), AnkoLogger {
                 val updater = updateManager.appUpdaterForInServiceUse(this)
                 updater.start()
                 source.onComplete()
-            }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+            }.observeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
         }
-    }
-
-    override fun onNotificationRemoved(sbn: StatusBarNotification) {
-        super.onNotificationRemoved(sbn)
     }
 }
