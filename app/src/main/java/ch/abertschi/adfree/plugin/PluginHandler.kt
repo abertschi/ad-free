@@ -7,6 +7,7 @@
 package ch.abertschi.adfree.plugin
 
 import android.content.Context
+import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 
@@ -14,8 +15,8 @@ import ch.abertschi.adfree.plugin.mute.MutePlugin
  * Created by abertschi on 21.04.17.
  */
 class PluginHandler(val context: Context, val prefs: PreferencesFactory,
-                    val plugins: List<AdPlugin>) {
-    
+                    val plugins: List<AdPlugin>, val adDetector: AdObservable) {
+
     private var activePlugin: AdPlugin? = MutePlugin()
 
     fun getActivePlugin(): AdPlugin {
@@ -37,7 +38,7 @@ class PluginHandler(val context: Context, val prefs: PreferencesFactory,
 
     fun runPlugin() = activePlugin?.play()
 
-    fun trialRunPlugin() = activePlugin?.playTrial()
+    fun trialRunPlugin() = adDetector.requestAd()
 
     fun requestPluginStop(onStoped: () -> Unit) = activePlugin?.requestStop(onStoped)
 

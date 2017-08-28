@@ -48,15 +48,17 @@ class AdFreeApplication : Application() {
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
                 , NotificationBundleAndroidTextDetector())
 
+        adDetector = AdDetector(adDetectors)
+
         adPlugins = listOf(MutePlugin(), InterdimCablePlugin(prefs, applicationContext))
-        pluginHandler = PluginHandler(applicationContext, prefs, adPlugins)
+        pluginHandler = PluginHandler(applicationContext, prefs, adPlugins, adDetector)
 
         audioManager = AudioController(applicationContext)
         notificationUtils = NotificationUtils(applicationContext)
 
         adStateController = AdStateController(audioManager, pluginHandler, notificationUtils)
 
-        adDetector = AdDetector(adDetectors)
         adDetector.addObserver(adStateController)
+
     }
 }

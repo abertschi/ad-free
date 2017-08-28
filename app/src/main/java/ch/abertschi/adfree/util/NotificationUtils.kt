@@ -53,7 +53,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
                 .setContentTitle("Ad detected")
                 .setContentText("Touch to unmute")
                 .setSmallIcon(R.mipmap.icon)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(dismissIntent)
                 .build()
 

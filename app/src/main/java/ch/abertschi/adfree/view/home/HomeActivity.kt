@@ -18,14 +18,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.ad.AdEvent
-import ch.abertschi.adfree.ad.EventType
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.onTouch
-import java.util.*
 
 /**
  * Created by abertschi on 15.04.17.
@@ -63,17 +58,17 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         homePresenter.onCreate(this.context)
         isInit = true
 
-        val r: Random = Random()
-
-        val c: AdFreeApplication = context.applicationContext as AdFreeApplication
-        view.onTouch { view, motionEvent ->
-            info { "AdFree event created" }
-            when (r.nextBoolean()) {
-                true -> c.adDetector.notifyObservers(AdEvent(EventType.IS_AD))
-                else -> c.adDetector.notifyObservers(AdEvent(EventType.NO_AD))
-            }
-            true
-        }
+        // TODO: this is debug code
+//        val r: Random = Random()
+//        val c: AdFreeApplication = context.applicationContext as AdFreeApplication
+//        view.onTouch { view, motionEvent ->
+//            info { "AdFree event created" }
+//            when (r.nextBoolean()) {
+//                true -> c.adDetector.notifyObservers(AdEvent(EventType.IS_AD))
+//                else -> c.adDetector.notifyObservers(AdEvent(EventType.NO_AD))
+//            }
+//            true
+//        }
     }
 
     override fun onResume() {
