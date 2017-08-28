@@ -15,36 +15,21 @@ import ch.abertschi.adfree.plugin.mute.MutePlugin
  */
 class PluginHandler(val context: Context, val prefs: PreferencesFactory,
                     val plugins: List<AdPlugin>) {
-
-    private val ACTVIE_PLUGIN_KEY: String = "ACTIVE_PLUGIN"
-
-//    private object Holder {
-//        val INSTANCE = PluginHandler()
-//    }
-//
-//    companion object {
-//        val instance: PluginHandler by lazy { Holder.INSTANCE }
-//    }
-
+    
     private var activePlugin: AdPlugin? = MutePlugin()
 
-    fun getActivePlugin(context: Context): AdPlugin {
-        val activeKey = prefs.getPreferences().getString(ACTVIE_PLUGIN_KEY, null)
-        var active: AdPlugin? = activePlugin
-        if (activeKey != null) {
-            plugins.forEach {
-                // TODO: this is hacky
-                if (serializeActivePluginId(it).equals(activeKey)) {
-                    active = it
-                }
-            }
+    fun getActivePlugin(): AdPlugin {
+        val key = prefs.getActivePlugin()
+        val active = plugins.filter { serializeActivePluginId(it).equals(key) }
+                .firstOrNull()
+        active.let {
+            activePlugin = it
         }
-        activePlugin = active
         return activePlugin!!
     }
 
     fun setActivePlugin(plugin: AdPlugin): AdPlugin {
-        prefs.getPreferences().edit().putString(ACTVIE_PLUGIN_KEY, serializeActivePluginId(plugin)).commit()
+        prefs.setActivePlugin(serializeActivePluginId(plugin))
         val oldPlugin = activePlugin
         activePlugin = plugin
         return oldPlugin!!

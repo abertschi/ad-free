@@ -27,12 +27,8 @@ class SettingsPresenter(val settingView: SettingsView, val context: Context) : A
     private var activePlugin: AdPlugin? = null
     private var activePluginIndex: Int = 0
 
-    // ideas for plugins:
-    // val list: List<String> = listOf("mute audio", "local music", "soundcloud",
-    // "interdimensional cable", "joke time", "meh", "suggest something ...")
-
     init {
-        activePlugin = pluginHandler.getActivePlugin(settingView.getContext())
+        activePlugin = pluginHandler.getActivePlugin()
         var index: Int = 0
         plugins.forEach {
             if (it == activePlugin) {
@@ -74,8 +70,6 @@ class SettingsPresenter(val settingView: SettingsView, val context: Context) : A
     }
 
     fun tryPlugin() {
-//        AudioController.instance.unmuteMusicAndStopActivePlugin(settingView.getContext())
-//        AudioController.instance.muteMusicAndRunActivePlugin(settingView.getContext())
     }
 
     private fun setActivePlugin(index: Int) {

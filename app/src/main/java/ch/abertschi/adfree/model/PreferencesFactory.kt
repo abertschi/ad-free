@@ -21,6 +21,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsLastUpdateInServiceDate = "LAST_UPDATE_IN_SERVICE"
     private val prefsFirstRun = "FIRST_RUN"
     private val prefsAudioVolume: String = "AUDIO_KEY"
+    private val prefsActivePlugin: String = "ACTIVE_PLUGIN"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -54,4 +55,12 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     @Deprecated("Dont use shared prefs outside this class anymore")
     fun getPreferences(): SharedPreferences = prefs
+
+    fun getActivePlugin(): String {
+        return prefs.getString(prefsActivePlugin, null)
+    }
+
+    fun setActivePlugin(plugin: String) {
+        prefs.edit().putString(prefsActivePlugin, plugin).commit()
+    }
 }

@@ -9,8 +9,8 @@ android {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 11
-        versionName "0.0.3.5"
+        versionCode 12
+        versionName "0.0.4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

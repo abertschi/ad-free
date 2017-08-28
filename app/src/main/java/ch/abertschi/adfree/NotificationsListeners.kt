@@ -16,7 +16,7 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 11.12.16.
  */
-class NotificationListener : NotificationListenerService(), AnkoLogger {
+class NotificationsListeners : NotificationListenerService(), AnkoLogger {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         info("notification detected")

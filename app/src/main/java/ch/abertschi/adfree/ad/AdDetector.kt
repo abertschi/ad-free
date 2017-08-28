@@ -26,20 +26,22 @@ class AdDetector(val detectors: List<AdDetectable>) : AnkoLogger, AdObservable {
 
     fun applyDetectors(payload: AdPayload) {
         val activeDetectors = detectors.filter { it.canHandle(payload) }
-
         if (activeDetectors.isNotEmpty()) {
-            debug("detected a spotify notification with ${activeDetectors.size} " +
-                    "active ad-detectors")
+            debug {
+                "detected a spotify notification with ${activeDetectors.size} " +
+                        "active ad-detectors"
+            }
 
             var isMusic = false
             var isAd = false
 
-            activeDetectors.filter { it.flagAsMusic(payload) }
-                    .first().let { isMusic = true }
+            activeDetectors.filter { it.flagAsMusic(payload) }.forEach {
+                isMusic = true
+            }
 
             if (!isMusic) {
                 activeDetectors.filter { it.flagAsAdvertisement(payload) }
-                        .first().let { isAd = true }
+                        .forEach { isAd = true }
             }
 
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
@@ -56,7 +58,7 @@ class AdDetector(val detectors: List<AdDetectable>) : AnkoLogger, AdObservable {
         /*
          * Wait for a while before submit event to reduce wrong detections
          */
-        Observable.just(true).delay(500, TimeUnit.MILLISECONDS)
+        Observable.just(true).delay(100, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).map {
 
