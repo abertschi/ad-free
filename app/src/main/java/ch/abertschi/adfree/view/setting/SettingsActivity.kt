@@ -110,7 +110,8 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
     override fun getContext(): Context = this.activity
 
     override fun showSuggestNewPlugin() {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
+        val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
         this.getContext().startActivity(browserIntent)
     }
 }

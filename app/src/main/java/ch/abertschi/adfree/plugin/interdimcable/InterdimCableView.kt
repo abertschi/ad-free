@@ -13,6 +13,8 @@ import android.view.View
 import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.view.ViewSettings
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.runOnUiThread
 
 /**
  * Created by abertschi on 22.04.17.
@@ -34,6 +36,29 @@ class InterdimCableView(val context: Context) {
             presenter.configureAudioVolume(context)
         }
         return viewInstance
+    }
+
+    fun showInternetError() {
+        context.applicationContext
+                .longToast("Unable to download intermidmensional ads. Did you check your internet?")
+
+    }
+
+    fun showDownloadingTrack() {
+        context.applicationContext
+                .longToast("Downloading track ...")
+
+    }
+
+    fun showAudioError() {
+        context.applicationContext.runOnUiThread {
+            longToast("Whooops, there was an error with audio")
+        }
+    }
+
+    fun showNoChannelsError() {
+        context.applicationContext
+                .longToast("No channels to play. You can not listen to interdimensional tv :(")
     }
 
 }

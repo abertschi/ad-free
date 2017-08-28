@@ -24,19 +24,24 @@ import org.jetbrains.anko.AnkoLogger
 class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory)
     : AnkoLogger {
 
+    private var isInit: Boolean = false
+
     fun onCreate(context: Context) {
+        isInit = true
         showPermissionRequiredIfNecessary(context)
         homeView.setPowerState(preferencesFactory.isBlockingEnabled())
         checkForUpdates(context)
     }
 
     fun onResume(context: Context) {
-        showPermissionRequiredIfNecessary(context)
+        if (!isInit) {
+            showPermissionRequiredIfNecessary(context)
+        }
     }
 
     fun hasNotificationPermission(context: Context): Boolean {
-        val permission = Settings.Secure
-                .getString(context.contentResolver, "enabled_notification_listeners")
+        val permission =
+                Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners")
         if (permission == null || !permission.contains(context.packageName)) {
             return false
         }

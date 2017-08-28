@@ -32,10 +32,9 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     lateinit var powerButton: SwitchCompat
     lateinit var enjoySloganText: TextView
     lateinit var homePresenter: HomePresenter
-    var isInit: Boolean = false
 
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.home_view, container, false)
     }
 
@@ -56,8 +55,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
             homePresenter.enabledStatusChanged(isChecked)
         }
         homePresenter.onCreate(this.context)
-        isInit = true
-
+        
         // TODO: this is debug code
 //        val r: Random = Random()
 //        val c: AdFreeApplication = context.applicationContext as AdFreeApplication
@@ -72,9 +70,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     }
 
     override fun onResume() {
-        if (isInit) {
-            homePresenter.onResume(this.context)
-        }
+        homePresenter.onResume(this.context)
         super.onResume()
     }
 
