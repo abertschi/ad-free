@@ -2,7 +2,7 @@
  * Ad Free
  * Copyright (c) 2017 by abertschi, www.abertschi.ch
  * See the file "LICENSE" for the full license governing this code.
- */ode.
+ */
 // */
 //
 //package ch.abertschi.adfree

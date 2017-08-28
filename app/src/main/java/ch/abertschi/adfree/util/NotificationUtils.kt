@@ -21,7 +21,7 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 16.04.17.
  */
-class NotificationUtils : AnkoLogger {
+class NotificationUtils(val context: Context) : AnkoLogger {
 
     companion object {
         val actionDismiss = "actionDismiss"
@@ -31,7 +31,7 @@ class NotificationUtils : AnkoLogger {
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
     }
 
-    fun showTextNotification(context: Context, title: String, content: String = "") {
+    fun showTextNotification(title: String, content: String = "") {
         val notification = NotificationCompat.Builder(context)
                 .setContentTitle(title)
                 .setContentText(content)
@@ -43,7 +43,7 @@ class NotificationUtils : AnkoLogger {
         manager.notify(textgNotificationId, notification)
     }
 
-    fun showBlockingNotification(context: Context, dismissCallable: () -> Unit) {
+    fun showBlockingNotification(dismissCallable: () -> Unit) {
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
                         , NotificationInteractionService::class.java).setAction(actionDismiss)
@@ -57,7 +57,8 @@ class NotificationUtils : AnkoLogger {
                 .setContentIntent(dismissIntent)
                 .build()
 
-        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT)
+        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
+                Notification.FLAG_ONGOING_EVENT)
 
         synchronized(actionDismissCallables) {
             actionDismissCallables.add(dismissCallable)
@@ -66,12 +67,13 @@ class NotificationUtils : AnkoLogger {
         manager.notify(blockingNotificationId, notification)
     }
 
-    fun hideBlockingNotification(context: Context) {
+    fun hideBlockingNotification() {
         val manager = NotificationManagerCompat.from(context)
         manager.cancel(blockingNotificationId)
     }
 
-    class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
+    class NotificationInteractionService :
+            IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
         init {
             info("NotificationInteractionService created")
         }
@@ -91,26 +93,6 @@ class NotificationUtils : AnkoLogger {
             }
         }
     }
-
-//    else if (actionKey.equals(NotificationUtils.actionIgnore)) {
-//        AudioController.instance.unmuteMusicStream(this)
-//        utils.hideBlockingNotification(this)
-//
-//        val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
-//        if (ignoreKeys != null && ignoreKeys.size > 0) {
-//            ignoreKeys.forEach {
-//                trackRepository.addTrack(it)
-//            }
-//        }
-//    }
-
-// As long as NotificationActionDetector works reliably, no need to filter out false positives
-//        val ignoreIntent = Intent(context
-//                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
-//
-//        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
-//                PendingIntent.getService(context, 0, ignoreIntent
-//                        , PendingIntent.FLAG_ONE_SHOT)).build()
 }
 
 

@@ -18,7 +18,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.onClick
 
 /**
@@ -35,7 +35,7 @@ class AboutActivity : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mTypeFace = AppSettings.instance(this.context).typeFace
+        mTypeFace = ViewSettings.instance(this.context).typeFace
 
         val textView = view?.findViewById(R.id.authorTitle) as TextView
         textView.typeface = mTypeFace

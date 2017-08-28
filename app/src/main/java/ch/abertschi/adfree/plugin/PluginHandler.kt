@@ -8,30 +8,27 @@ package ch.abertschi.adfree.plugin
 
 import android.content.Context
 import ch.abertschi.adfree.model.PreferencesFactory
-import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 
 /**
  * Created by abertschi on 21.04.17.
  */
-class PluginHandler private constructor() {
+class PluginHandler(val context: Context, val prefs: PreferencesFactory,
+                    val plugins: List<AdPlugin>) {
 
     private val ACTVIE_PLUGIN_KEY: String = "ACTIVE_PLUGIN"
 
-    private object Holder {
-        val INSTANCE = PluginHandler()
-    }
+//    private object Holder {
+//        val INSTANCE = PluginHandler()
+//    }
+//
+//    companion object {
+//        val instance: PluginHandler by lazy { Holder.INSTANCE }
+//    }
 
-    companion object {
-        val instance: PluginHandler by lazy { Holder.INSTANCE }
-    }
-
-    private var initPlugin: AdPlugin = MutePlugin()
-    private var plugins: List<AdPlugin> = listOf(initPlugin, InterdimCablePlugin()) // ()
-    private var activePlugin: AdPlugin? = initPlugin
+    private var activePlugin: AdPlugin? = MutePlugin()
 
     fun getActivePlugin(context: Context): AdPlugin {
-        val prefs = PreferencesFactory.providePrefernecesFactory(context)
         val activeKey = prefs.getPreferences().getString(ACTVIE_PLUGIN_KEY, null)
         var active: AdPlugin? = activePlugin
         if (activeKey != null) {
@@ -47,22 +44,20 @@ class PluginHandler private constructor() {
     }
 
     fun setActivePlugin(plugin: AdPlugin): AdPlugin {
-        val prefs = PreferencesFactory.providePrefernecesFactory()
         prefs.getPreferences().edit().putString(ACTVIE_PLUGIN_KEY, serializeActivePluginId(plugin)).commit()
         val oldPlugin = activePlugin
         activePlugin = plugin
         return oldPlugin!!
     }
 
-    fun getPlugins(): List<AdPlugin> = plugins
+    fun runPlugin() = activePlugin?.play()
 
-    fun runPlugin(context: PluginContet) = activePlugin?.play(context)
+    fun trialRunPlugin() = activePlugin?.playTrial()
 
-    fun trialRunPlugin(context: PluginContet) = activePlugin?.playTrial(context)
+    fun requestPluginStop(onStoped: () -> Unit) = activePlugin?.requestStop(onStoped)
 
-    fun requestPluginStop(context: PluginContet, onStoped: () -> Unit) = activePlugin?.requestStop(context, onStoped)
+    fun stopPlugin() = activePlugin?.forceStop()
 
-    fun stopPlugin(context: PluginContet) = activePlugin?.forceStop(context)
-
-    private fun serializeActivePluginId(plugin: AdPlugin): String = plugin.javaClass.canonicalName
+    private fun serializeActivePluginId(plugin: AdPlugin): String
+            = plugin.javaClass.canonicalName
 }

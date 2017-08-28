@@ -20,6 +20,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefIsEnabled = "IS_ENABLED"
     private val prefsLastUpdateInServiceDate = "LAST_UPDATE_IN_SERVICE"
     private val prefsFirstRun = "FIRST_RUN"
+    private val prefsAudioVolume: String = "AUDIO_KEY"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -45,23 +46,12 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     fun isFirstRun(): Boolean = prefs.getBoolean(prefsFirstRun, false)
 
+    fun storeAudioVolume(volume: Int)
+            = prefs.edit().putInt(prefsAudioVolume, volume).commit()
+
+    fun loadAudioVolume(): Int =
+            prefs.getInt(prefsAudioVolume, 100)
+
+    @Deprecated("Dont use shared prefs outside this class anymore")
     fun getPreferences(): SharedPreferences = prefs
-
-    companion object {
-        private var instance: PreferencesFactory? = null
-
-        fun providePrefernecesFactory(context: Context): PreferencesFactory {
-            return instance ?: preferenceFactory(context)
-        }
-
-        fun providePrefernecesFactory(): PreferencesFactory {
-            if (instance == null) throw IllegalStateException("Preference factory should be initialized by Application at very beginning")
-            return instance!!
-        }
-
-        private fun preferenceFactory(context: Context): PreferencesFactory {
-            instance = PreferencesFactory(context)
-            return instance!!
-        }
-    }
 }

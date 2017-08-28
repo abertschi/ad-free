@@ -13,8 +13,7 @@ import android.view.View
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.YamlRemoteConfigFactory
 import ch.abertschi.adfree.plugin.AdPlugin
-import ch.abertschi.adfree.plugin.PluginContet
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,11 +23,16 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by abertschi on 21.04.17.
  */
-class InterdimCablePlugin : AdPlugin, AnkoLogger {
-    private val PLUGIN_STORED_AUDIO_KEY: String = "INTERDIM_CABLE_PLUGIN_AUDIO"
+class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
+    : AdPlugin, AnkoLogger {
 
-    private val BASE_URL: String = AppSettings.AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
-    private val PLUGIN_FILE_PATH: String = BASE_URL + "plugin.yaml" + AppSettings.GITHUB_RAW_SUFFIX
+    val AD_FREE_RESOURCE_ADRESS: String
+            = "https://github.com/abertschi/ad-free-resources/blob/master/"
+
+    val GITHUB_RAW_SUFFIX: String = "?raw=true"
+
+    private val BASE_URL: String = AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
+    private val PLUGIN_FILE_PATH: String = BASE_URL + "plugin.yaml" + GITHUB_RAW_SUFFIX
 
     lateinit var configFactory: YamlRemoteConfigFactory<InterdimCableModel>
 
@@ -48,13 +52,15 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         return interdimCableView?.onCreate(this)
     }
 
-    override fun onPluginActivated(context: PluginContet) {
-        configFactory = YamlRemoteConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, PreferencesFactory.providePrefernecesFactory(context.applicationContext))
+    override fun onPluginActivated() {
+        configFactory = YamlRemoteConfigFactory(PLUGIN_FILE_PATH,
+                InterdimCableModel::class.java,
+                prefs)
         model = configFactory.loadFromLocalStore()
         updatePluginSettings(context.applicationContext)
     }
 
-    override fun onPluginDeactivated(context: PluginContet) {}
+    override fun onPluginDeactivated() {}
 
     private fun updatePluginSettings(context: Context) {
         configFactory.downloadObservable().subscribe(
@@ -71,38 +77,41 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         )
     }
 
-    override fun play(context: PluginContet) {
+    override fun play() {
         if (model == null) {
             updatePluginSettings(context.applicationContext)
             return
         }
         if (model?.channels?.size!! > 0) {
-            val url = BASE_URL + model!!.channels!![(Math.random() * model!!.channels!!.size).toInt()].path + AppSettings.GITHUB_RAW_SUFFIX
+            val url = BASE_URL +
+                    model!!.channels!![(Math.random() *
+                            model!!.channels!!.size).toInt()].path + GITHUB_RAW_SUFFIX
             playAudio(url, context.applicationContext)
         } else {
-            context.applicationContext.longToast("No channels to play. You can not listen to interdimensional tv :(")
+            context.applicationContext
+                    .longToast("No channels to play. You can not listen to interdimensional tv :(")
             error("No channels to play. You can not watch interdimensional tv")
         }
     }
 
-    override fun playTrial(context: PluginContet) = play(context)
+    override fun playTrial() = play()
 
     fun configureAudioVolume(context: Context) {
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(context), AudioManager.FLAG_SHOW_UI)
+        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
         Observable.just(true).delay(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
             val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
 
             info("Storing audio volume with value " + volume)
-            storeAudioVolume(volume, context)
+            storeAudioVolume(volume)
         }
     }
 
     private fun playAudio(url: String, context: Context) {
-        runAndCatchException(context, {
-            val proxy = AppSettings.instance(context).getHttpProxy()
+        runAndCatchException({
+            val proxy = ViewSettings.instance(context).getHttpProxy()
             val proxyUrl = proxy.getProxyUrl(url)
             initializeMediaPlayerObservable(context, proxyUrl).subscribe { player ->
                 this.player = player
@@ -113,13 +122,13 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         })
     }
 
-    override fun requestStop(contet: PluginContet, onStoped: () -> Unit) {
+    override fun requestStop(onStoped: () -> Unit) {
         if (!isPlaying) onStoped()
         else onStopCallables.add(onStoped)
     }
 
-    override fun forceStop(context: PluginContet) {
-        closePlayer(context.applicationContext)
+    override fun forceStop() {
+        closePlayer()
     }
 
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>
@@ -144,9 +153,9 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         }
         player?.setOnPreparedListener {
             asyncPreparationDone = true
-            am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(context), AudioManager.FLAG_SHOW_UI)
+            am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
             player?.setOnCompletionListener {
-                closePlayer(context)
+                closePlayer()
                 synchronized(onStopCallables) {
                     onStopCallables?.forEach { it() }
                     onStopCallables.clear()
@@ -156,7 +165,7 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         }
     }
 
-    private fun runAndCatchException(context: Context, function: () -> Unit): Unit {
+    private fun runAndCatchException(function: () -> Unit): Unit {
         try {
             function()
         } catch(e: Throwable) {
@@ -167,8 +176,8 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         }
     }
 
-    private fun closePlayer(context: Context) {
-        runAndCatchException(context, {
+    private fun closePlayer() {
+        runAndCatchException({
             isPlaying = false
             player?.stop()
             player?.release()
@@ -176,9 +185,9 @@ class InterdimCablePlugin : AdPlugin, AnkoLogger {
         })
     }
 
-    private fun storeAudioVolume(volume: Int, context: Context)
-            = PreferencesFactory.providePrefernecesFactory(context).getPreferences().edit().putInt(PLUGIN_STORED_AUDIO_KEY, volume).commit()
+    private fun storeAudioVolume(volume: Int)
+            = prefs.storeAudioVolume(volume)
 
-    private fun loadAudioVolume(context: Context): Int =
-            PreferencesFactory.providePrefernecesFactory(context).getPreferences().getInt(PLUGIN_STORED_AUDIO_KEY, 100)
+    private fun loadAudioVolume(): Int =
+            prefs.loadAudioVolume()
 }

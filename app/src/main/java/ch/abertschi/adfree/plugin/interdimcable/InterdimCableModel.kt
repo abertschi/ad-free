@@ -13,7 +13,6 @@ import ch.abertschi.adfree.util.Serializer
  */
 
 // Dont use data class attribute because yaml needs default constructor
-
 class InterdimCableModel {
     val channels: List<Channel>? = null
     override fun toString(): String {

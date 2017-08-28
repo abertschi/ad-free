@@ -21,8 +21,8 @@ import org.jetbrains.anko.AnkoLogger
 /**
  * Created by abertschi on 15.04.17.
  */
-
-class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory) : AnkoLogger {
+class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory)
+    : AnkoLogger {
 
     fun onCreate(context: Context) {
         showPermissionRequiredIfNecessary(context)
@@ -34,16 +34,32 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
         showPermissionRequiredIfNecessary(context)
     }
 
+    fun hasNotificationPermission(context: Context): Boolean {
+        val permission = Settings.Secure
+                .getString(context.contentResolver, "enabled_notification_listeners")
+        if (permission == null || !permission.contains(context.packageName)) {
+            return false
+        }
+        return true
+    }
+
+    fun enabledStatusChanged(status: Boolean) {
+        preferencesFactory.setBlockingEnabled(status)
+    }
+
     private fun checkForUpdates(context: Context) {
         RemoteManager(preferencesFactory)
                 .getRemoteSettingsObservable()
                 .subscribe({
                     if (it.useGithubReleasesForUpdateReminder && it.showSeakbarOnUpdate) {
                         Observable.create<AppUpdater> { source ->
-                            val updater = UpdateManager(preferencesFactory).appUpdaterForInAppUse(context)
+                            val updater = UpdateManager(preferencesFactory)
+                                    .appUpdaterForInAppUse(context)
                             updater.start()
                             source.onComplete()
-                        }.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+                        }.observeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe()
                     }
                 })
     }
@@ -54,17 +70,5 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
         } else {
             homeView.showPermissionRequired()
         }
-    }
-
-    fun hasNotificationPermission(context: Context): Boolean {
-        val permission = Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners")
-        if (permission == null || !permission.contains(context.packageName)) {
-            return false
-        }
-        return true
-    }
-
-    fun enabledStatusChanged(status: Boolean) {
-        preferencesFactory.setBlockingEnabled(status)
     }
 }

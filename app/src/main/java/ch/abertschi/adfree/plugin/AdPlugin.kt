@@ -18,13 +18,11 @@ interface AdPlugin {
     fun hasSettingsView(): Boolean = false
     fun settingsView(context: Context): View? = null
 
-    fun play(context: PluginContet): Unit
-    fun playTrial(context: PluginContet): Unit
-    fun requestStop(contet: PluginContet, onStoped: () -> Unit)
-    fun forceStop(context: PluginContet)
+    fun play(): Unit
+    fun playTrial(): Unit
+    fun requestStop(onStoped: () -> Unit)
+    fun forceStop()
 
-    fun onPluginActivated(context: PluginContet)
-    fun onPluginDeactivated(context: PluginContet)
+    fun onPluginActivated()
+    fun onPluginDeactivated()
 }
-
-data class PluginContet(val applicationContext: Context)

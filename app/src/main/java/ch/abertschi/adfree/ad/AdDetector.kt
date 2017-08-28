@@ -4,12 +4,8 @@
  * See the file "LICENSE" for the full license governing this code.
  */
 
-package ch.abertschi.adfree
+package ch.abertschi.adfree.ad
 
-import ch.abertschi.adfree.ad.AdEvent
-import ch.abertschi.adfree.ad.AdObservable
-import ch.abertschi.adfree.ad.AdObserver
-import ch.abertschi.adfree.ad.EventType
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import io.reactivex.Observable
@@ -25,8 +21,9 @@ import java.util.concurrent.TimeUnit
 class AdDetector(val detectors: List<AdDetectable>) : AnkoLogger, AdObservable {
 
     private var observers: MutableList<AdObserver> = ArrayList()
-    private var pendingEvent: AdEvent? = null
-    
+
+    private var _pendingEvent: AdEvent? = null
+
     fun applyDetectors(payload: AdPayload) {
         val activeDetectors = detectors.filter { it.canHandle(payload) }
 
@@ -45,28 +42,44 @@ class AdDetector(val detectors: List<AdDetectable>) : AnkoLogger, AdObservable {
                         .first().let { isAd = true }
             }
 
-            val eventType = if (isAd) EventType.IS_AD else EventType.NO_ADD
-            val event = AdEvent(eventType, payload)
+            val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
+            val event = AdEvent(eventType)
+            submitEvent(event)
+        }
+    }
+
+    private fun submitEvent(event: AdEvent) {
+        synchronized(this) {
+            _pendingEvent = event
+        }
+
+        /*
+         * Wait for a while before submit event to reduce wrong detections
+         */
+        Observable.just(true).delay(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).map {
 
             synchronized(this) {
-                pendingEvent = event
-            }
-            Observable.just(true).delay(500, TimeUnit.MILLISECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).map {
-                synchronized(this) {
-                    if (pendingEvent != null) {
-                        val e = pendingEvent
-                        pendingEvent = null
-                        notifyObservers(e!!)
-                    }
+                if (_pendingEvent != null) {
+                    val e = _pendingEvent
+                    _pendingEvent = null
+                    notifyObservers(e!!)
                 }
-            }.subscribe()
-        }
+            }
+        }.subscribe()
     }
 
     fun notifyObservers(event: AdEvent) {
         observers.forEach { it.onAdEvent(event, this) }
+    }
+
+    override fun requestNoAd() {
+        notifyObservers(AdEvent(EventType.NO_AD))
+    }
+
+    override fun requestAd() {
+        notifyObservers(AdEvent(EventType.IS_AD))
     }
 
     override fun addObserver(obs: AdObserver) {

@@ -7,28 +7,29 @@
 package ch.abertschi.adfree.plugin.mute
 
 import ch.abertschi.adfree.plugin.AdPlugin
-import ch.abertschi.adfree.plugin.PluginContet
 
 /**
  * Created by abertschi on 21.04.17.
  */
 class MutePlugin : AdPlugin {
-    override fun playTrial(context: PluginContet) {}
-
     override fun title() = "mute audio"
 
-    override fun hasSettingsView() = false
+    override fun play() {
+    }
 
-    override fun play(context: PluginContet) {}
+    override fun playTrial() {
+    }
 
-    override fun requestStop(contet: PluginContet, onStoped: () -> Unit) {
+    override fun requestStop(onStoped: () -> Unit) {
         onStoped()
     }
 
-    override fun forceStop(context: PluginContet) {}
+    override fun forceStop() {
+    }
 
-    override fun onPluginActivated(context: PluginContet) {}
+    override fun onPluginActivated() {
+    }
 
-    override fun onPluginDeactivated(context: PluginContet) {}
-
+    override fun onPluginDeactivated() {
+    }
 }

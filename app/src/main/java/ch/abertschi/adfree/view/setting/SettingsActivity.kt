@@ -22,7 +22,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.presenter.SettingsPresenter
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.onItemSelectedListener
 
@@ -62,11 +62,11 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         super.onCreate(savedInstanceState)
         this.rootView = view
 
-        typeFace = AppSettings.instance(this.activity).typeFace
+        typeFace = ViewSettings.instance(this.activity).typeFace
         settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         settingsTitle?.typeface = typeFace
 
-        settingPresenter = SettingsPresenter(this)
+        settingPresenter = SettingsPresenter(this, context.applicationContext)
 
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
         settingsTitle?.text = Html.fromHtml(text)

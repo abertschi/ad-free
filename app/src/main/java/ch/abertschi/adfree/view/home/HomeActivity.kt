@@ -16,20 +16,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.di.HomeModul
+import ch.abertschi.adfree.ad.AdEvent
+import ch.abertschi.adfree.ad.EventType
 import ch.abertschi.adfree.presenter.HomePresenter
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import org.jetbrains.anko.onTouch
+import java.util.*
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
-class HomeActivity : Fragment(), HomeView {
-    lateinit var mTypeFace: Typeface
+class HomeActivity : Fragment(), HomeView, AnkoLogger {
+    lateinit var typeFace: Typeface
 
-    lateinit var mPowerButton: SwitchCompat
-    lateinit var mEnjoySloganText: TextView
+    lateinit var powerButton: SwitchCompat
+    lateinit var enjoySloganText: TextView
     lateinit var homePresenter: HomePresenter
     var isInit: Boolean = false
 
@@ -41,19 +47,33 @@ class HomeActivity : Fragment(), HomeView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val controlModul = HomeModul(this.context, this)
-        homePresenter = controlModul.provideControlPresenter()
+        // TODO: proper responsibilities
+        val app: AdFreeApplication = context.applicationContext as AdFreeApplication
+        homePresenter = HomePresenter(this, app.prefs)
+//        homePresenter = controlModul.provideControlPresenter()
 
-        mPowerButton = view?.findViewById(R.id.switch1) as SwitchCompat
-        mTypeFace = AppSettings.instance(this.context).typeFace
+        powerButton = view?.findViewById(R.id.switch1) as SwitchCompat
+        typeFace = ViewSettings.instance(this.context).typeFace
 
-        mEnjoySloganText = view.findViewById(R.id.enjoy) as TextView
+        enjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
-        mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
             homePresenter.enabledStatusChanged(isChecked)
         }
         homePresenter.onCreate(this.context)
         isInit = true
+
+        val r: Random = Random()
+
+        val c: AdFreeApplication = context.applicationContext as AdFreeApplication
+        view.onTouch { view, motionEvent ->
+            info { "AdFree event created" }
+            when (r.nextBoolean()) {
+                true -> c.adDetector.notifyObservers(AdEvent(EventType.IS_AD))
+                else -> c.adDetector.notifyObservers(AdEvent(EventType.NO_AD))
+            }
+            true
+        }
     }
 
     override fun onResume() {
@@ -66,8 +86,8 @@ class HomeActivity : Fragment(), HomeView {
     override fun showPermissionRequired() {
         val text = "touch here to grant permission"
         setSloganText(text)
-        mPowerButton.visibility = View.GONE
-        mEnjoySloganText.setOnClickListener {
+        powerButton.visibility = View.GONE
+        enjoySloganText.setOnClickListener {
             showNotificationPermissionSettings()
         }
     }
@@ -77,18 +97,18 @@ class HomeActivity : Fragment(), HomeView {
     }
 
     private fun setSloganText(text: String) {
-        mEnjoySloganText.typeface = mTypeFace
-        mEnjoySloganText.text = Html.fromHtml(text)
+        enjoySloganText.typeface = typeFace
+        enjoySloganText.text = Html.fromHtml(text)
     }
 
     override fun showEnjoyAdFree() {
         val text = "enjoy your <font color=#FFFFFF>ad free</font> music experience"
         setSloganText(text)
-        mEnjoySloganText.setOnClickListener(null)
-        mPowerButton.visibility = View.VISIBLE
+        enjoySloganText.setOnClickListener(null)
+        powerButton.visibility = View.VISIBLE
     }
 
     override fun setPowerState(state: Boolean) {
-        mPowerButton.isChecked = state
+        powerButton.isChecked = state
     }
 }
