@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/plugin_localmusic_audio_volume_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+
+        android:text="configure audio volume"
+        android:textColor="#C4BCAF"
+        android:textSize="@dimen/normal_text_size"
+        />
+
+    <TextView
+        android:id="@+id/plugin_localmusic_choose_audio_directory_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+
+        android:text="choose audio directory"
+        android:textColor="#C4BCAF"
+        android:textSize="@dimen/normal_text_size"
+        android:layout_below="@+id/plugin_localmusic_audio_volume_text"
+        android:layout_alignParentStart="true"/>
+
+
+</RelativeLayout>

@@ -17,6 +17,7 @@ import ch.abertschi.adfree.model.TrackRepository
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
+import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import ch.abertschi.adfree.util.UsageFeedback
@@ -52,7 +53,10 @@ class AdFreeApplication : Application() {
 
         adDetector = AdDetector(adDetectors)
 
-        adPlugins = listOf(MutePlugin(), InterdimCablePlugin(prefs, audioManager, applicationContext))
+        adPlugins = listOf(MutePlugin(),
+                InterdimCablePlugin(prefs, audioManager, applicationContext),
+                LocalMusicPlugin(applicationContext, prefs, audioManager)
+        )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
 

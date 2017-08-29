@@ -68,8 +68,6 @@ open class AudioPlayer(val context: Context,
 
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>
             = Observable.create<MediaPlayer> { source ->
-        //        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-//        am.mode = AudioManager.MODE_RINGTONE
         player = MediaPlayer()
         player?.setDataSource(url)
         player?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
@@ -93,7 +91,6 @@ open class AudioPlayer(val context: Context,
         player?.setOnPreparedListener {
             asyncPreparationDone = true
             audioController.showVoiceCallVolume()
-            //am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
             player?.setOnCompletionListener {
                 closePlayer()
                 synchronized(onStopCallables) {
