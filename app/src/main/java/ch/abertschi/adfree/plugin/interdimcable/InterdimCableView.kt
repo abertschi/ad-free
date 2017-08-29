@@ -3,7 +3,6 @@
  * Copyright (c) 2017 by abertschi, www.abertschi.ch
  * See the file "LICENSE" for the full license governing this code.
  */
-
 package ch.abertschi.adfree.plugin.interdimcable
 
 import android.content.Context
@@ -19,7 +18,6 @@ import org.jetbrains.anko.runOnUiThread
 /**
  * Created by abertschi on 22.04.17.
  */
-
 class InterdimCableView(val context: Context) {
 
     private var viewInstance: View? = null
@@ -32,22 +30,20 @@ class InterdimCableView(val context: Context) {
         text?.typeface = ViewSettings.instance(context).typeFace
         val t = "configure <font color=#FFFFFF>audio volume</font>"
         text?.text = Html.fromHtml(t)
-        text.setOnClickListener {
-            presenter.configureAudioVolume(context)
-        }
+        text.setOnClickListener { presenter.configureAudioVolume() }
         return viewInstance
     }
 
     fun showInternetError() {
-        context.applicationContext
-                .longToast("Unable to download intermidmensional ads. Did you check your internet?")
-
+        context.applicationContext.runOnUiThread {
+            longToast("Unable to download intermidmensional ads. Did you check your internet?")
+        }
     }
 
     fun showDownloadingTrack() {
-        context.applicationContext
-                .longToast("Downloading track ...")
-
+        context.applicationContext.runOnUiThread {
+            longToast("Downloading track ...")
+        }
     }
 
     fun showAudioError() {
@@ -57,8 +53,8 @@ class InterdimCableView(val context: Context) {
     }
 
     fun showNoChannelsError() {
-        context.applicationContext
-                .longToast("No channels to play. You can not listen to interdimensional tv :(")
+        context.applicationContext.runOnUiThread {
+            longToast("No channels to play. You can not listen to interdimensional tv :(")
+        }
     }
-
 }

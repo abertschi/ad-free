@@ -56,7 +56,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     @Deprecated("Dont use shared prefs outside this class anymore")
     fun getPreferences(): SharedPreferences = prefs
 
-    fun getActivePlugin(): String {
+    fun getActivePlugin(): String? {
         return prefs.getString(prefsActivePlugin, null)
     }
 

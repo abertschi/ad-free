@@ -8,14 +8,19 @@ package ch.abertschi.adfree
 
 import android.content.Context
 import android.media.AudioManager
+import ch.abertschi.adfree.model.PreferencesFactory
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 16.04.17.
  */
-class AudioController(val context: Context) : AnkoLogger {
+class AudioController(val context: Context, val prefs: PreferencesFactory) : AnkoLogger {
 
     private var musicStreamVolume = 0
     private var musicStreamIsMuted = false
@@ -32,7 +37,7 @@ class AudioController(val context: Context) : AnkoLogger {
         musicStreamIsMuted = true
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         musicStreamVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
-        
+
         am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
     }
 
@@ -44,6 +49,18 @@ class AudioController(val context: Context) : AnkoLogger {
         musicStreamIsMuted = false
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
+    }
+
+    fun showVoiceCallVolume() {
+        val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, prefs.loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
+        Observable.just(true).delay(5000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe {
+            val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
+            prefs.storeAudioVolume(volume)
+            info("Storing audio volume with value " + volume)
+        }
     }
 }
 

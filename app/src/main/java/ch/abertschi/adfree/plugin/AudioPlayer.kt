@@ -9,21 +9,27 @@ package ch.abertschi.adfree.plugin
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
-import ch.abertschi.adfree.view.ViewSettings
+import com.danikula.videocache.HttpProxyCacheServer
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 28.08.17.
  */
-open class AudioPlayer(val context: Context, val prefs: PreferencesFactory) {
+open class AudioPlayer(val context: Context,
+                       val prefs: PreferencesFactory,
+                       val audioController: AudioController) : AnkoLogger {
 
     private var isPlaying: Boolean = false
     private var onStopCallables: ArrayList<() -> Unit> = ArrayList()
     private var player: MediaPlayer? = null
+    private var httpProxy: HttpProxyCacheServer? = null
 
     /**
      * a callable that is called when a track takes longer to load.
@@ -35,8 +41,8 @@ open class AudioPlayer(val context: Context, val prefs: PreferencesFactory) {
     }
 
     fun playWithCachingProxy(url: String) {
-        val proxy = ViewSettings.instance(context).getHttpProxy()
-        val proxyUrl = proxy.getProxyUrl(url)
+        httpProxy = httpProxy ?: HttpProxyCacheServer(context)
+        val proxyUrl = httpProxy!!.getProxyUrl(url)
         playAudio(proxyUrl)
     }
 
@@ -62,19 +68,23 @@ open class AudioPlayer(val context: Context, val prefs: PreferencesFactory) {
 
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>
             = Observable.create<MediaPlayer> { source ->
-        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.mode = AudioManager.MODE_RINGTONE
+        //        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+//        am.mode = AudioManager.MODE_RINGTONE
         player = MediaPlayer()
         player?.setDataSource(url)
         player?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
 
         var asyncPreparationDone = false
+        info { "$asyncPreparationDone / $trackPreparationDelayCallable" }
         trackPreparationDelayCallable?.let {
+            info { "creating observable" }
             Observable.just(true)
-                    .delay(1000, TimeUnit.MILLISECONDS)
+                    .delay(500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                info { "executing observable: $asyncPreparationDone" }
                 if (!asyncPreparationDone) {
+                    info { "invoking observable" }
                     trackPreparationDelayCallable?.invoke()
                 }
             }
@@ -82,7 +92,8 @@ open class AudioPlayer(val context: Context, val prefs: PreferencesFactory) {
         player?.prepareAsync()
         player?.setOnPreparedListener {
             asyncPreparationDone = true
-            am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
+            audioController.showVoiceCallVolume()
+            //am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
             player?.setOnCompletionListener {
                 closePlayer()
                 synchronized(onStopCallables) {
@@ -100,11 +111,13 @@ open class AudioPlayer(val context: Context, val prefs: PreferencesFactory) {
         player?.reset()
         player?.release()
         player = null
+//        httpProxy?.shutdown()
+//        httpProxy = null
     }
 
-    fun storeAudioVolume(volume: Int)
+    private fun storeAudioVolume(volume: Int)
             = prefs.storeAudioVolume(volume)
 
-    fun loadAudioVolume(): Int =
+    private fun loadAudioVolume(): Int =
             prefs.loadAudioVolume()
 }

@@ -52,7 +52,8 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
     }
 
     override fun setPluginView(view: View) {
-        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
         pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view) as LinearLayout
         clearPluginView()
         pluginViewContainer?.addView(view)
@@ -68,11 +69,14 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
 
         settingPresenter = SettingsPresenter(this, context.applicationContext)
 
-        val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
+        val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
+                "<font color=#FFFFFF>being played ?</font>"
+
         settingsTitle?.text = Html.fromHtml(text)
 
         spinner = view?.findViewById(R.id.spinner) as Spinner
-        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel(), spinner!!, view)
+        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item,
+                settingPresenter.getStringEntriesOfModel(), spinner!!, view)
         spinner?.adapter = spinnerAdapter
 
         spinner?.onItemSelectedListener {
@@ -80,19 +84,19 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
                 run {
                     if (init) settingPresenter.onPluginSelected(i)
                     spinnerAdapter?.notifyDataSetChanged()
-
                 }
             }
         }
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
-        view.findViewById(R.id.setting_spinner_item_container)?.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                spinner?.performClick()
-                return false
-            }
-        })
+        view.findViewById(R.id.setting_spinner_item_container)
+                ?.setOnTouchListener(object : View.OnTouchListener {
+                    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                        spinner?.performClick()
+                        return false
+                    }
+                })
 
         settingPresenter.onCreate()
         init = true

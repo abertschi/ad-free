@@ -12,6 +12,10 @@ import ch.abertschi.adfree.plugin.AdPlugin
  * Created by abertschi on 21.04.17.
  */
 class MutePlugin : AdPlugin {
+
+    override fun onPluginLoaded() {
+    }
+
     override fun title() = "mute audio"
 
     override fun play() {

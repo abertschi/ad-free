@@ -7,24 +7,22 @@
 package ch.abertschi.adfree.plugin.interdimcable
 
 import android.content.Context
-import android.media.AudioManager
 import android.view.View
+import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.YamlRemoteConfigFactory
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 21.04.17.
  */
-class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
+class InterdimCablePlugin(val prefs: PreferencesFactory,
+                          val audioController: AudioController,
+                          val context: Context)
     : AdPlugin, AnkoLogger {
 
     private val GITHUB_RAW_SUFFIX: String = "?raw=true"
@@ -40,7 +38,13 @@ class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
     private var model: InterdimCableModel? = null
     private var interdimCableView: InterdimCableView? = null
 
-    private var player: AudioPlayer = AudioPlayer(context, prefs)
+    private var player: AudioPlayer = AudioPlayer(context, prefs, audioController)
+
+    init {
+        player.trackPreparationDelayCallable = {
+            interdimCableView?.showDownloadingTrack()
+        }
+    }
 
     override fun title(): String = "interdimensional cable"
 
@@ -49,21 +53,22 @@ class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
     override fun settingsView(context: Context): View? {
         if (interdimCableView == null) {
             interdimCableView = InterdimCableView(context)
-            player.trackPreparationDelayCallable = {
-                interdimCableView?.showDownloadingTrack()
-            }
         }
         return interdimCableView?.onCreate(this)
     }
 
-    override fun onPluginActivated() {
+    override fun onPluginLoaded() {
         model = configFactory.loadFromLocalStore()
         updatePluginSettings()
     }
 
+    override fun onPluginActivated() {
+        onPluginLoaded()
+    }
+
     override fun onPluginDeactivated() {}
 
-    private fun updatePluginSettings() {
+    private fun updatePluginSettings(callback: (() -> Unit)? = null) {
         configFactory.downloadObservable()
                 .subscribe(
                         { pair ->
@@ -71,21 +76,27 @@ class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
                             info("Interdimensional cable plugin settings updated")
                             info("downloaded meta data for " + model?.channels?.size + " channels")
                             configFactory.storeToLocalStore(model!!)
+                            callback?.invoke()
                         },
                         { error ->
                             interdimCableView?.showInternetError()
+                            callback?.invoke()
                         }
                 )
     }
 
     override fun play() {
         if (model == null) {
-            updatePluginSettings()
+            updatePluginSettings(this::doPlay)
             return
         }
-        if (model?.channels?.size!! > 0) {
-            val url = BASE_URL + model!!.channels!![(Math.random() *
-                    model!!.channels!!.size).toInt()].path + GITHUB_RAW_SUFFIX
+        doPlay()
+    }
+
+    private fun doPlay() {
+        val list = model?.channels ?: listOf()
+        if (list.isNotEmpty()) {
+            val url = BASE_URL + list[(Math.random() * list.size).toInt()].path + GITHUB_RAW_SUFFIX
             runAndCatchException({
                 player.playWithCachingProxy(url)
             })
@@ -96,16 +107,8 @@ class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
 
     override fun playTrial() = play()
 
-    fun configureAudioVolume(context: Context) {
-        val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
-        Observable.just(true).delay(500, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
-            info("Storing audio volume with value " + volume)
-            storeAudioVolume(volume)
-        }
+    fun configureAudioVolume() {
+        audioController.showVoiceCallVolume()
     }
 
     override fun requestStop(onStoped: () -> Unit) {
@@ -124,10 +127,4 @@ class InterdimCablePlugin(val prefs: PreferencesFactory, val context: Context)
             error(e)
         }
     }
-
-    private fun storeAudioVolume(volume: Int)
-            = prefs.storeAudioVolume(volume)
-
-    private fun loadAudioVolume(): Int =
-            prefs.loadAudioVolume()
 }

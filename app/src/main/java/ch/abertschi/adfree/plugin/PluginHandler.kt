@@ -6,27 +6,29 @@
 
 package ch.abertschi.adfree.plugin
 
-import android.content.Context
 import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.mute.MutePlugin
+import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by abertschi on 21.04.17.
  */
-class PluginHandler(val context: Context, val prefs: PreferencesFactory,
-                    val plugins: List<AdPlugin>, val adDetector: AdObservable) {
+class PluginHandler(val prefs: PreferencesFactory,
+                    val plugins: List<AdPlugin>,
+                    val adDetector: AdObservable) : AnkoLogger {
 
-    private var activePlugin: AdPlugin? = MutePlugin()
+    private var activePlugin: AdPlugin = loadActivePlugin()
 
     fun getActivePlugin(): AdPlugin {
-        val key = prefs.getActivePlugin()
-        val active = plugins.filter { serializeActivePluginId(it).equals(key) }
-                .firstOrNull()
-        active.let {
-            activePlugin = it
-        }
         return activePlugin!!
+    }
+
+    private fun loadActivePlugin(): AdPlugin {
+        val key: String? = prefs.getActivePlugin()
+        var active = plugins.firstOrNull { serializeActivePluginId(it).equals(key) }
+        return if (active != null) active
+        else MutePlugin() // default plugin
     }
 
     fun setActivePlugin(plugin: AdPlugin): AdPlugin {

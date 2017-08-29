@@ -23,6 +23,7 @@ interface AdPlugin {
     fun requestStop(onStoped: () -> Unit)
     fun forceStop()
 
+    fun onPluginLoaded()
     fun onPluginActivated()
     fun onPluginDeactivated()
 }

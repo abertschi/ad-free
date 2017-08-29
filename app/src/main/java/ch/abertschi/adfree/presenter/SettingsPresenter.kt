@@ -20,6 +20,7 @@ import org.jetbrains.anko.AnkoLogger
 
 class SettingsPresenter(val settingView: SettingsView, val context: Context) : AnkoLogger {
 
+    // todo encapsulate this with module?
     private val pluginHandler: PluginHandler =
             (context.applicationContext as AdFreeApplication).pluginHandler
 
