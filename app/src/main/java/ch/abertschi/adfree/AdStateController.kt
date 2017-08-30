@@ -46,9 +46,9 @@ class AdStateController(val audioController: AudioController,
         info { "AdEvent Change: NO_ADD" }
         activeState = EventType.NO_AD
 
+        audioController.unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff()
         adPluginHandler.stopPlugin()
         notificationUtils.hideBlockingNotification()
-        audioController.unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff()
     }
 
     fun onAd(observable: AdObservable) {
@@ -60,8 +60,9 @@ class AdStateController(val audioController: AudioController,
 
         audioController.muteMusicStream()
         adPluginHandler.runPlugin()
-        observable.requestNoAd()
-
+        notificationUtils.showBlockingNotification(dismissCallable = {
+            observable.requestNoAd()
+        })
     }
 
     private fun startTimeout(callable: () -> Unit) {

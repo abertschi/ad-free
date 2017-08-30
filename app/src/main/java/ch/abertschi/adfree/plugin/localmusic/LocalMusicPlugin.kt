@@ -102,7 +102,8 @@ class LocalMusicPlugin(val context: Context,
     }
 
     fun chooseDirectory() {
-        view?.showFolderSelectionDialog()
+        val f = File("/storage")
+        view?.showFolderSelectionDialog(f)
     }
 
     fun onDirectorySelected(files: MutableList<String>) {

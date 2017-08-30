@@ -23,12 +23,13 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:scrollHorizontally="false"
-
+        android:layout_marginBottom="10dp"
         android:text="choose audio directory"
         android:textColor="#C4BCAF"
         android:textSize="@dimen/normal_text_size"
         android:layout_below="@+id/plugin_localmusic_audio_volume_text"
         android:layout_alignParentStart="true"/>
+
 
 
 </RelativeLayout>

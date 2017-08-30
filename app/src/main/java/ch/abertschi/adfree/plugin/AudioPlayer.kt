@@ -113,14 +113,14 @@ open class AudioPlayer(val context: Context,
     }
 
     fun closePlayer() {
-        isPlaying = false
-        player?.stop()
-        player?.reset()
-        player?.release()
-        player = null
-//        audioController.fadeOffVoiceCallVolume({
+        audioController.fadeOffVoiceCallVolume({
+            isPlaying = false
+            player?.stop()
+            player?.reset()
+            player?.release()
+            player = null
 
-//        })
+        })
 
 //        httpProxy?.shutdown()
 //        httpProxy = null

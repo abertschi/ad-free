@@ -62,11 +62,11 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         return viewInstance
     }
 
-    fun showFolderSelectionDialog() {
+    fun showFolderSelectionDialog(default: File) {
         val properties = DialogProperties()
         properties.selection_mode = DialogConfigs.SINGLE_MODE
         properties.selection_type = DialogConfigs.DIR_SELECT
-        properties.root = File("/storage")
+        properties.root = default
         properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
         properties.offset = File(DialogConfigs.DEFAULT_DIR)
         properties.extensions = null
