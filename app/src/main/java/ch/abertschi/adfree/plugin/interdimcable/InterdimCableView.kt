@@ -28,7 +28,7 @@ class InterdimCableView(val context: Context) {
 
         var text = viewInstance?.findViewById(R.id.plugin_interdim_cable_audio_volume_text) as TextView
         text?.typeface = ViewSettings.instance(context).typeFace
-        val t = "configure <font color=#FFFFFF>audio volume</font>"
+        val t = "> configure <font color=#FFFFFF>audio volume</font>"
         text?.text = Html.fromHtml(t)
         text.setOnClickListener { presenter.configureAudioVolume() }
         return viewInstance
