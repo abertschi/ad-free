@@ -14,13 +14,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
+import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
@@ -31,7 +31,7 @@ import org.jetbrains.anko.onItemSelectedListener
  * Created by abertschi on 21.04.17.
  */
 
-class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
+class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
 
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
@@ -40,6 +40,8 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
     private var pluginViewContainer: LinearLayout? = null
     private var spinnerAdapter: PluginSpinnerAdapter? = null
     private var init: Boolean = false
+    private val callablesOnActivityResult:
+            MutableList<(requestCode: Int, resultCode: Int, data: Intent?) -> Unit> = ArrayList()
 
     lateinit var settingPresenter: SettingsPresenter
 
@@ -54,6 +56,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
     override fun setPluginView(view: View) {
         view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
+
         pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view) as LinearLayout
         clearPluginView()
         pluginViewContainer?.addView(view)
@@ -91,12 +94,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
             settingPresenter.tryPlugin()
         }
         view.findViewById(R.id.setting_spinner_item_container)
-                ?.setOnTouchListener(object : View.OnTouchListener {
-                    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                        spinner?.performClick()
-                        return false
-                    }
-                })
+                ?.setOnTouchListener { v, event ->
+                    spinner?.performClick()
+                    false
+                }
 
         settingPresenter.onCreate()
         init = true
@@ -111,11 +112,26 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         spinner?.setSelection(index, true)
     }
 
+    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
+        super.startActivityForResult(intent, requestCode, options)
+    }
+
     override fun getContext(): Context = this.activity
 
     override fun showSuggestNewPlugin() {
         val browserIntent =
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
-        this.getContext().startActivity(browserIntent)
+        this.context.startActivity(browserIntent)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callablesOnActivityResult.forEach { it(requestCode, resultCode, data) }
+    }
+
+    override fun addOnActivityResult(callable: (requestCode: Int, resultCode: Int, data: Intent?)
+    -> Unit) {
+        callablesOnActivityResult.add(callable)
+    }
+
 }

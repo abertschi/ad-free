@@ -48,6 +48,7 @@ dependencies {
 // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex.rxjava2:rxjava:2.0.9'
     compile 'com.danikula:videocache:2.6.4'
+    compile 'com.github.angads25:filepicker:1.1.1'
 
     compile('com.thoughtworks.xstream:xstream:1.4.7') {
         exclude group: 'xmlpull', module: 'xmlpull'

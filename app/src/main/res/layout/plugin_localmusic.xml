@@ -8,7 +8,7 @@
         android:id="@+id/plugin_localmusic_audio_volume_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:inputType="textMultiLine"
         android:scrollHorizontally="false"
 

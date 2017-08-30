@@ -66,6 +66,16 @@ open class AudioPlayer(val context: Context,
         closePlayer()
     }
 
+    fun fadeOffAndStop() {
+        Observable.just(true).repeat(10)
+                .delay(100, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe {
+
+        }
+
+    }
+
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>
             = Observable.create<MediaPlayer> { source ->
         player = MediaPlayer()
@@ -108,13 +118,17 @@ open class AudioPlayer(val context: Context,
         player?.reset()
         player?.release()
         player = null
+//        audioController.fadeOffVoiceCallVolume({
+
+//        })
+
 //        httpProxy?.shutdown()
 //        httpProxy = null
     }
 
     private fun storeAudioVolume(volume: Int)
-            = prefs.storeAudioVolume(volume)
+            = prefs.storeVoiceCallAudioVolume(volume)
 
     private fun loadAudioVolume(): Int =
-            prefs.loadAudioVolume()
+            prefs.loadVoiceCallAudioVolume()
 }

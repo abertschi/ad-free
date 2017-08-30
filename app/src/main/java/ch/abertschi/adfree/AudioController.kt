@@ -51,16 +51,46 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
     }
 
+    fun unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff() {
+        Observable.just(true)
+                .delay(2000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).map {
+            unmuteMusicStream()
+        }.subscribe()
+
+    }
+
     fun showVoiceCallVolume() {
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, prefs.loadAudioVolume(), AudioManager.FLAG_SHOW_UI)
+        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, prefs.loadVoiceCallAudioVolume(), AudioManager.FLAG_SHOW_UI)
         Observable.just(true).delay(5000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
             val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
-            prefs.storeAudioVolume(volume)
+            prefs.storeVoiceCallAudioVolume(volume)
             info("Storing audio volume with value " + volume)
         }
+    }
+
+    fun fadeOffVoiceCallVolume(callback: (() -> Unit)?) {
+        val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val times: Long = 10
+        var counter: Int = 0
+        Observable.just(1).repeat(times)
+                .delay(400, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    info { counter }
+                    if (counter < times - 1) {
+                        am.adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_LOWER, 0)
+                    } else {
+                        am.adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_MUTE, 0)
+                        callback?.invoke()
+                    }
+                    counter += 1
+                }
     }
 }
 

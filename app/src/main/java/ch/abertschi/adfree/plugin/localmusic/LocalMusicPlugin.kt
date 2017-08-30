@@ -7,11 +7,16 @@
 package ch.abertschi.adfree.plugin.localmusic
 
 import android.content.Context
-import android.os.Environment
+import android.content.Intent
 import android.view.View
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.AdPlugin
+import ch.abertschi.adfree.plugin.AudioPlayer
+import ch.abertschi.adfree.plugin.PluginActivityAction
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.error
+import org.jetbrains.anko.info
 import java.io.File
 import java.util.*
 
@@ -21,19 +26,27 @@ import java.util.*
  */
 class LocalMusicPlugin(val context: Context,
                        val prefs: PreferencesFactory,
-                       val audioController: AudioController) : AdPlugin {
+                       val audioController: AudioController) : AdPlugin, AnkoLogger {
 
     private val supportedFileExt = listOf(".mp3")
     private var view: LocalMusicView? = null
+    private var player: AudioPlayer = AudioPlayer(context, prefs, audioController)
 
     override fun hasSettingsView(): Boolean = true
 
-    override fun settingsView(context: Context): View? {
-        view = view ?: LocalMusicView(context)
+    override fun settingsView(context: Context, action: PluginActivityAction): View? {
+        view = view ?: LocalMusicView(context, action)
         return view!!.onCreate(this)
     }
 
     override fun play() {
+        val file = getRandomTrackfromUri(prefs.getLocalMusicDirectory())
+        file?.let {
+            info { "playing " + file.absolutePath }
+            runAndCatchException {
+                player.play(file.absolutePath)
+            }
+        }
     }
 
     override fun playTrial() {
@@ -41,9 +54,14 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun requestStop(onStoped: () -> Unit) {
+        forceStop()
+        onStoped()
     }
 
     override fun forceStop() {
+        runAndCatchException({
+            player.forceStop()
+        })
     }
 
     override fun onPluginLoaded() {
@@ -57,8 +75,8 @@ class LocalMusicPlugin(val context: Context,
 
     override fun title(): String = "local music"
 
-    private fun getUrl(): File? {
-        val musicDir: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+    private fun getRandomTrackfromUri(path: String): File? {
+        val musicDir = File(path)
         val allFiles = ArrayList<File>()
         val dirs = LinkedList<File>()
         dirs.add(musicDir)
@@ -70,7 +88,6 @@ class LocalMusicPlugin(val context: Context,
                 } else if (f.isFile) {
                     for (ext: String in supportedFileExt) {
                         if (f.absoluteFile.toString().endsWith(ext)) {
-                            println(f.absoluteFile)
                             allFiles.add(f)
                         }
                     }
@@ -85,7 +102,24 @@ class LocalMusicPlugin(val context: Context,
     }
 
     fun chooseDirectory() {
-        val path = Environment.getExternalStorageDirectory().absolutePath + "/Music/"
-        view?.openFileBrowser(path)
+        view?.showFolderSelectionDialog()
+    }
+
+    fun onDirectorySelected(files: MutableList<String>) {
+        files?.firstOrNull().let {
+            prefs.setLocalMusicDirectory(it!!)
+        }
+    }
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    }
+
+    private fun runAndCatchException(function: () -> Unit): Unit {
+        try {
+            function()
+        } catch (e: Throwable) {
+            view?.showAudioError()
+            error(e)
+        }
     }
 }

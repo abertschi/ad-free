@@ -11,7 +11,6 @@ import ch.abertschi.adfree.util.Serializer
 /**
  * Created by abertschi on 22.04.17.
  */
-
 // Dont use data class attribute because yaml needs default constructor
 class InterdimCableModel {
     val channels: List<Channel>? = null

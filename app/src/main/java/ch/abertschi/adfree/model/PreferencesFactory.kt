@@ -21,7 +21,9 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsLastUpdateInServiceDate = "LAST_UPDATE_IN_SERVICE"
     private val prefsFirstRun = "FIRST_RUN"
     private val prefsAudioVolume: String = "AUDIO_KEY"
+    private val prefsStreamMusicAudioVolume: String = "AUDIO_STREAM_MUSIC_KEY"
     private val prefsActivePlugin: String = "ACTIVE_PLUGIN"
+    private val prefsLocalMusic: String = "location_local_music"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -47,11 +49,24 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     fun isFirstRun(): Boolean = prefs.getBoolean(prefsFirstRun, false)
 
-    fun storeAudioVolume(volume: Int)
+    fun storeVoiceCallAudioVolume(volume: Int)
             = prefs.edit().putInt(prefsAudioVolume, volume).commit()
 
-    fun loadAudioVolume(): Int =
+    fun loadVoiceCallAudioVolume(): Int =
             prefs.getInt(prefsAudioVolume, 100)
+
+
+    fun storeStreamMusicAudioVolume(volume: Int)
+            = prefs.edit().putInt(prefsStreamMusicAudioVolume, volume).commit()
+
+    fun loadStreaMusicAudioVolume(): Int =
+            prefs.getInt(prefsStreamMusicAudioVolume, 100)
+
+    fun getLocalMusicDirectory(): String =
+            prefs.getString(prefsLocalMusic, "/storage/sdcard0/Music")
+
+    fun setLocalMusicDirectory(value: String) =
+            prefs.edit().putString(prefsLocalMusic, value).commit()
 
     @Deprecated("Dont use shared prefs outside this class anymore")
     fun getPreferences(): SharedPreferences = prefs

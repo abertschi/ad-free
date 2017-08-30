@@ -13,6 +13,7 @@ import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.YamlRemoteConfigFactory
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
+import ch.abertschi.adfree.plugin.PluginActivityAction
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
@@ -22,7 +23,7 @@ import org.jetbrains.anko.info
  */
 class InterdimCablePlugin(val prefs: PreferencesFactory,
                           val audioController: AudioController,
-                          val context: Context)
+                          val globalContext: Context)
     : AdPlugin, AnkoLogger {
 
     private val GITHUB_RAW_SUFFIX: String = "?raw=true"
@@ -36,24 +37,18 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
             YamlRemoteConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, prefs)
 
     private var model: InterdimCableModel? = null
-    private var interdimCableView: InterdimCableView? = null
+    private var interdimCableView: InterdimCableView? = InterdimCableView(globalContext)
 
-    private var player: AudioPlayer = AudioPlayer(context, prefs, audioController)
+    private var player: AudioPlayer = AudioPlayer(globalContext, prefs, audioController)
 
     init {
-        player.trackPreparationDelayCallable = {
-            interdimCableView?.showDownloadingTrack()
-        }
     }
 
     override fun title(): String = "interdimensional cable"
 
     override fun hasSettingsView(): Boolean = true
 
-    override fun settingsView(context: Context): View? {
-        if (interdimCableView == null) {
-            interdimCableView = InterdimCableView(context)
-        }
+    override fun settingsView(c: Context, actions: PluginActivityAction): View? {
         return interdimCableView?.onCreate(this)
     }
 

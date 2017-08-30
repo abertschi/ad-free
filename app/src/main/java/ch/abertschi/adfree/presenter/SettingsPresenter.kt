@@ -12,6 +12,7 @@ import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.view.setting.SettingsView
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.collections.forEachWithIndex
 
 
 /**
@@ -30,15 +31,9 @@ class SettingsPresenter(val settingView: SettingsView, val context: Context) : A
 
     init {
         activePlugin = pluginHandler.getActivePlugin()
-        var index: Int = 0
-        plugins.forEach {
-            if (it == activePlugin) {
-                activePluginIndex = index
-            }
-            index++
-        }
-        if (activePluginIndex >= plugins.size) {
-            activePluginIndex = 0
+        activePluginIndex = 0
+        plugins.forEachWithIndex { i, adPlugin ->
+            if (adPlugin == activePlugin) activePluginIndex = i
         }
     }
 
@@ -49,8 +44,9 @@ class SettingsPresenter(val settingView: SettingsView, val context: Context) : A
 
     private fun setPluginView() {
         settingView.clearPluginView()
-        if (activePlugin?.hasSettingsView() ?: false) {
-            settingView.setPluginView(activePlugin?.settingsView(settingView.getContext())!!)
+        if (activePlugin?.hasSettingsView() == true) {
+            settingView.setPluginView(activePlugin?.
+                    settingsView(settingView.getContext(), settingView)!!)
         }
     }
 

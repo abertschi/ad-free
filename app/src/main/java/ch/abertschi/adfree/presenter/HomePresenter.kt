@@ -34,9 +34,7 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     }
 
     fun onResume(context: Context) {
-        if (!isInit) {
-            showPermissionRequiredIfNecessary(context)
-        }
+        showPermissionRequiredIfNecessary(context)
     }
 
     fun hasNotificationPermission(context: Context): Boolean {

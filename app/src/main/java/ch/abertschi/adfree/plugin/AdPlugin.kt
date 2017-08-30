@@ -16,7 +16,7 @@ interface AdPlugin {
 
     fun title(): String
     fun hasSettingsView(): Boolean = false
-    fun settingsView(context: Context): View? = null
+    fun settingsView(context: Context, activityActions: PluginActivityAction): View? = null
 
     fun play(): Unit
     fun playTrial(): Unit

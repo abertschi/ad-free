@@ -58,7 +58,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         
         // TODO: this is debug code
 //        val r: Random = Random()
-//        val c: AdFreeApplication = context.applicationContext as AdFreeApplication
+//        val c: AdFreeApplication = globalContext.applicationContext as AdFreeApplication
 //        view.onTouch { view, motionEvent ->
 //            info { "AdFree event created" }
 //            when (r.nextBoolean()) {

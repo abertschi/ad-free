@@ -16,7 +16,7 @@ import ch.abertschi.adfree.view.home.HomeView
 class HomeModul(val context: Context, val homeView: HomeView) {
 
     /*fun provideControlPresenter(): HomePresenter {
-        return HomePresenter(homeView, context)
+        return HomePresenter(homeView, globalContext)
     }*/
 
 }
