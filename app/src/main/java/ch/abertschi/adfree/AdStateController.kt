@@ -40,6 +40,18 @@ class AdStateController(val audioController: AudioController,
         if (activeState != EventType.NO_AD && event.eventType == EventType.NO_AD) {
             onNoAd(observable)
         }
+        if (activeState != EventType.IGNORE_AD && event.eventType == EventType.IGNORE_AD) {
+            onIgnoreAd(observable)
+        }
+    }
+
+    fun onIgnoreAd(observable: AdObservable) {
+        info { "AdEvent Change: IGNORE_AD" }
+        activeState = EventType.IGNORE_AD
+
+        audioController.unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff()
+        adPluginHandler.stopPlugin()
+        notificationUtils.hideBlockingNotification()
     }
 
     fun onNoAd(observable: AdObservable) {
@@ -61,7 +73,7 @@ class AdStateController(val audioController: AudioController,
         audioController.muteMusicStream()
         adPluginHandler.runPlugin()
         notificationUtils.showBlockingNotification(dismissCallable = {
-            observable.requestNoAd()
+            observable.requestIgnoreAd()
         })
     }
 

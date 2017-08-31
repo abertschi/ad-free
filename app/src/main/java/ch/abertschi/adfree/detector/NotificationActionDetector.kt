@@ -17,6 +17,6 @@ class NotificationActionDetector : AbstractStatusBarDetector() {
             = super.canHandle(payload) && payload?.statusbarNotification?.notification?.actions != null
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = payload.statusbarNotification.notification.actions.size <= 3 || true
+            = payload.statusbarNotification.notification.actions.size <= 3
 
 }

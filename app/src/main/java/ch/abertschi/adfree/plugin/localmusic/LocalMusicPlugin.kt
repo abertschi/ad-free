@@ -20,7 +20,6 @@ import org.jetbrains.anko.info
 import java.io.File
 import java.util.*
 
-
 /**
  * Created by abertschi on 01.05.17.
  */
@@ -71,6 +70,7 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun onPluginDeactivated() {
+        forceStop()
     }
 
     override fun title(): String = "local music"

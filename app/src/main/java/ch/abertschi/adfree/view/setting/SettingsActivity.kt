@@ -25,6 +25,7 @@ import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.onItemSelectedListener
+import org.jetbrains.anko.toast
 
 
 /**
@@ -77,6 +78,11 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
         settingsTitle?.text = Html.fromHtml(text)
 
+        val tryMeText = view?.findViewById(R.id.tryout_text) as TextView
+        tryMeText.typeface = typeFace
+        tryMeText?.text = Html.fromHtml("")
+
+
         spinner = view?.findViewById(R.id.spinner) as Spinner
         spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item,
                 settingPresenter.getStringEntriesOfModel(), spinner!!, view)
@@ -122,6 +128,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         val browserIntent =
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
         this.context.startActivity(browserIntent)
+    }
+
+    override fun showTryOutMessage() {
+       this.activity.toast("Trying out plugin")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

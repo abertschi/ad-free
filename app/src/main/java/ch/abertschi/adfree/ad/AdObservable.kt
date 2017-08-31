@@ -14,5 +14,6 @@ interface AdObservable {
     fun addObserver(obs: AdObserver)
     fun deleteObserver(obs: AdObserver)
     fun requestAd()
+    fun requestIgnoreAd()
     fun requestNoAd()
 }

@@ -50,6 +50,21 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         val text = "> choose <font color=#FFFFFF>audio directory</font>"
         chooseDirectoryView?.text = Html.fromHtml(text)
 
+        var playUntilEnd = viewInstance?.
+                findViewById(R.id.plugin_localmusic_play_till_end) as TextView
+        playUntilEnd?.typeface = typeFace
+
+        val playUntilEndText = "> play until end "
+        playUntilEnd?.text = Html.fromHtml(playUntilEndText)
+
+        var playUntilEndAnswer = viewInstance?.
+                findViewById(R.id.plugin_localmusic_play_till_end_answer) as TextView
+        playUntilEndAnswer?.typeface = typeFace
+
+        val playUntilEndAnswerText = "<font color=#FFFFFF>yup</font>"
+        playUntilEndAnswer?.text = Html.fromHtml(playUntilEndAnswerText)
+
+
         setVolumeView.setOnClickListener { presenter.configureAudioVolume() }
         chooseDirectoryView.setOnClickListener {
             presenter.chooseDirectory()

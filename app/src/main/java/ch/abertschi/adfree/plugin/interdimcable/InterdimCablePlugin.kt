@@ -61,7 +61,9 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
         onPluginLoaded()
     }
 
-    override fun onPluginDeactivated() {}
+    override fun onPluginDeactivated() {
+        forceStop()
+    }
 
     private fun updatePluginSettings(callback: (() -> Unit)? = null) {
         configFactory.downloadObservable()

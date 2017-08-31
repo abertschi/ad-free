@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:text="version"
         android:textColor="#C4BCAF"
-        android:textSize="12dp"
+        android:textSize="@dimen/normal_text_small"
         />
 
 

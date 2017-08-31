@@ -21,4 +21,5 @@ interface SettingsView : PluginActivityAction {
     fun showSuggestNewPlugin()
     fun setPluginView(view: View)
     fun clearPluginView()
+    fun showTryOutMessage()
 }

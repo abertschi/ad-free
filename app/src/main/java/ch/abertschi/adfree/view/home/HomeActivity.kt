@@ -21,12 +21,15 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.toast
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
 class HomeActivity : Fragment(), HomeView, AnkoLogger {
+
     lateinit var typeFace: Typeface
 
     lateinit var powerButton: SwitchCompat
@@ -73,6 +76,13 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         homePresenter.onResume(this.context)
         super.onResume()
     }
+
+    override fun showStatusEnabled() {
+        context.applicationContext.runOnUiThread {
+            context.toast("Ad Free enabled")
+        }
+    }
+
 
     override fun showPermissionRequired() {
         val text = "touch here to grant permission"

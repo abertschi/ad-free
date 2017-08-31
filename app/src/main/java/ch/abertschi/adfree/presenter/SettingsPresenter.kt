@@ -67,6 +67,7 @@ class SettingsPresenter(val settingView: SettingsView, val context: Context) : A
     }
 
     fun tryPlugin() {
+//        settingView.showTryOutMessage()
         pluginHandler.trialRunPlugin()
     }
 

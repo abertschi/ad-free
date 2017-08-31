@@ -47,6 +47,9 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     }
 
     fun enabledStatusChanged(status: Boolean) {
+        if (status && !preferencesFactory.isBlockingEnabled()) {
+            homeView.showStatusEnabled()
+        }
         preferencesFactory.setBlockingEnabled(status)
     }
 

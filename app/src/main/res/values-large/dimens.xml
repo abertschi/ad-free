@@ -2,5 +2,6 @@
 <resources>
     <dimen name="title_text_size">45sp</dimen>
     <dimen name="normal_text_size">30sp</dimen>
+    <dimen name="normal_text_small">20sp</dimen>
 
 </resources>
