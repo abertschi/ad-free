@@ -6,63 +6,54 @@
 
 package ch.abertschi.adfree.plugin
 
-import android.content.Context
+import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.model.PreferencesFactory
-import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 21.04.17.
  */
-class PluginHandler private constructor() {
+class PluginHandler(val prefs: PreferencesFactory,
+                    val plugins: List<AdPlugin>,
+                    val adDetector: AdObservable) : AnkoLogger {
 
-    private val ACTVIE_PLUGIN_KEY: String = "ACTIVE_PLUGIN"
+    private var activePlugin: AdPlugin = loadActivePlugin()
 
-    private object Holder {
-        val INSTANCE = PluginHandler()
-    }
-
-    companion object {
-        val instance: PluginHandler by lazy { Holder.INSTANCE }
-    }
-
-    private var initPlugin: AdPlugin = MutePlugin()
-    private var plugins: List<AdPlugin> = listOf(initPlugin, InterdimCablePlugin()) // ()
-    private var activePlugin: AdPlugin? = initPlugin
-
-    fun getActivePlugin(context: Context): AdPlugin {
-        val prefs = PreferencesFactory.providePrefernecesFactory(context)
-        val activeKey = prefs.getPreferences().getString(ACTVIE_PLUGIN_KEY, null)
-        var active: AdPlugin? = activePlugin
-        if (activeKey != null) {
-            plugins.forEach {
-                // TODO: this is hacky
-                if (serializeActivePluginId(it).equals(activeKey)) {
-                    active = it
-                }
-            }
-        }
-        activePlugin = active
+    fun getActivePlugin(): AdPlugin {
         return activePlugin!!
     }
 
+    private fun loadActivePlugin(): AdPlugin {
+        val key: String? = prefs.getActivePlugin()
+        var active = plugins.firstOrNull { serializeActivePluginId(it).equals(key) }
+        return if (active != null) active
+        else MutePlugin() // default plugin
+    }
+
     fun setActivePlugin(plugin: AdPlugin): AdPlugin {
-        val prefs = PreferencesFactory.providePrefernecesFactory()
-        prefs.getPreferences().edit().putString(ACTVIE_PLUGIN_KEY, serializeActivePluginId(plugin)).commit()
+        prefs.setActivePlugin(serializeActivePluginId(plugin))
         val oldPlugin = activePlugin
         activePlugin = plugin
         return oldPlugin!!
     }
 
-    fun getPlugins(): List<AdPlugin> = plugins
+    fun runPlugin() = activePlugin?.play()
 
-    fun runPlugin(context: PluginContet) = activePlugin?.play(context)
+    fun trialRunPlugin() {
+        activePlugin?.playTrial()
+    }
 
-    fun trialRunPlugin(context: PluginContet) = activePlugin?.playTrial(context)
+    fun requestPluginStop(onStoped: () -> Unit) = activePlugin?.requestStop(onStoped)
 
-    fun requestPluginStop(context: PluginContet, onStoped: () -> Unit) = activePlugin?.requestStop(context, onStoped)
+    fun stopPlugin(onStoped: () -> Unit) {
+        info { "Stopping plugin " + activePlugin?.javaClass.canonicalName }
+        activePlugin?.stop(onStoped)
+    }
 
-    fun stopPlugin(context: PluginContet) = activePlugin?.forceStop(context)
+    fun forceStopPlugin(onStoped: () -> Unit) = activePlugin?.forceStop(onStoped)
 
-    private fun serializeActivePluginId(plugin: AdPlugin): String = plugin.javaClass.canonicalName
+    private fun serializeActivePluginId(plugin: AdPlugin): String
+            = plugin.javaClass.canonicalName
 }

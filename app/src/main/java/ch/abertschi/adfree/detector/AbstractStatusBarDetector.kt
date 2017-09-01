@@ -6,16 +6,21 @@
 
 package ch.abertschi.adfree.detector
 
+import org.jetbrains.anko.AnkoLogger
+
 /**
  * Created by abertschi on 13.12.16.
  */
-abstract class AbstractStatusBarDetector : AdDetectable {
+abstract class AbstractStatusBarDetector : AdDetectable, AnkoLogger {
 
     companion object {
         private val SPOTIFY_PACKAGE = "com.spotify"
     }
 
-    override fun canHandle(payload: AdPayload): Boolean
-            = payload?.statusbarNotification?.key?.toLowerCase()?.contains(SPOTIFY_PACKAGE) ?: false
+    override fun canHandle(payload: AdPayload): Boolean {
+        return payload?.statusbarNotification?.key?.toLowerCase()?.contains(SPOTIFY_PACKAGE) ?: false
+    }
+
 
 }
+

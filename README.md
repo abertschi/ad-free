@@ -6,9 +6,9 @@ Ad Free is a research project attempting to show flaws in the way how Spotify fo
 <img src=".github/cover2.png" width="900">
 
 ## Features
+- No ROOT required
 - Turn off sound when advertisement is playing
 - Play arbitrary audio instead of Spotify advertisement
-- No ROOT required
 - Plugin based design
 
 ## Download
@@ -34,15 +34,28 @@ Detector which checks for properties set in the notification bundle.
 
 #### Plugins
 
-Currently, an [instance](./app/src/main/java/ch/abertschi/adfree/plugin/interdimcable/InterdimCablePlugin.kt) of `AdPlugin` is implemented which replaces Spotify advertisements with interdimensional cable advertisements featured in [Adult Swim's Rick and Morty TV series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP).
+##### Mute Audio
+As the title of this plugin suggests, it only mutes adertisments without playing sound.
+
+##### Interdimensional Cable
+[Interdimensional Cable](./app/src/main/java/ch/abertschi/adfree/plugin/interdimcable/InterdimCablePlugin.kt) replaces Spotify advertisements with interdimensional cable advertisements featured in [Adult Swim's Rick and Morty TV series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP).
+
+##### Play local music
+Play music tracks stored on your phone while advertisement is playing
 
 ## Compatibility
 Due to the lack of notifications on Android TV, Ad Free is currently not compatible with Android TV.
 
 Tested with the following Spotify versions
 - 2017-04-19: 8.3.0.681 armV7
+- 2017-09-01: 8.4.17.640 armV7
 
 ## Release notes
+### v0.0.4.0, 2017-09-01
+- Introduce a new Plugin: `local music` to play music stored on your phone while
+ads are being played.
+- Improve ad detection. Implement finite state machine to keep track of an ad is currently played or not.
+- Introduce landing webpage and prepare for play store release.
 
 ### v0.0.3.4, 2017-04-30
 - Various bug fixes and internal refactoring

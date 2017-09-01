@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 
 
@@ -49,7 +49,7 @@ class PluginSpinnerAdapter
         val view = inflater.inflate(R.layout.replacer_setting_item, parent, false)
         val textView = view.findViewById(R.id.setting_spinner_item) as TextView
         textView.text = objects[position]
-        textView.typeface = AppSettings.instance(context).typeFace
+        textView.typeface = ViewSettings.instance(context).typeFace
         view.setOnClickListener {
             spinner.performClick()
             spinner.setSelection(position)

@@ -28,6 +28,21 @@
         android:src="@mipmap/audio_gray"
         />
 
+    <TextView
+        android:id="@+id/tryout_text"
+        style="@style/AppTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:text="try me"
+        android:textColor="#C4BCAF"
+        android:textSize="@dimen/normal_text_small"
+        android:paddingBottom="6dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignBottom="@+id/try_plugin_button"
+        android:layout_toStartOf="@+id/try_plugin_button"/>
+
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
@@ -75,7 +90,7 @@
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/plugin_spinner_height"
                     android:entries="@array/test"/>
 
             </LinearLayout>
@@ -95,10 +110,9 @@
             android:id="@+id/setting_plugin_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:paddingBottom="100dp"
 
-
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"/>
     </ScrollView>
 
 

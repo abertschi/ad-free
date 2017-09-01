@@ -7,10 +7,10 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "ch.abertschi.adfree"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 24
-        versionCode 11
-        versionName "0.0.3.5"
+        versionCode 12
+        versionName "0.0.4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -48,12 +48,17 @@ dependencies {
 // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex.rxjava2:rxjava:2.0.9'
     compile 'com.danikula:videocache:2.6.4'
+    compile 'com.github.angads25:filepicker:1.1.1'
 
     compile('com.thoughtworks.xstream:xstream:1.4.7') {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
 
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
+
+    compile 'com.android.support:support-compat:24.1.1'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
 }
 repositories {
     mavenCentral()

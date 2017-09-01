@@ -12,11 +12,11 @@ package ch.abertschi.adfree.util
 
 class UpdateManager(val prefs: ch.abertschi.adfree.model.PreferencesFactory) {
 
-    // TODO: INDEFINITE duration seems to long, add a timeout that hides the banner after 30 secs or so
+    // TODO: INDEFINITE duration seems to long, add a startTimeout that hides the banner after 30 secs or so
     fun appUpdaterForInAppUse(context: android.content.Context): com.github.javiersantos.appupdater.AppUpdater {
         return com.github.javiersantos.appupdater.AppUpdater(context)
                 .setUpdateFrom(com.github.javiersantos.appupdater.enums.UpdateFrom.GITHUB)
-                .setDuration(com.github.javiersantos.appupdater.enums.Duration.INDEFINITE)
+                .setDuration(com.github.javiersantos.appupdater.enums.Duration.NORMAL)
                 .setGitHubUserAndRepo("abertschi", "ad-free")
                 .setDisplay(com.github.javiersantos.appupdater.enums.Display.SNACKBAR)
     }

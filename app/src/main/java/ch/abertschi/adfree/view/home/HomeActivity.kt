@@ -19,55 +19,73 @@ import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.HomeModul
 import ch.abertschi.adfree.presenter.HomePresenter
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.toast
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
-class HomeActivity : Fragment(), HomeView {
-    lateinit var mTypeFace: Typeface
+class HomeActivity : Fragment(), HomeView, AnkoLogger {
 
-    lateinit var mPowerButton: SwitchCompat
-    lateinit var mEnjoySloganText: TextView
+    lateinit var typeFace: Typeface
+
+    lateinit var powerButton: SwitchCompat
+    lateinit var enjoySloganText: TextView
     lateinit var homePresenter: HomePresenter
-    var isInit: Boolean = false
 
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.home_view, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val controlModul = HomeModul(this.context, this)
-        homePresenter = controlModul.provideControlPresenter()
+        homePresenter = HomeModul(this.activity, this).provideSettingsPresenter()
+        
+        powerButton = view?.findViewById(R.id.switch1) as SwitchCompat
+        typeFace = ViewSettings.instance(this.context).typeFace
 
-        mPowerButton = view?.findViewById(R.id.switch1) as SwitchCompat
-        mTypeFace = AppSettings.instance(this.context).typeFace
+        enjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
-        mEnjoySloganText = view.findViewById(R.id.enjoy) as TextView
-
-        mPowerButton.setOnCheckedChangeListener { buttonView, isChecked ->
+        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
             homePresenter.enabledStatusChanged(isChecked)
         }
         homePresenter.onCreate(this.context)
-        isInit = true
+
+        // TODO: this is debug code
+//        val r: Random = Random()
+//        val c: AdFreeApplication = globalContext.applicationContext as AdFreeApplication
+//        view.onTouch { view, motionEvent ->
+//            info { "AdFree event created" }
+//            when (r.nextBoolean()) {
+//                true -> c.adDetector.notifyObservers(AdEvent(EventType.IS_AD))
+//                else -> c.adDetector.notifyObservers(AdEvent(EventType.NO_AD))
+//            }
+//            true
+//        }
     }
 
     override fun onResume() {
-        if (isInit) {
-            homePresenter.onResume(this.context)
-        }
+        homePresenter.onResume(this.context)
         super.onResume()
     }
+
+    override fun showStatusEnabled() {
+        context.applicationContext.runOnUiThread {
+            context.toast("Ad Free enabled")
+        }
+    }
+
 
     override fun showPermissionRequired() {
         val text = "touch here to grant permission"
         setSloganText(text)
-        mPowerButton.visibility = View.GONE
-        mEnjoySloganText.setOnClickListener {
+        powerButton.visibility = View.GONE
+        enjoySloganText.setOnClickListener {
             showNotificationPermissionSettings()
         }
     }
@@ -77,18 +95,18 @@ class HomeActivity : Fragment(), HomeView {
     }
 
     private fun setSloganText(text: String) {
-        mEnjoySloganText.typeface = mTypeFace
-        mEnjoySloganText.text = Html.fromHtml(text)
+        enjoySloganText.typeface = typeFace
+        enjoySloganText.text = Html.fromHtml(text)
     }
 
     override fun showEnjoyAdFree() {
         val text = "enjoy your <font color=#FFFFFF>ad free</font> music experience"
         setSloganText(text)
-        mEnjoySloganText.setOnClickListener(null)
-        mPowerButton.visibility = View.VISIBLE
+        enjoySloganText.setOnClickListener(null)
+        powerButton.visibility = View.VISIBLE
     }
 
     override fun setPowerState(state: Boolean) {
-        mPowerButton.isChecked = state
+        powerButton.isChecked = state
     }
 }

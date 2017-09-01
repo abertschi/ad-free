@@ -6,7 +6,7 @@
 
 package ch.abertschi.adfree.model
 
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,10 +19,12 @@ import org.jetbrains.anko.info
 
 class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
 
-    private var URL: String = AppSettings.AD_FREE_RESOURCE_ADRESS + "settings.yaml" + AppSettings.GITHUB_RAW_SUFFIX
+    private var URL: String = ViewSettings.AD_FREE_RESOURCE_ADRESS +
+            "settings.yaml" + ViewSettings.GITHUB_RAW_SUFFIX
 
     var remoteSettings: RemoteSetting? = null
-    var configFactory: YamlRemoteConfigFactory<RemoteSetting> = YamlRemoteConfigFactory(URL, RemoteSetting::class.java, prefFactory)
+    var configFactory: YamlRemoteConfigFactory<RemoteSetting> =
+            YamlRemoteConfigFactory(URL, RemoteSetting::class.java, prefFactory)
 
     fun getRemoteSettingsObservable(): Observable<RemoteSetting> {
         remoteSettings = configFactory.loadFromLocalStore()
@@ -31,10 +33,11 @@ class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
                     .map { source -> source.first }
                     .doOnNext { remoteSettings = it }
                     .doOnNext { configFactory.storeToLocalStore(it) }
-                    .subscribe({ _ -> source.onNext(remoteSettings) },
+                    .subscribe({ _ -> source.onNext(remoteSettings!!) },
                             { err ->
                                 info(err)
-                                source.onNext(remoteSettings)
+                                //source.onError(err)
+//                                source.onNext(remoteSettings)
                             })
         }
                 .observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

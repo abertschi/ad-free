@@ -21,7 +21,7 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 16.04.17.
  */
-class NotificationUtils : AnkoLogger {
+class NotificationUtils(val context: Context) : AnkoLogger {
 
     companion object {
         val actionDismiss = "actionDismiss"
@@ -31,47 +31,81 @@ class NotificationUtils : AnkoLogger {
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
     }
 
-    fun showTextNotification(context: Context, title: String, content: String = "") {
-        val notification = NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setSmallIcon(R.mipmap.icon)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .build()
+    private val updateNotificationMap: MutableMap<Int, NotificationCompat.Builder> = HashMap()
 
-        val manager = NotificationManagerCompat.from(context)
-        manager.notify(textgNotificationId, notification)
+    fun updateTextNotificationIfAvailable(id: Int, title: String? = null, content: String? = null) {
+        val builder = updateNotificationMap.get(id)
+        builder?.let {
+            if (title != null) it.setContentTitle(title)
+            if (content != null) it.setContentText(content)
+
+            val manager = NotificationManagerCompat.from(context)
+            manager.notify(id, builder.build())
+        }
     }
 
-    fun showBlockingNotification(context: Context, dismissCallable: () -> Unit) {
+    fun showTextNotification(id: Int, title: String, content: String = "",
+                             dismissCallable: () -> Unit = {}) {
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
                         , NotificationInteractionService::class.java).setAction(actionDismiss)
                         , PendingIntent.FLAG_ONE_SHOT)
 
-        val notification = NotificationCompat.Builder(context)
-                .setContentTitle("Ad detected")
-                .setContentText("Touch to unmute")
+        val builder = NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(content)
                 .setSmallIcon(R.mipmap.icon)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(dismissIntent)
-                .build()
 
-        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT)
+
+        updateNotificationMap[id] = builder
+        val notification = builder.build()
+        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
+                Notification.FLAG_ONGOING_EVENT)
+
+
 
         synchronized(actionDismissCallables) {
             actionDismissCallables.add(dismissCallable)
         }
+
         val manager = NotificationManagerCompat.from(context)
-        manager.notify(blockingNotificationId, notification)
+        manager.notify(id, notification)
     }
 
-    fun hideBlockingNotification(context: Context) {
+//    fun showBlockingNotification(dismissCallable: () -> Unit) {
+//        val dismissIntent = PendingIntent
+//                .getService(context, 0, Intent(context
+//                        , NotificationInteractionService::class.java).setAction(actionDismiss)
+//                        , PendingIntent.FLAG_ONE_SHOT)
+//
+//        val notification = NotificationCompat.Builder(context)
+//                .setContentTitle("Ad detected")
+//                .setContentText("Touch to unmute")
+//                .setSmallIcon(R.mipmap.icon)
+//                .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                .setContentIntent(dismissIntent)
+//                .build()
+//
+//        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
+//                Notification.FLAG_ONGOING_EVENT)
+//
+//        synchronized(actionDismissCallables) {
+//            actionDismissCallables.add(dismissCallable)
+//        }
+//        val manager = NotificationManagerCompat.from(context)
+//        manager.notify(blockingNotificationId, notification)
+//    }
+
+    fun hideNotification(id: Int) {
         val manager = NotificationManagerCompat.from(context)
-        manager.cancel(blockingNotificationId)
+        updateNotificationMap.remove(id)
+        manager.cancel(id)
     }
 
-    class NotificationInteractionService : IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
+    class NotificationInteractionService :
+            IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
         init {
             info("NotificationInteractionService created")
         }
@@ -91,26 +125,6 @@ class NotificationUtils : AnkoLogger {
             }
         }
     }
-
-//    else if (actionKey.equals(NotificationUtils.actionIgnore)) {
-//        AudioController.instance.unmuteMusicStream(this)
-//        utils.hideBlockingNotification(this)
-//
-//        val ignoreKeys: List<String>? = intent.getStringArrayListExtra(NotificationUtils.ignoreIntentExtraKey)
-//        if (ignoreKeys != null && ignoreKeys.size > 0) {
-//            ignoreKeys.forEach {
-//                trackRepository.addTrack(it)
-//            }
-//        }
-//    }
-
-// As long as NotificationActionDetector works reliably, no need to filter out false positives
-//        val ignoreIntent = Intent(context
-//                , NotificationInteractionService::class.java).setAction(actionIgnore).putExtra(ignoreIntentExtraKey, ignoreKeys)
-//
-//        val ignoreAction = NotificationCompat.Action.Builder(0, "Do not block this again",
-//                PendingIntent.getService(context, 0, ignoreIntent
-//                        , PendingIntent.FLAG_ONE_SHOT)).build()
 }
 
 

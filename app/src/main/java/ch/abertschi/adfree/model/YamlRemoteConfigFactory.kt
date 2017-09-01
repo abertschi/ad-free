@@ -7,12 +7,16 @@
 package ch.abertschi.adfree.model
 
 import com.github.kittinunf.fuel.httpGet
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by abertschi on 26.04.17.
  */
-
-class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Class<MODEL>, val preferences: ch.abertschi.adfree.model.PreferencesFactory) {
+class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String,
+                                     val modelType: Class<MODEL>,
+                                     val preferences: PreferencesFactory) {
 
     private val SETTING_PERSISTENCE_LOCAL_KEY: String = "YAML_CONFIG_FACTORY_PERSISTENCE_"
 
@@ -21,7 +25,8 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Cla
     }
 
     fun downloadObservable(): io.reactivex.Observable<Pair<MODEL, String>>
-            = io.reactivex.Observable.create<Pair<MODEL, String>> { source ->
+            = Observable.create<Pair<MODEL, String>> { source ->
+
         downloadUrl.httpGet().responseString { _, _, result ->
             val (data, error) = result
             if (error == null) {
@@ -37,7 +42,8 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Cla
             }
             source.onComplete()
         }
-    }.observeOn(io.reactivex.schedulers.Schedulers.io()).observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+    }.observeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
     fun loadFromLocalStore(defaultReturn: MODEL? = null): MODEL? {
         val yaml = createYamlInstance()
@@ -51,7 +57,8 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String, val modelType: Cla
 
     fun storeToLocalStore(model: MODEL) {
         val yaml = createYamlInstance()
-        preferences.getPreferences().edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).commit()
+        preferences.getPreferences()
+                .edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).commit()
     }
 
     private fun createYamlInstance(): org.yaml.snakeyaml.Yaml {

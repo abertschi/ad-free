@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ad-Free</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background-color: #FE9375;
+            /*font-family: 'Ubuntu Mono', monospace;*/
+            font-family: 'Raleway', sans-serif;
+        }
+
+        header {
+            height: 100vh;
+            width: 100%;
+            min-width: 700px;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            text-align: center;
+            overflow: hidden;
+            position: fixed;
+            top: 0px;
+            margin-left: auto;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 100px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 0px;
+            color: #252A2E;
+        }
+
+        header h2 {
+            margin-top: 0px;
+            font-size: 25px;
+            color: white;
+            color: #252A2E;
+        }
+
+        .phone {
+            width: 47%;
+            height: 100%;
+            display: inline-block;
+        }
+
+        .phone__img {
+            height: 90%;
+            padding: 5%;
+            padding-right: 15%;
+            float: right;
+        }
+
+        .text {
+            display: inline-block;
+            float: right;
+            text-align: left;
+            width: 53%;
+
+            height: 100%;
+            /*background-color: blue;*/
+        }
+
+        .text__title {
+            margin-top: 32vh;
+        }
+
+        .text__links {
+            margin-top: 3vh;
+            color: #252A2E;
+        }
+
+        .text__features {
+
+            margin: 0;
+            padding: 0;
+            margin-top: 3vh;
+        }
+
+        .text__features ul {
+
+            margin: 0;
+            padding: 0;
+
+            list-style-type: none;
+        }
+
+        .text__features ul li {
+            padding-bottom: 5px;
+        }
+
+        button {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            background: #252A2E;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 20px;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+            padding: 0 25px;
+            outline: none;
+            border: 0;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            font-style: normal;
+            cursor: pointer;
+            width: 150px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .bg_item {
+
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            opacity: 0.5;
+            r
+        }
+
+        .bg_item__img {
+            width: 10px;
+        }
+
+        @media only screen and (max-width: 800px) {
+            header {
+                height: auto;
+                width: 100%;
+            }
+            .phone {
+                width: 100%;
+                height: auto;
+                display: block;
+                float: left;
+                margin: 0;
+                padding: 0;
+            }
+
+            .phone__img {
+                height: auto;
+                width: 80%;
+                margin: 0;
+                padding: 0;
+                float: left;
+                margin-left: 10%;
+                margin-bottom: 10%;
+            }
+
+            .text {
+                display: block;
+                text-align: center;
+                width: 100%;
+                margin-top: 0;
+                height: 500px;
+            }
+            .text__title {
+                margin-top: 0;
+            }
+        }
+    </style>
+    <script src="jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+    <header>
+
+        <div class='text'>
+            <div class='text__title'>
+                <h1>Ad-Free</h1>
+                <h2>A Spotify AdBlocker for Android</h2>
+            </div>
+            <div class='text__links'>
+                <button id='download'>download</button>
+                <button id='sourcecode'>source code</button>
+            </div>
+
+            <div class='text__features'>
+                <ul>
+                    <li>&gt; &nbsp;No ROOT required</li>
+                    <li>&gt; &nbsp;Plugin based design</li>
+                    <li>&gt; &nbsp;Mute audio when advertisement is playing</li>
+                    <li>&gt; &nbsp;Play arbitrary audio instead of Spotify advertisement</li>
+                    <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
+                    <ul>
+            </div>
+        </div>
+        <div class='bg_item'>
+            <!-- <img src="headphones.png" class='bg__item__img'> -->
+        </div>
+        <div class='phone'>
+            <img src="phone.png" class='phone__img' id='app-picture'>
+        </div>
+    </header>
+
+    <script>
+        var index = 0;
+        var imgs = ['phone-0.png', 'phone-1.png', 'phone-2.png'];
+
+        var changePicture = function() {
+            var pic = $('#app-picture');
+            pic.attr("src", imgs[index]);
+            pic.fadeIn(1000);
+            index = (index + 1) % imgs.length
+            setTimeout(changePicture, 10000);
+        }
+        changePicture()
+
+        $("#download").click(function() {
+            // window.location.href = 'https://github.com/abertschi/ad-free/releases/latest';
+            window.location.href = 'https://github.com/abertschi/ad-free';
+        });
+
+        $("#sourcecode").click(function() {
+            window.location.href = 'https://github.com/abertschi/ad-free';
+        });
+    </script>
+</body>
+
+</html>

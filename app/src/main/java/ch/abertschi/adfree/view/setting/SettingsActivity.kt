@@ -14,24 +14,35 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
+import ch.abertschi.adfree.di.SettingsModul
+import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
-import ch.abertschi.adfree.view.AppSettings
+import ch.abertschi.adfree.view.ViewSettings
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.onItemSelectedListener
+import org.jetbrains.anko.toast
 
 
 /**
  * Created by abertschi on 21.04.17.
  */
 
-class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
+class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
+
+    override fun signalizeTryOut() {
+        YoYo.with(Techniques.Shake)
+                .duration(800)
+                .repeat(0)
+                .playOn(activity.findViewById(R.id.try_plugin_button))
+    }
 
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
@@ -40,6 +51,8 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
     private var pluginViewContainer: LinearLayout? = null
     private var spinnerAdapter: PluginSpinnerAdapter? = null
     private var init: Boolean = false
+    private val callablesOnActivityResult:
+            MutableList<(requestCode: Int, resultCode: Int, data: Intent?) -> Unit> = ArrayList()
 
     lateinit var settingPresenter: SettingsPresenter
 
@@ -52,7 +65,9 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
     }
 
     override fun setPluginView(view: View) {
-        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+
         pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view) as LinearLayout
         clearPluginView()
         pluginViewContainer?.addView(view)
@@ -62,17 +77,25 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         super.onCreate(savedInstanceState)
         this.rootView = view
 
-        typeFace = AppSettings.instance(this.activity).typeFace
+        typeFace = ViewSettings.instance(this.activity).typeFace
         settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         settingsTitle?.typeface = typeFace
 
-        settingPresenter = SettingsPresenter(this)
+        settingPresenter = SettingsModul(this.activity, this).provideSettingsPresenter()
 
-        val text = "what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>"
+        val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
+                "<font color=#FFFFFF>being played ?</font>"
+
         settingsTitle?.text = Html.fromHtml(text)
 
+        val tryMeText = view?.findViewById(R.id.tryout_text) as TextView
+        tryMeText.typeface = typeFace
+        tryMeText?.text = Html.fromHtml("")
+
+
         spinner = view?.findViewById(R.id.spinner) as Spinner
-        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item, settingPresenter.getStringEntriesOfModel(), spinner!!, view)
+        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item,
+                settingPresenter.getStringEntriesOfModel(), spinner!!, view)
         spinner?.adapter = spinnerAdapter
 
         spinner?.onItemSelectedListener {
@@ -80,19 +103,17 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
                 run {
                     if (init) settingPresenter.onPluginSelected(i)
                     spinnerAdapter?.notifyDataSetChanged()
-
                 }
             }
         }
         view.findViewById(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
-        view.findViewById(R.id.setting_spinner_item_container)?.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                spinner?.performClick()
-                return false
-            }
-        })
+        view.findViewById(R.id.setting_spinner_item_container)
+                ?.setOnTouchListener { v, event ->
+                    spinner?.performClick()
+                    false
+                }
 
         settingPresenter.onCreate()
         init = true
@@ -107,10 +128,30 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger {
         spinner?.setSelection(index, true)
     }
 
+    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
+        super.startActivityForResult(intent, requestCode, options)
+    }
+
     override fun getContext(): Context = this.activity
 
     override fun showSuggestNewPlugin() {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
-        this.getContext().startActivity(browserIntent)
+        val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
+        this.context.startActivity(browserIntent)
     }
+
+    override fun showTryOutMessage() {
+        this.activity.toast("Trying out plugin")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callablesOnActivityResult.forEach { it(requestCode, resultCode, data) }
+    }
+
+    override fun addOnActivityResult(callable: (requestCode: Int, resultCode: Int, data: Intent?)
+    -> Unit) {
+        callablesOnActivityResult.add(callable)
+    }
+
 }

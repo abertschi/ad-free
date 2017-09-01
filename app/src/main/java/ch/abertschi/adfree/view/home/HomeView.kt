@@ -15,4 +15,5 @@ interface HomeView {
     fun showPermissionRequired()
     fun showEnjoyAdFree()
     fun setPowerState(state: Boolean)
+    fun showStatusEnabled()
 }

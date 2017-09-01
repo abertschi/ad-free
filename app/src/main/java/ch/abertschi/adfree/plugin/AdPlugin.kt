@@ -16,15 +16,27 @@ interface AdPlugin {
 
     fun title(): String
     fun hasSettingsView(): Boolean = false
-    fun settingsView(context: Context): View? = null
+    fun settingsView(context: Context, activityActions: PluginActivityAction): View? = null
 
-    fun play(context: PluginContet): Unit
-    fun playTrial(context: PluginContet): Unit
-    fun requestStop(contet: PluginContet, onStoped: () -> Unit)
-    fun forceStop(context: PluginContet)
+    fun play(): Unit
+    fun playTrial(): Unit
 
-    fun onPluginActivated(context: PluginContet)
-    fun onPluginDeactivated(context: PluginContet)
+    /**
+     * run plugin until the end and call callback on stop
+     */
+    fun requestStop(onStoped: () -> Unit)
+
+    /**
+     * Forcefully stop plugin
+     */
+    fun forceStop(onStoped: () -> Unit)
+
+    /**
+     * Signalize plugin to stop now. Call callback on done
+     */
+    fun stop(onStoped: () -> Unit)
+
+    fun onPluginLoaded()
+    fun onPluginActivated()
+    fun onPluginDeactivated()
 }
-
-data class PluginContet(val applicationContext: Context)

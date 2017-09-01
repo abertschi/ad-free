@@ -8,16 +8,19 @@ package ch.abertschi.adfree.view.setting
 
 import android.content.Context
 import android.view.View
+import ch.abertschi.adfree.plugin.PluginActivityAction
 
 /**
  * Created by abertschi on 21.04.17.
  */
 
-interface SettingsView {
+interface SettingsView : PluginActivityAction {
 
     fun setActivePlugin(index: Int)
     fun getContext(): Context
     fun showSuggestNewPlugin()
     fun setPluginView(view: View)
     fun clearPluginView()
+    fun showTryOutMessage()
+    fun signalizeTryOut()
 }

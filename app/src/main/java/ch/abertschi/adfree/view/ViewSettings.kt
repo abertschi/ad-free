@@ -14,7 +14,7 @@ import com.danikula.videocache.HttpProxyCacheServer
  * Created by abertschi on 21.04.17.
  */
 
-class AppSettings private constructor(val context: Context) {
+class ViewSettings private constructor(val context: Context) {
 
     var typeFace: Typeface = Typeface.createFromAsset(context.assets, "fonts/Raleway-ExtraLight.ttf")
 
@@ -23,16 +23,18 @@ class AppSettings private constructor(val context: Context) {
     }
 
     companion object {
-        val AD_FREE_RESOURCE_ADRESS: String = "https://github.com/abertschi/ad-free-resources/blob/master/"
+        val AD_FREE_RESOURCE_ADRESS: String
+                = "https://github.com/abertschi/ad-free-resources/blob/master/"
+
         val GITHUB_RAW_SUFFIX: String = "?raw=true"
 
         private lateinit var httpProxy: HttpProxyCacheServer
 
-        var _instance: AppSettings? = null
+        var _instance: ViewSettings? = null
 
-        fun instance(context: Context): AppSettings {
+        fun instance(context: Context): ViewSettings {
             if (_instance == null) {
-                _instance = AppSettings(context)
+                _instance = ViewSettings(context)
             }
             return _instance!!
         }
