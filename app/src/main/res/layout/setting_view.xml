@@ -90,7 +90,7 @@
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/plugin_spinner_height"
                     android:entries="@array/test"/>
 
             </LinearLayout>
