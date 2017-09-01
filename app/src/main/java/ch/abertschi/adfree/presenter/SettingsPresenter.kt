@@ -11,8 +11,12 @@ import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.view.setting.SettingsView
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.collections.forEachWithIndex
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -64,6 +68,12 @@ class SettingsPresenter(val settingView: SettingsView,
             setActivePlugin(index)
         }
         setPluginView()
+
+        Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe {
+            settingView?.signalizeTryOut()
+        }
     }
 
     fun tryPlugin() {

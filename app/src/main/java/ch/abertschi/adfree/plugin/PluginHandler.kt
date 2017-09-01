@@ -10,6 +10,7 @@ import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 21.04.17.
@@ -46,7 +47,10 @@ class PluginHandler(val prefs: PreferencesFactory,
 
     fun requestPluginStop(onStoped: () -> Unit) = activePlugin?.requestStop(onStoped)
 
-    fun stopPlugin(onStoped: () -> Unit) = activePlugin?.stop(onStoped)
+    fun stopPlugin(onStoped: () -> Unit) {
+        info { "Stopping plugin " + activePlugin?.javaClass.canonicalName }
+        activePlugin?.stop(onStoped)
+    }
 
     fun forceStopPlugin(onStoped: () -> Unit) = activePlugin?.forceStop(onStoped)
 

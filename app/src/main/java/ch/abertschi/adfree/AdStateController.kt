@@ -28,7 +28,7 @@ class AdStateController(val audioController: AudioController,
                         val notificationChannel: NotificationChannel) : AdObserver, AnkoLogger {
 
     private var activeState: EventType? = EventType.NO_AD
-    private val timeoutInMs: Long = 90_000
+    private val timeoutInMs: Long = 10_000
     private var timeoutDisposable: Disposable? = null
 
     override fun onAdEvent(event: AdEvent, observable: AdObservable) {
@@ -52,7 +52,7 @@ class AdStateController(val audioController: AudioController,
         adPluginHandler.forceStopPlugin({
             audioController.muteMusicStream()
             notificationChannel.showDefaultAdNotification {
-                observable.requestNoAd()
+                observable.requestIgnoreAd()
             }
             adPluginHandler.trialRunPlugin()
             resetTimeout()
@@ -66,18 +66,18 @@ class AdStateController(val audioController: AudioController,
         info { "AdEvent Change: IGNORE_AD" }
         activeState = EventType.IGNORE_AD
 
-        adPluginHandler.stopPlugin {
+        adPluginHandler.forceStopPlugin {
             audioController.unmuteMusicStream()
+            notificationChannel.hideDefaultAdNotification()
         }
-        notificationChannel.hideDefaultAdNotification()
     }
 
     fun onNoAd(observable: AdObservable) {
         info { "AdEvent Change: NO_ADD" }
         activeState = EventType.NO_AD
 
-        notificationChannel.hideDefaultAdNotification()
         adPluginHandler.stopPlugin {
+            notificationChannel.hideDefaultAdNotification()
             audioController.unmuteMusicStream()
         }
     }

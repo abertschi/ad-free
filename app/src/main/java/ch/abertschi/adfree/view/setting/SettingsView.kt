@@ -22,4 +22,5 @@ interface SettingsView : PluginActivityAction {
     fun setPluginView(view: View)
     fun clearPluginView()
     fun showTryOutMessage()
+    fun signalizeTryOut()
 }

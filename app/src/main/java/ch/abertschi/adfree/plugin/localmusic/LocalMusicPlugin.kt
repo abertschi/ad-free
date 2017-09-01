@@ -12,21 +12,27 @@ import android.view.View
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.model.YesNoModel
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
 import ch.abertschi.adfree.plugin.PluginActivityAction
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import java.io.File
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 01.05.17.
  */
 class LocalMusicPlugin(val context: Context,
                        val prefs: PreferencesFactory,
-                       val audioController: AudioController) : AdPlugin, AnkoLogger {
+                       val audioController: AudioController,
+                       val yesNoModel: YesNoModel) : AdPlugin, AnkoLogger {
 
     private val supportedFileExt = listOf(".mp3")
     private var view: LocalMusicView? = null
@@ -36,7 +42,9 @@ class LocalMusicPlugin(val context: Context,
 
     override fun settingsView(context: Context, action: PluginActivityAction): View? {
         view = view ?: LocalMusicView(context, action)
-        return view!!.onCreate(this)
+        val settingsView = view!!.onCreate(this)
+        loadPlayUntilEndFlag()
+        return settingsView
     }
 
     override fun play() {
@@ -48,8 +56,18 @@ class LocalMusicPlugin(val context: Context,
             val name = file.absolutePath.split("/").last()
             runAndCatchException {
                 player.play(file.absolutePath)
-                ad.notificationChannel.updateAdNotification(title = name,
-                        content = "touch to unmute ad")
+                Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe {
+
+                    val content = when (prefs.getPlayUntilEnd()) {
+                        true -> "playing until end - touch to stop"
+                        else -> "touch to unmute ad"
+                    }
+
+                    ad.notificationChannel.updateAdNotification(title = name,
+                            content = content)
+                }
             }
         }
     }
@@ -81,9 +99,13 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun stop(onStoped: () -> Unit) {
-        runAndCatchException({
-            player.stop(onStoped)
-        })
+        if (prefs.getPlayUntilEnd()) {
+            requestStop(onStoped)
+        } else {
+            runAndCatchException({
+                player.stop(onStoped)
+            })
+        }
     }
 
     override fun title(): String = "local music"
@@ -135,5 +157,20 @@ class LocalMusicPlugin(val context: Context,
             view?.showAudioError()
             error(e)
         }
+    }
+
+    fun changePlayUntilEndFlag() {
+        val status = prefs.getPlayUntilEnd()
+        prefs.setPlayUntilEnd(!status)
+        loadPlayUntilEndFlag()
+    }
+
+    fun loadPlayUntilEndFlag() {
+        val status = prefs.getPlayUntilEnd()
+        val keyword = when (status) {
+            true -> yesNoModel.getRandomYes()
+            else -> yesNoModel.getRandomNo()
+        }
+        view?.setPlayUntilEndTo(keyword)
     }
 }

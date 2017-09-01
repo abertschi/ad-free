@@ -32,6 +32,8 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
 
     var presenter: LocalMusicPlugin? = null
 
+    private lateinit var playUntilEndAnswer: TextView
+
     fun onCreate(presenter: LocalMusicPlugin): View? {
         this.presenter = presenter
         val inflater = LayoutInflater.from(context)
@@ -57,13 +59,12 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         val playUntilEndText = "> play until end "
         playUntilEnd?.text = Html.fromHtml(playUntilEndText)
 
-        var playUntilEndAnswer = viewInstance?.
+        playUntilEndAnswer = viewInstance?.
                 findViewById(R.id.plugin_localmusic_play_till_end_answer) as TextView
+
         playUntilEndAnswer?.typeface = typeFace
-
-        val playUntilEndAnswerText = "<font color=#FFFFFF>yup</font>"
-        playUntilEndAnswer?.text = Html.fromHtml(playUntilEndAnswerText)
-
+        playUntilEndAnswer.setOnClickListener { presenter.changePlayUntilEndFlag() }
+        playUntilEnd.setOnClickListener { presenter.changePlayUntilEndFlag() }
 
         setVolumeView.setOnClickListener { presenter.configureAudioVolume() }
         chooseDirectoryView.setOnClickListener {
@@ -112,5 +113,10 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         context.applicationContext.runOnUiThread {
             longToast("Whoops, there was an error with audio")
         }
+    }
+
+    fun setPlayUntilEndTo(keyword: String) {
+        val playUntilEndAnswerText = "<font color=#FFFFFF>$keyword</font>"
+        playUntilEndAnswer?.text = Html.fromHtml(playUntilEndAnswerText)
     }
 }

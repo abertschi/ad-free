@@ -15,9 +15,13 @@ import ch.abertschi.adfree.model.YamlRemoteConfigFactory
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
 import ch.abertschi.adfree.plugin.PluginActivityAction
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 21.04.17.
@@ -105,8 +109,13 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
             runAndCatchException({
                 player.playWithCachingProxy(url)
                 val title = item.name ?: item.path?.split("/")?.last()
-                adFree.notificationChannel.updateAdNotification(
-                        title = title)
+
+                Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                    adFree.notificationChannel.updateAdNotification(
+                            title = title)
+                }
             })
         } else {
             interdimCableView?.showNoChannelsError()

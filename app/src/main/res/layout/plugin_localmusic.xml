@@ -32,7 +32,7 @@
         android:textSize="@dimen/normal_text_size"/>
 
     <LinearLayout
-        android:id="@+id/b"
+        android:id="@+id/plugin_localmusic_play_till_end_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -47,7 +47,7 @@
 
             android:inputType="textMultiLine"
             android:scrollHorizontally="false"
-            android:text="> play until the end:"
+            android:text="> play until the end"
             android:textColor="#C4BCAF"
             android:textSize="@dimen/normal_text_size"/>
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
 
             android:inputType="textMultiLine"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="3dp"
             android:scrollHorizontally="false"
             android:text="sure thing"
             android:textColor="#C4BCAF"

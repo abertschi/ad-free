@@ -24,6 +24,8 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsStreamMusicAudioVolume: String = "AUDIO_STREAM_MUSIC_KEY"
     private val prefsActivePlugin: String = "ACTIVE_PLUGIN"
     private val prefsLocalMusic: String = "location_local_music"
+    private val prefsPlayUntilEnd: String = "location_local_music_play_until_end"
+
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -54,6 +56,13 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     fun loadVoiceCallAudioVolume(): Int =
             prefs.getInt(prefsAudioVolume, 100)
+
+
+    fun setPlayUntilEnd(flag: Boolean)
+            = prefs.edit().putBoolean(prefsPlayUntilEnd, flag).commit()
+
+    fun getPlayUntilEnd(): Boolean =
+            prefs.getBoolean(prefsPlayUntilEnd, false)
 
 
     fun storeStreamMusicAudioVolume(volume: Int)

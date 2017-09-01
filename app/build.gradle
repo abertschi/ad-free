@@ -55,6 +55,10 @@ dependencies {
     }
 
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
+
+    compile 'com.android.support:support-compat:24.1.1'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
 }
 repositories {
     mavenCentral()
