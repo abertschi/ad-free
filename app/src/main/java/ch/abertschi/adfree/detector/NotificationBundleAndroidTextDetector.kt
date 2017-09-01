@@ -13,8 +13,6 @@ import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by abertschi on 17.04.17.
- *
- * Checks for notification bundle property "android.text" which is not set on ads
  */
 class NotificationBundleAndroidTextDetector : AbstractStatusBarDetector(), AnkoLogger {
 
