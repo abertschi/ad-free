@@ -3,14 +3,14 @@ apply plugin: 'kotlin-android'
 
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 21
-        targetSdkVersion 24
-        versionCode 12
-        versionName "0.0.4.0"
+        targetSdkVersion 25
+        versionCode 13
+        versionName "0.0.4.0a1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -30,7 +30,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -54,9 +54,8 @@ dependencies {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
 
-    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.google.android.gms:play-services-analytics:10.2.6'
 
-    compile 'com.android.support:support-compat:24.1.1'
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
 }
