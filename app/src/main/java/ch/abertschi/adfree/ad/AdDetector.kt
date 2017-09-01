@@ -84,6 +84,10 @@ class AdDetector(val detectors: List<AdDetectable>) : AnkoLogger, AdObservable {
         notifyObservers(AdEvent(EventType.IGNORE_AD))
     }
 
+    override fun requestShowcase() {
+        notifyObservers(AdEvent(EventType.SHOWCASE))
+    }
+
     override fun requestAd() {
         notifyObservers(AdEvent(EventType.IS_AD))
     }

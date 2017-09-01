@@ -102,9 +102,15 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         action.startActivityForResult(intent, requestCode, options)
     }
 
+    fun showNoAudioTracksFoundMessage() {
+        context.applicationContext.runOnUiThread {
+            longToast("Whoops, no music found in current audio directory")
+        }
+    }
+
     fun showAudioError() {
         context.applicationContext.runOnUiThread {
-            longToast("Whooops, there was an error with audio")
+            longToast("Whoops, there was an error with audio")
         }
     }
 }

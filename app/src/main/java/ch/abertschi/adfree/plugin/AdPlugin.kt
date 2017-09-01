@@ -20,8 +20,21 @@ interface AdPlugin {
 
     fun play(): Unit
     fun playTrial(): Unit
+
+    /**
+     * run plugin until the end and call callback on stop
+     */
     fun requestStop(onStoped: () -> Unit)
-    fun forceStop()
+
+    /**
+     * Forcefully stop plugin
+     */
+    fun forceStop(onStoped: () -> Unit)
+
+    /**
+     * Signalize plugin to stop now. Call callback on done
+     */
+    fun stop(onStoped: () -> Unit)
 
     fun onPluginLoaded()
     fun onPluginActivated()

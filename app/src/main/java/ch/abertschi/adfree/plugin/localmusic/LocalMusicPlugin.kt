@@ -9,6 +9,7 @@ package ch.abertschi.adfree.plugin.localmusic
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.AdPlugin
@@ -40,10 +41,15 @@ class LocalMusicPlugin(val context: Context,
 
     override fun play() {
         val file = getRandomTrackfromUri(prefs.getLocalMusicDirectory())
-        file?.let {
+        if (file == null) view?.showNoAudioTracksFoundMessage()
+        else {
             info { "playing " + file.absolutePath }
+            val ad = context.applicationContext as AdFreeApplication
+            val name = file.absolutePath.split("/").last()
             runAndCatchException {
                 player.play(file.absolutePath)
+                ad.notificationChannel.updateAdNotification(title = name,
+                        content = "touch to unmute ad")
             }
         }
     }
@@ -53,13 +59,14 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun requestStop(onStoped: () -> Unit) {
-        forceStop()
-        onStoped()
+        runAndCatchException({
+            player.requestStop(onStoped)
+        })
     }
 
-    override fun forceStop() {
+    override fun forceStop(onStoped: () -> Unit) {
         runAndCatchException({
-            player.forceStop()
+            player.forceStop(onStoped)
         })
     }
 
@@ -70,7 +77,13 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun onPluginDeactivated() {
-        forceStop()
+        forceStop({})
+    }
+
+    override fun stop(onStoped: () -> Unit) {
+        runAndCatchException({
+            player.stop(onStoped)
+        })
     }
 
     override fun title(): String = "local music"

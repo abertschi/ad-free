@@ -8,6 +8,7 @@ package ch.abertschi.adfree.plugin.interdimcable
 
 import android.content.Context
 import android.view.View
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.YamlRemoteConfigFactory
@@ -23,8 +24,7 @@ import org.jetbrains.anko.info
  */
 class InterdimCablePlugin(val prefs: PreferencesFactory,
                           val audioController: AudioController,
-                          val globalContext: Context)
-    : AdPlugin, AnkoLogger {
+                          val globalContext: Context) : AdPlugin, AnkoLogger {
 
     private val GITHUB_RAW_SUFFIX: String = "?raw=true"
     private val AD_FREE_RESOURCE_ADRESS: String
@@ -62,7 +62,11 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
     }
 
     override fun onPluginDeactivated() {
-        forceStop()
+        forceStop({})
+    }
+
+    override fun stop(onStoped: () -> Unit) {
+        player.stop(onStoped)
     }
 
     private fun updatePluginSettings(callback: (() -> Unit)? = null) {
@@ -83,7 +87,7 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
     }
 
     override fun play() {
-        if (model == null) {
+        if (model == null || model!!.channels == null || model!!.channels!!.isEmpty()) {
             updatePluginSettings(this::doPlay)
             return
         }
@@ -93,9 +97,16 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
     private fun doPlay() {
         val list = model?.channels ?: listOf()
         if (list.isNotEmpty()) {
-            val url = BASE_URL + list[(Math.random() * list.size).toInt()].path + GITHUB_RAW_SUFFIX
+            val item = list[(Math.random() * list.size).toInt()]
+            val adFree = globalContext.applicationContext as AdFreeApplication
+            // TODO
+
+            val url = BASE_URL + item.path + GITHUB_RAW_SUFFIX
             runAndCatchException({
                 player.playWithCachingProxy(url)
+                val title = item.name ?: item.path?.split("/")?.last()
+                adFree.notificationChannel.updateAdNotification(
+                        title = title)
             })
         } else {
             interdimCableView?.showNoChannelsError()
@@ -112,8 +123,8 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
         runAndCatchException({ player.requestStop(onStoped) })
     }
 
-    override fun forceStop() {
-        runAndCatchException({ player.forceStop() })
+    override fun forceStop(onStoped: () -> Unit) {
+        runAndCatchException({ player.forceStop(onStoped) })
     }
 
     private fun runAndCatchException(function: () -> Unit): Unit {

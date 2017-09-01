@@ -17,5 +17,5 @@ interface AdObserver {
 data class AdEvent(val eventType: EventType)
 
 enum class EventType {
-    IS_AD, NO_AD, IGNORE_AD
+    IS_AD, NO_AD, IGNORE_AD, SHOWCASE
 }

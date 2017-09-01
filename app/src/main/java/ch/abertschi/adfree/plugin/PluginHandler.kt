@@ -40,11 +40,15 @@ class PluginHandler(val prefs: PreferencesFactory,
 
     fun runPlugin() = activePlugin?.play()
 
-    fun trialRunPlugin() = adDetector.requestAd()
+    fun trialRunPlugin() {
+        activePlugin?.playTrial()
+    }
 
     fun requestPluginStop(onStoped: () -> Unit) = activePlugin?.requestStop(onStoped)
 
-    fun stopPlugin() = activePlugin?.forceStop()
+    fun stopPlugin(onStoped: () -> Unit) = activePlugin?.stop(onStoped)
+
+    fun forceStopPlugin(onStoped: () -> Unit) = activePlugin?.forceStop(onStoped)
 
     private fun serializeActivePluginId(plugin: AdPlugin): String
             = plugin.javaClass.canonicalName

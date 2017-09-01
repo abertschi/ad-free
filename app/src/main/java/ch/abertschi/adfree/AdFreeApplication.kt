@@ -38,6 +38,7 @@ class AdFreeApplication : Application() {
     lateinit var adPlugins: List<AdPlugin>
     lateinit var adStateController: AdStateController
     lateinit var notificationUtils: NotificationUtils
+    lateinit var notificationChannel: NotificationChannel
 
     override fun onCreate() {
         super.onCreate()
@@ -62,7 +63,8 @@ class AdFreeApplication : Application() {
 
         notificationUtils = NotificationUtils(applicationContext)
 
-        adStateController = AdStateController(audioManager, pluginHandler, notificationUtils)
+        notificationChannel = NotificationChannel(notificationUtils)
+        adStateController = AdStateController(audioManager, pluginHandler, notificationChannel)
 
         adDetector.addObserver(adStateController)
 

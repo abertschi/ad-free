@@ -62,18 +62,16 @@ open class AudioPlayer(val context: Context,
         else onStopCallables.add(onStoped)
     }
 
-    fun forceStop() {
+    fun forceStop(onStoped: () -> Unit) {
         closePlayer()
+        onStoped?.invoke()
     }
 
-    fun fadeOffAndStop() {
-        Observable.just(true).repeat(10)
-                .delay(100, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe {
-
-        }
-
+    fun stop(onStoped: () -> Unit) {
+        audioController.fadeOffVoiceCallVolume({
+            closePlayer()
+            onStoped?.invoke()
+        })
     }
 
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>
@@ -112,16 +110,12 @@ open class AudioPlayer(val context: Context,
         }
     }
 
-    fun closePlayer() {
-        audioController.fadeOffVoiceCallVolume({
-            isPlaying = false
-            player?.stop()
-            player?.reset()
-            player?.release()
-            player = null
-
-        })
-
+    private fun closePlayer() {
+        isPlaying = false
+        player?.stop()
+        player?.reset()
+        player?.release()
+        player = null
 //        httpProxy?.shutdown()
 //        httpProxy = null
     }

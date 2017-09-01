@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
+import ch.abertschi.adfree.di.SettingsModul
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.ViewSettings
@@ -71,7 +72,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         settingsTitle?.typeface = typeFace
 
-        settingPresenter = SettingsPresenter(this, context.applicationContext)
+        settingPresenter = SettingsModul(this.activity, this).provideSettingsPresenter()
 
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
                 "<font color=#FFFFFF>being played ?</font>"
@@ -131,7 +132,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     }
 
     override fun showTryOutMessage() {
-       this.activity.toast("Trying out plugin")
+        this.activity.toast("Trying out plugin")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

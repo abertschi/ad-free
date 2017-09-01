@@ -16,4 +16,5 @@ interface AdObservable {
     fun requestAd()
     fun requestIgnoreAd()
     fun requestNoAd()
+    fun requestShowcase()
 }

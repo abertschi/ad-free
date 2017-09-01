@@ -7,7 +7,7 @@
 package ch.abertschi.adfree.presenter
 
 import android.content.Context
-import ch.abertschi.adfree.AdFreeApplication
+import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.view.setting.SettingsView
@@ -19,11 +19,11 @@ import org.jetbrains.anko.collections.forEachWithIndex
  * Created by abertschi on 21.04.17.
  */
 
-class SettingsPresenter(val settingView: SettingsView, val context: Context) : AnkoLogger {
+class SettingsPresenter(val settingView: SettingsView,
+                        val context: Context,
+                        val pluginHandler: PluginHandler,
+                        val adObserver: AdObservable) : AnkoLogger {
 
-    // todo encapsulate this with module?
-    private val pluginHandler: PluginHandler =
-            (context.applicationContext as AdFreeApplication).pluginHandler
 
     private val plugins: List<AdPlugin> = pluginHandler.plugins
     private var activePlugin: AdPlugin? = null
@@ -67,8 +67,8 @@ class SettingsPresenter(val settingView: SettingsView, val context: Context) : A
     }
 
     fun tryPlugin() {
-//        settingView.showTryOutMessage()
-        pluginHandler.trialRunPlugin()
+        adObserver.requestShowcase()
+        settingView.showTryOutMessage()
     }
 
     private fun setActivePlugin(index: Int) {

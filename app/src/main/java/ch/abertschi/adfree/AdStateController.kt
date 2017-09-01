@@ -11,7 +11,6 @@ import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.ad.AdObserver
 import ch.abertschi.adfree.ad.EventType
 import ch.abertschi.adfree.plugin.PluginHandler
-import ch.abertschi.adfree.util.NotificationUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -26,11 +25,12 @@ import java.util.concurrent.TimeUnit
  */
 class AdStateController(val audioController: AudioController,
                         val adPluginHandler: PluginHandler,
-                        val notificationUtils: NotificationUtils) : AdObserver, AnkoLogger {
+                        val notificationChannel: NotificationChannel) : AdObserver, AnkoLogger {
 
     private var activeState: EventType? = EventType.NO_AD
     private val timeoutInMs: Long = 90_000
     private var timeoutDisposable: Disposable? = null
+    private val defaultAdNotificationId = 1000
 
     override fun onAdEvent(event: AdEvent, observable: AdObservable) {
         if (activeState != EventType.IS_AD && event.eventType == EventType.IS_AD) {
@@ -43,24 +43,46 @@ class AdStateController(val audioController: AudioController,
         if (activeState != EventType.IGNORE_AD && event.eventType == EventType.IGNORE_AD) {
             onIgnoreAd(observable)
         }
+        if (event.eventType == EventType.SHOWCASE) {
+            onShowCase(observable)
+        }
+    }
+
+    fun onShowCase(observable: AdObservable) {
+//        audioController.unmuteMusicStream()
+//        notificationUtils.hideNotification()
+        activeState = EventType.SHOWCASE
+        adPluginHandler.forceStopPlugin({
+            audioController.muteMusicStream()
+            notificationChannel.showDefaultAdNotification {
+                observable.requestNoAd()
+            }
+            adPluginHandler.trialRunPlugin()
+            resetTimeout()
+            startTimeout({
+                observable.requestNoAd()
+            })
+        })
     }
 
     fun onIgnoreAd(observable: AdObservable) {
         info { "AdEvent Change: IGNORE_AD" }
         activeState = EventType.IGNORE_AD
 
-        audioController.unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff()
-        adPluginHandler.stopPlugin()
-        notificationUtils.hideBlockingNotification()
+        adPluginHandler.stopPlugin {
+            audioController.unmuteMusicStream()
+        }
+        notificationChannel.hideDefaultAdNotification()
     }
 
     fun onNoAd(observable: AdObservable) {
         info { "AdEvent Change: NO_ADD" }
         activeState = EventType.NO_AD
 
-        audioController.unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff()
-        adPluginHandler.stopPlugin()
-        notificationUtils.hideBlockingNotification()
+        notificationChannel.hideDefaultAdNotification()
+        adPluginHandler.stopPlugin {
+            audioController.unmuteMusicStream()
+        }
     }
 
     fun onAd(observable: AdObservable) {
@@ -72,9 +94,9 @@ class AdStateController(val audioController: AudioController,
 
         audioController.muteMusicStream()
         adPluginHandler.runPlugin()
-        notificationUtils.showBlockingNotification(dismissCallable = {
+        notificationChannel.showDefaultAdNotification {
             observable.requestIgnoreAd()
-        })
+        }
     }
 
     private fun startTimeout(callable: () -> Unit) {
@@ -91,4 +113,5 @@ class AdStateController(val audioController: AudioController,
             timeoutDisposable!!.dispose()
         }
     }
+
 }

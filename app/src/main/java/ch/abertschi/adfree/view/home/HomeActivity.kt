@@ -47,7 +47,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         // TODO: proper responsibilities
         val app: AdFreeApplication = context.applicationContext as AdFreeApplication
         homePresenter = HomePresenter(this, app.prefs)
-//        homePresenter = controlModul.provideControlPresenter()
+//        homePresenter = controlModul.provideSettingsPresenter()
 
         powerButton = view?.findViewById(R.id.switch1) as SwitchCompat
         typeFace = ViewSettings.instance(this.context).typeFace

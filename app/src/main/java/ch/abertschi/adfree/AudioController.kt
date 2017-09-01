@@ -41,9 +41,6 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
     }
 
-    fun muteMusicStream(callback: (() -> Unit)?) {
-
-    }
 
     fun unmuteMusicStream() {
         info("Unmuting audio....")
@@ -53,16 +50,6 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         musicStreamIsMuted = false
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
-    }
-
-    fun unmuteMusicStreamWithDelayIfVoiceCallIsFadedOff() {
-        Observable.just(true)
-                .delay(1500, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).map {
-            unmuteMusicStream()
-        }.subscribe()
-
     }
 
     fun showVoiceCallVolume() {

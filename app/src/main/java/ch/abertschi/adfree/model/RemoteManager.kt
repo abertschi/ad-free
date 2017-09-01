@@ -33,10 +33,11 @@ class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
                     .map { source -> source.first }
                     .doOnNext { remoteSettings = it }
                     .doOnNext { configFactory.storeToLocalStore(it) }
-                    .subscribe({ _ -> source.onNext(remoteSettings) },
+                    .subscribe({ _ -> source.onNext(remoteSettings!!) },
                             { err ->
                                 info(err)
-                                source.onNext(remoteSettings)
+                                //source.onError(err)
+//                                source.onNext(remoteSettings)
                             })
         }
                 .observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
