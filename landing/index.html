@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ad-Free</title>
     <link rel="stylesheet" href="normalize.css">
     <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -133,16 +136,39 @@
         }
 
         @media only screen and (max-width: 800px) {
-            body {
-                background: red;
+            header {
+                height: auto;
+                width: 100%;
             }
             .phone {
+                width: 100%;
+                height: auto;
                 display: block;
-            }
-            .text {
-                display: block;
+                float: left;
+                margin: 0;
+                padding: 0;
             }
 
+            .phone__img {
+                height: auto;
+                width: 80%;
+                margin: 0;
+                padding: 0;
+                float: left;
+                margin-left: 10%;
+                margin-bottom: 10%;
+            }
+
+            .text {
+                display: block;
+                text-align: center;
+                width: 100%;
+                margin-top: 0;
+                height: 500px;
+            }
+            .text__title {
+                margin-top: 0;
+            }
         }
     </style>
     <script src="jquery-3.1.1.min.js"></script>
@@ -150,9 +176,7 @@
 
 <body>
     <header>
-        <div class='phone'>
-            <img src="phone.png" class='phone__img' id='app-picture'>
-        </div>
+
         <div class='text'>
             <div class='text__title'>
                 <h1>Ad-Free</h1>
@@ -175,6 +199,9 @@
         </div>
         <div class='bg_item'>
             <!-- <img src="headphones.png" class='bg__item__img'> -->
+        </div>
+        <div class='phone'>
+            <img src="phone.png" class='phone__img' id='app-picture'>
         </div>
     </header>
 
