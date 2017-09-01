@@ -8,8 +8,8 @@ package ch.abertschi.adfree.plugin.interdimcable
 
 import android.content.Context
 import android.view.View
-import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
+import ch.abertschi.adfree.NotificationChannel
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.YamlRemoteConfigFactory
 import ch.abertschi.adfree.plugin.AdPlugin
@@ -28,7 +28,8 @@ import java.util.concurrent.TimeUnit
  */
 class InterdimCablePlugin(val prefs: PreferencesFactory,
                           val audioController: AudioController,
-                          val globalContext: Context) : AdPlugin, AnkoLogger {
+                          val globalContext: Context,
+                          val notificationChannel: NotificationChannel) : AdPlugin, AnkoLogger {
 
     private val GITHUB_RAW_SUFFIX: String = "?raw=true"
     private val AD_FREE_RESOURCE_ADRESS: String
@@ -102,8 +103,6 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
         val list = model?.channels ?: listOf()
         if (list.isNotEmpty()) {
             val item = list[(Math.random() * list.size).toInt()]
-            val adFree = globalContext.applicationContext as AdFreeApplication
-            // TODO
 
             val url = BASE_URL + item.path + GITHUB_RAW_SUFFIX
             runAndCatchException({
@@ -113,7 +112,7 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
                 Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    adFree.notificationChannel.updateAdNotification(
+                    notificationChannel.updateAdNotification(
                             title = title)
                 }
             })

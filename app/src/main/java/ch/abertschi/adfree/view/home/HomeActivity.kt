@@ -16,8 +16,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
+import ch.abertschi.adfree.di.HomeModul
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
@@ -44,11 +44,8 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: proper responsibilities
-        val app: AdFreeApplication = context.applicationContext as AdFreeApplication
-        homePresenter = HomePresenter(this, app.prefs)
-//        homePresenter = controlModul.provideSettingsPresenter()
-
+        homePresenter = HomeModul(this.activity, this).provideSettingsPresenter()
+        
         powerButton = view?.findViewById(R.id.switch1) as SwitchCompat
         typeFace = ViewSettings.instance(this.context).typeFace
 
@@ -58,7 +55,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
             homePresenter.enabledStatusChanged(isChecked)
         }
         homePresenter.onCreate(this.context)
-        
+
         // TODO: this is debug code
 //        val r: Random = Random()
 //        val c: AdFreeApplication = globalContext.applicationContext as AdFreeApplication

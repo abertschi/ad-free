@@ -7,6 +7,8 @@
 package ch.abertschi.adfree.di
 
 import android.content.Context
+import ch.abertschi.adfree.AdFreeApplication
+import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.home.HomeView
 
 /**
@@ -15,8 +17,9 @@ import ch.abertschi.adfree.view.home.HomeView
 
 class HomeModul(val context: Context, val homeView: HomeView) {
 
-    /*fun provideSettingsPresenter(): HomePresenter {
-        return HomePresenter(homeView, globalContext)
-    }*/
+    fun provideSettingsPresenter(): HomePresenter {
+        val adFree = context.applicationContext as AdFreeApplication
+        return HomePresenter(homeView, adFree.prefs)
+    }
 
 }

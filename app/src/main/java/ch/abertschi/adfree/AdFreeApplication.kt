@@ -59,16 +59,15 @@ class AdFreeApplication : Application() {
         yesNoModel = YesNoModel(this)
         yesNoModel.getRandomYes()
 
+        notificationUtils = NotificationUtils(applicationContext)
+        notificationChannel = NotificationChannel(notificationUtils)
+
         adPlugins = listOf(MutePlugin(),
-                InterdimCablePlugin(prefs, audioManager, applicationContext),
+                InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel),
                 LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel)
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
-
-        notificationUtils = NotificationUtils(applicationContext)
-
-        notificationChannel = NotificationChannel(notificationUtils)
         adStateController = AdStateController(audioManager, pluginHandler, notificationChannel)
 
         adDetector.addObserver(adStateController)
