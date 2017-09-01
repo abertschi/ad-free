@@ -30,7 +30,6 @@ class AdStateController(val audioController: AudioController,
     private var activeState: EventType? = EventType.NO_AD
     private val timeoutInMs: Long = 90_000
     private var timeoutDisposable: Disposable? = null
-    private val defaultAdNotificationId = 1000
 
     override fun onAdEvent(event: AdEvent, observable: AdObservable) {
         if (activeState != EventType.IS_AD && event.eventType == EventType.IS_AD) {
@@ -49,8 +48,6 @@ class AdStateController(val audioController: AudioController,
     }
 
     fun onShowCase(observable: AdObservable) {
-//        audioController.unmuteMusicStream()
-//        notificationUtils.hideNotification()
         activeState = EventType.SHOWCASE
         adPluginHandler.forceStopPlugin({
             audioController.muteMusicStream()

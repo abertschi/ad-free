@@ -7,7 +7,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "ch.abertschi.adfree"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 12
         versionName "0.0.4.0"
