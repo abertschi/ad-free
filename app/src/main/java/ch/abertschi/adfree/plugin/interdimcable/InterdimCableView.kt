@@ -28,9 +28,17 @@ class InterdimCableView(val context: Context) {
 
         var text = viewInstance?.findViewById(R.id.plugin_interdim_cable_audio_volume_text) as TextView
         text?.typeface = ViewSettings.instance(context).typeFace
-        val t = "> configure <font color=#FFFFFF>audio volume</font>"
+        var t = "> configure <font color=#FFFFFF>audio volume</font>"
         text?.text = Html.fromHtml(t)
         text.setOnClickListener { presenter.configureAudioVolume() }
+
+        var des = viewInstance?.findViewById(R.id.plugin_interdim_cable_description) as TextView
+        des?.typeface = ViewSettings.instance(context).typeFace
+
+        t = "enjoy intergalactic television featured in " +
+                "rick and morty by adult swim"
+        des?.text = Html.fromHtml(t)
+
         return viewInstance
     }
 
