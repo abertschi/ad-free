@@ -49,19 +49,19 @@ class InterdimCableView(val context: Context) {
     }
 
     fun showDownloadingTrack() {
-        context.applicationContext.runOnUiThread {
+        context.runOnUiThread {
             longToast("Downloading track ...")
         }
     }
 
     fun showAudioError() {
-        context.applicationContext.runOnUiThread {
+        context.runOnUiThread {
             longToast("Whooops, there was an error with audio")
         }
     }
 
     fun showNoChannelsError() {
-        context.applicationContext.runOnUiThread {
+        context.runOnUiThread {
             longToast("No channels to play. You can not listen to interdimensional tv :(")
         }
     }
