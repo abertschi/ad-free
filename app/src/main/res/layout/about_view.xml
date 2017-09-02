@@ -10,22 +10,50 @@
     android:orientation="vertical"
     >
 
-    <TextView
-        android:id="@+id/version"
-        style="@style/AppTextView"
-        android:layout_width="match_parent"
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:scrollHorizontally="false"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        android:textAlignment="textEnd"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="version"
-        android:textColor="#C4BCAF"
-        android:textSize="@dimen/normal_text_small"
-        />
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/version"
+            style="@style/AppTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:inputType="textMultiLine"
+            android:scrollHorizontally="false"
+            android:text="version"
+            android:textAlignment="textEnd"
+            android:textColor="#C4BCAF"
+            android:textSize="@dimen/normal_text_small"
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/more_settings"-->
+            <!--style="@style/AppTextView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:inputType="textMultiLine"-->
+            <!--android:scrollHorizontally="false"-->
+            <!--android:text="..."-->
+            <!--android:textAlignment="textEnd"-->
+            <!--android:textColor="#C4BCAF"-->
+            <!--android:textSize="40dp"-->
+            <!--android:layout_alignBaseline="@+id/version"-->
+            <!--android:layout_alignBottom="@+id/version"-->
+            <!--/>-->
+
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -65,8 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/aboutLayout"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_marginTop="70dp">
+            android:layout_marginTop="70dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/website"
@@ -78,13 +106,13 @@
                 />
 
             <!--<ImageView-->
-                <!--android:id="@+id/github"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:scaleType="fitCenter"-->
-                <!--android:src="@mipmap/github"-->
-                <!--/>-->
+            <!--android:id="@+id/github"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@mipmap/github"-->
+            <!--/>-->
 
             <ImageView
                 android:id="@+id/twitter"
@@ -97,11 +125,11 @@
 
         </LinearLayout>
         <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/icons_first_row"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--&gt;-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/icons_first_row"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--&gt;-->
 
     </RelativeLayout>
 </LinearLayout>

@@ -21,7 +21,6 @@ import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
 import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
-import ch.abertschi.adfree.util.UsageFeedback
 
 
 /**
@@ -31,7 +30,6 @@ import ch.abertschi.adfree.util.UsageFeedback
 class AdFreeApplication : Application() {
 
     lateinit var prefs: PreferencesFactory
-    lateinit var feedback: UsageFeedback
     lateinit var adDetectors: List<AdDetectable>
     lateinit var adDetector: AdDetector
     lateinit var audioManager: AudioController
@@ -45,8 +43,6 @@ class AdFreeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         prefs = PreferencesFactory(applicationContext)
-        feedback = UsageFeedback(applicationContext, prefs)
-        feedback.trackFirstRun()
 
         adDetectors = listOf<AdDetectable>(NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
@@ -68,7 +64,8 @@ class AdFreeApplication : Application() {
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
-        adStateController = AdStateController(audioManager, pluginHandler, notificationChannel)
+        adStateController = AdStateController(audioManager, pluginHandler,
+                notificationChannel)
 
         adDetector.addObserver(adStateController)
 

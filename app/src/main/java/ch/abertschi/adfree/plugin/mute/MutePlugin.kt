@@ -13,6 +13,7 @@ import ch.abertschi.adfree.plugin.AdPlugin
  */
 class MutePlugin : AdPlugin {
     override fun stop(onStoped: () -> Unit) {
+        onStoped()
     }
 
     override fun onPluginLoaded() {
@@ -31,6 +32,7 @@ class MutePlugin : AdPlugin {
     }
 
     override fun forceStop(onStoped: () -> Unit) {
+        onStoped()
     }
 
     override fun onPluginActivated() {

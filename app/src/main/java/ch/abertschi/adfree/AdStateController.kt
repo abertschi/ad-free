@@ -11,7 +11,6 @@ import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.ad.AdObserver
 import ch.abertschi.adfree.ad.EventType
 import ch.abertschi.adfree.plugin.PluginHandler
-import ch.abertschi.adfree.util.UsageFeedback
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -26,8 +25,7 @@ import java.util.concurrent.TimeUnit
  */
 class AdStateController(val audioController: AudioController,
                         val adPluginHandler: PluginHandler,
-                        val notificationChannel: NotificationChannel,
-                        val usageFeedback: UsageFeedback) : AdObserver, AnkoLogger {
+                        val notificationChannel: NotificationChannel) : AdObserver, AnkoLogger {
 
     private var activeState: EventType? = EventType.NO_AD
     private val timeoutInMs: Long = 90_000
@@ -56,7 +54,6 @@ class AdStateController(val audioController: AudioController,
             notificationChannel.showDefaultAdNotification {
                 observable.requestIgnoreAd()
             }
-            usageFeedback.feedbackTryPlugin()
             adPluginHandler.trialRunPlugin()
             resetTimeout()
             startTimeout({
@@ -92,7 +89,6 @@ class AdStateController(val audioController: AudioController,
             observable.requestNoAd()
         })
 
-        usageFeedback.feedbackAdBlock()
         audioController.muteMusicStream()
         adPluginHandler.runPlugin()
         notificationChannel.showDefaultAdNotification {
