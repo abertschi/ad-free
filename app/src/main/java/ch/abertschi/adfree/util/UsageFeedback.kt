@@ -23,6 +23,7 @@ class UsageFeedback(val context: Context, val prefs: PreferencesFactory) : AnkoL
 
     companion object {
         val ADBLOCK: String = "adblock"
+        val TRYOUTPLUGIN: String = "tryoutplugin"
         val ACTION: String = "action"
         val USE: String = "use"
         val FIRST_RUN: String = "first_run"
@@ -53,6 +54,14 @@ class UsageFeedback(val context: Context, val prefs: PreferencesFactory) : AnkoL
         t.send(HitBuilders.EventBuilder()
                 .setCategory(ACTION)
                 .setAction(ADBLOCK)
+                .build())
+    }
+
+    fun feedbackTryPlugin() {
+        val t = getFeedback()
+        t.send(HitBuilders.EventBuilder()
+                .setCategory(ACTION)
+                .setAction(TRYOUTPLUGIN)
                 .build())
     }
 
