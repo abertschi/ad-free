@@ -223,7 +223,7 @@
                     <li>&gt; &nbsp;Play arbitrary audio instead of Spotify advertisement</li>
                     <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
                     <ul>
-                        <br/>
+                    
                         <br/> by <a href='https://abertschi.ch'>abertschi</a>
             </div>
         </div>
@@ -236,17 +236,33 @@
     </header>
 
     <script>
+    (function() {
         var index = 0;
-        var imgs = ['phone-0.png', 'phone-1.png', 'phone-2.png'];
+        var prefix = 'phone/'
+        var imgs = ['0.png',
+                    '1.png',
+                    '2.png',
+                    '3.png',
+                    '2.png',
+                    '4.png',
+                    '2.png',
+                    '5.png',
+                    '6.png'];
 
+        var timeout = null;
         var changePicture = function() {
             var pic = $('#app-picture');
-            pic.attr("src", imgs[index]);
+            pic.attr("src", prefix + imgs[index]);
             pic.fadeIn(1000);
             index = (index + 1) % imgs.length
-            setTimeout(changePicture, 10000);
+            timeout = setTimeout(changePicture, 6000);
         }
         changePicture()
+
+        $('.phone').click(() => {
+            if (timeout) clearTimeout(timeout)
+            changePicture()
+        })
 
         $("#download").click(function() {
             // window.location.href = 'https://github.com/abertschi/ad-free/releases/latest';
@@ -256,6 +272,9 @@
         $("#sourcecode").click(function() {
             window.location.href = 'https://github.com/abertschi/ad-free';
         });
+
+
+    })();
     </script>
 </body>
 
