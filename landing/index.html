@@ -2,9 +2,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ad-Free</title>
+    <meta name="theme-color" content="#FE9375" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="j.css">
     <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
@@ -141,7 +144,29 @@
                 height: auto;
                 width: 100%;
             }
+
+            header h1 {
+                font-size: 150px;
+            }
+
+            header h2 {
+                font-size: 40px;
+                margin-bottom: 10%;
+            }
+            button {
+                font-size: 30px;
+                height: 50px;
+                width: 50%;
+            }
+            .text__features {
+                margin-top: 7%;
+                font-size: 25px;
+                text-align: left;
+                margin-left: 12%;
+            }
+
             .phone {
+
                 width: 100%;
                 height: auto;
                 display: block;
@@ -165,7 +190,8 @@
                 text-align: center;
                 width: 100%;
                 margin-top: 0;
-                height: 530px;
+                height: 600px;
+                margin-bottom: 300px;
             }
             .text__title {
                 margin-top: 0;
@@ -173,11 +199,12 @@
         }
     </style>
     <script src="jquery-3.1.1.min.js"></script>
+    <script src="cheet.min.js"></script>
+    <script src="j.js"></script>
 </head>
 
 <body>
-    <header>
-
+    <header class=''>
         <div class='text'>
             <div class='text__title'>
                 <h1>Ad-Free</h1>
@@ -185,7 +212,7 @@
             </div>
             <div class='text__links'>
                 <button id='download'>download</button>
-                <button id='sourcecode'>source code</button>
+                <button id='sourcecode'>sourcecode</button>
             </div>
 
             <div class='text__features'>
@@ -197,7 +224,7 @@
                     <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
                     <ul>
                         <br/>
-                        <br/> by <a href='https://twitter.com/andrinbertschi'>@andrinbertschi</a>
+                        <br/> by <a href='https://abertschi.ch'>abertschi</a>
             </div>
         </div>
         <div class='bg_item'>

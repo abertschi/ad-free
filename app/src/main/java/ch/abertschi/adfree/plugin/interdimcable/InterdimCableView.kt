@@ -28,9 +28,17 @@ class InterdimCableView(val context: Context) {
 
         var text = viewInstance?.findViewById(R.id.plugin_interdim_cable_audio_volume_text) as TextView
         text?.typeface = ViewSettings.instance(context).typeFace
-        val t = "> configure <font color=#FFFFFF>audio volume</font>"
+        var t = "> configure <font color=#FFFFFF>audio volume</font>"
         text?.text = Html.fromHtml(t)
         text.setOnClickListener { presenter.configureAudioVolume() }
+
+        var des = viewInstance?.findViewById(R.id.plugin_interdim_cable_description) as TextView
+        des?.typeface = ViewSettings.instance(context).typeFace
+
+        t = "enjoy intergalactic television featured in " +
+                "rick and morty by adult swim"
+        des?.text = Html.fromHtml(t)
+
         return viewInstance
     }
 
@@ -41,19 +49,19 @@ class InterdimCableView(val context: Context) {
     }
 
     fun showDownloadingTrack() {
-        context.applicationContext.runOnUiThread {
+        context.runOnUiThread {
             longToast("Downloading track ...")
         }
     }
 
     fun showAudioError() {
-        context.applicationContext.runOnUiThread {
+        context.runOnUiThread {
             longToast("Whooops, there was an error with audio")
         }
     }
 
     fun showNoChannelsError() {
-        context.applicationContext.runOnUiThread {
+        context.runOnUiThread {
             longToast("No channels to play. You can not listen to interdimensional tv :(")
         }
     }
