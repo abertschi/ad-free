@@ -8,7 +8,6 @@ package ch.abertschi.adfree.model
 
 import android.content.Context
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.json.JSONArray
 import java.io.IOException
 import java.nio.charset.Charset
@@ -45,7 +44,6 @@ class YesNoModel(val context: Context) : AnkoLogger {
             stream.read(buffer)
             stream.close()
             json = buffer.toString(Charset.defaultCharset())
-            info(json)
             val words = JSONArray(json)
             var result = ArrayList<String>()
             (0 until words.length()).mapTo(result) { words[it] as String }

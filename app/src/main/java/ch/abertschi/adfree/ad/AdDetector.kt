@@ -26,11 +26,7 @@ class AdDetector(val detectors: List<AdDetectable>,
 
     private var _pendingEvent: AdEvent? = null
     private var go: Boolean = true
-
-    init {
-        remoteManager.getRemoteSettingsObservable()
-                .subscribe({ go = it.enabled })
-    }
+    private var init: Boolean = false
 
     fun applyDetectors(payload: AdPayload) {
         if (!go) return
@@ -52,6 +48,11 @@ class AdDetector(val detectors: List<AdDetectable>,
             if (!isMusic) {
                 activeDetectors.filter { it.flagAsAdvertisement(payload) }
                         .forEach { isAd = true }
+            }
+
+            if (!init) {
+                fetchRemote()
+                init = true
             }
 
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
@@ -80,6 +81,11 @@ class AdDetector(val detectors: List<AdDetectable>,
                 }
             }
         }.subscribe()
+    }
+
+    private fun fetchRemote() {
+        remoteManager.getRemoteSettingsObservable()
+                .subscribe({ go = it.enabled})
     }
 
     fun notifyObservers(event: AdEvent) {
