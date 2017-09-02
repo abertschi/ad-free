@@ -8,6 +8,7 @@ package ch.abertschi.adfree.ad
 
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
+import ch.abertschi.adfree.model.RemoteManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,13 +19,22 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by abertschi on 13.08.17.
  */
-class AdDetector(val detectors: List<AdDetectable>) : AnkoLogger, AdObservable {
+class AdDetector(val detectors: List<AdDetectable>,
+                 val remoteManager: RemoteManager) : AnkoLogger, AdObservable {
 
     private var observers: MutableList<AdObserver> = ArrayList()
 
     private var _pendingEvent: AdEvent? = null
+    private var go: Boolean = true
+
+    init {
+        remoteManager.getRemoteSettingsObservable()
+                .subscribe({ go = it.enabled })
+    }
 
     fun applyDetectors(payload: AdPayload) {
+        if (!go) return
+
         val activeDetectors = detectors.filter { it.canHandle(payload) }
         if (activeDetectors.isNotEmpty()) {
             debug {

@@ -13,6 +13,7 @@ import ch.abertschi.adfree.detector.NotificationActionDetector
 import ch.abertschi.adfree.detector.NotificationBundleAndroidTextDetector
 import ch.abertschi.adfree.detector.SpotifyTitleDetector
 import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.model.TrackRepository
 import ch.abertschi.adfree.model.YesNoModel
 import ch.abertschi.adfree.plugin.AdPlugin
@@ -39,6 +40,7 @@ class AdFreeApplication : Application() {
     lateinit var notificationUtils: NotificationUtils
     lateinit var notificationChannel: NotificationChannel
     lateinit var yesNoModel: YesNoModel
+    lateinit var remoteManager: RemoteManager
 
     override fun onCreate() {
         super.onCreate()
@@ -49,8 +51,8 @@ class AdFreeApplication : Application() {
                 , NotificationBundleAndroidTextDetector())
 
         audioManager = AudioController(applicationContext, prefs)
-
-        adDetector = AdDetector(adDetectors)
+        remoteManager = RemoteManager(prefs)
+        adDetector = AdDetector(adDetectors, remoteManager)
 
         yesNoModel = YesNoModel(this)
         yesNoModel.getRandomYes()
@@ -64,8 +66,8 @@ class AdFreeApplication : Application() {
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
-        adStateController = AdStateController(audioManager, pluginHandler,
-                notificationChannel)
+        adStateController = AdStateController(audioManager,
+                pluginHandler, notificationChannel)
 
         adDetector.addObserver(adStateController)
 
