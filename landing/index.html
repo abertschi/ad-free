@@ -24,13 +24,6 @@
             height: 100vh;
             width: 100%;
             min-width: 700px;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            text-align: center;
-            overflow: hidden;
-            position: fixed;
             top: 0px;
             margin-left: auto;
             position: relative;
@@ -75,7 +68,7 @@
         }
 
         .text__title {
-            margin-top: 32vh;
+            margin-top: 25vh;
         }
 
         .text__links {
@@ -138,8 +131,43 @@
             width: 10px;
         }
 
-        @media only screen and (max-width: 800px),
+        /*@media only
         screen and (max-height: 500px) {
+            .text__title {
+                margin-top: 1vh;
+            }
+        }*/
+
+        @media only
+        screen and (max-height: 600px) {
+            .text__title {
+                margin-top: 10vh;
+            }
+
+            .text__title h1{
+                margin-top: 0;
+            }
+        }
+
+        @media only
+        screen and (max-height: 450px) {
+            .text__title {
+                margin-top: 10vh;
+            }
+
+            .text__title h1{
+                margin-top: 0;
+            }
+            .phone__img {
+                height: 500px;
+                padding: 5%;
+                padding-right: 15%;
+                float: right;
+            }
+        }
+
+        @media only screen and (max-width: 800px) {
+        /*screen and (max-height: 400px) {*/
             header {
                 height: auto;
                 width: 100%;
@@ -191,7 +219,7 @@
                 width: 100%;
                 margin-top: 0;
                 height: 600px;
-                margin-bottom: 300px;
+                margin-bottom: 400px;
             }
             .text__title {
                 margin-top: 0;
@@ -221,9 +249,11 @@
                     <li>&gt; &nbsp;Plugin based design</li>
                     <li>&gt; &nbsp;Mute audio when advertisement is playing</li>
                     <li>&gt; &nbsp;Play arbitrary audio instead of Spotify advertisement</li>
+                    <li>&gt; &nbsp;User friendly <a href='https://github.com/abertschi/ad-free/blob/master/privacy_policy.md'>
+                        Privacy Policy</a></li>
                     <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
                     <ul>
-                    
+
                         <br/> by <a href='https://abertschi.ch'>abertschi</a>
             </div>
         </div>
