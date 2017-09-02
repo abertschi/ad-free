@@ -58,6 +58,7 @@ dependencies {
 
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
+//    compile 'com.afollestad.material-dialogs:core:0.9.4.1'
 }
 repositories {
     mavenCentral()
