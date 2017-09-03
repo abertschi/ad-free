@@ -9,11 +9,14 @@ package ch.abertschi.adfree.ad
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.RemoteManager
+import ch.abertschi.adfree.util.DevelopUtils
+import com.thoughtworks.xstream.XStream
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
+import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
 /**
@@ -38,6 +41,8 @@ class AdDetector(val detectors: List<AdDetectable>,
                         "active ad-detectors"
             }
 
+//            info { XStream().toXML(payload) }
+
             var isMusic = false
             var isAd = false
 
@@ -53,6 +58,21 @@ class AdDetector(val detectors: List<AdDetectable>,
             if (!init) {
                 fetchRemote()
                 init = true
+            }
+
+            if (isAd) {
+                info { "ad-detected ###" }
+//                info { XStream().toXML(payload) }
+                var str = XStream().toXML(payload).trim()
+                str = str.replace("\n\r", "")
+                val i = str.length / 2
+                System.out.println(str.substring(0, i))
+                System.out.flush()
+                System.out.println(str.substring(i + 1))
+                System.out.flush()
+                DevelopUtils().serializeAndWriteToFile(payload, "ad")
+            } else {
+                DevelopUtils().serializeAndWriteToFile(payload, "no_ad")
             }
 
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
@@ -85,7 +105,7 @@ class AdDetector(val detectors: List<AdDetectable>,
 
     private fun fetchRemote() {
         remoteManager.getRemoteSettingsObservable()
-                .subscribe({ go = it.enabled})
+                .subscribe({ go = it.enabled })
     }
 
     fun notifyObservers(event: AdEvent) {
