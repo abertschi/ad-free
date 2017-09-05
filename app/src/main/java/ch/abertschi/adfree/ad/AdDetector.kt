@@ -11,13 +11,9 @@ import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.util.DevelopUtils
 import com.thoughtworks.xstream.XStream
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 13.08.17.
@@ -86,21 +82,23 @@ class AdDetector(val detectors: List<AdDetectable>,
             _pendingEvent = event
         }
 
-        /*
-         * Wait for a while before submit event to reduce wrong detections
-         */
-        Observable.just(true).delay(100, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).map {
-
-            synchronized(this) {
-                if (_pendingEvent != null) {
-                    val e = _pendingEvent
-                    _pendingEvent = null
-                    notifyObservers(e!!)
-                }
+        synchronized(this) {
+            if (_pendingEvent != null) {
+                val e = _pendingEvent
+                _pendingEvent = null
+                notifyObservers(e!!)
             }
-        }.subscribe()
+        }
+
+//        /*
+//         * Wait for a while before submit event to reduce wrong detections
+//         */
+//        Observable.just(true).delay(0, TimeUnit.MILLISECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread()).map {
+//
+//
+//        }.subscribe()
     }
 
     private fun fetchRemote() {

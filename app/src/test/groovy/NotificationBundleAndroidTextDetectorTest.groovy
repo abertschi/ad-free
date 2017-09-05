@@ -8,9 +8,7 @@ import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.detector.NotificationBundleAndroidTextDetector
 import ch.abertschi.adfree.model.RemoteManager
-import com.thoughtworks.xstream.XStream
 import spock.lang.Specification
-
 /*
  * Ad Free
  * Copyright (c) 2017 by abertschi, www.abertschi.ch
@@ -35,15 +33,13 @@ class NotificationBundleAndroidTextDetectorTest extends Specification implements
 
     def "test notification bundle detector for valid ad detection"() {
         given:
-        def detector = new AdDetector(detectors, remoteManager)
-        def payload = new AdPayload(GroovyStub(StatusBarNotification))
-        print(new XStream().fromXML(""))
-
+            def detector = new AdDetector(detectors, remoteManager)
+            def payload = new AdPayload(GroovyStub(StatusBarNotification))
+//        print(new XStream().fromXML(""))
         when:
-        detector.addObserver(this)
-        detector.applyDetectors(payload)
-
-//        then:
-//        happenedEvents.size() != 0
+            detector.addObserver(this)
+            detector.applyDetectors(payload)
+        then:
+            happenedEvents.size() != 0
     }
 }

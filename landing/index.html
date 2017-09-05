@@ -130,7 +130,6 @@
         .bg_item__img {
             width: 10px;
         }
-
         /*@media only
         screen and (max-height: 500px) {
             .text__title {
@@ -138,24 +137,22 @@
             }
         }*/
 
-        @media only
-        screen and (max-height: 600px) {
+        @media only screen and (max-height: 600px) {
             .text__title {
                 margin-top: 10vh;
             }
 
-            .text__title h1{
+            .text__title h1 {
                 margin-top: 0;
             }
         }
 
-        @media only
-        screen and (max-height: 450px) {
+        @media only screen and (max-height: 450px) {
             .text__title {
                 margin-top: 25vh;
             }
 
-            .text__title h1{
+            .text__title h1 {
                 margin-top: 0;
             }
             .phone__img {
@@ -167,7 +164,7 @@
         }
 
         @media only screen and (max-width: 800px) {
-        /*screen and (max-height: 400px) {*/
+            /*screen and (max-height: 400px) {*/
             header {
                 height: auto;
                 width: 100%;
@@ -186,7 +183,7 @@
                 margin-top: 10vh;
             }
 
-            .text__title h1{
+            .text__title h1 {
                 margin-top: 20vh;
             }
             button {
@@ -274,45 +271,46 @@
     </header>
 
     <script>
-    (function() {
-        var index = 0;
-        var prefix = 'phone/'
-        var imgs = ['0.png',
-                    '1.png',
-                    '2.png',
-                    '3.png',
-                    '2.png',
-                    '4.png',
-                    '2.png',
-                    '5.png',
-                    '6.png'];
+        (function() {
+            var index = 0;
+            var prefix = 'phone/'
+            var imgs = ['0.png',
+                '1.png',
+                '2.png',
+                '3.png',
+                '2.png',
+                '4.png',
+                '2.png',
+                '5.png',
+                '6.png'
+            ];
 
-        var timeout = null;
-        var changePicture = function() {
-            var pic = $('#app-picture');
-            pic.attr("src", prefix + imgs[index]);
-            pic.fadeIn(1000);
-            index = (index + 1) % imgs.length
-            timeout = setTimeout(changePicture, 6000);
-        }
-        changePicture()
-
-        $('.phone').click(() => {
-            if (timeout) clearTimeout(timeout)
+            var timeout = null;
+            var changePicture = function() {
+                var pic = $('#app-picture');
+                pic.attr("src", prefix + imgs[index]);
+                pic.fadeIn(1000);
+                index = (index + 1) % imgs.length
+                timeout = setTimeout(changePicture, 6000);
+            }
             changePicture()
-        })
 
-        $("#download").click(function() {
-            // window.location.href = 'https://github.com/abertschi/ad-free/releases/latest';
-            window.location.href = 'https://github.com/abertschi/ad-free';
-        });
+            $('.phone').click(() => {
+                if (timeout) clearTimeout(timeout)
+                changePicture()
+            })
 
-        $("#sourcecode").click(function() {
-            window.location.href = 'https://github.com/abertschi/ad-free';
-        });
+            $("#download").click(function() {
+                // window.location.href = 'https://github.com/abertschi/ad-free/releases/latest';
+                window.location.href = 'https://github.com/abertschi/ad-free';
+            });
+
+            $("#sourcecode").click(function() {
+                window.location.href = 'https://github.com/abertschi/ad-free';
+            });
 
 
-    })();
+        })();
     </script>
 </body>
 
