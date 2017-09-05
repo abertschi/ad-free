@@ -12,7 +12,7 @@ Ad Free is a research project attempting to show flaws in the way how Spotify fo
 - Plugin based design
 
 ## Download
-This is OpenSource. [Download the latest binary from the release tab](https://github.com/abertschi/ad-free/releases/latest) or clone and build it yourself :fire:
+This is OpenSource. [Download the latest binary from the release tab](https://github.com/abertschi/ad-free/releases) or clone and build it yourself :fire:
 
 ## Implementation notes
 ### Ad detection
