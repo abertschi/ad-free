@@ -51,7 +51,7 @@ Tested with the following Spotify versions
 - 2017-09-01: 8.4.17.640 armV7
 
 ## Release notes
-### v0.0.4.0, 2017-09-01
+### v0.0.4.1, 2017-09-01
 - Introduce a new Plugin: `local music` to play music stored on your phone while
 ads are being played.
 - Improve ad detection. Implement finite state machine to keep track of an ad is currently played or not.
