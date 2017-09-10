@@ -130,7 +130,6 @@
         .bg_item__img {
             width: 10px;
         }
-
         /*@media only
         screen and (max-height: 500px) {
             .text__title {
@@ -138,24 +137,22 @@
             }
         }*/
 
-        @media only
-        screen and (max-height: 600px) {
+        @media only screen and (max-height: 600px) {
             .text__title {
                 margin-top: 10vh;
             }
 
-            .text__title h1{
+            .text__title h1 {
                 margin-top: 0;
             }
         }
 
-        @media only
-        screen and (max-height: 450px) {
+        @media only screen and (max-height: 450px) {
             .text__title {
                 margin-top: 25vh;
             }
 
-            .text__title h1{
+            .text__title h1 {
                 margin-top: 0;
             }
             .phone__img {
@@ -167,7 +164,7 @@
         }
 
         @media only screen and (max-width: 800px) {
-        /*screen and (max-height: 400px) {*/
+            /*screen and (max-height: 400px) {*/
             header {
                 height: auto;
                 width: 100%;
@@ -186,7 +183,7 @@
                 margin-top: 10vh;
             }
 
-            .text__title h1{
+            .text__title h1 {
                 margin-top: 20vh;
             }
             button {
@@ -195,7 +192,7 @@
                 width: 50%;
             }
             .text__features {
-                margin-top: 15%;
+                margin-top: 10%;
                 font-size: 25px;
                 text-align: left;
                 margin-left: 12%;
@@ -227,7 +224,7 @@
                 width: 100%;
                 margin-top: 0;
                 height: 600px;
-                margin-bottom: 400px;
+                margin-bottom: 350px;
             }
             .text__title {
                 margin-top: 0;
@@ -257,7 +254,8 @@
                     <li>&gt; &nbsp;Plugin based design</li>
                     <li>&gt; &nbsp;Mute audio when advertisement is playing</li>
                     <li>&gt; &nbsp;Play arbitrary audio instead of Spotify advertisement</li>
-                    <li>&gt; &nbsp;User friendly <a href='https://github.com/abertschi/ad-free/blob/master/privacy_policy.md'>
+                    <li>&gt; &nbsp;User friendly
+                        <a href='https://github.com/abertschi/ad-free/blob/master/privacy_policy.md'>
                         Privacy Policy</a></li>
                     <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
                     <ul>
@@ -274,45 +272,63 @@
     </header>
 
     <script>
-    (function() {
-        var index = 0;
-        var prefix = 'phone/'
-        var imgs = ['0.png',
-                    '1.png',
-                    '2.png',
-                    '3.png',
-                    '2.png',
-                    '4.png',
-                    '2.png',
-                    '5.png',
-                    '6.png'];
+        (function() {
+            var index = 0;
+            var prefix = 'phone/'
+            var imgs = ['0.png',
+                '1.png',
+                '2.png',
+                '3.png',
+                '2.png',
+                '4.png',
+                '2.png',
+                '5.png',
+                '6.png'
+            ];
 
-        var timeout = null;
-        var changePicture = function() {
-            var pic = $('#app-picture');
-            pic.attr("src", prefix + imgs[index]);
-            pic.fadeIn(1000);
-            index = (index + 1) % imgs.length
-            timeout = setTimeout(changePicture, 6000);
-        }
-        changePicture()
-
-        $('.phone').click(() => {
-            if (timeout) clearTimeout(timeout)
+            var timeout = null;
+            var changePicture = function() {
+                var pic = $('#app-picture');
+                pic.attr("src", prefix + imgs[index]);
+                pic.fadeIn(1000);
+                index = (index + 1) % imgs.length
+                timeout = setTimeout(changePicture, 6000);
+            }
             changePicture()
-        })
 
-        $("#download").click(function() {
-            // window.location.href = 'https://github.com/abertschi/ad-free/releases/latest';
-            window.location.href = 'https://github.com/abertschi/ad-free';
-        });
+            $('.phone').click(() => {
+                if (timeout) clearTimeout(timeout)
+                changePicture()
+            })
 
-        $("#sourcecode").click(function() {
-            window.location.href = 'https://github.com/abertschi/ad-free';
-        });
+            $("#download").click(function() {
+                window.location.href = 'https://github.com/abertschi/ad-free/releases';
+                // window.location.href = 'https://github.com/abertschi/ad-free';
+            });
+
+            $("#sourcecode").click(function() {
+                window.location.href = 'https://github.com/abertschi/ad-free';
+            });
 
 
-    })();
+        })();
+    </script>
+
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-63061525-5', 'auto');
+        ga('send', 'pageview');
     </script>
 </body>
 
