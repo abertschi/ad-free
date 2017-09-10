@@ -1,5 +1,9 @@
 # Changelog / Ad-Free
 
+### v0.0.4.2, 2017-09-10
+- Bugfixes
+- Removed Google dependencies and prepared for F-Droid  store release
+
 ### v0.0.4.1, 2017-09-01
 - Introduce a new Plugin: `local music` to play music stored on your phone while
 ads are being played.
