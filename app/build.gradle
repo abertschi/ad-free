@@ -61,11 +61,9 @@ dependencies {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
 
-    compile 'com.google.android.gms:play-services-analytics:10.2.6'
 
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
-//    compile 'com.afollestad.material-dialogs:core:0.9.4.1'
 
 
     testCompile 'org.codehaus.groovy:groovy:2.4.11:grooid'
@@ -81,5 +79,3 @@ dependencies {
 repositories {
     mavenCentral()
 }
-
-apply plugin: 'com.google.gms.google-services'
