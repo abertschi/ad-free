@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- standard meta tags -->
+    <meta name="description" content="Ad-Free is an AdBlocker for Spotify on Android that does not require ROOT and is modularized into plugins.">
+    <meta name="keywords" content="adblocker, spotify, android, music, ad, ads, blocker, plugin, rickandmorty" />
+
+    <!-- facebook open graph tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ad-Free">
+    <meta property="og:url" content="http://adfree.abertschi.ch">
+    <meta property="og:title" content="Ad-Free, an adblocker for Spotify on Android">
+    <meta property="og:description" content="Ad-Free is an AdBlocker for Spotify on Android that does not require ROOT and is modularized into plugins.">
+    <meta property="og:image" name="facebook" content="/images/shareimage-9fd811b6d4.png">
+
     <meta charset="utf-8">
     <title>Ad-Free</title>
     <meta name="theme-color" content="#FE9375" />
@@ -302,15 +315,17 @@
             })
 
             $("#download").click(function() {
-                window.location.href = 'https://github.com/abertschi/ad-free/releases';
+                var version = '0.0.4.2';
+                https: //github.com/abertschi/ad-free/releases/download/0.0.4.2/0.0.4.2-app-release.apk
+                    window.location.href =
+                    'https://github.com/abertschi/ad-free/releases/download/' +
+                    version + '/' + version + '-app-release.apk';
                 // window.location.href = 'https://github.com/abertschi/ad-free';
             });
 
             $("#sourcecode").click(function() {
                 window.location.href = 'https://github.com/abertschi/ad-free';
             });
-
-
         })();
     </script>
 
