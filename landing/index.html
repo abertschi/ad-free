@@ -33,6 +33,101 @@
             font-family: 'Raleway', sans-serif;
         }
 
+        .features {
+            /*height: 100vh;*/
+            height: 800px;
+            width: 100%;
+            /*min-width: 700px;*/
+            /*background-color: #252A2E;*/
+            color: white;
+        }
+
+        .features h1 {
+
+            font-size: 40px;
+            color: white;
+            /*font-weight: bold;*/
+            font-weight: normal;
+            margin-bottom: 0px;
+            color: white;
+            color: #cecac2;
+        }
+
+        .white {
+            color: white;
+            /*font-style: italic;*/
+        }
+
+        .features h2 {
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 0px;
+            color: white;
+        }
+
+        .features a {
+            color: white;
+        }
+
+        .features__title {
+            padding-top: 100px;
+            text-align: center;
+            width: 80%;
+            margin: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features__entries__entry--bold {
+            margin-top: 30px;
+            font-size: 30px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 0px;
+            color: white;
+            text-align: center;
+            padding-top: 20px;
+
+        }
+
+        .features__entries__entry--text {
+            font-size: 20px;
+            margin-top: 20px;
+            line-height: 1.3;
+            text-align: center;
+        }
+
+        .features__entries__entry__icon {
+            text-align: center;
+
+
+        }
+        .features__entries__entry__icon__img {
+              width: 30%;
+        }
+
+
+        .features__entries {
+            padding-top: 30vh;
+            /*padding-top: 200px;*/
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .features__entries__entry {
+            width: 40%;
+            padding-left: 2%;
+            padding-right: 2%;
+            height: 100px;
+            margin: auto;
+            /* Magic! */
+        }
+
         header {
             height: 100vh;
             width: 100%;
@@ -40,6 +135,23 @@
             top: 0px;
             margin-left: auto;
             position: relative;
+            /*background-color: red;*/
+        }
+        .footer {
+            /*background-color: #252A2E;*/
+            font-size: 13px;
+            color: white;
+            text-align: center;
+            /*padding: 30px;*/
+            width: 100%;
+            height: 100px;
+            /*position: fixed;*/
+  /*bottom: 0;*/
+  /*width: 100%;*/
+
+        }
+        .footer div {
+
         }
 
         header h1 {
@@ -174,10 +286,22 @@
                 padding-right: 15%;
                 float: right;
             }
+            header {
+                height: 500px;
+            }
+
+            .features {
+                margin-top: 100px;
+                height: 500px;
+            }
         }
 
         @media only screen and (max-width: 800px) {
             /*screen and (max-height: 400px) {*/
+
+            .features {
+                height: 100vh;
+            }
             header {
                 height: auto;
                 width: 100%;
@@ -283,6 +407,50 @@
             <img src="phone.png" class='phone__img' id='app-picture'>
         </div>
     </header>
+    <section class='features'>
+        <!-- <div class='features__title'>
+            <h1> what do you want to do while <span class='white'>ads</span> are <span class='white'>
+                being played</span> ? </h1>
+        </div> -->
+        <div class='features__entries'>
+            <div class='features__entries__entry'>
+                <div class='features__entries__entry__icon'>
+                    <img class="features__entries__entry__icon__img" src="mute.svg">
+                </div>
+                <div class='features__entries__entry--bold'>Mute audio</div>
+                <div class='features__entries__entry--text'>
+                    Mute your phone when ads are playing
+                </div>
+            </div>
+            <div class='features__entries__entry'>
+                <div class='features__entries__entry__icon'>
+                    <img class="features__entries__entry__icon__img" src="play.svg">
+                </div>
+                <div class='features__entries__entry--bold'>Local Music</div>
+                <div class='features__entries__entry--text'>
+                    Play your own local music when ads are playing
+                </div>
+            </div>
+            <div class='features__entries__entry'>
+                <div class='features__entries__entry__icon'>
+                    <img class="features__entries__entry__icon__img" src="alien2.svg">
+                </div>
+                <div class='features__entries__entry--bold'>Interdimensional Cable</div>
+                <div class='features__entries__entry--text'>
+                    Replace ads with interdimensional cable television featured
+                    in <a href="http://www.adultswim.com/videos/rick-and-morty/">AdultSwim's Rick and Morty</a>.
+                </div>
+            </div>
+        </div>
+
+
+            <div>
+            the interdimensional cable plugin in ad-free is not affiliated, sponsored, or otherwise endorsed by AdultSwim <br/>
+            This software is provided "as is" without warranty of any kind under the Apache License 2
+
+    </div>
+    </section>
+
 
     <script>
         (function() {
@@ -317,11 +485,11 @@
             $("#download").click(function() {
                 // var version = '0.0.4.2';
                 // https: //github.com/abertschi/ad-free/releases/download/0.0.4.2/0.0.4.2-app-release.apk
-                    // window.location.href =
-                    // 'https://github.com/abertschi/ad-free/releases/download/' +
-                    // version + '/' + version + '-app-release.apk';
+                // window.location.href =
+                // 'https://github.com/abertschi/ad-free/releases/download/' +
+                // version + '/' + version + '-app-release.apk';
                 // window.location.href = 'https://github.com/abertschi/ad-free';
-                
+
                 window.location.href = 'https://f-droid.org/packages/ch.abertschi.adfree/';
             });
 
