@@ -33,7 +33,7 @@
             font-family: 'Raleway', sans-serif;
         }
 
-        header {
+        .header {
             height: 100vh;
             width: 100%;
             min-width: 700px;
@@ -43,7 +43,7 @@
             /*background-color: red;*/
         }
 
-        header h1 {
+        .header h1 {
             font-size: 100px;
             color: white;
             font-weight: bold;
@@ -51,7 +51,7 @@
             color: #252A2E;
         }
 
-        header h2 {
+        .header h2 {
             margin-top: 0px;
             font-size: 25px;
             color: white;
@@ -155,9 +155,10 @@
             /*height: 100vh;*/
             /*height: 1000px;*/
             /*margin-top: 300px;*/
-            width: 100%;
+            /*width: 100%;*/
             /*min-width: 700px;*/
             color: white;
+            /*background-color: red;*/
         }
 
         .features h1 {
@@ -227,7 +228,7 @@
         .features__entries {
             background-color: #252A2E;
             padding-top: 30vh;
-            width: 100%;
+            /*width: 100%;*/
             /*padding-top: 200px;*/
             display: flex;
             flex-direction: row;
@@ -243,10 +244,10 @@
             background-color: #252A2E;
 
             /*width: 40%;*/
-            /*padding-left: 2%;*/
+            padding-left: 1%;
             width: 80%;
 
-            /*padding-right: 2%;*/
+            padding-right: 1%;
             /*padding-left: 10%;*/
             /*height: 100px;*/
             padding-bottom: 150px;
@@ -340,7 +341,7 @@
                 padding-right: 15%;
                 float: right;
             }
-            header {
+            .header {
                 /*height: 900px;*/
             }
 
@@ -356,16 +357,16 @@
                 font-size: 25px;
             }
 
-            header {
+            .header {
                 height: auto;
                 width: 100%;
             }
 
-            header h1 {
+            .header h1 {
                 font-size: 150px;
             }
 
-            header h2 {
+            .header h2 {
                 font-size: 40px;
                 margin-bottom: 10%;
             }
@@ -421,10 +422,14 @@
                 margin-top: 0;
             }
 
-            .features {}
+            .features {
+                width: 100%;
+                /*height: 2000px;*/
+            }
 
             .features__entries {
                 flex-wrap: wrap;
+                width: 100%;
             }
 
             .features__entries__entry--text {
@@ -452,7 +457,7 @@
 </head>
 
 <body>
-    <header class=''>
+    <section class='header'>
         <div class='text'>
             <div class='text__title'>
                 <h1>Ad-Free</h1>
@@ -488,7 +493,7 @@
             <a href="#section03"><span></span></a>
         </div> -->
         </div>
-    </header>
+    </section>
     <section class='features'>
         <!-- <div class='features__title'>
             <h1> what do you want to do while <span class='white'>ads</span> are <span class='white'>
