@@ -3,6 +3,8 @@
 
 Ad Free is a research project attempting to show flaws in the way how Spotify for Android presents audio advertisement. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
 
+http://adfree.abertschi.ch
+
 <img src=".github/cover2.png" width="900">
 
 ## Features
