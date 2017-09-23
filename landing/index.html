@@ -360,7 +360,6 @@
                 width: 100%;
                 margin: 0;
                 /*background-color: red;*/
-
             }
 
             .header h1 {
@@ -375,9 +374,7 @@
                 margin-bottom: 10%;
             }
 
-            .text__title {
-
-            }
+            .text__title {}
 
             .text__title h1 {
                 text-align: center;
@@ -491,7 +488,8 @@
                     <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
                     <ul>
 
-                        <br/> by <a href='https://abertschi.ch'>abertschi</a>
+                        <br/> by <a href='https://abertschi.ch'
+                        onclick="t('https://abertschi.ch'); return false;">abertschi</a>
             </div>
         </div>
         <div class='bg_item'>
@@ -535,8 +533,10 @@
                 </div>
                 <div class='features__entries__entry--bold'>Interdimensional Cable</div>
                 <div class='features__entries__entry--text'>
-                    Replace ads with <a href='https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'>
-                        interdimensional cable television</a> featured in <a href="http://www.adultswim.com/videos/rick-and-morty/">AdultSwim's Rick and Morty</a>.
+                    Replace ads with <a href='https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'
+                     onclick="t('https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'); return false;">
+                        interdimensional cable television</a> featured in <a href="http://www.adultswim.com/videos/rick-and-morty/"
+                        onclick="t('http://www.adultswim.com/videos/rick-and-morty'); return false;">AdultSwim's Rick and Morty</a>.
                 </div>
             </div>
         </div>
@@ -594,11 +594,12 @@
                 // 'https://github.com/abertschi/ad-free/releases/download/' +
                 // version + '/' + version + '-app-release.apk';
                 // window.location.href = 'https://github.com/abertschi/ad-free';
-
+                t('https://f-droid.org/packages/ch.abertschi.adfree/');
                 window.location.href = 'https://f-droid.org/packages/ch.abertschi.adfree/';
             });
 
             $("#sourcecode").click(function() {
+                t('https://github.com/abertschi/ad-free');
                 window.location.href = 'https://github.com/abertschi/ad-free';
             });
         })();
@@ -619,6 +620,16 @@
 
         ga('create', 'UA-63061525-5', 'auto');
         ga('send', 'pageview');
+
+
+        var t = function(url) {
+            ga('send', 'event', 'outbound', 'click', url, {
+                'transport': 'beacon',
+                'hitCallback': function() {
+                    document.location = url;
+                }
+            });
+        }
     </script>
 </body>
 
