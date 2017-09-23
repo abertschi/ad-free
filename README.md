@@ -36,15 +36,12 @@ Detector which checks for properties set in the notification bundle.
 ### Ad blocking
 [AudioManager](https://developer.android.com/reference/android/media/AudioManager.html), Android's Audio System provides several streams on which audio can be played. Spotify, alike many music players, plays audio on the stream [STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC). In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls a configured [AdPlugin](./app/src/main/java/ch/abertschi/adfree/plugin/AdPlugin.kt). `AdPlugins` aim to replace Spotify's advertisement. They play music on an alternative stream and are therefore not affected by the mute of _STREAM MUSIC_.
 
-#### Plugins
-
-##### Mute Audio
+### Plugins
+#### Mute Audio
 As the title of this plugin suggests, it only mutes adertisments without playing sound.
-
-##### Interdimensional Cable
+#### Interdimensional Cable
 [Interdimensional Cable](./app/src/main/java/ch/abertschi/adfree/plugin/interdimcable/InterdimCablePlugin.kt) replaces Spotify advertisements with interdimensional cable advertisements featured in [Adult Swim's Rick and Morty TV series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP).
-
-##### Play local music
+#### Play local music
 Play music tracks stored on your phone while advertisement is playing
 
 ## Compatibility
