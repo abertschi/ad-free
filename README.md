@@ -52,7 +52,7 @@ Tested with the following Spotify versions
 - 2017-09-01: 8.4.17.640 armV7
 - 2017-11-28: 8.4.24.875 armV7
 
-This app is optimized to work on Android 6.0.1 as my phone runs that version of Android. If you notice problems on a newer version, please fill an issue and we try to tackle down the problem together.
+This app is optimized to work on Android 6.0.1 as my phone runs that version of Android. If you notice problems on a newer version of Android, please fill an issue and we try to tackle down the problem together.
 
 ## Release notes
 - See [Changelog](./CHANGELOG.md)
