@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Ad Free</string>
+    <string name="enjoy">Profitez de votre expérience musicale <b>sans pub</b></string>
+    <string name="country_prompt">Choisissez un pays</string>
+
+    <string-array name="test">
+        <item>COUPER LE SON</item>
+        <item>JOUER DE LA MUSIQUE LOCALE</item>
+        <item>SOUNDCLOUD</item>
+        <item>INTERDIMENSIONAL CABLE</item>
+        <item>PLAISANTERIE</item>
+        <item>CHUCK NORRIS</item>
+        <item>MEH</item>
+        <item>SUGGÉRER QQC...</item>
+    </string-array>
+</resources>
