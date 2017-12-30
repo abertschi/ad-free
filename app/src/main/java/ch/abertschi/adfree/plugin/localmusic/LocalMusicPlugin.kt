@@ -137,7 +137,7 @@ class LocalMusicPlugin(val context: Context,
     }
 
     fun chooseDirectory() {
-        val f = File("/storage")
+        val f = File("/")
         view?.showFolderSelectionDialog(f)
     }
 
