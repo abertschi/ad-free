@@ -1,5 +1,9 @@
 # Changelog / Ad-Free
 
+### v0.0.4.3, 2017-01-02
+- Change selection of default folder in localmusic plugin from
+  `/storage` to `/`. `/storage` was not available on some devices like Nexus 6/7.1.1.
+
 ### v0.0.4.2, 2017-09-10
 - Bugfixes
 - Removed Google dependencies and prepared for F-Droid  store release
