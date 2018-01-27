@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.view.setting
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -16,6 +17,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -73,6 +75,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         pluginViewContainer?.addView(view)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.rootView = view
@@ -106,10 +109,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
                 }
             }
         }
-        view.findViewById(R.id.try_plugin_button).setOnClickListener {
+        view.findViewById<ImageView>(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
-        view.findViewById(R.id.setting_spinner_item_container)
+        view.findViewById<LinearLayout>(R.id.setting_spinner_item_container)
                 ?.setOnTouchListener { v, event ->
                     spinner?.performClick()
                     false

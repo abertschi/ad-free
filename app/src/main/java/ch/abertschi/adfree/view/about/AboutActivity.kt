@@ -15,6 +15,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
@@ -58,15 +59,15 @@ class AboutActivity : Fragment(), AboutView {
         versionView?.typeface = typeFace
         versionView?.text = "v${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
 
-        view?.findViewById(R.id.twitter).onClick {
+        view.findViewById<ImageView>(R.id.twitter).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/andrinbertschi"))
+                    Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
             this.getContext().startActivity(browserIntent)
         }
 
-        view?.findViewById(R.id.website).onClick {
+        view.findViewById<ImageView>(R.id.website).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://abertschi.ch"))
+                    Uri.parse("http://abertschi.ch?rel=adfree"))
             this.getContext().startActivity(browserIntent)
         }
 
