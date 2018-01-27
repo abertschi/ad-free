@@ -1,5 +1,8 @@
 # Changelog / Ad-Free
 
+## v0.0.4.4, 2017-01-27
+- Internal changes, compile project with sdkVersion 27 (android Oreo)
+
 ### v0.0.4.3, 2017-01-02
 - Change selection of default folder in localmusic plugin from
   `/storage` to `/`. `/storage` was not available on some devices like Nexus 6/7.1.1.
