@@ -36,25 +36,25 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     lateinit var enjoySloganText: TextView
     lateinit var homePresenter: HomePresenter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.home_view, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        homePresenter = HomeModul(this.activity, this).provideSettingsPresenter()
+        homePresenter = HomeModul(this.activity!!, this).provideSettingsPresenter()
         
         powerButton = view?.findViewById(R.id.switch1) as SwitchCompat
-        typeFace = ViewSettings.instance(this.context).typeFace
+        typeFace = ViewSettings.instance(this.context!!).typeFace
 
         enjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
         powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
             homePresenter.enabledStatusChanged(isChecked)
         }
-        homePresenter.onCreate(this.context)
+        homePresenter.onCreate(this.context!!)
 
         // TODO: this is debug code
 //        val r: Random = Random()
@@ -70,13 +70,13 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     }
 
     override fun onResume() {
-        homePresenter.onResume(this.context)
+        homePresenter.onResume(this.context!!)
         super.onResume()
     }
 
     override fun showStatusEnabled() {
-        context.applicationContext.runOnUiThread {
-            context.toast("Ad Free enabled")
+        context?.applicationContext?.runOnUiThread {
+            context?.toast("Ad Free enabled")
         }
     }
 

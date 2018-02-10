@@ -6,11 +6,11 @@
 
 package ch.abertschi.adfree.util
 
-import android.app.IntentService
-import android.app.Notification
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import ch.abertschi.adfree.R
@@ -27,11 +27,18 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         val actionDismiss = "actionDismiss"
         val blockingNotificationId = 1
         val textgNotificationId = 2
+        val CHANNEL_ID = "ad_channel"
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
     }
 
     private val updateNotificationMap: MutableMap<Int, NotificationCompat.Builder> = HashMap()
+
+    init {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannel()
+        }
+    }
 
     fun updateTextNotificationIfAvailable(id: Int, title: String? = null, content: String? = null) {
         val builder = updateNotificationMap.get(id)
@@ -51,7 +58,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
                         , NotificationInteractionService::class.java).setAction(actionDismiss)
                         , PendingIntent.FLAG_ONE_SHOT)
 
-        val builder = NotificationCompat.Builder(context)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setSmallIcon(R.mipmap.icon)
@@ -98,10 +105,27 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 //        manager.notify(blockingNotificationId, notification)
 //    }
 
+
     fun hideNotification(id: Int) {
         val manager = NotificationManagerCompat.from(context)
         updateNotificationMap.remove(id)
         manager.cancel(id)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createChannel() {
+        val notificationManager = context
+                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val id = CHANNEL_ID
+        val name = "Ad blocking"
+        val description = "Ad blocking notification"
+        val importance = NotificationManager.IMPORTANCE_LOW
+        val channel = NotificationChannel(id, name, importance)
+        // Configure the notification channel.
+        channel.description = description
+        channel.setShowBadge(false)
+        channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+        notificationManager.createNotificationChannel(channel)
     }
 
     class NotificationInteractionService :
@@ -125,6 +149,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
             }
         }
     }
+
 }
 
 

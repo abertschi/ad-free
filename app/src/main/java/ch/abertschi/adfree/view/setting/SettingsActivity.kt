@@ -43,7 +43,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         YoYo.with(Techniques.Shake)
                 .duration(800)
                 .repeat(0)
-                .playOn(activity.findViewById(R.id.try_plugin_button))
+                .playOn(activity?.findViewById(R.id.try_plugin_button))
     }
 
     private lateinit var typeFace: Typeface
@@ -58,7 +58,8 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
     lateinit var settingPresenter: SettingsPresenter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.setting_view, container, false)
     }
 
@@ -76,15 +77,15 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.rootView = view
 
-        typeFace = ViewSettings.instance(this.activity).typeFace
+        typeFace = ViewSettings.instance(this.activity!!).typeFace
         settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         settingsTitle?.typeface = typeFace
 
-        settingPresenter = SettingsModul(this.activity, this).provideSettingsPresenter()
+        settingPresenter = SettingsModul(this.activity!!, this).provideSettingsPresenter()
 
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
                 "<font color=#FFFFFF>being played ?</font>"
@@ -97,7 +98,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
 
         spinner = view?.findViewById(R.id.spinner) as Spinner
-        spinnerAdapter = PluginSpinnerAdapter(this.activity, R.layout.replacer_setting_item,
+        spinnerAdapter = PluginSpinnerAdapter(this.activity!!, R.layout.replacer_setting_item,
                 settingPresenter.getStringEntriesOfModel(), spinner!!, view)
         spinner?.adapter = spinnerAdapter
 
@@ -135,7 +136,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         super.startActivityForResult(intent, requestCode, options)
     }
 
-    override fun getContext(): Context = this.activity
+    override fun getContext(): Context = this.activity!!
 
     override fun showSuggestNewPlugin() {
         val browserIntent =
@@ -144,7 +145,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     }
 
     override fun showTryOutMessage() {
-        this.activity.toast("Trying out plugin")
+        this.activity?.toast("Trying out plugin")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
