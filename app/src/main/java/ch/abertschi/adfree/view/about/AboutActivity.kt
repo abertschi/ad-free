@@ -35,16 +35,16 @@ class AboutActivity : Fragment(), AboutView {
     lateinit var typeFace: Typeface
     lateinit var presenter: AboutPresenter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.about_view, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        typeFace = ViewSettings.instance(this.context).typeFace
+        typeFace = ViewSettings.instance(this.context!!).typeFace
 
-        presenter = AboutModul(this.activity, this).provideAboutPresenter()
+        presenter = AboutModul(this.activity!!, this).provideAboutPresenter()
 
         val textView = view?.findViewById(R.id.authorTitle) as TextView
         textView.typeface = typeFace
@@ -62,13 +62,13 @@ class AboutActivity : Fragment(), AboutView {
         view.findViewById<ImageView>(R.id.twitter).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
-            this.getContext().startActivity(browserIntent)
+            this.getContext()!!.startActivity(browserIntent)
         }
 
         view.findViewById<ImageView>(R.id.website).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://abertschi.ch?rel=adfree"))
-            this.getContext().startActivity(browserIntent)
+            this.getContext()!!.startActivity(browserIntent)
         }
 
     }
