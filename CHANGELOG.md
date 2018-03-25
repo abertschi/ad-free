@@ -1,14 +1,14 @@
 # Changelog / Ad-Free
-### v0.0.4.6, 2017-02-10
+### v0.0.4.6, 2018-02-10
 - Fix notification issue introduced with version 0.0.4.4. Ad blocking notification was not shown.
 
-### v0.0.4.5, 2017-02-05
+### v0.0.4.5, 2018-02-05
 - fdroid release only, fixes dependency issues causing 0.0.4.4 not to build on fdroidserver.
 
-### v0.0.4.4, 2017-01-27
+### v0.0.4.4, 2018-01-27
 - Internal changes, compile project with sdkVersion 27 (android Oreo)
 
-### v0.0.4.3, 2017-01-02
+### v0.0.4.3, 2018-01-02
 - Change selection of default folder in localmusic plugin from
   `/storage` to `/`. `/storage` was not available on some devices like Nexus 6/7.1.1.
 
