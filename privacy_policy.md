@@ -1,4 +1,4 @@
-# Privacy Policy / Ad-Free
+# Privacy Policy / Ad-Free Android Application
 > _Do I collect user sensitive data for aggregation analysis like most Android apps?_
 
 I physically can't. I have nowhere to store it. I don't have a server database to store it. I value privacy as much as you do and I disapprove global mass surveillance, so even if Audrey Tautou asked me nicely to see your data, I would not have anything to show her. That's why I believe in opensource software and that's the reason why, with Ad-Free, what happens on your device stays on your device.
