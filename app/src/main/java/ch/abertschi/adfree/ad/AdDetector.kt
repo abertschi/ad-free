@@ -9,11 +9,8 @@ package ch.abertschi.adfree.ad
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.RemoteManager
-import ch.abertschi.adfree.util.DevelopUtils
-import com.thoughtworks.xstream.XStream
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
-import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 13.08.17.
@@ -37,8 +34,6 @@ class AdDetector(val detectors: List<AdDetectable>,
                         "active ad-detectors"
             }
 
-//            info { XStream().toXML(payload) }
-
             var isMusic = false
             var isAd = false
 
@@ -56,20 +51,20 @@ class AdDetector(val detectors: List<AdDetectable>,
                 init = true
             }
 
-            if (isAd) {
-                info { "ad-detected ###" }
-//                info { XStream().toXML(payload) }
-                var str = XStream().toXML(payload).trim()
-                str = str.replace("\n\r", "")
-                val i = str.length / 2
-                System.out.println(str.substring(0, i))
-                System.out.flush()
-                System.out.println(str.substring(i + 1))
-                System.out.flush()
-                DevelopUtils().serializeAndWriteToFile(payload, "ad")
-            } else {
-                DevelopUtils().serializeAndWriteToFile(payload, "no_ad")
-            }
+//            if (isAd) {
+//                info { "ad-detected ###" }
+////                info { XStream().toXML(payload) }
+//                var str = XStream().toXML(payload).trim()
+//                str = str.replace("\n\r", "")
+//                val i = str.length / 2
+//                System.out.println(str.substring(0, i))
+//                System.out.flush()
+//                System.out.println(str.substring(i + 1))
+//                System.out.flush()
+//                DevelopUtils().serializeAndWriteToFile(payload, "ad")
+//            } else {
+//                DevelopUtils().serializeAndWriteToFile(payload, "no_ad")
+//            }
 
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
             val event = AdEvent(eventType)

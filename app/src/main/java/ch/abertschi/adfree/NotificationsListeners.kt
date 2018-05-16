@@ -21,6 +21,7 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         info("notification detected")
 
+        // info { XStream().toXML(sbn) }
         val context = applicationContext as AdFreeApplication
         context.adDetector.applyDetectors(AdPayload(sbn))
     }
