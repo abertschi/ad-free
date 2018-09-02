@@ -22,13 +22,16 @@ import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
 import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import org.jetbrains.anko.warn
 
 
 /**
  * Created by abertschi on 21.04.17.
  */
 
-class AdFreeApplication : Application() {
+class AdFreeApplication : Application(), AnkoLogger {
 
     lateinit var prefs: PreferencesFactory
     lateinit var adDetectors: List<AdDetectable>
@@ -45,7 +48,6 @@ class AdFreeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         prefs = PreferencesFactory(applicationContext)
-
         adDetectors = listOf<AdDetectable>(NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
                 , NotificationBundleAndroidTextDetector())

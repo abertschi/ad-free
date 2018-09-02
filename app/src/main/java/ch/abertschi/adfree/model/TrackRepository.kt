@@ -34,13 +34,13 @@ open class TrackRepository: AnkoLogger {
 
         val tracks = getTracks()
         tracks.add(content)
-        sharedPreferences.edit().putStringSet(TRACKS, tracks).commit()
+        sharedPreferences.edit().putStringSet(TRACKS, tracks).apply()
     }
 
     open fun removeTrack(content: String) {
         val tracks = getTracks()
         tracks.remove(content)
-        sharedPreferences.edit().putStringSet(TRACKS, tracks).commit()
+        sharedPreferences.edit().putStringSet(TRACKS, tracks).apply()
     }
 
     open fun getAllTracks(): Set<String> {
@@ -48,7 +48,7 @@ open class TrackRepository: AnkoLogger {
         return tracks
     }
 
-    open fun setAllTracksd(tracks: Set<String>) {
-        sharedPreferences.edit().putStringSet(TRACKS, tracks).commit()
+    open fun setAllTracks(tracks: Set<String>) {
+        sharedPreferences.edit().putStringSet(TRACKS, tracks).apply()
     }
 }
