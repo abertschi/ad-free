@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Ad Free</string>
+    <string name="enjoy">Genieße deine <b >werbungsfreie</b> Musikerfahrung</string>
+    <string name="country_prompt">Wähle ein Land</string>
+
+    <string-array name="test">
+        <item>TON STUMMSCHALTEN</item>
+        <item>LOKALE MUSIK ABSPIELEN</item>
+        <item>SOUNDCLOUD</item>
+        <item>INTERDIMENSIONELLES KABEL</item>
+        <item>WITZZEIT</item>
+        <item>CHUCK NORRIS</item>
+        <item>NAJA</item>
+        <item>SCHLAG ETWAS VOR ...</item>
+    </string-array>
+</resources>
