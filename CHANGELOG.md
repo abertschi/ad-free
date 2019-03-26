@@ -1,6 +1,6 @@
 # Changelog / Ad-Free
 ### v0.0.4.7, 2019-03-26
-- Update fdroid store information (#30)
+- Update fdroid store information (thanks @bennettscience)
 - Introduce more supported audio formats for local music: mp3, wav, m4a
 
 ### v0.0.4.6, 2018-02-10
