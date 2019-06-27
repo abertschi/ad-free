@@ -9,11 +9,11 @@ android {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 20
-        versionName "0.0.4.6"
+        versionCode 30
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-    }
+   }
 
 
     buildTypes {
@@ -39,14 +39,17 @@ dependencies {
     compile 'com.android.support:appcompat-v7:27.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile 'org.jetbrains.anko:anko-sdk23:0.9.1' // sdk19, sdk21, sdk23 are also available
     compile 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
     compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'com.github.javiersantos:AppUpdater:2.6.1'
 
-    compile 'com.github.kittinunf.fuel:fuel-android:1.5.0'
+//    compile 'com.github.kittinunf.fuel:fuel-android:1.5.0'
+    implementation 'com.github.kittinunf.fuel:fuel:2.1.0'
+    implementation 'com.github.kittinunf.fuel:fuel-android:2.1.0'
+
     compile 'com.github.bmoliveira:snake-yaml:v1.18-android'
 
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
