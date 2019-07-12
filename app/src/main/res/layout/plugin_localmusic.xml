@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginBottom="20dp"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:scrollHorizontally="false"
 
         android:text="configure audio volume"
@@ -25,7 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/plugin_localmusic_audio_volume_text"
         android:layout_marginBottom="20dp"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:scrollHorizontally="false"
         android:text="choose audio directory"
         android:textColor="#C4BCAF"
@@ -44,8 +44,7 @@
             android:id="@+id/plugin_localmusic_play_till_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:scrollHorizontally="false"
             android:text="> play until the end"
             android:textColor="#C4BCAF"
@@ -55,8 +54,7 @@
             android:id="@+id/plugin_localmusic_play_till_end_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:layout_marginLeft="3dp"
             android:scrollHorizontally="false"
             android:text="sure thing"

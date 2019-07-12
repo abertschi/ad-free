@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="30dp"
             android:layout_marginTop="30dp"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:scrollHorizontally="false"
             android:text="version"
             android:textAlignment="textEnd"
@@ -78,11 +78,12 @@
                 style="@style/AppTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textNoSuggestions"
                 android:scrollHorizontally="false"
                 android:text=""
                 android:textColor="#C4BCAF"
                 android:textSize="@dimen/title_text_size"
+
                 />
 
         </LinearLayout>

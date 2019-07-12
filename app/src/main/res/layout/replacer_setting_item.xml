@@ -10,7 +10,7 @@
         android:id="@+id/setting_spinner_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:scrollHorizontally="false"
         android:layout_marginBottom="7dp"
         android:layout_marginTop="15dp"

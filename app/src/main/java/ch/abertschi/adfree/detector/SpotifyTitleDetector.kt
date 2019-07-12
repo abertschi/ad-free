@@ -19,7 +19,6 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) : AbstractStatu
     private val keyword: String = "Spotify —"
 
     override fun canHandle(payload: AdPayload): Boolean {
-
         getTitle(payload).let { payload.ignoreKeys.add(it!!) }
         return super.canHandle(payload)
     }

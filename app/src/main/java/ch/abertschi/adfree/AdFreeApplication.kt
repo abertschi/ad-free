@@ -8,10 +8,7 @@ package ch.abertschi.adfree
 
 import android.app.Application
 import ch.abertschi.adfree.ad.AdDetector
-import ch.abertschi.adfree.detector.AdDetectable
-import ch.abertschi.adfree.detector.NotificationActionDetector
-import ch.abertschi.adfree.detector.NotificationBundleAndroidTextDetector
-import ch.abertschi.adfree.detector.SpotifyTitleDetector
+import ch.abertschi.adfree.detector.*
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.model.TrackRepository
@@ -50,7 +47,8 @@ class AdFreeApplication : Application(), AnkoLogger {
         prefs = PreferencesFactory(applicationContext)
         adDetectors = listOf<AdDetectable>(NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
-                , NotificationBundleAndroidTextDetector())
+                , NotificationBundleAndroidTextDetector(),
+                ScDetector())
 
         audioManager = AudioController(applicationContext, prefs)
         remoteManager = RemoteManager(prefs)

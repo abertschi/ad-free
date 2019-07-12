@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             style="@style/AppTextView"
             android:layout_gravity="center"
-            android:inputType="textMultiLine"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:scrollHorizontally="false"
             android:text="@string/enjoy"
             android:textColor="#C4BCAF"
