@@ -14,6 +14,18 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+
+        <activity
+            android:name="ch.abertschi.adfree.exceptionhandler.SendLog"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="ch.abertschi.adfree.SEND_LOG_CRASH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait">

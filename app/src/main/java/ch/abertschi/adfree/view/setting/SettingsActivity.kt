@@ -40,10 +40,11 @@ import org.jetbrains.anko.toast
 class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
 
     override fun signalizeTryOut() {
-        YoYo.with(Techniques.Shake)
-                .duration(800)
-                .repeat(0)
-                .playOn(activity?.findViewById(R.id.try_plugin_button))
+        // TODO: crashes
+//        YoYo.with(Techniques.Shake)
+//                .duration(800)
+//                .repeat(0)
+//                .playOn(activity?.findViewById(R.id.try_plugin_button))
     }
 
     private lateinit var typeFace: Typeface

@@ -22,6 +22,11 @@ import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
+import android.content.Intent
+import kotlin.system.exitProcess
+import ch.abertschi.adfree.view.MainActivity
+
+
 
 
 /**
@@ -72,5 +77,25 @@ class AdFreeApplication : Application(), AnkoLogger {
         adDetector.addObserver(adStateController)
 
 
+
+        Thread.setDefaultUncaughtExceptionHandler { thread, e -> handleUncaughtException(thread, e) }
+
+
     }
-}
+
+    fun handleUncaughtException(thread: Thread?, e: Throwable?) {
+        e?.printStackTrace() // not all Android versions will print the stack trace automatically
+
+        val intent = Intent()
+        intent.action = "ch.abertschi.adfree.SEND_LOG_CRASH"
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+//        val intent = Intent(applicationContext, MainActivity::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        startActivity(intent)
+//        System.exit(1)
+//        exitProcess(1)
+    }
+
+
+    }

@@ -28,7 +28,7 @@ import ch.abertschi.adfree.view.setting.SettingsActivity
 class MainActivity : FragmentActivity() {
 
     companion object {
-        private val NUM_PAGES = 3
+        private val NUM_PAGES = 4
     }
 
     private var mPager: ViewPager? = null
@@ -57,7 +57,8 @@ class MainActivity : FragmentActivity() {
             when (position) {
                 0 -> return HomeActivity()
                 1 -> return SettingsActivity()
-                else -> return AboutActivity()
+                2 -> return AboutActivity()
+                else -> return DebugActivity()
             }
         }
 

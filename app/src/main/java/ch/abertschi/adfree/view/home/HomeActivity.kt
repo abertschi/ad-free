@@ -100,7 +100,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     }
 
     override fun showEnjoyAdFree() {
-        val text = "enjoy your <font color=#FFFFFF>ad free</font> music experience"
+        val text = "<font color=#FFFFFF>enjoy</font> your <font color=#FFFFFF>ad-free</font> music experience."
         setSloganText(text)
         enjoySloganText.setOnClickListener(null)
         powerButton.visibility = View.VISIBLE
