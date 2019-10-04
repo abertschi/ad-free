@@ -30,7 +30,6 @@ import kotlin.system.exitProcess
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
-import java.io.StringWriter
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -92,17 +91,18 @@ class AdFreeApplication : Application(), AnkoLogger {
 
     fun handleUncaughtException(thread: Thread?, e: Throwable?) {
         e?.printStackTrace() // not all Android versions will print the stack trace automatically
-        val report = generateReport(e)
+        val (summary, logcat) = generateReport(e)
 
         val time = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date())
         val filename = "adfree-crashlog-${time}.txt"
         val file = File(this.filesDir, filename)
-        file.writeText(report)
+        file.writeText(logcat)
 
         val intent = Intent()
         intent.action = SendLogActivity.ACTION_NAME
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.putExtra(SendLogActivity.EXTRA_LOGFILE, filename)
+        intent.putExtra(SendLogActivity.EXTRA_SUMMARY, summary)
         startActivity(intent)
 
         System.exit(1)
@@ -110,7 +110,7 @@ class AdFreeApplication : Application(), AnkoLogger {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun generateReport(th: Throwable?): String {
+    private fun generateReport(th: Throwable?): Pair<String, String> {
         val manager = this.packageManager
         var info: PackageInfo? = null
         try {
@@ -122,17 +122,17 @@ class AdFreeApplication : Application(), AnkoLogger {
         if (!model.startsWith(MANUFACTURER))
             model = "$MANUFACTURER $model"
 
-        val report = StringBuilder()
-        report.append("\n\n\n")
-        report.append("Android version: " + VERSION.SDK_INT + "\n")
-        report.append("Device: $model\n")
-        report.append("App version: " + (info?.versionCode ?: "(null)") + "\n")
-        report.append("Time: " + SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date()) + "\n")
-        report.append("Root cause: "+ th.toString() + "\n\n\n")
+        val summary = StringBuilder()
+        summary.append("Android version: " + VERSION.SDK_INT + "\n")
+        summary.append("Device: $model\n")
+        summary.append("App version: " + (info?.versionCode ?: "(null)") + "\n")
+        summary.append("Time: " + SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date()) + "\n")
+        summary.append("Root cause: "+ th.toString() + "\n\n\n")
 
-        report.append("Logcat messages: \n"+ th?.message)
-        report.append(readLogcat())
-        return report.toString()
+        val logcat = StringBuilder()
+        logcat.append("Logcat messages: \n"+ th?.message)
+        logcat.append(readLogcat())
+        return Pair(summary.toString(), logcat.toString())
     }
 
     private fun readLogcat(): String {

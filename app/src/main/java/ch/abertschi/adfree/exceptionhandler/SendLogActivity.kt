@@ -1,4 +1,5 @@
 package ch.abertschi.adfree.exceptionhandler
+import android.Manifest
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,12 +13,14 @@ import org.jetbrains.anko.warn
 import java.io.File
 import java.lang.Exception
 import android.content.Intent
+import android.support.v4.app.ActivityCompat
 
 class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
 
     companion object {
         val ACTION_NAME = "ch.abertschi.adfree.SEND_LOG_CRASH"
         val EXTRA_LOGFILE = "ch.abertschi.adfree.extra.logfile"
+        val EXTRA_SUMMARY = "ch.abertschi.adfree.extra.summary"
         val MAIL_ADDR = "apps@abertschi.ch"
         val SUBJECT = "[ad-free-crash-report]"
     }
@@ -64,6 +67,11 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
     }
 
     override fun onClick(v: View) {
+
+//        ActivityCompat.requestPermissions(this, Arrays.{ Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+
+
         logfile?.let {
             try {
                 val file = File(filesDir, logfile)
