@@ -45,7 +45,7 @@ class DebugActivity: Fragment(), DebugView, AnkoLogger {
         info2.typeface = typeFace
 
                 info2?.setOnTouchListener { v, event ->
-                    throw RuntimeException("oh no")
+                    throw RuntimeException("something happened")
                     false
                 }
 

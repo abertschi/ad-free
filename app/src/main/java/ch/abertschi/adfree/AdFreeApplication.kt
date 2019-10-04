@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree
 
+import android.annotation.SuppressLint
 import android.app.Application
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.detector.*
@@ -20,13 +21,19 @@ import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.Build.*
+import ch.abertschi.adfree.exceptionhandler.SendLogActivity
 import kotlin.system.exitProcess
-import ch.abertschi.adfree.view.MainActivity
-
-
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
+import java.io.StringWriter
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -85,17 +92,56 @@ class AdFreeApplication : Application(), AnkoLogger {
 
     fun handleUncaughtException(thread: Thread?, e: Throwable?) {
         e?.printStackTrace() // not all Android versions will print the stack trace automatically
+        val report = generateReport(e)
+
+        val time = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date())
+        val filename = "adfree-crashlog-${time}.txt"
+        val file = File(this.filesDir, filename)
+        file.writeText(report)
 
         val intent = Intent()
-        intent.action = "ch.abertschi.adfree.SEND_LOG_CRASH"
+        intent.action = SendLogActivity.ACTION_NAME
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.putExtra(SendLogActivity.EXTRA_LOGFILE, filename)
         startActivity(intent)
-//        val intent = Intent(applicationContext, MainActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        startActivity(intent)
-//        System.exit(1)
-//        exitProcess(1)
+
+        System.exit(1)
+        exitProcess(1)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun generateReport(th: Throwable?): String {
+        val manager = this.packageManager
+        var info: PackageInfo? = null
+        try {
+            info = manager.getPackageInfo(this.packageName, 0)
+        } catch (e2: PackageManager.NameNotFoundException) {
+        }
+
+        var model = MODEL
+        if (!model.startsWith(MANUFACTURER))
+            model = "$MANUFACTURER $model"
+
+        val report = StringBuilder()
+        report.append("\n\n\n")
+        report.append("Android version: " + VERSION.SDK_INT + "\n")
+        report.append("Device: $model\n")
+        report.append("App version: " + (info?.versionCode ?: "(null)") + "\n")
+        report.append("Time: " + SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date()) + "\n")
+        report.append("Root cause: "+ th.toString() + "\n\n\n")
+
+        report.append("Logcat messages: \n"+ th?.message)
+        report.append(readLogcat())
+        return report.toString()
+    }
+
+    private fun readLogcat(): String {
+        val process = Runtime.getRuntime().exec("logcat -d")
+        val bufferedReader = BufferedReader(
+                InputStreamReader(process.inputStream))
+        val log = bufferedReader.readText()
+        return log
     }
 
 
-    }
+}

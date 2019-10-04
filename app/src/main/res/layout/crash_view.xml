@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:background="#252A2E"
     android:orientation="vertical"
-    tools:context="ch.abertschi.adfree.exceptionhandler.SendLog"
     >
 
 

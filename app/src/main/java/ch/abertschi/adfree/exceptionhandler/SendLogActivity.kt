@@ -1,6 +1,4 @@
 package ch.abertschi.adfree.exceptionhandler
-
-
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,32 +6,44 @@ import android.text.Html
 import android.view.View
 import android.widget.TextView
 import ch.abertschi.adfree.R
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-
-import android.os.Build
-import android.os.Environment.getExternalStorageDirectory
-
-import android.os.Environment
 import android.widget.Toast
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.warn
 import java.io.File
-import java.io.FileWriter
-import java.io.IOException
-import java.io.InputStreamReader
+import java.lang.Exception
+import android.content.Intent
 
+class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
 
-// capture logs on app crash
-// https://stackoverflow.com/questions/19897628/need-to-handle-uncaught-exception-and-send-log-file
+    companion object {
+        val ACTION_NAME = "ch.abertschi.adfree.SEND_LOG_CRASH"
+        val EXTRA_LOGFILE = "ch.abertschi.adfree.extra.logfile"
+        val MAIL_ADDR = "apps@abertschi.ch"
+        val SUBJECT = "[ad-free-crash-report]"
+    }
 
-class SendLog : AppCompatActivity(), View.OnClickListener {
+    var logfile: String? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try {
+            doOnCreate()
+        } catch (e: Exception) {
+            warn(e)
+            Toast.makeText(this, "Error: $e", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun doOnCreate() {
+        setupUI()
+        logfile = intent?.extras?.getString(EXTRA_LOGFILE)
+    }
+
+    fun setupUI() {
         setContentView(R.layout.crash_view)
         setFinishOnTouchOutside(false)
         val v = findViewById(R.id.crash_container) as View
         v.setOnClickListener(this)
-
-
 
         var typeFace: Typeface = Typeface.createFromAsset(baseContext.assets, "fonts/Raleway-ExtraLight.ttf")
 
@@ -45,109 +55,37 @@ class SendLog : AppCompatActivity(), View.OnClickListener {
 
         val text =
                 "success is not final, failure is not fatal: it is the " +
-                        "<font color=#FFFFFF>courage</font> to continue that counts. -- " +
+                        "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
                         "Winston Churchill <br/><br/>" +
                         "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
                         "send the <font color=#FFFFFF>crash report.</font>"
 
         title?.text = Html.fromHtml(text)
-        val f = extractLogToFile()
     }
 
     override fun onClick(v: View) {
-        // respond to button clicks in your UI
-        val f = extractLogToFile()
-        println(f)
-        Toast.makeText(this, f, Toast.LENGTH_LONG)
+        logfile?.let {
+            try {
+                val file = File(filesDir, logfile)
+                val log = file.readText()
+                launchSendIntent(log)
+            } catch (e: Exception) {
+                warn {"cant send crash report"}
+                warn { e }
+                e.printStackTrace()
+                Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()
+            }
+        } ?: run {Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()}
     }
 
-    fun extractLogToFile(): String
-    {
-        val manager = this.packageManager
-        var info: PackageInfo? = null
-        try {
-            info = manager.getPackageInfo(this.packageName, 0)
-        } catch (e2: PackageManager.NameNotFoundException) {
-        }
+    fun launchSendIntent(msg: String) {
+        val sendIntent = Intent(Intent.ACTION_SEND)
 
-        var model = Build.MODEL
-        if (!model.startsWith(Build.MANUFACTURER))
-            model = Build.MANUFACTURER + " " + model
-
-        println(model)
-
-        // Make file name - file must be saved to external storage or it wont be readable by
-        // the email app.
-        val path = Environment.getExternalStorageDirectory().absolutePath + "/" + ""
-        val fullName = path + "error.txt"
-
-        // Extract to file.
-        val file = File(fullName)
-        var reader: InputStreamReader? = null
-        var writer: FileWriter? = null
-        try {
-            // For Android 4.0 and earlier, you will get all app's log output, so filter it to
-            // mostly limit it to your app's output.  In later versions, the filtering isn't needed.
-            val cmd = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-                "logcat -d -v time MyApp:v dalvikvm:v System.err:v *:s"
-            else
-                "logcat -d -v time"
-
-            // get input stream
-            val process = Runtime.getRuntime().exec(cmd)
-            process.inputStream.toString()
-            reader = InputStreamReader(process.inputStream)
-
-            // write output stream
-            writer = FileWriter(file)
-            writer!!.write("Android version: " + Build.VERSION.SDK_INT + "\n")
-            writer!!.write("Device: $model\n")
-            writer!!.write("App version: " + (info?.versionCode ?: "(null)") + "\n")
-
-            val buffer = CharArray(10000)
-            do {
-                val n = reader!!.read(buffer, 0, buffer.size)
-                if (n == -1)
-                    break
-                writer!!.write(buffer, 0, n)
-            } while (true)
-
-            reader!!.close()
-            writer!!.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            if (writer != null)
-                try {
-                    writer!!.close()
-                } catch (e1: IOException) {
-                    e1.printStackTrace()
-                }
-
-            if (reader != null)
-                try {
-                    reader!!.close()
-                } catch (e1: IOException) {
-                    e1.printStackTrace()
-                }
-
-            // You might want to write a failure message to the log here.
-        }
-
-
-        return fullName
+        sendIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(MAIL_ADDR))
+        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)
+        sendIntent.type = "text/plain"
+        this.startActivity(Intent.createChooser(sendIntent, "Choose an Email client"))
 
     }
-
-
-
-
-    private fun sendLogFile() {
-        // method as shown above
-    }
-
-
-//    private fun extractLogToFile(): String {
-//        // method as shown above
-//    }
-
 }
