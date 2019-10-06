@@ -42,6 +42,7 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
         logfile = intent?.extras?.getString(EXTRA_LOGFILE)
     }
 
+    // TODO: Send logcat output and summary
     fun setupUI() {
         setContentView(R.layout.crash_view)
         setFinishOnTouchOutside(false)
@@ -59,24 +60,39 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
         val text =
                 "success is not final, failure is not fatal: it is the " +
                         "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
-                        "Winston Churchill <br/><br/>" +
+                        "Winston Churchill"
+//                        "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
+//                        "send the <font color=#FFFFFF>crash report.</font>"
+
+        title?.text = Html.fromHtml(text)
+
+        val subtitle = findViewById(R.id.debugSubtitle) as TextView
+        subtitle.typeface = typeFace
+
+        subtitle.setOnClickListener(this)
+
+        val subtitletext =
+//                "success is not final, failure is not fatal: it is the " +
+//                        "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
+//                        "Winston Churchill"
                         "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
                         "send the <font color=#FFFFFF>crash report.</font>"
 
-        title?.text = Html.fromHtml(text)
+
+        subtitle?.text = Html.fromHtml(subtitletext)
+//        subtitle.text = intent?.extras?.getString(EXTRA_SUMMARY)
+
     }
 
     override fun onClick(v: View) {
 
 //        ActivityCompat.requestPermissions(this, Arrays.{ Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-
-
-
         logfile?.let {
             try {
                 val file = File(filesDir, logfile)
                 val log = file.readText()
-                launchSendIntent(log)
+//                launchSendIntent(log)
+                launchSendIntent(intent?.extras?.getString(EXTRA_SUMMARY) ?: "")
             } catch (e: Exception) {
                 warn {"cant send crash report"}
                 warn { e }
@@ -94,6 +110,5 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)
         sendIntent.type = "text/plain"
         this.startActivity(Intent.createChooser(sendIntent, "Choose an Email client"))
-
     }
 }

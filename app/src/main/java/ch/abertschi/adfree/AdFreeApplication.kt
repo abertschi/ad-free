@@ -25,11 +25,10 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build.*
+import android.util.Log
 import ch.abertschi.adfree.exceptionhandler.SendLogActivity
+import java.io.*
 import kotlin.system.exitProcess
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -127,7 +126,12 @@ class AdFreeApplication : Application(), AnkoLogger {
         summary.append("Device: $model\n")
         summary.append("App version: " + (info?.versionCode ?: "(null)") + "\n")
         summary.append("Time: " + SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date()) + "\n")
-        summary.append("Root cause: "+ th.toString() + "\n\n\n")
+
+        val sw = StringWriter()
+        val pw = PrintWriter(sw)
+        th?.printStackTrace(pw)
+
+        summary.append("Root cause: \n"+ Log.getStackTraceString(th) + "")
 
         val logcat = StringBuilder()
         logcat.append("Logcat messages: \n"+ th?.message)
