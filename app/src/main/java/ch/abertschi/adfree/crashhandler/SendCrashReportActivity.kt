@@ -1,5 +1,4 @@
-package ch.abertschi.adfree.exceptionhandler
-import android.Manifest
+package ch.abertschi.adfree.crashhandler
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -13,9 +12,9 @@ import org.jetbrains.anko.warn
 import java.io.File
 import java.lang.Exception
 import android.content.Intent
-import android.support.v4.app.ActivityCompat
 
-class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
+// todo: better view/controller split
+class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
 
     companion object {
         val ACTION_NAME = "ch.abertschi.adfree.SEND_LOG_CRASH"
@@ -37,13 +36,13 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
         }
     }
 
-    fun doOnCreate() {
+    private fun doOnCreate() {
         setupUI()
         logfile = intent?.extras?.getString(EXTRA_LOGFILE)
     }
 
     // TODO: Send logcat output and summary
-    fun setupUI() {
+    private fun setupUI() {
         setContentView(R.layout.crash_view)
         setFinishOnTouchOutside(false)
         val v = findViewById(R.id.crash_container) as View
@@ -61,8 +60,6 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
                 "success is not final, failure is not fatal: it is the " +
                         "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
                         "Winston Churchill"
-//                        "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
-//                        "send the <font color=#FFFFFF>crash report.</font>"
 
         title?.text = Html.fromHtml(text)
 
@@ -72,26 +69,18 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
         subtitle.setOnClickListener(this)
 
         val subtitletext =
-//                "success is not final, failure is not fatal: it is the " +
-//                        "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
-//                        "Winston Churchill"
                         "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
                         "send the <font color=#FFFFFF>crash report.</font>"
 
 
         subtitle?.text = Html.fromHtml(subtitletext)
-//        subtitle.text = intent?.extras?.getString(EXTRA_SUMMARY)
-
     }
 
     override fun onClick(v: View) {
-
-//        ActivityCompat.requestPermissions(this, Arrays.{ Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         logfile?.let {
             try {
                 val file = File(filesDir, logfile)
                 val log = file.readText()
-//                launchSendIntent(log)
                 launchSendIntent(intent?.extras?.getString(EXTRA_SUMMARY) ?: "")
             } catch (e: Exception) {
                 warn {"cant send crash report"}
@@ -102,9 +91,8 @@ class SendLogActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
         } ?: run {Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()}
     }
 
-    fun launchSendIntent(msg: String) {
+    private fun launchSendIntent(msg: String) {
         val sendIntent = Intent(Intent.ACTION_SEND)
-
         sendIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(MAIL_ADDR))
         sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)

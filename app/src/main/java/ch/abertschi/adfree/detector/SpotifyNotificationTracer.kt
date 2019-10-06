@@ -9,13 +9,11 @@ import java.io.FileOutputStream
 
 class SpotifyNotificationTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
 
-    companion object {
-        private val SPOTIFY_PACKAGE = "com.spotify"
-        private val FILENAME = "adfree-spotify.txt"
-    }
+    private val SPOTIFY_PACKAGE = "com.spotify"
+    private val FILENAME = "adfree-spotify.txt"
 
     override fun canHandle(payload: AdPayload): Boolean {
-        if (storageFolder == null){
+        if (storageFolder == null) {
             warn { "Given storageFolder is null, cant work. Disabling functionality ..." }
             return false
         }

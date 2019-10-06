@@ -6,7 +6,6 @@
 
 package ch.abertschi.adfree
 
-import android.annotation.SuppressLint
 import android.app.Application
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.detector.*
@@ -21,17 +20,7 @@ import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
-import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.os.Build.*
-import android.util.Log
-import ch.abertschi.adfree.exceptionhandler.SendLogActivity
-import java.io.*
-import kotlin.system.exitProcess
-import java.lang.StringBuilder
-import java.text.SimpleDateFormat
-import java.util.*
+import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
 
 
 /**
@@ -54,9 +43,9 @@ class AdFreeApplication : Application(), AnkoLogger {
 
     override fun onCreate() {
         super.onCreate()
+        Thread.setDefaultUncaughtExceptionHandler(CrashExceptionHandler(this))
+
         prefs = PreferencesFactory(applicationContext)
-
-
 
         adDetectors = listOf<AdDetectable>(NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
@@ -85,68 +74,5 @@ class AdFreeApplication : Application(), AnkoLogger {
                 pluginHandler, notificationChannel)
 
         adDetector.addObserver(adStateController)
-
-        Thread.setDefaultUncaughtExceptionHandler { thread, e -> handleUncaughtException(thread, e) }
     }
-
-    fun handleUncaughtException(thread: Thread?, e: Throwable?) {
-        e?.printStackTrace() // not all Android versions will print the stack trace automatically
-        val (summary, logcat) = generateReport(e)
-
-        val time = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date())
-        val filename = "adfree-crashlog-${time}.txt"
-        val file = File(this.filesDir, filename)
-        file.writeText(logcat)
-
-        val intent = Intent()
-        intent.action = SendLogActivity.ACTION_NAME
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.putExtra(SendLogActivity.EXTRA_LOGFILE, filename)
-        intent.putExtra(SendLogActivity.EXTRA_SUMMARY, summary)
-        startActivity(intent)
-
-        System.exit(1)
-        exitProcess(1)
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun generateReport(th: Throwable?): Pair<String, String> {
-        val manager = this.packageManager
-        var info: PackageInfo? = null
-        try {
-            info = manager.getPackageInfo(this.packageName, 0)
-        } catch (e2: PackageManager.NameNotFoundException) {
-        }
-
-        var model = MODEL
-        if (!model.startsWith(MANUFACTURER))
-            model = "$MANUFACTURER $model"
-
-        val summary = StringBuilder()
-        summary.append("Android version: " + VERSION.SDK_INT + "\n")
-        summary.append("Device: $model\n")
-        summary.append("App version: " + (info?.versionCode ?: "(null)") + "\n")
-        summary.append("Time: " + SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date()) + "\n")
-
-        val sw = StringWriter()
-        val pw = PrintWriter(sw)
-        th?.printStackTrace(pw)
-
-        summary.append("Root cause: \n"+ Log.getStackTraceString(th) + "")
-
-        val logcat = StringBuilder()
-        logcat.append("Logcat messages: \n"+ th?.message)
-        logcat.append(readLogcat())
-        return Pair(summary.toString(), logcat.toString())
-    }
-
-    private fun readLogcat(): String {
-        val process = Runtime.getRuntime().exec("logcat -d")
-        val bufferedReader = BufferedReader(
-                InputStreamReader(process.inputStream))
-        val log = bufferedReader.readText()
-        return log
-    }
-
-
 }

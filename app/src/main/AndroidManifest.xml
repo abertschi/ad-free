@@ -18,7 +18,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="ch.abertschi.adfree.exceptionhandler.SendLogActivity"
+            android:name="ch.abertschi.adfree.crashhandler.SendCrashReportActivity"
             android:process=":crashlog"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
