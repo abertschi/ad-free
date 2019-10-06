@@ -55,10 +55,15 @@ class AdFreeApplication : Application(), AnkoLogger {
     override fun onCreate() {
         super.onCreate()
         prefs = PreferencesFactory(applicationContext)
+
+
+
         adDetectors = listOf<AdDetectable>(NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
-                , NotificationBundleAndroidTextDetector(),
-                ScDetector())
+                , NotificationBundleAndroidTextDetector()
+                , ScDetector()
+                , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
+        )
 
         audioManager = AudioController(applicationContext, prefs)
         remoteManager = RemoteManager(prefs)
@@ -81,11 +86,7 @@ class AdFreeApplication : Application(), AnkoLogger {
 
         adDetector.addObserver(adStateController)
 
-
-
         Thread.setDefaultUncaughtExceptionHandler { thread, e -> handleUncaughtException(thread, e) }
-
-
     }
 
     fun handleUncaughtException(thread: Thread?, e: Throwable?) {
