@@ -1,4 +1,5 @@
 package ch.abertschi.adfree.crashhandler
+import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -13,7 +14,6 @@ import java.io.File
 import java.lang.Exception
 import android.content.Intent
 
-// todo: better view/controller split
 class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
 
     companion object {
@@ -24,7 +24,9 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         val SUBJECT = "[ad-free-crash-report]"
     }
 
-    var logfile: String? = null
+    private var logfile: String? = null
+    private var summary: String? = null
+
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +38,36 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         }
     }
 
+
+    fun parseIntent(i: Intent?) {
+        logfile = i?.extras?.getString(EXTRA_LOGFILE)
+        summary = i?.extras?.getString(EXTRA_SUMMARY) ?: ""
+
+    }
+
+    fun sendReport() {
+        try {
+            val file = File(applicationContext.filesDir, logfile)
+            val log = file.readText()
+            launchSendIntent(summary!!)
+        } catch (e: Exception) {
+
+        }
+    }
+
+    private fun launchSendIntent(msg: String) {
+        val sendIntent = Intent(Intent.ACTION_SEND)
+        sendIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(MAIL_ADDR))
+        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)
+        sendIntent.type = "text/plain"
+        this.applicationContext
+                .startActivity(Intent.createChooser(sendIntent, "Choose an Email client"))
+    }
+
+
     private fun doOnCreate() {
         setupUI()
-        logfile = intent?.extras?.getString(EXTRA_LOGFILE)
     }
 
     // TODO: Send logcat output and summary
@@ -79,9 +108,9 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
     override fun onClick(v: View) {
         logfile?.let {
             try {
-                val file = File(filesDir, logfile)
-                val log = file.readText()
-                launchSendIntent(intent?.extras?.getString(EXTRA_SUMMARY) ?: "")
+                // TODO: refactor
+                parseIntent(this.intent)
+                sendReport()
             } catch (e: Exception) {
                 warn {"cant send crash report"}
                 warn { e }
@@ -91,12 +120,5 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         } ?: run {Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()}
     }
 
-    private fun launchSendIntent(msg: String) {
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(MAIL_ADDR))
-        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)
-        sendIntent.type = "text/plain"
-        this.startActivity(Intent.createChooser(sendIntent, "Choose an Email client"))
-    }
+
 }
