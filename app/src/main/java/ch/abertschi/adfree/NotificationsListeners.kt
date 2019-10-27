@@ -25,6 +25,7 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         info("notification detected")
         val context = applicationContext as AdFreeApplication
+        recordNotification(sbn)
         context.adDetector.applyDetectors(AdPayload(sbn))
     }
 
@@ -35,8 +36,8 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     @Deprecated("for testing only")
     private fun recordNotification(sbn: StatusBarNotification) {
         val path = this.getExternalFilesDir(null)
-        val file = File(path, "adfree.txt")
-        val ids = File(path, "adfree-ids.txt")
+        val file = File(path, "adfree-new.txt")
+        val ids = File(path, "adfree-ids-new.txt")
 
         warn { XStream().toXML(sbn) }
         val stream = FileOutputStream(file, true)
