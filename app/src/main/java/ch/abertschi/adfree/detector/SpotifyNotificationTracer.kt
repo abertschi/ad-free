@@ -3,6 +3,7 @@ package ch.abertschi.adfree.detector
 import android.service.notification.StatusBarNotification
 import com.thoughtworks.xstream.XStream
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
@@ -26,7 +27,9 @@ class SpotifyNotificationTracer(val storageFolder: File?) : AdDetectable, AnkoLo
 
     private fun recordNotification(sbn: StatusBarNotification) {
         val file = File(storageFolder, FILENAME)
-        warn { XStream().toXML(sbn) }
+        info { XStream().toXML(sbn) }
+        info("writing spotify notification content to $file}")
+
         val stream = FileOutputStream(file, true)
         try {
             stream.write(XStream().toXML(sbn).toByteArray())
