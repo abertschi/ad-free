@@ -25,11 +25,9 @@ import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.view.about.AboutView
 import org.jetbrains.anko.onClick
 
-
 /**
  * Created by abertschi on 21.04.17.
  */
-
 class AboutActivity : Fragment(), AboutView {
 
     lateinit var typeFace: Typeface
@@ -70,7 +68,5 @@ class AboutActivity : Fragment(), AboutView {
                     Uri.parse("http://abertschi.ch?rel=adfree"))
             this.getContext()!!.startActivity(browserIntent)
         }
-
     }
-
 }

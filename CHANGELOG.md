@@ -1,5 +1,11 @@
 # Changelog / Ad-Free
-### v1.0, 2019-06-27 (unreleased)
+### v1.1, (unreleased)
+- Add support for miui based devices
+- introduce global error handler and option for email bug report on crash
+- introduce sc ad detection
+- introduce option to dump spotify notification
+
+### v1.0, 2019-06-27
 - Update fdroid store information (thanks @bennettscience)
 - Introduce more supported audio formats for local music: mp3, wav,
   m4a

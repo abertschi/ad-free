@@ -47,12 +47,13 @@ class AdFreeApplication : Application(), AnkoLogger {
 
         prefs = PreferencesFactory(applicationContext)
 
-        adDetectors = listOf<AdDetectable>(NotificationActionDetector()
+        adDetectors = listOf<AdDetectable>(
+                  NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
                 , NotificationBundleAndroidTextDetector()
                 , ScDetector()
                 , MiuiNotificationDetector()
-                , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
+//                , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
         )
 
         audioManager = AudioController(applicationContext, prefs)

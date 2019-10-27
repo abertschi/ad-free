@@ -1,4 +1,5 @@
 package ch.abertschi.adfree.crashhandler
+
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
@@ -14,6 +15,7 @@ import java.io.File
 import java.lang.Exception
 import android.content.Intent
 
+// TODO: refator this into presenter and view
 class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
 
     companion object {
@@ -31,6 +33,7 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
+            parseIntent(this.intent)
             doOnCreate()
         } catch (e: Exception) {
             warn(e)
@@ -98,27 +101,27 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         subtitle.setOnClickListener(this)
 
         val subtitletext =
-                        "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
+                "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
                         "send the <font color=#FFFFFF>crash report.</font>"
 
 
-        subtitle?.text = Html.fromHtml(subtitletext)
+        subtitle.text = Html.fromHtml(subtitletext)
     }
 
     override fun onClick(v: View) {
         logfile?.let {
             try {
-                // TODO: refactor
-                parseIntent(this.intent)
                 sendReport()
             } catch (e: Exception) {
-                warn {"cant send crash report"}
+                warn { "cant send crash report" }
                 warn { e }
                 e.printStackTrace()
-                Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "No crash report available.",
+                        Toast.LENGTH_LONG).show()
             }
-        } ?: run {Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()}
+        } ?: run {
+            Toast.makeText(this, "No crash report available.",
+                    Toast.LENGTH_LONG).show()
+        }
     }
-
-
 }

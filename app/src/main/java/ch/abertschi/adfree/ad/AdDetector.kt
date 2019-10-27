@@ -50,22 +50,6 @@ class AdDetector(val detectors: List<AdDetectable>,
                 fetchRemote()
                 init = true
             }
-
-//            if (isAd) {
-//                info { "ad-detected ###" }
-////                info { XStream().toXML(payload) }
-//                var str = XStream().toXML(payload).trim()
-//                str = str.replace("\n\r", "")
-//                val i = str.length / 2
-//                System.out.println(str.substring(0, i))
-//                System.out.flush()
-//                System.out.println(str.substring(i + 1))
-//                System.out.flush()
-//                DevelopUtils().serializeAndWriteToFile(payload, "ad")
-//            } else {
-//                DevelopUtils().serializeAndWriteToFile(payload, "no_ad")
-//            }
-
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
             val event = AdEvent(eventType)
             submitEvent(event)

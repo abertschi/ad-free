@@ -6,12 +6,14 @@
 
 package ch.abertschi.adfree
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import ch.abertschi.adfree.model.PreferencesFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.Schedulers.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
@@ -56,7 +58,7 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, prefs.loadVoiceCallAudioVolume(), AudioManager.FLAG_SHOW_UI)
         Observable.just(true).delay(8000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
             val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
             prefs.storeVoiceCallAudioVolume(volume)
@@ -70,7 +72,7 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         var counter: Int = 0
         Observable.just(1).delay(25, TimeUnit.MILLISECONDS)
                 .repeat(times)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     info { counter }
