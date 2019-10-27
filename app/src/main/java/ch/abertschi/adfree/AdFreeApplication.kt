@@ -51,6 +51,7 @@ class AdFreeApplication : Application(), AnkoLogger {
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
                 , NotificationBundleAndroidTextDetector()
                 , ScDetector()
+                , MiuiNotificationDetector()
                 , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
         )
 

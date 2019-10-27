@@ -7,25 +7,28 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
 
 /**
- * Created by abertschi on 17.04.17.
- *
- * miui 10 specific checks for notifications
+ * Perform inspection of miui notification bundles
  */
 class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean
             = super.canHandle(payload) && payload?.statusbarNotification?.notification != null
 
-    // <string>android.title</string>
-    //   <android.text.SpannableString>
-    //   <mSpanCount>0</mSpanCount>
-    //   <mSpanData/>
-    //   <mSpans/>
-    //   <mText>Advertisement</mText>
-    // </android.text.SpannableString>
+
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         var flagAsAd = false
         val bundle = getNotificationBundle(payload!!.statusbarNotification!!.notification)
+
+        // Notification content:
+        //
+        // <string>android.title</string>
+        //   <android.text.SpannableString>
+        //   <mSpanCount>0</mSpanCount>
+        //   <mSpanData/>
+        //   <mSpans/>
+        //   <mText>Advertisement</mText>
+        // </android.text.SpannableString>
+        //
         bundle.let {
             val sp: SpannableString? = bundle?.get("android.title") as SpannableString?
             sp?.run {
@@ -38,9 +41,9 @@ class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
 
     private fun getSpanCount(sp: SpannableString): Int? {
         try {
-            val f = sp.javaClass.getDeclaredField("mSpanCount") //NoSuchFieldException
+            val f = sp.javaClass.superclass.getDeclaredField("mSpanCount") //NoSuchFieldException
             f.isAccessible = true
-            return f.get(sp) as Int
+            return f.get(sp) as Int?
         } catch (e: Exception) {
             warn("Can not access notification mSpanCount with reflection, $e")
         }
@@ -57,5 +60,4 @@ class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
         }
         return null
     }
-
 }
