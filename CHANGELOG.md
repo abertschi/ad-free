@@ -1,5 +1,6 @@
 # Changelog / Ad-Free
-### v1.1, (unreleased)
+
+### v1.1
 - Add support for miui based devices
 - introduce global error handler and option for email bug report on crash
 - introduce sc ad detection
