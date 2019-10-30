@@ -16,7 +16,8 @@ class Serializer {
     }
 
     companion object {
-        val instance: ch.abertschi.adfree.util.Serializer by lazy { ch.abertschi.adfree.util.Serializer.Holder.INSTANCE }
+        val instance: ch.abertschi.adfree.util.Serializer
+                by lazy { ch.abertschi.adfree.util.Serializer.Holder.INSTANCE }
     }
 
     private val xstream: com.thoughtworks.xstream.XStream = com.thoughtworks.xstream.XStream()

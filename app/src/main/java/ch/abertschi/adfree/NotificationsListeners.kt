@@ -35,8 +35,8 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     @Deprecated("for testing only")
     private fun recordNotification(sbn: StatusBarNotification) {
         val path = this.getExternalFilesDir(null)
-        val file = File(path, "adfree.txt")
-        val ids = File(path, "adfree-ids.txt")
+        val file = File(path, "adfree-new.txt")
+        val ids = File(path, "adfree-ids-new.txt")
 
         warn { XStream().toXML(sbn) }
         val stream = FileOutputStream(file, true)

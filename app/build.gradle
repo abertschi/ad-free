@@ -9,8 +9,8 @@ android {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 30
-        versionName "1.0"
+        versionCode 31
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
    }
@@ -36,36 +36,36 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:27.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile 'org.jetbrains.anko:anko-sdk23:0.9.1' // sdk19, sdk21, sdk23 are also available
-    compile 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compile 'com.github.javiersantos:AppUpdater:2.6.1'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'org.jetbrains.anko:anko-sdk23:0.9.1' // sdk19, sdk21, sdk23 are also available
+    implementation 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
+    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation 'com.github.javiersantos:AppUpdater:2.6.1'
 
 //    compile 'com.github.kittinunf.fuel:fuel-android:1.5.0'
     implementation 'com.github.kittinunf.fuel:fuel:2.1.0'
     implementation 'com.github.kittinunf.fuel:fuel-android:2.1.0'
 
-    compile 'com.github.bmoliveira:snake-yaml:v1.18-android'
+    implementation 'com.github.bmoliveira:snake-yaml:v1.18-android'
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 // Because RxAndroid releases are few and far between, it is recommended you also
 // explicitly depend on RxJava's latest version for bug fixes and new features.
-    compile 'io.reactivex.rxjava2:rxjava:2.0.9'
-    compile 'com.danikula:videocache:2.6.4'
-    compile 'com.github.angads25:filepicker:1.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.9'
+    implementation 'com.danikula:videocache:2.6.4'
+    implementation 'com.github.angads25:filepicker:1.1.1'
 
-    compile('com.thoughtworks.xstream:xstream:1.4.7') {
+    implementation('com.thoughtworks.xstream:xstream:1.4.7') {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
 
 
-    compile 'com.daimajia.easing:library:2.0@aar'
-    compile 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
 
     testCompile 'org.codehaus.groovy:groovy:2.4.11:grooid'

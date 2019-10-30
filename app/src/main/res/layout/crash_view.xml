@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/crash_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#252A2E"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:gravity="center_vertical"
+
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+
+            <LinearLayout
+
+                android:id="@+id/quote_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+
+                android:orientation="vertical">
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/sad_face"-->
+                <!--                    style="@style/AppTextView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:inputType="textMultiLine|textNoSuggestions"-->
+                <!--                    android:scrollHorizontally="true"-->
+                <!--                    android:text=":("-->
+                <!--                    android:textColor="#C4BCAF"-->
+                <!--                    android:textSize="60dp"-->
+                <!--                    android:layout_marginBottom="50dp"-->
+
+                <!--                    />-->
+
+
+                <TextView
+                    android:id="@+id/crash_Title"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="true"
+                    android:text="ad-free crashed"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/title_text_size"
+
+                    />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/quote_container"
+                android:layout_centerHorizontal="false"
+                android:layout_marginTop="50dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/debugSubtitle"
+                    style="@style/AppTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="true"
+
+                    android:text="send logs"
+
+                    android:textColor="#C4BCAF"
+
+                android:textSize="@dimen/normal_text_size" />
+
+            </LinearLayout>
+
+            <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:id="@+id/website"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_height="50dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_gravity="top|right"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:scaleType="fitCenter"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:src="@mipmap/web"&ndash;&gt;-->
+            <!--&lt;!&ndash;                />&ndash;&gt;-->
+
+            <!--            &lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--            &lt;!&ndash;android:id="@+id/github"&ndash;&gt;-->
+            <!--            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--            &lt;!&ndash;android:layout_height="50dp"&ndash;&gt;-->
+            <!--            &lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+            <!--            &lt;!&ndash;android:scaleType="fitCenter"&ndash;&gt;-->
+            <!--            &lt;!&ndash;android:src="@mipmap/github"&ndash;&gt;-->
+            <!--            &lt;!&ndash;/>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:id="@+id/twitter"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_height="50dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_gravity="top|right"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:scaleType="fitCenter"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:src="@mipmap/bird"&ndash;&gt;-->
+            <!--&lt;!&ndash;                />&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:id="@+id/debug_info1"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_marginBottom="20dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:inputType="textMultiLine|textNoSuggestions"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:scrollHorizontally="false"&ndash;&gt;-->
+
+            <!--&lt;!&ndash;                android:text="run spotify for a while so ads can appear and be captured."&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:textColor="#C4BCAF"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:textSize="@dimen/normal_text_size"&ndash;&gt;-->
+            <!--&lt;!&ndash;                />&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:id="@+id/debugInfo2"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:layout_marginBottom="20dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:inputType="textMultiLine|textNoSuggestions"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:scrollHorizontally="false"&ndash;&gt;-->
+
+            <!--&lt;!&ndash;                android:text="> send logs"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:textColor="#FFFFFF"&ndash;&gt;-->
+            <!--&lt;!&ndash;                android:textSize="@dimen/normal_text_size"&ndash;&gt;-->
+            <!--&lt;!&ndash;                />&ndash;&gt;-->
+
+
+            <!--        </LinearLayout>-->
+            <!--        &lt;!&ndash;<LinearLayout&ndash;&gt;-->
+            <!--        &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--        &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--        &lt;!&ndash;android:layout_below="@id/icons_first_row"&ndash;&gt;-->
+            <!--        &lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+            <!--        &lt;!&ndash;&gt;&ndash;&gt;-->
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</ScrollView>
+
+

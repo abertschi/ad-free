@@ -20,8 +20,7 @@ import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
 
 
 /**
@@ -44,11 +43,18 @@ class AdFreeApplication : Application(), AnkoLogger {
 
     override fun onCreate() {
         super.onCreate()
+        Thread.setDefaultUncaughtExceptionHandler(CrashExceptionHandler(this))
+
         prefs = PreferencesFactory(applicationContext)
-        adDetectors = listOf<AdDetectable>(NotificationActionDetector()
+
+        adDetectors = listOf<AdDetectable>(
+                  NotificationActionDetector()
                 , SpotifyTitleDetector(TrackRepository(this, prefs))
-                , NotificationBundleAndroidTextDetector(),
-                ScDetector())
+                , NotificationBundleAndroidTextDetector()
+                , ScDetector()
+                , MiuiNotificationDetector()
+//                , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
+        )
 
         audioManager = AudioController(applicationContext, prefs)
         remoteManager = RemoteManager(prefs)
@@ -70,7 +76,5 @@ class AdFreeApplication : Application(), AnkoLogger {
                 pluginHandler, notificationChannel)
 
         adDetector.addObserver(adStateController)
-
-
     }
 }

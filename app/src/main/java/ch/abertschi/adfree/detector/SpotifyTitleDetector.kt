@@ -13,10 +13,16 @@ import org.jetbrains.anko.AnkoLogger
  * AdDetectable that checks for the Keyword Spotify
  *
  * Created by abertschi on 15.04.17.
+ *
+ *
  */
-class SpotifyTitleDetector(val trackRepository: TrackRepository) : AbstractStatusBarDetector(), AnkoLogger {
+// TODO: add option to tag ads manually
+class SpotifyTitleDetector(val trackRepository: TrackRepository) :
+        AbstractStatusBarDetector(), AnkoLogger {
 
-    private val keyword: String = "Spotify —"
+    private val keywords = listOf(
+            "Spotify —"
+            ,"Advertisement —")
 
     override fun canHandle(payload: AdPayload): Boolean {
         getTitle(payload).let { payload.ignoreKeys.add(it!!) }
@@ -24,7 +30,12 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) : AbstractStatu
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = getTitle(payload)?.toLowerCase()?.trim()?.equals(keyword) ?: false
+            = getTitle(payload)?.toLowerCase()?.trim()?.run {
+        var isAdd = false
+        for(k in keywords) {
+            isAdd = isAdd || k.toLowerCase() == this
+        }
+        isAdd }?: false
 
     override fun flagAsMusic(payload: AdPayload): Boolean
             = getTitle(payload).let { trackRepository.getAllTracks().contains(it) }

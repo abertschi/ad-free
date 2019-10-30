@@ -58,6 +58,7 @@ class MainActivity : FragmentActivity() {
                 0 -> return HomeActivity()
                 1 -> return SettingsActivity()
                 else -> return AboutActivity()
+//                else -> return DebugActivity()
             }
         }
 

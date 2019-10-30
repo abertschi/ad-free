@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.presenter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Settings
 import ch.abertschi.adfree.model.PreferencesFactory
@@ -30,7 +31,6 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
         isInit = true
         showPermissionRequiredIfNecessary(context)
         homeView.setPowerState(preferencesFactory.isBlockingEnabled())
-        checkForUpdates(context)
     }
 
     fun onResume(context: Context) {
@@ -39,7 +39,8 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
 
     fun hasNotificationPermission(context: Context): Boolean {
         val permission =
-                Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners")
+                Settings.Secure.getString(context.contentResolver,
+                        "enabled_notification_listeners")
         if (permission == null || !permission.contains(context.packageName)) {
             return false
         }
@@ -51,23 +52,6 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
             homeView.showStatusEnabled()
         }
         preferencesFactory.setBlockingEnabled(status)
-    }
-
-    private fun checkForUpdates(context: Context) {
-        RemoteManager(preferencesFactory)
-                .getRemoteSettingsObservable()
-                .subscribe({
-                    if (it.useGithubReleasesForUpdateReminder && it.showSeakbarOnUpdate) {
-                        Observable.create<AppUpdater> { source ->
-                            val updater = UpdateManager(preferencesFactory)
-                                    .appUpdaterForInAppUse(context)
-                            updater.start()
-                            source.onComplete()
-                        }.observeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe()
-                    }
-                })
     }
 
     private fun showPermissionRequiredIfNecessary(context: Context) {

@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.view.setting
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
@@ -25,11 +26,9 @@ import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.view.about.AboutView
 import org.jetbrains.anko.onClick
 
-
 /**
  * Created by abertschi on 21.04.17.
  */
-
 class AboutActivity : Fragment(), AboutView {
 
     lateinit var typeFace: Typeface
@@ -40,6 +39,7 @@ class AboutActivity : Fragment(), AboutView {
         return inflater?.inflate(R.layout.about_view, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         typeFace = ViewSettings.instance(this.context!!).typeFace
@@ -56,21 +56,24 @@ class AboutActivity : Fragment(), AboutView {
 
 
         val versionView = view?.findViewById(R.id.version) as TextView
-        versionView?.typeface = typeFace
-        versionView?.text = "v${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
+        versionView.typeface = typeFace
+        versionView.text = "v${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
+        versionView.onClick {
+            val browserIntent = Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md"))
+            this.context!!.startActivity(browserIntent)
+        }
 
         view.findViewById<ImageView>(R.id.twitter).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
-            this.getContext()!!.startActivity(browserIntent)
+            this.context!!.startActivity(browserIntent)
         }
 
         view.findViewById<ImageView>(R.id.website).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://abertschi.ch?rel=adfree"))
-            this.getContext()!!.startActivity(browserIntent)
+            this.context!!.startActivity(browserIntent)
         }
-
     }
-
 }
