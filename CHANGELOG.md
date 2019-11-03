@@ -1,5 +1,8 @@
 # Changelog / Ad-Free
 
+### v1.2, 2019-11-03
+- bug fix: fix casting issue on non-miui devices
+
 ### v1.1, 2019-10-30
 - Add support for miui based devices
 - introduce global error handler and option for email bug report on crash
