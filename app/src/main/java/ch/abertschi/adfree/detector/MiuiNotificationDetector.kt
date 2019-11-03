@@ -29,12 +29,16 @@ class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
         //   <mText>Advertisement</mText>
         // </android.text.SpannableString>
         //
-        bundle.let {
-            val sp: SpannableString? = bundle?.get("android.title") as SpannableString?
-            sp?.run {
-                val count = getSpanCount(this)
-                flagAsAd = count != null && count == 0
+        try {
+            bundle.let {
+                val sp: SpannableString? = bundle?.get("android.title") as SpannableString?
+                sp?.run {
+                    val count = getSpanCount(this)
+                    flagAsAd = count != null && count == 0
+                }
             }
+        } catch(e: java.lang.Exception) {
+            warn("Cant apply miui listener, $e")
         }
         return flagAsAd
     }
