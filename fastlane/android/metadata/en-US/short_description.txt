@@ -1,1 +1,0 @@
-Ad-Free is a modularized AdBlocker for Spotify on Android.

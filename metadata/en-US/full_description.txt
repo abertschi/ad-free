@@ -1,4 +1,5 @@
-Ad Free stops Spotify ads from playing while listening on your phone. You can pick from one of three options to play instead of the ad:
+Ad-Free is an ad blocker for Spotify.
+You can pick from one of three options to play instead of the ad:
 
 1. Mute audio
 2. Local music files
@@ -9,4 +10,3 @@ Features:
 * Mute audio when advertisement is playing
 * Play arbitrary audio instead of Spotify advertisement
 * No ROOT required
-* Plugin based design

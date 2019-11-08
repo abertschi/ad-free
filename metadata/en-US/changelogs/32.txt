@@ -1,0 +1,1 @@
+- fix bug caused by detector for MIUI devices
