@@ -10,3 +10,8 @@ Features:
 * Mute audio when advertisement is playing
 * Play arbitrary audio instead of Spotify advertisement
 * No ROOT required
+* Privacy focused, we do not spy on you
+* Plugin based design, easily extend it for more support.
+
+
+Browse https://adfree.abertschi.ch for more information.
