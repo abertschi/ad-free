@@ -1,5 +1,9 @@
 # Changelog / Ad-Free
 
+### v1.2.1, 2019-11-9
+- update fdroid metadata: screenshots, changelog
+- no functional changes
+
 ### v1.2, 2019-11-03
 - bug fix: fix casting issue on non-miui devices
 
