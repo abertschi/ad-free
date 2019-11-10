@@ -1,6 +1,6 @@
 # Changelog / Ad-Free
 
-### v1.2.1, 2019-11-9
+### v1.2.1/33,  2019-11-9
 - update fdroid metadata: screenshots, changelog
 - no functional changes
 
