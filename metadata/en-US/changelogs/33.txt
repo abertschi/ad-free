@@ -1,0 +1,3 @@
+- update fdroid metadata: screenshots, changelogs
+- no functional changes
+
