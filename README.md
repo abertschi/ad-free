@@ -24,7 +24,7 @@ Advertisement detectors are modularized into implementations of [AdDetectable](.
 
 Ad Free registers an [NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html) and is therefore able to parse all incoming notifications on Android. Notifications are parsed by implementations of `AdDetectable`:
 
-- `SpotifyTitleDetector`:  
+- `TitleDetector`:  
 Detector which parses notifications for certain keywords. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
 
 - `NotificationActionDetector`:  
