@@ -22,13 +22,13 @@ http://adfree.abertschi.ch
 ### Ad detection
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adfree/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is advertisement or not.
 
-Ad Free registers an [NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html) and is therefore able to parse all incoming notifications on Android. Notifications shown by Spotify are parsed by implementations of `AdDetectable`:
+Ad Free registers an [NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html) and is therefore able to parse all incoming notifications on Android. Notifications are parsed by implementations of `AdDetectable`:
 
 - `SpotifyTitleDetector`:  
-Detector which parses Spotify notifications for certain keywords. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
+Detector which parses notifications for certain keywords. In order to avoid false positives, an notification action is provided to unblock wrongly detected advertisements.
 
 - `NotificationActionDetector`:  
-Detector which inspects Spotify notifications for properties set in the track navigation bar.
+Detector which inspects notifications for properties set in the track navigation bar.
 
 - `NotificationBundleAndroidTextDetector`:  
 Detector which checks for properties set in the notification bundle.
