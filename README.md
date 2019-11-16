@@ -2,7 +2,7 @@
 # Ad-Free
 
 Ad Free is a research project attempting to show flaws in the way how audio advertisement is shown on Android. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
-It does not interfere with music players but simply uses context information of the Android runtime.
+It does not interfere with music players but simply uses context information of the Android runtime to mute audio.
 
 http://adfree.abertschi.ch
 
