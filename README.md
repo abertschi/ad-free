@@ -1,7 +1,7 @@
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()  [![codebeat badge](https://codebeat.co/badges/1fc357d9-4c2e-46f6-b847-d295e4de78eb)](https://codebeat.co/projects/github-com-abertschi-ad-free-master)
 # Ad-Free
 
-Ad Free is a research project attempting to show flaws in the way how Spotify for Android presents audio advertisement. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
+Ad Free is a research project attempting to show flaws in the way how audio advertisement is shown on Android. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
 
 http://adfree.abertschi.ch
 
@@ -10,7 +10,7 @@ http://adfree.abertschi.ch
 ## Features
 - No ROOT required
 - Turn off sound when advertisement is playing
-- Play arbitrary audio instead of Spotify advertisement
+- Play arbitrary audio instead of advertisement
 - Plugin based design
 
 ## Download
