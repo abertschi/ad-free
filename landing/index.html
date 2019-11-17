@@ -1,635 +1,636 @@
 <!DOCTYPE html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- standard meta tags -->
-    <meta name="description" content="Ad-Free is an AdBlocker on Android that does not require ROOT and is modularized into plugins.">
-    <meta name="keywords" content="adblocker, android, music, ad, ads, blocker, plugin, rickandmorty" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- standard meta tags -->
+  <meta name="description" content="Ad-Free is an AdBlocker on Android that does not require ROOT and is modularized into plugins.">
+  <meta name="keywords" content="adblocker, android, music, ad, ads, blocker, plugin, rickandmorty" />
 
-    <!-- facebook open graph tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Ad-Free">
-    <meta property="og:url" content="http://adfree.abertschi.ch">
-    <meta property="og:title" content="Ad-Free, an adblocker on Android">
-    <meta property="og:description" content="Ad-Free is an AdBlocker for Android that does not require ROOT and is modularized into plugins.">
-    <meta property="og:image" name="facebook" content="/images/shareimage-9fd811b6d4.png">
+  <!-- facebook open graph tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ad-Free">
+  <meta property="og:url" content="http://adfree.abertschi.ch">
+  <meta property="og:title" content="Ad-Free, an adblocker on Android">
+  <meta property="og:description" content="Ad-Free is an AdBlocker for Android that does not require ROOT and is modularized into plugins.">
+  <meta property="og:image" name="facebook" content="/images/shareimage-9fd811b6d4.png">
 
-    <meta charset="utf-8">
-    <title>Ad-Free</title>
-    <meta name="theme-color" content="#FE9375" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="j.css">
-    <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            background-color: #FE9375;
-            /*font-family: 'Ubuntu Mono', monospace;*/
-            font-family: 'Raleway', sans-serif;
-        }
+  <meta charset="utf-8">
+  <title>Ad-Free</title>
+  <meta name="theme-color" content="#FE9375" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="j.css">
+  <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <style>
+    body {
+        margin: 0;
+        background-color: #FE9375;
+        /*font-family: 'Ubuntu Mono', monospace;*/
+        font-family: 'Raleway', sans-serif;
+    }
 
-        .header {
-            height: 100vh;
-            width: 100%;
-            /*min-width: 700px;*/
-            top: 0px;
-            /*margin-left: auto;*/
-            /*position: relative;*/
-            /*background-color: red;*/
-        }
+    .header {
+        height: 100vh;
+        width: 100%;
+        /*min-width: 700px;*/
+        top: 0px;
+        /*margin-left: auto;*/
+        /*position: relative;*/
+        /*background-color: red;*/
+    }
 
-        .header h1 {
-            font-size: 100px;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 0px;
-            color: #252A2E;
-        }
+    .header h1 {
+        font-size: 100px;
+        color: white;
+        font-weight: bold;
+        margin-bottom: 0px;
+        color: #252A2E;
+    }
 
-        .header h2 {
-            margin-top: 0px;
-            font-size: 25px;
-            color: white;
-            color: #252A2E;
-        }
+    .header h2 {
+        margin-top: 0px;
+        font-size: 25px;
+        color: white;
+        color: #252A2E;
+    }
 
-        .phone {
-            width: 47%;
-            height: 100%;
-            display: inline-block;
-        }
+    .phone {
+        width: 47%;
+        height: 100%;
+        display: inline-block;
+    }
 
-        .phone__img {
-            height: 90%;
-            padding: 5%;
-            padding-right: 15%;
-            float: right;
-        }
+    .phone__img {
+        height: 90%;
+        padding: 5%;
+        padding-right: 15%;
+        float: right;
+    }
 
-        .text {
-            display: inline-block;
-            float: right;
-            text-align: left;
-            width: 53%;
+    .text {
+        display: inline-block;
+        float: right;
+        text-align: left;
+        width: 53%;
 
-            height: 100%;
-            /*background-color: blue;*/
-        }
+        height: 100%;
+        /*background-color: blue;*/
+    }
 
-        .text__title {
-            margin-top: 25vh;
-        }
+    .text__title {
+        margin-top: 25vh;
+    }
 
-        .text__links {
-            margin-top: 3vh;
-            color: #252A2E;
-        }
+    .text__links {
+        margin-top: 3vh;
+        color: #252A2E;
+    }
 
-        .text__features {
+    .text__features {
 
-            margin: 0;
-            padding: 0;
-            margin-top: 3vh;
-        }
+        margin: 0;
+        padding: 0;
+        margin-top: 3vh;
+    }
 
-        .text__features ul {
+    .text__features ul {
 
-            margin: 0;
-            padding: 0;
+        margin: 0;
+        padding: 0;
 
-            list-style-type: none;
-        }
+        list-style-type: none;
+    }
 
-        .text__features ul li {
-            padding-bottom: 5px;
-        }
+    .text__features ul li {
+        padding-bottom: 5px;
+    }
 
-        button {
-            display: inline-block;
-            height: 40px;
-            line-height: 40px;
-            background: #252A2E;
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-            margin-right: 20px;
-            text-transform: uppercase;
-            text-decoration: none;
-            text-align: center;
-            padding: 0 25px;
-            outline: none;
-            border: 0;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-            font-style: normal;
-            cursor: pointer;
-            width: 150px;
-            font-family: 'Raleway', sans-serif;
-        }
+    button {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        background: #252A2E;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        margin-right: 20px;
+        text-transform: uppercase;
+        text-decoration: none;
+        text-align: center;
+        padding: 0 25px;
+        outline: none;
+        border: 0;
+        margin-bottom: 10px;
+        transition: all 0.3s;
+        font-style: normal;
+        cursor: pointer;
+        width: 150px;
+        font-family: 'Raleway', sans-serif;
+    }
 
-        .bg_item {
+    .bg_item {
 
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            opacity: 0.5;
-            r
-        }
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        opacity: 0.5;
+        r
+    }
 
-        .bg_item__img {
-            width: 10px;
-        }
-        /*@media only
+    .bg_item__img {
+        width: 10px;
+    }
+    /*@media only
         screen and (max-height: 500px) {
             .text__title {
                 margin-top: 1vh;
             }
         }*/
 
+    .features {
+        /*height: 100vh;*/
+        /*height: 1000px;*/
+        /*margin-top: 300px;*/
+        width: 100%;
+        /*min-width: 700px;*/
+        color: white;
+        /*background-color: red;*/
+    }
+
+    .features h1 {
+
+        /*font-size: 40px;*/
+        color: white;
+        /*font-weight: bold;*/
+        font-weight: normal;
+        margin-bottom: 0px;
+        color: white;
+        color: #cecac2;
+    }
+
+    .white {
+        color: white;
+        /*font-style: italic;*/
+    }
+
+    .features h2 {
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        margin-bottom: 0px;
+        color: white;
+    }
+
+    .features a {
+        color: white;
+    }
+
+    .features__title {
+        padding-top: 100px;
+        text-align: center;
+        margin: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .features__entries__entry--bold {
+        margin-top: 30px;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        margin-bottom: 0px;
+        color: white;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .features__entries__entry--text {
+        font-size: 20px;
+        margin-top: 20px;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .features__entries__entry__icon {
+        text-align: center;
+    }
+
+    .features__entries__entry__icon__img {
+        width: 30%;
+    }
+
+
+    .features__entries {
+        background-color: #252A2E;
+        padding-top: 30vh;
+        /*width: 100%;*/
+        /*padding-top: 200px;*/
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        padding-left: 5%;
+        padding-right: 5%;
+        /*height: 500px;*/
+        /*flex: 0;*/
+    }
+
+    .features__entries__entry {
+        background-color: #252A2E;
+
+        /*width: 40%;*/
+        padding-left: 1%;
+        width: 80%;
+
+        padding-right: 1%;
+        /*padding-left: 10%;*/
+        /*height: 100px;*/
+        padding-bottom: 150px;
+        margin: auto;
+        /* Magic! */
+    }
+
+    footer {
+        background-color: #252A2E;
+        /*margin-top: 100px;*/
+        font-size: 13px;
+        color: white;
+        text-align: center;
+        /*padding: 30px;*/
+        width: 100%;
+        /*padding: 30px;*/
+        /*height: 100px;*/
+        /*position: fixed;*/
+        /*bottom: 0;*/
+        /*width: 100%;*/
+    }
+
+    footer div {
+        padding: 30px;
+    }
+
+
+    .scroll {
+        /*bottom: 0px;*/
+        /*padding-top: 90vh;*/
+        /*background-color: red;*/
+        margin-top: -10vh;
+    }
+
+    .scroll a {
+        /*padding-top: 60px;*/
+    }
+
+    .scroll a span {
+        position: absolute;
+        /*top: 0;*/
+        left: 50%;
+        width: 46px;
+        height: 46px;
+        margin-left: -23px;
+        border: 2px solid #252A2E;
+        border-radius: 100%;
+        box-sizing: border-box;
+        color: #252A2E;
+    }
+
+    .scroll a span::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        content: '';
+        width: 16px;
+        height: 16px;
+        margin: -12px 0 0 -8px;
+        border-left: 1px solid #252A2E;
+        border-bottom: 1px solid #252A2E;
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        box-sizing: border-box;
+    }
+
+
+    @media only screen and (max-height: 600px) {
+        .text__title {
+            margin-top: 10vh;
+        }
+
+        .text__title h1 {
+            margin-top: 0;
+        }
+    }
+
+    @media only screen and (max-height: 450px) {
+        .text__title {
+            margin-top: 25vh;
+        }
+
+        .text__title h1 {
+            margin-top: 0;
+        }
+        .phone__img {
+            height: 500px;
+            padding: 5%;
+            padding-right: 15%;
+            float: right;
+        }
+        .header {
+            /*height: 900px;*/
+        }
+
         .features {
-            /*height: 100vh;*/
-            /*height: 1000px;*/
-            /*margin-top: 300px;*/
+            /*margin-top: 100px;*/
+            /*height: 500px;*/
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        /*screen and (max-height: 400px) {*/
+        body {
+            font-size: 25px;
+        }
+
+        .header {
             width: 100%;
-            /*min-width: 700px;*/
-            color: white;
+            margin: 0;
             /*background-color: red;*/
         }
 
-        .features h1 {
-
-            /*font-size: 40px;*/
-            color: white;
-            /*font-weight: bold;*/
-            font-weight: normal;
-            margin-bottom: 0px;
-            color: white;
-            color: #cecac2;
-        }
-
-        .white {
-            color: white;
-            /*font-style: italic;*/
-        }
-
-        .features h2 {
-            font-size: 30px;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 0px;
-            color: white;
-        }
-
-        .features a {
-            color: white;
-        }
-
-        .features__title {
-            padding-top: 100px;
+        .header h1 {
+            font-size: 22vw;
             text-align: center;
-            margin: auto;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: bold;
         }
 
-        .features__entries__entry--bold {
+        .header h2 {
             margin-top: 30px;
             font-size: 30px;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 0px;
-            color: white;
+            margin-bottom: 10%;
+        }
+
+        .text__title {}
+
+        .text__title h1 {
             text-align: center;
-            padding-top: 20px;
+            margin-top: 10vh;
+        }
+        button {
+            font-size: 22px;
+            height: 50px;
+            width: 70%;
+        }
+        .text__features {
+            margin-top: 10%;
+            font-size: 18px;
+            text-align: left;
+            margin-left: 12%;
+
+        }
+
+        .phone {
+
+
+            width: 100%;
+            height: auto;
+            display: block;
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+
+        .phone__img {
+            height: auto;
+            width: 80%;
+            margin: 0;
+            padding: 0;
+            float: left;
+            /*margin-top: 10%;*/
+            margin-left: 10%;
+            margin-bottom: 10%;
+        }
+
+        .text {
+            display: block;
+            text-align: center;
+            width: 100%;
+            margin-top: 0;
+            height: 600px;
+            margin-bottom: 29%; /* this may make problems! */
+        }
+        .text__title {
+            margin-top: 0;
+        }
+
+        .features {
+            width: 100%;
+            padding-top: 0;
+            margin-top: 0;
+            /*height: 2000px;*/
+        }
+
+        .features__entries {
+            flex-wrap: wrap;
+            width: 100%;
+            padding-left: 0%;
+            padding-right: 0%;
         }
 
         .features__entries__entry--text {
             font-size: 20px;
-            margin-top: 20px;
-            line-height: 1.3;
-            text-align: center;
         }
 
-        .features__entries__entry__icon {
-            text-align: center;
+        .features__entries__entry--bold {
+            font-size: 30px;
         }
 
-        .features__entries__entry__icon__img {
-            width: 30%;
-        }
-
-
-        .features__entries {
-            background-color: #252A2E;
-            padding-top: 30vh;
-            /*width: 100%;*/
-            /*padding-top: 200px;*/
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: center;
-            padding-left: 5%;
-            padding-right: 5%;
-            /*height: 500px;*/
-            /*flex: 0;*/
-        }
-
-        .features__entries__entry {
-            background-color: #252A2E;
-
-            /*width: 40%;*/
-            padding-left: 1%;
-            width: 80%;
-
-            padding-right: 1%;
+        .footer {
+            padding-top: 100px;
+            /*width: 80%;*/
+            height: 200px;
             /*padding-left: 10%;*/
-            /*height: 100px;*/
-            padding-bottom: 150px;
-            margin: auto;
-            /* Magic! */
+            /*padding-right: 10%;*/
+            font-size: 19px;
+            line-height: 1.5;
         }
-
-        footer {
-            background-color: #252A2E;
-            /*margin-top: 100px;*/
-            font-size: 13px;
-            color: white;
-            text-align: center;
-            /*padding: 30px;*/
-            width: 100%;
-            /*padding: 30px;*/
-            /*height: 100px;*/
-            /*position: fixed;*/
-            /*bottom: 0;*/
-            /*width: 100%;*/
         }
-
-        footer div {
-            padding: 30px;
-        }
-
-
-        .scroll {
-            /*bottom: 0px;*/
-            /*padding-top: 90vh;*/
-            /*background-color: red;*/
-            margin-top: -10vh;
-        }
-
-        .scroll a {
-            /*padding-top: 60px;*/
-        }
-
-        .scroll a span {
-            position: absolute;
-            /*top: 0;*/
-            left: 50%;
-            width: 46px;
-            height: 46px;
-            margin-left: -23px;
-            border: 2px solid #252A2E;
-            border-radius: 100%;
-            box-sizing: border-box;
-            color: #252A2E;
-        }
-
-        .scroll a span::after {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            content: '';
-            width: 16px;
-            height: 16px;
-            margin: -12px 0 0 -8px;
-            border-left: 1px solid #252A2E;
-            border-bottom: 1px solid #252A2E;
-            -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-            box-sizing: border-box;
-        }
-
-
-        @media only screen and (max-height: 600px) {
-            .text__title {
-                margin-top: 10vh;
-            }
-
-            .text__title h1 {
-                margin-top: 0;
-            }
-        }
-
-        @media only screen and (max-height: 450px) {
-            .text__title {
-                margin-top: 25vh;
-            }
-
-            .text__title h1 {
-                margin-top: 0;
-            }
-            .phone__img {
-                height: 500px;
-                padding: 5%;
-                padding-right: 15%;
-                float: right;
-            }
-            .header {
-                /*height: 900px;*/
-            }
-
-            .features {
-                /*margin-top: 100px;*/
-                /*height: 500px;*/
-            }
-        }
-
-        @media only screen and (max-width: 800px) {
-            /*screen and (max-height: 400px) {*/
-            body {
-                font-size: 25px;
-            }
-
-            .header {
-                width: 100%;
-                margin: 0;
-                /*background-color: red;*/
-            }
-
-            .header h1 {
-                font-size: 22vw;
-                text-align: center;
-                font-weight: bold;
-            }
-
-            .header h2 {
-                margin-top: 30px;
-                font-size: 30px;
-                margin-bottom: 10%;
-            }
-
-            .text__title {}
-
-            .text__title h1 {
-                text-align: center;
-                margin-top: 10vh;
-            }
-            button {
-                font-size: 22px;
-                height: 50px;
-                width: 70%;
-            }
-            .text__features {
-                margin-top: 10%;
-                font-size: 18px;
-                text-align: left;
-                margin-left: 12%;
-
-            }
-
-            .phone {
-
-
-                width: 100%;
-                height: auto;
-                display: block;
-                float: left;
-                margin: 0;
-                padding: 0;
-            }
-
-            .phone__img {
-                height: auto;
-                width: 80%;
-                margin: 0;
-                padding: 0;
-                float: left;
-                /*margin-top: 10%;*/
-                margin-left: 10%;
-                margin-bottom: 10%;
-            }
-
-            .text {
-                display: block;
-                text-align: center;
-                width: 100%;
-                margin-top: 0;
-                height: 600px;
-                margin-bottom: 29%; /* this may make problems! */
-            }
-            .text__title {
-                margin-top: 0;
-            }
-
-            .features {
-                width: 100%;
-                padding-top: 0;
-                margin-top: 0;
-                /*height: 2000px;*/
-            }
-
-            .features__entries {
-                flex-wrap: wrap;
-                width: 100%;
-                padding-left: 0%;
-                padding-right: 0%;
-            }
-
-            .features__entries__entry--text {
-                font-size: 20px;
-            }
-
-            .features__entries__entry--bold {
-                font-size: 30px;
-            }
-
-            .footer {
-                padding-top: 100px;
-                /*width: 80%;*/
-                height: 200px;
-                /*padding-left: 10%;*/
-                /*padding-right: 10%;*/
-                font-size: 19px;
-                line-height: 1.5;
-            }
-        }
-    </style>
-    <script src="jquery-3.1.1.min.js"></script>
-    <script src="cheet.min.js"></script>
-    <script src="j.js"></script>
+  </style>
+  <script src="jquery-3.1.1.min.js"></script>
+  <script src="cheet.min.js"></script>
+  <script src="j.js"></script>
 </head>
 
 <body>
-    <section class='header'>
-        <div class='text'>
-            <div class='text__title'>
-                <h1>Ad-Free</h1>
-                <h2>A generic ad blocker for Android</h2>
-            </div>
-            <div class='text__links'>
-                <button id='download'>download</button>
-                <button id='sourcecode'>sourcecode</button>
-            </div>
+  <section class='header'>
+    <div class='text'>
+      <div class='text__title'>
+        <h1>Ad-Free</h1>
+        <h2>An audio ad blocker for Android</h2>
+      </div>
+      <div class='text__links'>
+        <button id='download'>download</button>
+        <button id='sourcecode'>sourcecode</button>
+      </div>
 
-            <div class='text__features'>
-                <ul>
-                    <li>&gt; &nbsp;No ROOT required</li>
-                    <li>&gt; &nbsp;Plugin based design</li>
-                    <li>&gt; &nbsp;Mute audio when ads are playing</li>
-                    <li>&gt; &nbsp;Play arbitrary audio</li>
-                    <li>&gt; &nbsp;User friendly
-                        <a href='https://github.com/abertschi/ad-free/blob/master/privacy_policy.md'>
-                        Privacy Policy</a></li>
-                    <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
-                    <li>&gt; &nbsp;Support for Spotify</li>
-                    <ul>
+      <div class='text__features'>
+        <ul>
+          <li>&gt; &nbsp;Support for Spotify</li>
+          <li>&gt; &nbsp;No ROOT required</li>
+          <li>&gt; &nbsp;Plugin based design</li>
+          <li>&gt; &nbsp;Mute audio when ads are playing</li>
+          <li>&gt; &nbsp;Play arbitrary audio</li>
+          <li>&gt; &nbsp;User friendly
+            <a href='https://github.com/abertschi/ad-free/blob/master/privacy_policy.md'>
+              Privacy Policy</a> - we don't spy on you</li>
+          <li>&gt; &nbsp;Opensource, Apache Lisence 2.0</li>
+          <ul>
 
-                        <br/> by <a href='https://abertschi.ch' target="_blank">abertschi</a>
-            </div>
-        </div>
-        <div class='bg_item'>
-            <!-- <img src="headphones.png" class='bg__item__img'> -->
-        </div>
-        <div class='phone'>
-            <img src="phone.png" class='phone__img' id='app-picture'>
-        </div>
-        <!-- <div class='scroll'>
-            <a href="#section03"><span></span></a>
-        </div> -->
-        </div>
-    </section>
-    <section class='features'>
-        <!-- <div class='features__title'>
-            <h1> what do you want to do while <span class='white'>ads</span> are <span class='white'>
-                being played</span> ? </h1>
-        </div> -->
-        <div class='features__entries'>
-            <div class='features__entries__entry'>
-                <div class='features__entries__entry__icon'>
-                    <img class="features__entries__entry__icon__img" src="mute.svg">
-                </div>
-                <div class='features__entries__entry--bold'>Mute audio</div>
-                <div class='features__entries__entry--text'>
-                    Mute your phone when ads are playing
-                </div>
-            </div>
-            <div class='features__entries__entry'>
-                <div class='features__entries__entry__icon'>
-                    <img class="features__entries__entry__icon__img" src="play.svg">
-                </div>
-                <div class='features__entries__entry--bold'>Local Music</div>
-                <div class='features__entries__entry--text'>
-                    Play your own local music when ads are playing
-                </div>
-            </div>
-            <div class='features__entries__entry'>
-                <div class='features__entries__entry__icon'>
-                    <img class="features__entries__entry__icon__img" src="alien2.svg">
-                </div>
-                <div class='features__entries__entry--bold'>Interdimensional Cable</div>
-                <div class='features__entries__entry--text'>
-                    Replace ads with <a href='https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'
-                     onclick="t('https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'); return false;">
-                        interdimensional cable television</a> featured in <a href="http://www.adultswim.com/videos/rick-and-morty/"
-                        onclick="t('http://www.adultswim.com/videos/rick-and-morty'); return false;">AdultSwim's Rick and Morty</a>.
-                </div>
-            </div>
-        </div>
-
-
-        <!-- <div class='footer'>
-            the interdimensional cable plugin in ad-free is not affiliated, sponsored, or otherwise endorsed by AdultSwim <br/>
-            This software is provided "as is" without warranty of any kind under the Apache License 2
-
+            <br/> by <a href='https://abertschi.ch' target="_blank">abertschi</a>
+      </div>
+    </div>
+    <div class='bg_item'>
+      <!-- <img src="headphones.png" class='bg__item__img'> -->
+    </div>
+    <div class='phone'>
+      <img src="phone.png" class='phone__img' id='app-picture'>
+    </div>
+    <!-- <div class='scroll'>
+      <a href="#section03"><span></span></a>
     </div> -->
-    </section>
-    <footer>
-        <div class=''>
-            The interdimensional cable plugin in ad-free is not affiliated, sponsored, or otherwise endorsed by AdultSwim.<br/>
-            <!-- This software is provided "as is" without warranty of any kind under the Apache License 2. -->
-
-        </div>
-    </footer>
-
-
-    <script>
-        (function() {
-            var index = 0;
-            var prefix = 'phone/'
-            var imgs = ['0.png',
-                '1.png',
-                '2.png',
-                '3.png',
-                '2.png',
-                '4.png',
-                '2.png',
-                '5.png',
-                '6.png'
-            ];
-
-            var timeout = null;
-            var changePicture = function() {
-                var pic = $('#app-picture');
-                pic.attr("src", prefix + imgs[index]);
-                pic.fadeIn(1000);
-                index = (index + 1) % imgs.length
-                timeout = setTimeout(changePicture, 6000);
-            }
-            changePicture()
-
-            $('.phone').click(() => {
-                if (timeout) clearTimeout(timeout)
-                changePicture()
-            })
-
-            $("#download").click(function() {
-                // var version = '0.0.4.2';
-                // https: //github.com/abertschi/ad-free/releases/download/0.0.4.2/0.0.4.2-app-release.apk
-                // window.location.href =
-                // 'https://github.com/abertschi/ad-free/releases/download/' +
-                // version + '/' + version + '-app-release.apk';
-                // window.location.href = 'https://github.com/abertschi/ad-free';
-                t('https://f-droid.org/packages/ch.abertschi.adfree/');
-                window.location.href = 'https://f-droid.org/packages/ch.abertschi.adfree/';
-            });
-
-            $("#sourcecode").click(function() {
-                t('https://github.com/abertschi/ad-free');
-                window.location.href = 'https://github.com/abertschi/ad-free';
-            });
-        })();
-    </script>
-
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-63061525-5', 'auto');
-        ga('send', 'pageview');
+</div>
+</section>
+<section class='features'>
+  <!-- <div class='features__title'>
+    <h1> what do you want to do while <span class='white'>ads</span> are <span class='white'>
+        being played</span> ? </h1>
+  </div> -->
+  <div class='features__entries'>
+    <div class='features__entries__entry'>
+      <div class='features__entries__entry__icon'>
+        <img class="features__entries__entry__icon__img" src="mute.svg">
+      </div>
+      <div class='features__entries__entry--bold'>Mute audio</div>
+      <div class='features__entries__entry--text'>
+        Mute your phone when ads are playing
+      </div>
+    </div>
+    <div class='features__entries__entry'>
+      <div class='features__entries__entry__icon'>
+        <img class="features__entries__entry__icon__img" src="play.svg">
+      </div>
+      <div class='features__entries__entry--bold'>Local Music</div>
+      <div class='features__entries__entry--text'>
+        Play your own local music when ads are playing
+      </div>
+    </div>
+    <div class='features__entries__entry'>
+      <div class='features__entries__entry__icon'>
+        <img class="features__entries__entry__icon__img" src="alien2.svg">
+      </div>
+      <div class='features__entries__entry--bold'>Interdimensional
+        Cable <a href="https://github.com/abertschi/ad-free/blob/master/README.md">(discontinued)</a></div>
+      <div class='features__entries__entry--text'>
+        Replace ads with <a href='https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'
+                            onclick="t('https://www.youtube.com/watch?v=Vv5VwVDYf3I&index=7&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP'); return false;">
+          interdimensional cable television</a> featured in <a href="http://www.adultswim.com/videos/rick-and-morty/"
+                                                               onclick="t('http://www.adultswim.com/videos/rick-and-morty'); return false;">AdultSwim's Rick and Morty</a>.
+      </div>
+    </div>
+  </div>
 
 
-        var t = function(url) {
-            ga('send', 'event', 'outbound', 'click', url, {
-                'transport': 'beacon',
-                'hitCallback': function() {
-                    document.location = url;
-                }
-            });
-        }
-    </script>
+  <!-- <div class='footer'>
+    the interdimensional cable plugin in ad-free is not affiliated, sponsored, or otherwise endorsed by AdultSwim <br/>
+    This software is provided "as is" without warranty of any kind under the Apache License 2
+
+  </div> -->
+</section>
+<footer>
+  <div class=''>
+    The interdimensional cable plugin in ad-free is not affiliated, sponsored, or otherwise endorsed by AdultSwim.<br/>
+    <!-- This software is provided "as is" without warranty of any kind under the Apache License 2. -->
+
+  </div>
+</footer>
+
+
+<script>
+  (function() {
+      var index = 0;
+      var prefix = 'phone/'
+      var imgs = ['0.png',
+                  '1.png',
+                  '2.png',
+                  '3.png',
+                  '2.png',
+                  '4.png',
+                  '2.png',
+                  '5.png',
+                  '6.png'
+                 ];
+
+      var timeout = null;
+      var changePicture = function() {
+          var pic = $('#app-picture');
+          pic.attr("src", prefix + imgs[index]);
+          pic.fadeIn(1000);
+          index = (index + 1) % imgs.length
+          timeout = setTimeout(changePicture, 6000);
+      }
+      changePicture()
+
+      $('.phone').click(() => {
+          if (timeout) clearTimeout(timeout)
+          changePicture()
+      })
+
+      $("#download").click(function() {
+          // var version = '0.0.4.2';
+          // https: //github.com/abertschi/ad-free/releases/download/0.0.4.2/0.0.4.2-app-release.apk
+          // window.location.href =
+          // 'https://github.com/abertschi/ad-free/releases/download/' +
+          // version + '/' + version + '-app-release.apk';
+          // window.location.href = 'https://github.com/abertschi/ad-free';
+          t('https://f-droid.org/packages/ch.abertschi.adfree/');
+          window.location.href = 'https://f-droid.org/packages/ch.abertschi.adfree/';
+      });
+
+      $("#sourcecode").click(function() {
+          t('https://github.com/abertschi/ad-free');
+          window.location.href = 'https://github.com/abertschi/ad-free';
+      });
+  })();
+</script>
+
+<script>
+  (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+          (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-63061525-5', 'auto');
+  ga('send', 'pageview');
+
+
+  var t = function(url) {
+      ga('send', 'event', 'outbound', 'click', url, {
+          'transport': 'beacon',
+          'hitCallback': function() {
+              document.location = url;
+          }
+      });
+  }
+</script>
 </body>
 
 </html>
