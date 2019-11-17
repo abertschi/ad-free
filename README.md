@@ -64,11 +64,12 @@ replaces advertisements with interdimensional cable advertisements
 featured in [Adult Swim's Rick and Morty TV
 series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP)._
 
-Due to a rise in popularity, this feature is no longer supported. You can use the local music
-plugin and play local audio instead.
+Due to legal reasons and a rise in popularity, this feature is no
+longer supported. Download audio tracks on your own and use the local
+music plugin instead. Stay schwifty!
 
 ### Play local music
-Play music tracks stored on your phone while advertisement is playing
+Play music tracks stored on your phone while advertisement is playing.
 
 ## Release notes
 - See [Changelog](./CHANGELOG.md)
