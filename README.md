@@ -1,10 +1,10 @@
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()  [![codebeat badge](https://codebeat.co/badges/1fc357d9-4c2e-46f6-b847-d295e4de78eb)](https://codebeat.co/projects/github-com-abertschi-ad-free-master)
-# Ad-Free
+# ad-free
 
-Ad Free is a research project attempting to show flaws in the way how audio advertisement is shown on Android. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
-It does not interfere with music players but simply uses context information of the Android runtime to mute audio.
+ad-free is a research project attempting to show flaws in the way how audio advertisement is shown on Android. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
+It does not interfere with music players and only uses context information provided by the Android runtime.
 
-http://adfree.abertschi.ch
+https://adfree.abertschi.ch
 
 <img src=".github/cover2.png" width="900">
 
@@ -19,6 +19,17 @@ http://adfree.abertschi.ch
 [Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.  
 
 <a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" width="220"/></a>
+
+## Legality
+This app is secure, free and open and does not seek a comercial interest. It does not
+collect user data. It is a proof-of-concept to show
+flaws in the way how audio advertisement is often implemented on
+Android.
+Ad-free's algorithms are described below and it's source code is freely available.
+It does not alter or "hack" protection measures of music players, and only
+gathers context information provided by the Android
+runtime. Nontheless, ad-free may be against terms of services of music
+players. Use it at your own risk.
 
 ## Implementation notes
 ### Ad detection
@@ -46,14 +57,22 @@ played. Music players play audio on the stream [STREAM_MUSIC](https://developer.
 ### Mute Audio
 As the title of this plugin suggests, it only mutes adertisments without playing sound.
 
-### Interdimensional Cable
-[Interdimensional Cable](./app/src/main/java/ch/abertschi/adfree/plugin/interdimcable/InterdimCablePlugin.kt) replaces advertisements with interdimensional cable advertisements featured in [Adult Swim's Rick and Morty TV series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP).
+### Interdimensional Cable (discontinued)
+_[Interdimensional
+Cable](./app/src/main/java/ch/abertschi/adfree/plugin/interdimcable/InterdimCablePlugin.kt)
+replaces advertisements with interdimensional cable advertisements
+featured in [Adult Swim's Rick and Morty TV
+series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP)._
+
+Due to a rise in popularity, this feature is no longer supported. You can use the local music
+plugin and play local audio instead.
 
 ### Play local music
 Play music tracks stored on your phone while advertisement is playing
 
 ## Release notes
 - See [Changelog](./CHANGELOG.md)
+
 ## Credits
 - The bird and website icons used in this app are made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
 
