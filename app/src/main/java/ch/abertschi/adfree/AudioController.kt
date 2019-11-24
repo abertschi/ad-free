@@ -40,7 +40,7 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         musicStreamVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
 
-        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
+//        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
         am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
     }
 
@@ -52,7 +52,7 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         }
         musicStreamIsMuted = false
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
+//        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
         am.setStreamVolume(AudioManager.STREAM_MUSIC, musicStreamVolume, 0)
     }
 
