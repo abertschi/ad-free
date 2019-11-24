@@ -50,7 +50,7 @@ open class AudioPlayer(val context: Context,
         initializeMediaPlayerObservable(context, url).subscribe { player ->
             this.player = player
             player.setOnErrorListener { _, what, _ ->
-                throw RuntimeException("Problem with audio player, code: " + what)
+                throw RuntimeException("Problem with audio player, code: $what")
             }
             player.start()
             isPlaying = true
@@ -68,10 +68,10 @@ open class AudioPlayer(val context: Context,
     }
 
     fun stop(onStoped: () -> Unit) {
-        audioController.fadeOffVoiceCallVolume({
+        audioController.fadeOffVoiceCallVolume {
             closePlayer()
-            onStoped?.invoke()
-        })
+            onStoped.invoke()
+        }
     }
 
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>

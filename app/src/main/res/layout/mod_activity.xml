@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="30dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".40"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/AppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:scrollHorizontally="false"
+            android:text="change how ad-free internally works"
+            android:textColor="#C4BCAF"
+            android:textSize="@dimen/title_text_size" />
+
+    </LinearLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_weight=".60"
+        android:layout_height="0dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> ad detectors"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="choose active detectors"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> delay unmute"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="not delayed"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> mute internals"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="pick how music is muted."
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+
+    <!--</FrameLayout>-->
