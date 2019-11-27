@@ -75,5 +75,10 @@ class AboutActivity : Fragment(), AboutView {
                     Uri.parse("http://abertschi.ch?rel=adfree"))
             this.context!!.startActivity(browserIntent)
         }
+
+        view.findViewById<ImageView>(R.id.moresettings).onClick {
+            presenter.showMoreSettings()
+        }
+
     }
 }

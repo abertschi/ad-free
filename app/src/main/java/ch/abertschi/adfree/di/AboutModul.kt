@@ -19,7 +19,7 @@ class AboutModul(val context: Context, val aboutView: AboutView) {
 
     fun provideAboutPresenter(): AboutPresenter {
         val adFree = context.applicationContext as AdFreeApplication
-        return AboutPresenter(aboutView, adFree.prefs)
+        return AboutPresenter(aboutView, adFree.prefs, context)
     }
 
 }

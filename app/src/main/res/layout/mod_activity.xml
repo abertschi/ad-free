@@ -8,17 +8,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
+    android:background="#252A2E"
+    android:padding="30dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".40"
+        android:layout_weight=".35"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/modTitle"
             style="@style/AppTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,10 +32,9 @@
 
     </LinearLayout>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_weight=".60"
+        android:layout_weight=".65"
         android:layout_height="0dp">
 
 
@@ -41,6 +42,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/AppTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine|textNoSuggestions"
+                        android:scrollHorizontally="false"
+                        android:text="> ad-free"
+                        android:layout_alignParentLeft="true"
+
+                        android:layout_alignParentTop="true"
+
+                        android:gravity="top|left"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/normal_text_size" />
+
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/switch1"
+                        android:layout_width="wrap_content"
+
+                        android:layout_alignParentRight="true"
+
+                        android:layout_alignParentTop="true"
+
+                        android:layout_marginRight="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="enabled"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,6 +185,36 @@
                     android:textSize="@dimen/normal_text_small" />
 
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mod_version1"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> version 1.0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <TextView
+                    android:id="@+id/mod_version2"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="build 30"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
             </LinearLayout>
 
 
