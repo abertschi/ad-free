@@ -11,6 +11,7 @@ import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.RemoteManager
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 13.08.17.
@@ -29,7 +30,7 @@ class AdDetector(val detectors: List<AdDetectable>,
 
         val activeDetectors = detectors.filter { it.canHandle(payload) }
         if (activeDetectors.isNotEmpty()) {
-            debug {
+            info {
                 "detected a spotify notification with ${activeDetectors.size} " +
                         "active ad-detectors"
             }

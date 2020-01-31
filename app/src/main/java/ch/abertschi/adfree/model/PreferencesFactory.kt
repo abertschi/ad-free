@@ -26,6 +26,8 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsLocalMusic: String = "location_local_music"
     private val prefsPlayUntilEnd: String = "location_local_music_play_until_end"
 
+    private val prefsDelaySound = "DELAY_SOUND"
+    private val prefsAlwaysOnNoti = "ALWAYS_ON_NOTI"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -87,4 +89,16 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     fun setActivePlugin(plugin: String) {
         prefs.edit().putString(prefsActivePlugin, plugin).commit()
     }
+
+    fun isAlwaysOnNotificationEnabled() =
+            prefs.getBoolean(prefsAlwaysOnNoti, false)
+
+    fun setAlwaysOnNotification(enable: Boolean) =
+            prefs.edit().putBoolean(prefsAlwaysOnNoti, enable).commit()
+
+    fun getDelaySeconds(): Int =
+            prefs.getInt(prefsDelaySound, 0)
+
+    fun setDelaySeconds(s: Int) =
+            prefs.edit().putInt(prefsDelaySound, s).commit()
 }

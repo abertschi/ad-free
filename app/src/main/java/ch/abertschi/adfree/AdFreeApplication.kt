@@ -21,6 +21,14 @@ import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
+import android.content.pm.PackageManager
+import android.content.ComponentName
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.Build
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.service.notification.ConditionProviderService.requestRebind
+import android.support.annotation.RequiresApi
+import org.jetbrains.anko.warn
 
 
 /**
@@ -76,5 +84,31 @@ class AdFreeApplication : Application(), AnkoLogger {
                 pluginHandler, notificationChannel)
 
         adDetector.addObserver(adStateController)
+
+        restartNotificationListener()
+    }
+
+
+    fun restartNotificationListener() {
+        toggleNotificationListenerService()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val componentName = ComponentName(applicationContext,
+                    NotificationsListeners::class.java!!)
+
+            requestRebind(componentName)
+        } else {
+            warn { "restart notification listener is not supported for current v. of android" }
+        }
+
+    }
+    /**
+     * Try deactivate/activate your component service
+     */
+    private fun toggleNotificationListenerService() {
+        val pm = packageManager
+        pm.setComponentEnabledSetting(ComponentName(this, NotificationsListeners::class.java!!),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
+        pm.setComponentEnabledSetting(ComponentName(this, NotificationsListeners::class.java!!),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
     }
 }

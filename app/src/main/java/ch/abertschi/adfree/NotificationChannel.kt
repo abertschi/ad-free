@@ -27,6 +27,4 @@ class NotificationChannel(val notificationUtils: NotificationUtils) {
     fun updateAdNotification(title: String? = null, content: String? = null ) {
         notificationUtils.updateTextNotificationIfAvailable(defaultAdNotificationId, title, content)
     }
-
-
 }
