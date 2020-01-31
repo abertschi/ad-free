@@ -126,5 +126,4 @@ class AdStateController(private val audioController: AudioController,
             timeoutDisposable!!.dispose()
         }
     }
-
 }

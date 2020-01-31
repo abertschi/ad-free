@@ -14,6 +14,6 @@ interface HomeView {
     fun showNotificationPermissionSettings()
     fun showPermissionRequired()
     fun showEnjoyAdFree()
-    fun setPowerState(state: Boolean)
-    fun showStatusEnabled()
+//    fun setPowerState(state: Boolean)
+//    fun showPowerEnabled()
 }

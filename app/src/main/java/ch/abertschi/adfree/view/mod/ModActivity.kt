@@ -9,10 +9,6 @@ import android.view.View
 
 import android.widget.TextView
 
-import org.jetbrains.anko.AnkoLogger
-
-import org.jetbrains.anko.onClick
-
 import android.support.v7.app.AlertDialog
 import android.widget.SeekBar
 
@@ -20,7 +16,7 @@ import android.widget.SeekBar
 import android.view.LayoutInflater
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
-import org.jetbrains.anko.info
+import org.jetbrains.anko.*
 
 
 class ModActivity : AppCompatActivity(), AnkoLogger {
@@ -104,11 +100,21 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         val b = presenter.isEnabled()
         enabledSwitch?.isChecked = b
         findViewById<TextView>(R.id.enableSubtext)?.text = if (b) "enabled" else "disabled"
+
+        this.applicationContext?.runOnUiThread {
+            toast("Ad Free enabled")
+        }
     }
 
     fun updateAlwaysOnToggle() {
         val b = presenter.isAlwaysOnNotification()
         alwaysOnSwitch?.isChecked = b
         info { "always On: " + b}
+    }
+
+    fun showPowerEnabled() {
+        this.applicationContext?.runOnUiThread {
+            toast("Ad Free enabled")
+        }
     }
 }

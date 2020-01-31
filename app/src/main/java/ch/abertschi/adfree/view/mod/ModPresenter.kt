@@ -44,5 +44,19 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
     fun configureDetectors() {
 
     }
+    //
+
+
+    fun onDelayChanged(delay: Int) {
+
+    }
+
+    fun onEnableToggleChanged(enable: Boolean) {
+
+    }
+
+    fun onShowNotificationChanged(enable: Boolean) {
+
+    }
 
 }

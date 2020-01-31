@@ -51,9 +51,9 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
 
         enjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
-        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            homePresenter.enabledStatusChanged(isChecked)
-        }
+//        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
+//            homePresenter.enabledStatusChanged(isChecked)
+//        }
         homePresenter.onCreate(this.context!!)
 
         // TODO: this is debug code
@@ -73,13 +73,6 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         homePresenter.onResume(this.context!!)
         super.onResume()
     }
-
-    override fun showStatusEnabled() {
-        context?.applicationContext?.runOnUiThread {
-            context?.toast("Ad Free enabled")
-        }
-    }
-
 
     override fun showPermissionRequired() {
         val text = "touch here to grant permission"
@@ -106,7 +99,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         powerButton.visibility = View.VISIBLE
     }
 
-    override fun setPowerState(state: Boolean) {
-        powerButton.isChecked = state
-    }
+//    override fun setPowerState(state: Boolean) {
+//        powerButton.isChecked = state
+//    }
 }
