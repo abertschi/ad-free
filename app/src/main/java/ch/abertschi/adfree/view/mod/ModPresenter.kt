@@ -11,6 +11,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
     private lateinit var context: Context
 
     fun onCreate(context: Context) {
+        info { "new presenter" }
         view.setEnableToggle(prefs.isBlockingEnabled())
         view.setNotificationEnabled(prefs.isAlwaysOnNotificationEnabled())
         view.setDelayValue(prefs.getDelaySeconds())

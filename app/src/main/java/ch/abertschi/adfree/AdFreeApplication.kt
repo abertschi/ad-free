@@ -72,7 +72,7 @@ class AdFreeApplication : Application(), AnkoLogger {
         yesNoModel.getRandomYes()
 
         notificationUtils = NotificationUtils(applicationContext)
-        notificationChannel = NotificationChannel(notificationUtils)
+        notificationChannel = NotificationChannel(notificationUtils, prefs)
 
         adPlugins = listOf(MutePlugin(),
                 InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel),

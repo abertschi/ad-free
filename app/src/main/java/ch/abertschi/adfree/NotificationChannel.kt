@@ -19,27 +19,22 @@ class NotificationChannel(val notificationUtils: NotificationUtils,
                           val prefs: PreferencesFactory) {
 
     private val defaultAdNotificationId: Int = 1000
+    private val alwaysOnNotificationId: Int = 1001
 
     fun buildAlwaysOnNotification(): Pair<Notification, Int> {
-        val not = notificationUtils.showTextNotification(defaultAdNotificationId,
+        val not = notificationUtils.showTextNotification(alwaysOnNotificationId,
                 "ad-free is running",
                 "ads are monitored", {}, notifiy = false)
 
-        return Pair(not , defaultAdNotificationId)
+        return Pair(not , alwaysOnNotificationId)
     }
 
     fun hideDefaultAdNotification() {
-        if (prefs.isAlwaysOnNotificationEnabled()) {
-            notificationUtils.updateTextNotificationIfAvailable(defaultAdNotificationId,
-                    "ad-free is running", "ads are monitored")
-
-        } else {
-            notificationUtils.hideNotification(defaultAdNotificationId)
-        }
+        notificationUtils.hideNotification(defaultAdNotificationId)
     }
 
     fun showDefaultAdNotification(dismissCallable: () -> Unit = {}) {
-        notificationUtils.showTextNotification(defaultAdNotificationId, "Ad detected",
+        notificationUtils.showTextNotification(defaultAdNotificationId, "ad detected",
                 "touch to unmute", dismissCallable)
     }
 

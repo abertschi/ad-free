@@ -229,7 +229,7 @@
                     android:layout_marginTop="10dp"
                     android:inputType="textMultiLine|textNoSuggestions"
                     android:scrollHorizontally="false"
-                    android:text="prevent ad-free form being killed by Android OS"
+                    android:text="prevent ad-free form being killed by Android OS. leave disabled unless you run into issues."
                     android:textColor="#C4BCAF"
                     android:textSize="@dimen/normal_text_small" />
             </LinearLayout>
