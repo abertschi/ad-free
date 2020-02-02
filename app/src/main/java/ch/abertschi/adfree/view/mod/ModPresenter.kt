@@ -5,57 +5,44 @@ import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.model.PreferencesFactory
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
-import org.jetbrains.anko.toast
 
 class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLogger {
 
     private lateinit var context: Context
 
     fun onCreate(context: Context) {
-        view.updateEnableToggle()
-        view.updateAlwaysOnToggle()
-        view.updateDelaySeekbar(prefs.getDelaySeconds())
+        view.setEnableToggle(prefs.isBlockingEnabled())
+        view.setNotificationEnabled(prefs.isAlwaysOnNotificationEnabled())
+        view.setDelayValue(prefs.getDelaySeconds())
         this.context = context
     }
 
-    fun isEnabled(): Boolean = prefs.isBlockingEnabled()
-
-    fun isAlwaysOnNotification() = prefs.isAlwaysOnNotificationEnabled()
-
-    fun toggleEnabled() {
-        prefs.setBlockingEnabled(!prefs.isBlockingEnabled())
-        view.updateEnableToggle()
+    fun onToggleAlwaysOnChanged() {
+        val newVal = !prefs.isAlwaysOnNotificationEnabled()
+        prefs.setAlwaysOnNotification(newVal)
+        view.setNotificationEnabled(newVal)
+        (view.applicationContext as AdFreeApplication).restartNotificationListener()
     }
 
-    fun toggleAlwaysOn() {
-        prefs.setAlwaysOnNotification(!prefs.isAlwaysOnNotificationEnabled())
-        view.updateAlwaysOnToggle()
-    }
-
-    fun delayUmute() {
+    fun onDelayUnmute() {
         view.showDelayUnmute()
     }
-    fun delayChanged(delay: Int) {
+    fun onDelayChanged(delay: Int) {
         prefs.setDelaySeconds(delay)
-        view.updateDelaySeekbar(delay)
-        info { delay }
+        view.setDelayValue(delay)
+    }
+
+
+    fun onEnableToggleChanged() {
+        val newVal = !prefs.isBlockingEnabled()
+        prefs.setBlockingEnabled(newVal)
+        view.setEnableToggle(newVal)
+        if (newVal) {
+            view.showPowerEnabled()
+        }
     }
 
     fun configureDetectors() {
-
-    }
-    //
-
-
-    fun onDelayChanged(delay: Int) {
-
-    }
-
-    fun onEnableToggleChanged(enable: Boolean) {
-
-    }
-
-    fun onShowNotificationChanged(enable: Boolean) {
 
     }
 

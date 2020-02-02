@@ -26,8 +26,8 @@ import java.util.concurrent.TimeUnit
  */
 class AdStateController(private val audioController: AudioController,
                         private val adPluginHandler: PluginHandler,
-                        private val prefs: PreferencesFactory,
-                        private val notificationChannel: NotificationChannel) :
+                        private val notificationChannel: NotificationChannel,
+                        private val prefs: PreferencesFactory) :
         AdObserver, AnkoLogger {
 
     private var activeState: EventType? = EventType.NO_AD

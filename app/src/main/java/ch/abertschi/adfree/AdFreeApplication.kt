@@ -81,7 +81,7 @@ class AdFreeApplication : Application(), AnkoLogger {
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
         adStateController = AdStateController(audioManager,
-                pluginHandler, notificationChannel)
+                pluginHandler, notificationChannel, prefs)
 
         adDetector.addObserver(adStateController)
 

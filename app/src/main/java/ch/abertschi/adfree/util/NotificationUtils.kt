@@ -23,7 +23,7 @@ import org.jetbrains.anko.info
  */
 class NotificationUtils(val context: Context) : AnkoLogger {
 
-    companion object {
+    public companion object {
         val actionDismiss = "actionDismiss"
         val blockingNotificationId = 1
         val textgNotificationId = 2
@@ -51,39 +51,62 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         }
     }
 
+
     fun showTextNotification(id: Int, title: String, content: String = "",
                              dismissCallable: () -> Unit = {},
-                             priority: Int = NotificationCompat.PRIORITY_HIGH): Notification {
-        val dismissIntent = PendingIntent
-                .getService(context, 0, Intent(context
-                        , NotificationInteractionService::class.java).setAction(actionDismiss)
-                        , PendingIntent.FLAG_ONE_SHOT)
-
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(title)
-                .setSmallIcon(R.mipmap.icon)
-                .setPriority(priority)
-                        .setContentIntent(dismissIntent)
-
-        if (content != "") {
-            builder.setContentText(content)
-        }
+                             priority: Int = NotificationCompat.PRIORITY_HIGH, notifiy: Boolean = true): Notification {
 
 
-        updateNotificationMap[id] = builder
-        val notification = builder.build()
+        if (updateNotificationMap.containsKey(id)) {
+            val b = updateNotificationMap.get(id)
+            var n: Notification? = null
+            b?.let {
+                if (title != null) it.setContentTitle(title)
+                if (content != null) it.setContentText(content)
+                val manager = NotificationManagerCompat.from(context)
+                n = b.build()
+                manager.notify(id, n)
+
+            }
+            return n!!
+        } else {
+
+
+            val dismissIntent = PendingIntent
+                    .getService(context, 0, Intent(context
+                            , NotificationInteractionService::class.java).setAction(actionDismiss)
+                            , PendingIntent.FLAG_ONE_SHOT)
+
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setContentTitle(title)
+                    .setSmallIcon(R.mipmap.icon)
+                    .setPriority(priority)
+                    .setContentIntent(dismissIntent)
+
+            if (content != "") {
+                builder.setContentText(content)
+            }
+
+
+            updateNotificationMap[id] = builder
+            val notification = builder.build()
 //        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
 //                Notification.FLAG_ONGOING_EVENT)
+            notification.flags = notification.flags or
+                    Notification.FLAG_ONGOING_EVENT
 
 
 
-        synchronized(actionDismissCallables) {
-            actionDismissCallables.add(dismissCallable)
+            synchronized(actionDismissCallables) {
+                actionDismissCallables.add(dismissCallable)
+            }
+
+            val manager = NotificationManagerCompat.from(context)
+            if (notifiy) {
+                manager.notify(id, notification)
+            }
+            return notification
         }
-
-        val manager = NotificationManagerCompat.from(context)
-        manager.notify(id, notification)
-        return notification
     }
 
 //    fun showBlockingNotification(dismissCallable: () -> Unit) {

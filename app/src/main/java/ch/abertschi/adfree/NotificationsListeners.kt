@@ -15,13 +15,9 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
-import android.content.Context.NOTIFICATION_SERVICE
-import android.app.NotificationManager
 import android.app.Service
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.support.v4.app.NotificationCompat
+import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.toast
 
 
@@ -31,7 +27,6 @@ import org.jetbrains.anko.toast
 class NotificationsListeners : NotificationListenerService(), AnkoLogger {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
-//        info("notification detected")
         val context = applicationContext as AdFreeApplication
         context.adDetector.applyDetectors(AdPayload(sbn))
     }
@@ -51,16 +46,13 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     }
 
     override fun onListenerConnected() {
-
         super.onListenerConnected()
-        toast("onListenerConnected")
         info {"Service Reader Connected"}
         val context = applicationContext as AdFreeApplication
-        val id = 2
-        val not = context.notificationUtils
-                .showTextNotification(id, "Ad-Free is running",
-                        "ads are monitored", {})
-        startForeground(id, not)
+        if (context.prefs.isAlwaysOnNotificationEnabled()) {
+            val pair = context.notificationChannel.buildAlwaysOnNotification()
+            startForeground(pair.second, pair.first)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
