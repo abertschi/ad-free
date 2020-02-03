@@ -10,6 +10,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="25dp"
+    android:background="#252A2E"
     android:paddingRight="25dp"
     android:paddingBottom="30dp">
 

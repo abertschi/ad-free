@@ -19,9 +19,8 @@ import ch.abertschi.adfree.R
 import org.jetbrains.anko.*
 
 import android.content.Intent
-
-
-
+import android.net.Uri
+import ch.abertschi.adfree.BuildConfig
 
 
 class ModActivity : AppCompatActivity(), AnkoLogger {
@@ -70,11 +69,21 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         findViewById<View>(R.id.active_detectors_title).onClick { presenter.onLaunchActiveDetectorsView() }
         findViewById<View>(R.id.active_detectors_subtitle).onClick { presenter.onLaunchActiveDetectorsView() }
 
+        val versionView = findViewById<TextView>(R.id.mod_version1) as TextView
+        versionView.text =
+                "> version ${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
+
+        versionView.onClick {
+            val browserIntent = Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md"))
+            this.startActivity(browserIntent)
+        }
 
 
         val alert = AlertDialog.Builder(this)
         alert.setTitle("> delay unmute")
         alert.setView(delayLayout)
+
         delayDialog = alert.create()
 
         alwaysOnSwitch = findViewById<SwitchCompat>(R.id.always_on_switch)
@@ -96,6 +105,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showDelayUnmute() {
         delayDialog.show()
+        delayDialog.getWindow().setBackgroundDrawableResource(R.color.colorBackground);
     }
 
     fun setDelayValue(p: Int) {
@@ -119,7 +129,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showPowerEnabled() {
         this.applicationContext?.runOnUiThread {
-            toast("Ad Free enabled")
+            toast("ad-free enabled")
         }
     }
 

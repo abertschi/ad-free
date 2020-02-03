@@ -21,6 +21,10 @@ class AdDetectableFactory(var context: Context,
         prefs.loadAdDetectables(adDetectors)
     }
 
+    fun saveMetadataForDetectable(d: AdDetectable) {
+        prefs.saveAdDetectable(d)
+    }
+
     fun saveMetadata() {
         prefs.saveAdDetectables(adDetectors)
     }

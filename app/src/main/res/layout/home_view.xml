@@ -23,15 +23,6 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            />
-
 
         <TextView
             android:id="@+id/enjoy"

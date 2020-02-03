@@ -104,13 +104,19 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     fun setDelaySeconds(s: Int) =
             prefs.edit().putInt(prefsDelaySound, s).commit()
 
-    fun saveAdDetectables(d: List<AdDetectable>) {
+
+    fun saveAdDetectable(d: AdDetectable) {
         val edit = prefs.edit()
+        edit.putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName,
+                d.getMeta().enabled).commit()
+
+
+    }
+
+    fun saveAdDetectables(d: List<AdDetectable>) {
         d.forEach {
-            edit.putBoolean(prefsAdDetectableMetaPrefix + it.javaClass.canonicalName,
-                    it.getMeta().enabled)
+            saveAdDetectable(it)
         }
-        edit.commit()
     }
 
     fun loadAdDetectables(d: List<AdDetectable>) {

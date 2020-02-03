@@ -19,16 +19,13 @@ import android.support.v7.widget.SwitchCompat
 import android.view.View
 import android.widget.ScrollView
 import ch.abertschi.adfree.AdFreeApplication
-import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.detector.AdDetectable
-
-
 class ActiveDetectorsActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-
+    private lateinit var presenter: ActiveDetectorsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,26 +37,22 @@ class ActiveDetectorsActivity : AppCompatActivity(), AnkoLogger {
                         "choose what's active."
         textView.text = Html.fromHtml(text)
 
+        presenter = ActiveDetectorsPresenter(this)
+
+
         findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
-
-
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter((applicationContext as AdFreeApplication).adDetectors.getDetectors())
-
+        viewAdapter = MyAdapter(presenter.getDetectors(), presenter)
         recyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view).apply {
-            // use a linear layout manager
             layoutManager = viewManager
-
-            // specify an viewAdapter (see also next example)
             adapter = viewAdapter
 
         }
     }
-
 }
 
-class MyAdapter(private val detectors: List<AdDetectable>) :
-        RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val detectors: List<AdDetectable>, private val presenter: ActiveDetectorsPresenter) :
+        RecyclerView.Adapter<MyAdapter.MyViewHolder>(), AnkoLogger {
 
     class MyViewHolder(val view: View,
                        val title: TextView,
@@ -67,19 +60,15 @@ class MyAdapter(private val detectors: List<AdDetectable>) :
                        val switch: SwitchCompat,
                        val sepView: View) : RecyclerView.ViewHolder(view)
 
-
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MyAdapter.MyViewHolder {
-        // create a new view
+
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.mod_active_detectors_view_element, parent, false)
-
         val title = view.findViewById<TextView>(R.id.det_title) as TextView
         val subtitle = view.findViewById<TextView>(R.id.det_subtitle) as TextView
         val switch = view.findViewById<TextView>(R.id.det_switch) as SwitchCompat
         val sep = view.findViewById<View>(R.id.mod_det_seperation)
-
         return MyViewHolder(view, title, subtitle, switch, sep)
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -87,9 +76,13 @@ class MyAdapter(private val detectors: List<AdDetectable>) :
         holder.subtitle.text = detectors[position].getMeta().description
 //                " (${detectors[position].javaClass.simpleName})"
         holder.switch.isChecked = detectors[position].getMeta().enabled
+        holder.switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            presenter.onDetectorToggled(isChecked, detectors[position])
+            info{isChecked}
+            info(detectors[position].javaClass.canonicalName)
+        }
         holder.sepView.visibility =
                 if (position == detectors.size - 1) View.INVISIBLE else View.VISIBLE
     }
-
     override fun getItemCount() = detectors.size
 }

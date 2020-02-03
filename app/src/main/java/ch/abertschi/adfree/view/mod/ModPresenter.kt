@@ -3,6 +3,7 @@ package ch.abertschi.adfree.view.mod
 import android.content.Context
 import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
+import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.model.PreferencesFactory
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -24,6 +25,9 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         prefs.setAlwaysOnNotification(newVal)
         view.setNotificationEnabled(newVal)
         (view.applicationContext as AdFreeApplication).restartNotificationListener()
+        if (!newVal) {
+            (view.applicationContext as AdFreeApplication).notificationChannel.hideAlwaysOnNotification()
+        }
     }
 
     fun onDelayUnmute() {
@@ -48,5 +52,4 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         val myIntent = Intent(this.context, ActiveDetectorsActivity::class.java)
         this.context.startActivity(myIntent)
     }
-
 }

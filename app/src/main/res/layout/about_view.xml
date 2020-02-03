@@ -31,7 +31,7 @@
             android:layout_marginTop="30dp"
             android:inputType="textMultiLine|textNoSuggestions"
             android:scrollHorizontally="false"
-            android:text="version"
+            android:text=""
             android:textAlignment="textEnd"
             android:textColor="#C4BCAF"
             android:textSize="@dimen/normal_text_small"

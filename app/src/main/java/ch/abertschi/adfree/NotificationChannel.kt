@@ -29,6 +29,10 @@ class NotificationChannel(val notificationUtils: NotificationUtils,
         return Pair(not , alwaysOnNotificationId)
     }
 
+    fun hideAlwaysOnNotification() {
+        notificationUtils.hideNotification(alwaysOnNotificationId)
+    }
+
     fun hideDefaultAdNotification() {
         notificationUtils.hideNotification(defaultAdNotificationId)
     }
