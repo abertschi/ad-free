@@ -110,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:scrollHorizontally="false"
+                android:textAlignment="textStart"
                 android:text=""
                 android:textColor="#C4BCAF"
                 android:textSize="@dimen/title_text_size"

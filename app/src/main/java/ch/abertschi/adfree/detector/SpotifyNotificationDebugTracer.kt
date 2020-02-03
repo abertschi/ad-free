@@ -8,7 +8,7 @@ import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
 
-class SpotifyNotificationTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
+class SpotifyNotificationDebugTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
 
     private val SPOTIFY_PACKAGE = "com.spotify"
     private val FILENAME = "adfree-spotify.txt"
@@ -37,4 +37,7 @@ class SpotifyNotificationTracer(val storageFolder: File?) : AdDetectable, AnkoLo
             stream.close()
         }
     }
+
+    override fun getMeta(): AdDetectorMeta
+            = AdDetectorMeta("Spotify Tracer", "Trace Spotify notifications. This is for debugging only")
 }

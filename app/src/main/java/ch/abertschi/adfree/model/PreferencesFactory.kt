@@ -8,6 +8,7 @@ package ch.abertschi.adfree.model
 
 import android.content.Context
 import android.content.SharedPreferences
+import ch.abertschi.adfree.detector.AdDetectable
 import org.jetbrains.anko.AnkoLogger
 import java.util.*
 
@@ -25,6 +26,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsActivePlugin: String = "ACTIVE_PLUGIN"
     private val prefsLocalMusic: String = "location_local_music"
     private val prefsPlayUntilEnd: String = "location_local_music_play_until_end"
+    private val prefsAdDetectableMetaPrefix: String = "detectable_"
 
     private val prefsDelaySound = "DELAY_SOUND"
     private val prefsAlwaysOnNoti = "ALWAYS_ON_NOTI"
@@ -101,4 +103,21 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     fun setDelaySeconds(s: Int) =
             prefs.edit().putInt(prefsDelaySound, s).commit()
+
+    fun saveAdDetectables(d: List<AdDetectable>) {
+        val edit = prefs.edit()
+        d.forEach {
+            edit.putBoolean(prefsAdDetectableMetaPrefix + it.javaClass.canonicalName,
+                    it.getMeta().enabled)
+        }
+        edit.commit()
+    }
+
+    fun loadAdDetectables(d: List<AdDetectable>) {
+        d.forEach {
+            it.getMeta().enabled =
+                    prefs.getBoolean(prefsAdDetectableMetaPrefix + it.javaClass.canonicalName,
+                            it.getMeta().enabled)
+        }
+    }
 }

@@ -8,6 +8,7 @@ package ch.abertschi.adfree.ad
 
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
+import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
@@ -16,7 +17,7 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 13.08.17.
  */
-class AdDetector(val detectors: List<AdDetectable>,
+class AdDetector(val detectors: AdDetectableFactory,
                  val remoteManager: RemoteManager) : AnkoLogger, AdObservable {
 
     private var observers: MutableList<AdObserver> = ArrayList()
@@ -28,7 +29,7 @@ class AdDetector(val detectors: List<AdDetectable>,
     fun applyDetectors(payload: AdPayload) {
         if (!go) return
 
-        val activeDetectors = detectors.filter { it.canHandle(payload) }
+        val activeDetectors = detectors.getDetectors().filter { it.canHandle(payload) }
         if (activeDetectors.isNotEmpty()) {
             info {
                 "detected a spotify notification with ${activeDetectors.size} " +
@@ -70,15 +71,6 @@ class AdDetector(val detectors: List<AdDetectable>,
             }
         }
 
-//        /*
-//         * Wait for a while before submit event to reduce wrong detections
-//         */
-//        Observable.just(true).delay(0, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread()).map {
-//
-//
-//        }.subscribe()
     }
 
     private fun fetchRemote() {

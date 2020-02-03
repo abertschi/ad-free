@@ -26,8 +26,6 @@ import ch.abertschi.adfree.di.SettingsModul
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.ViewSettings
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.onItemSelectedListener
 import org.jetbrains.anko.toast

@@ -9,10 +9,6 @@ package ch.abertschi.adfree
 import android.app.Application
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.detector.*
-import ch.abertschi.adfree.model.PreferencesFactory
-import ch.abertschi.adfree.model.RemoteManager
-import ch.abertschi.adfree.model.TrackRepository
-import ch.abertschi.adfree.model.YesNoModel
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
@@ -28,6 +24,7 @@ import android.os.Build
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.service.notification.ConditionProviderService.requestRebind
 import android.support.annotation.RequiresApi
+import ch.abertschi.adfree.model.*
 import org.jetbrains.anko.warn
 
 
@@ -38,7 +35,7 @@ import org.jetbrains.anko.warn
 class AdFreeApplication : Application(), AnkoLogger {
 
     lateinit var prefs: PreferencesFactory
-    lateinit var adDetectors: List<AdDetectable>
+    lateinit var adDetectors: AdDetectableFactory
     lateinit var adDetector: AdDetector
     lateinit var audioManager: AudioController
     lateinit var pluginHandler: PluginHandler
@@ -55,14 +52,9 @@ class AdFreeApplication : Application(), AnkoLogger {
 
         prefs = PreferencesFactory(applicationContext)
 
-        adDetectors = listOf<AdDetectable>(
-                  NotificationActionDetector()
-                , SpotifyTitleDetector(TrackRepository(this, prefs))
-                , NotificationBundleAndroidTextDetector()
-                , ScDetector()
-                , MiuiNotificationDetector()
-//                , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
-        )
+        adDetectors = AdDetectableFactory(applicationContext, prefs)
+        adDetectors.loadMetadata()
+
 
         audioManager = AudioController(applicationContext, prefs)
         remoteManager = RemoteManager(prefs)

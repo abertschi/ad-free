@@ -101,7 +101,7 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         subtitle.setOnClickListener(this)
 
         val subtitletext =
-                "<font color=#FFFFFF>ad-free</font> crashed. help to continue and " +
+                "<font color=#FFFFFF>ad-free</font> crashed. be courageous and continue. " +
                         "send the <font color=#FFFFFF>crash report.</font>"
 
 

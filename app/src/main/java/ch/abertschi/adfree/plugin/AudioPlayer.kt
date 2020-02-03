@@ -11,7 +11,6 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
-import com.danikula.videocache.HttpProxyCacheServer
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +28,6 @@ open class AudioPlayer(val context: Context,
     private var isPlaying: Boolean = false
     private var onStopCallables: ArrayList<() -> Unit> = ArrayList()
     private var player: MediaPlayer? = null
-    private var httpProxy: HttpProxyCacheServer? = null
 
     /**
      * a callable that is called when a track takes longer to load.
@@ -41,9 +39,9 @@ open class AudioPlayer(val context: Context,
     }
 
     fun playWithCachingProxy(url: String) {
-        httpProxy = httpProxy ?: HttpProxyCacheServer(context)
-        val proxyUrl = httpProxy!!.getProxyUrl(url)
-        playAudio(proxyUrl)
+//        httpProxy = httpProxy ?: HttpProxyCacheServer(context)
+//        val proxyUrl = httpProxy!!.getProxyUrl(url)
+        playAudio(url)
     }
 
     private fun playAudio(url: String) {

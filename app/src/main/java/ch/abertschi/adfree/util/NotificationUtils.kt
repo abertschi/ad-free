@@ -56,57 +56,39 @@ class NotificationUtils(val context: Context) : AnkoLogger {
                              dismissCallable: () -> Unit = {},
                              priority: Int = NotificationCompat.PRIORITY_HIGH, notifiy: Boolean = true): Notification {
 
+        val dismissIntent = PendingIntent
+                .getService(context, 0, Intent(context
+                        , NotificationInteractionService::class.java).setAction(actionDismiss)
+                        , PendingIntent.FLAG_ONE_SHOT)
 
-        if (updateNotificationMap.containsKey(id)) {
-            val b = updateNotificationMap.get(id)
-            var n: Notification? = null
-            b?.let {
-                if (title != null) it.setContentTitle(title)
-                if (content != null) it.setContentText(content)
-                val manager = NotificationManagerCompat.from(context)
-                n = b.build()
-                manager.notify(id, n)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle(title)
+                .setSmallIcon(R.mipmap.icon)
+                .setPriority(priority)
+                .setContentIntent(dismissIntent)
 
-            }
-            return n!!
-        } else {
-
-
-            val dismissIntent = PendingIntent
-                    .getService(context, 0, Intent(context
-                            , NotificationInteractionService::class.java).setAction(actionDismiss)
-                            , PendingIntent.FLAG_ONE_SHOT)
-
-            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setContentTitle(title)
-                    .setSmallIcon(R.mipmap.icon)
-                    .setPriority(priority)
-                    .setContentIntent(dismissIntent)
-
-            if (content != "") {
-                builder.setContentText(content)
-            }
+        if (content != "") {
+            builder.setContentText(content)
+        }
 
 
-            updateNotificationMap[id] = builder
-            val notification = builder.build()
+        updateNotificationMap[id] = builder
+        val notification = builder.build()
 //        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
 //                Notification.FLAG_ONGOING_EVENT)
 //            notification.flags = notification.flags or
 //                    Notification.FLAG_ONGOING_EVENT
 
 
-
-            synchronized(actionDismissCallables) {
-                actionDismissCallables.add(dismissCallable)
-            }
-
-            val manager = NotificationManagerCompat.from(context)
-            if (notifiy) {
-                manager.notify(id, notification)
-            }
-            return notification
+        synchronized(actionDismissCallables) {
+            actionDismissCallables.add(dismissCallable)
         }
+
+        val manager = NotificationManagerCompat.from(context)
+        if (notifiy) {
+            manager.notify(id, notification)
+        }
+        return notification
     }
 
 //    fun showBlockingNotification(dismissCallable: () -> Unit) {

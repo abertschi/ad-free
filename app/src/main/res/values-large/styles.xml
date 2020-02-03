@@ -1,5 +1,5 @@
 <resources>
     <style name="AppTextView" parent="AppTheme">
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">left</item>
     </style>
 </resources>

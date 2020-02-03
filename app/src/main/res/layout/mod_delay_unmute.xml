@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:inputType="textMultiLine|textNoSuggestions"
-            android:text="change how long advertisement is muted before audio continues"
+            android:text="change how long advertisement stays muted before playback continues"
             android:textColor="#C4BCAF"
             android:textSize="@dimen/normal_text_small" />
 

@@ -18,6 +18,11 @@ import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
 import org.jetbrains.anko.*
 
+import android.content.Intent
+
+
+
+
 
 class ModActivity : AppCompatActivity(), AnkoLogger {
 
@@ -60,6 +65,11 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         findViewById<View>(R.id.always_on_text).onClick { presenter.onToggleAlwaysOnChanged() }
         findViewById<View>(R.id.always_on_subtext).onClick { presenter.onToggleAlwaysOnChanged() }
         findViewById<View>(R.id.always_on_switch).onClick { presenter.onToggleAlwaysOnChanged() }
+
+        findViewById<View>(R.id.active_detectors_layout).onClick { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.active_detectors_title).onClick { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.active_detectors_subtitle).onClick { presenter.onLaunchActiveDetectorsView() }
+
 
 
         val alert = AlertDialog.Builder(this)
@@ -112,4 +122,8 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
             toast("Ad Free enabled")
         }
     }
+
+//    fun showChooseDetectors() {
+
 }
+

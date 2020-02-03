@@ -25,6 +25,7 @@
 
     <ScrollView
         android:layout_marginTop="30dp"
+        android:textAlignment="textStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -109,6 +110,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/active_detectors_layout"
                 android:layout_marginTop="30dp"
                 android:orientation="vertical">
 
@@ -120,6 +122,7 @@
                     android:inputType="textMultiLine|textNoSuggestions"
                     android:scrollHorizontally="false"
                     android:text="> ad detectors"
+                    android:id="@+id/active_detectors_title"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/normal_text_size" />
 
@@ -130,6 +133,7 @@
                     android:layout_marginTop="10dp"
                     android:inputType="textMultiLine|textNoSuggestions"
                     android:scrollHorizontally="false"
+                    android:id="@+id/active_detectors_subtitle"
                     android:text="choose active detectors"
                     android:textColor="#C4BCAF"
                     android:textSize="@dimen/normal_text_small" />

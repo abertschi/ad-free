@@ -1,6 +1,7 @@
 package ch.abertschi.adfree.view.mod
 
 import android.content.Context
+import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.model.PreferencesFactory
 import org.jetbrains.anko.AnkoLogger
@@ -43,8 +44,9 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         }
     }
 
-    fun configureDetectors() {
-
+    fun onLaunchActiveDetectorsView() {
+        val myIntent = Intent(this.context, ActiveDetectorsActivity::class.java)
+        this.context.startActivity(myIntent)
     }
 
 }

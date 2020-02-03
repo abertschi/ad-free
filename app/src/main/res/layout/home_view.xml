@@ -43,6 +43,7 @@
             android:scrollHorizontally="false"
             android:text="@string/enjoy"
             android:textColor="#C4BCAF"
+            android:textAlignment="textStart"
             android:textSize="@dimen/title_text_size"
             android:textStyle="italic"/>
 
