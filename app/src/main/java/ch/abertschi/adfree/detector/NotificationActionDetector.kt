@@ -20,6 +20,6 @@ class NotificationActionDetector : AbstractStatusBarDetector() {
             = payload.statusbarNotification.notification.actions.size <= 3
 
     override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Notification actions", "generic inspection of notification actions")
+            = AdDetectorMeta("Notification actions", "spotify generic inspection of notification actions")
 
 }

@@ -49,5 +49,5 @@ class NotificationBundleAndroidTextDetector : AbstractStatusBarDetector(), AnkoL
         }
     }
     override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Notification bundle", "generic inspection of notification bundle")
+            = AdDetectorMeta("Notification bundle", "spotify generic inspection of notification bundle")
 }

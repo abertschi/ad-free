@@ -11,9 +11,9 @@ class AdDetectableFactory(var context: Context,
             NotificationActionDetector()
             , SpotifyTitleDetector(TrackRepository(this.context, prefs))
             , NotificationBundleAndroidTextDetector()
-            , ScDetector()
             , MiuiNotificationDetector()
-//                , SpotifyNotificationDebugTracer(getExternalFilesDir(null))
+            , ScDetector()
+//                , SpotifyNotificationDebugTracer(context.getExternalFilesDir(null))
     )
 
 

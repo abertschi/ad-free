@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SwitchCompat
 import android.view.View
+import android.widget.ScrollView
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.detector.AdDetectable
@@ -38,6 +39,8 @@ class ActiveDetectorsActivity : AppCompatActivity(), AnkoLogger {
                 "detectors <font color=#FFFFFF>find ads</font>. " +
                         "choose what's active."
         textView.text = Html.fromHtml(text)
+
+        findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
 
 
         viewManager = LinearLayoutManager(this)
@@ -61,7 +64,8 @@ class MyAdapter(private val detectors: List<AdDetectable>) :
     class MyViewHolder(val view: View,
                        val title: TextView,
                        val subtitle: TextView,
-                       val switch: SwitchCompat) : RecyclerView.ViewHolder(view)
+                       val switch: SwitchCompat,
+                       val sepView: View) : RecyclerView.ViewHolder(view)
 
 
     // Create new views (invoked by the layout manager)
@@ -74,13 +78,17 @@ class MyAdapter(private val detectors: List<AdDetectable>) :
         val title = view.findViewById<TextView>(R.id.det_title) as TextView
         val subtitle = view.findViewById<TextView>(R.id.det_subtitle) as TextView
         val switch = view.findViewById<TextView>(R.id.det_switch) as SwitchCompat
+        val sep = view.findViewById<View>(R.id.mod_det_seperation)
 
-        return MyViewHolder(view, title, subtitle, switch)
+        return MyViewHolder(view, title, subtitle, switch, sep)
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.title.text = "> " + detectors[position].getMeta().title
         holder.subtitle.text = detectors[position].getMeta().description
+//                " (${detectors[position].javaClass.simpleName})"
         holder.switch.isChecked = detectors[position].getMeta().enabled
+        holder.sepView.visibility =
+                if (position == detectors.size - 1) View.INVISIBLE else View.VISIBLE
     }
 
     override fun getItemCount() = detectors.size

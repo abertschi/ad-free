@@ -66,5 +66,5 @@ class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
     }
 
     override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("MIUI Notification", "detector for MIUI devices")
+            = AdDetectorMeta("MIUI notification", "spotify detector for MIUI devices")
 }
