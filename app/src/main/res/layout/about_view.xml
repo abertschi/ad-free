@@ -12,6 +12,7 @@
 
 
     <RelativeLayout
+        android:layout_margin="@dimen/margin_home_views"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -114,7 +115,6 @@
                 android:text=""
                 android:textColor="#C4BCAF"
                 android:textSize="@dimen/title_text_size"
-
                 />
 
         </LinearLayout>

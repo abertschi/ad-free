@@ -69,6 +69,10 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         findViewById<View>(R.id.active_detectors_title).onClick { presenter.onLaunchActiveDetectorsView() }
         findViewById<View>(R.id.active_detectors_subtitle).onClick { presenter.onLaunchActiveDetectorsView() }
 
+        findViewById<TextView>(R.id.mod_status_service).onClick {
+            presenter.onLaunchNotificationListenerSystemSettings()
+        }
+
         val versionView = findViewById<TextView>(R.id.mod_version1) as TextView
         versionView.text =
                 "> version ${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
@@ -105,7 +109,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showDelayUnmute() {
         delayDialog.show()
-        delayDialog.getWindow().setBackgroundDrawableResource(R.color.colorBackground);
+        delayDialog.window.setBackgroundDrawableResource(R.color.colorBackground)
     }
 
     fun setDelayValue(p: Int) {
@@ -131,6 +135,16 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         this.applicationContext?.runOnUiThread {
             toast("ad-free enabled")
         }
+    }
+
+    fun showNotifiationListenerConnected() {
+        findViewById<TextView>(R.id.mod_status_service).text = "notification service is connected"
+
+    }
+
+    fun showNotificationListenerDisconnected() {
+        findViewById<TextView>(R.id.mod_status_service).text = "notification service is disconnected"
+
     }
 
 //    fun showChooseDetectors() {

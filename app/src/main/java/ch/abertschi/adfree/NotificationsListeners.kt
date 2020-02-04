@@ -10,15 +10,12 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adfree.detector.AdPayload
 import com.thoughtworks.xstream.XStream
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
 import android.app.Service
 import android.content.Intent
 import ch.abertschi.adfree.util.NotificationUtils
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 
 /**
@@ -31,32 +28,34 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
         context.adDetector.applyDetectors(AdPayload(sbn))
     }
 
-    override fun onNotificationRemoved(sbn: StatusBarNotification) {
-        super.onNotificationRemoved(sbn)
-    }
-
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
-        toast("onListenerDisconnected")
+        val context = applicationContext as AdFreeApplication
+        context.notificationStatus.notifyStatusChanged(ListenerStatus.DISCONNECTED)
+
+//        toast("onListenerDisconnected")
     }
 
     override fun onListenerHintsChanged(hints: Int) {
         super.onListenerHintsChanged(hints)
-        toast("onListenerHintsChanged")
+//        toast("onListenerHintsChanged")
     }
 
     override fun onListenerConnected() {
         super.onListenerConnected()
-        info {"Service Reader Connected"}
+//        info {"Service Reader Connected"}
         val context = applicationContext as AdFreeApplication
+        context.notificationStatus.notifyStatusChanged(ListenerStatus.CONNECTED)
+
         if (context.prefs.isAlwaysOnNotificationEnabled()) {
             val pair = context.notificationChannel.buildAlwaysOnNotification()
             startForeground(pair.second, pair.first)
         }
+        alarmManager.nextAlarmClock
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        toast("onStartCommand")
+//        toast("onStartCommand")
         return Service.START_STICKY
     }
 

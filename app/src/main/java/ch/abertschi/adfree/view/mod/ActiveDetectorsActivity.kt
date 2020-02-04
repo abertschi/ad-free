@@ -18,7 +18,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SwitchCompat
 import android.view.View
 import android.widget.ScrollView
-import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.detector.AdDetectable
 class ActiveDetectorsActivity : AppCompatActivity(), AnkoLogger {
 

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="#252A2E"
     android:id="@+id/container"
+    android:padding="@dimen/margin_home_views"
 
     >
 
@@ -14,7 +15,6 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
 
         android:gravity="center_vertical"
         tools:context="ch.abertschi.adfree.view.home.HomeActivity"
