@@ -5,5 +5,5 @@
     <dimen name="normal_text_small">20sp</dimen>
     <dimen name="plugin_spinner_height">80dp</dimen>
     <dimen name="margin_view">40dp</dimen>
-    <dimen name="margin_home_views">40dp</dimen>
+    <dimen name="margin_home_views">20dp</dimen>
 </resources>

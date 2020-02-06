@@ -17,11 +17,7 @@
         android:layout_height="match_parent"
 
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adfree.view.home.HomeActivity"
-
-
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:context="ch.abertschi.adfree.view.home.HomeActivity">
 
 
         <TextView

@@ -12,49 +12,102 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#252A2E"
-    android:padding="@dimen/margin_home_views"
+    android:padding="@dimen/margin_home_views_settings"
     android:orientation="vertical"
     >
 
-    <ImageView
-        android:id="@+id/try_plugin_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="top|right"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/audio_gray"
-        />
 
-    <TextView
-        android:id="@+id/tryout_text"
-        style="@style/AppTextView"
+
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine|textNoSuggestions"
-        android:scrollHorizontally="false"
-        android:text=""
-        android:textColor="#C4BCAF"
-        android:textSize="@dimen/normal_text_small"
-        android:paddingBottom="6dp"
-        android:layout_marginEnd="10dp"
-        android:layout_alignBottom="@+id/try_plugin_button"
-        android:layout_toStartOf="@+id/try_plugin_button"/>
+        android:orientation="vertical"
+        >
+
+<!--        <TextView-->
+<!--            android:id="@+id/version"-->
+<!--            style="@style/AppTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:scrollHorizontally="false"-->
+<!--            android:text=""-->
+<!--            android:textAlignment="textEnd"-->
+<!--            android:textColor="#C4BCAF"-->
+<!--            android:textSize="@dimen/normal_text_small"-->
+<!--            />-->
+
+        <ImageView
+            style="@style/AppTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="@dimen/margin_home_views_settings_tryout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:scrollHorizontally="false"
+            android:id="@+id/try_plugin_button"
+            android:textAlignment="textEnd"
+            android:textColor="#C4BCAF"
+            android:textSize="@dimen/title_text_size"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/audio_gray"
+            />
+
+    </RelativeLayout>
+
+
+
+
+
+
+<!--    <ImageView-->
+<!--        android:id="@+id/try_plugin_button"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_gravity="right"-->
+
+<!--        android:scaleType="fitCenter"-->
+
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tryout_text"-->
+<!--        style="@style/AppTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:inputType="textMultiLine|textNoSuggestions"-->
+<!--        android:scrollHorizontally="false"-->
+<!--        android:text=""-->
+<!--        android:textColor="#C4BCAF"-->
+<!--        android:textSize="@dimen/normal_text_small"-->
+<!--        android:paddingBottom="6dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_alignBottom="@+id/try_plugin_button"-->
+<!--        android:layout_toStartOf="@+id/try_plugin_button"/>-->
 
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-
-
         android:gravity="center_vertical"
         tools:context="ch.abertschi.adfree.view.setting.SettingsActivity"
 
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,9 +118,9 @@
             <TextView
                 android:id="@+id/settingsTitle"
                 style="@style/AppTextView"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:gravity="left"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:scrollHorizontally="false"
@@ -79,7 +132,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
@@ -90,7 +143,6 @@
                     android:entries="@array/test"/>
 
             </LinearLayout>
-
         </LinearLayout>
     </FrameLayout>
 
@@ -98,10 +150,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/frame"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:scrollbars="none"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="0dp">
 
         <LinearLayout
             android:id="@+id/setting_plugin_view"
@@ -111,8 +163,6 @@
 
             android:orientation="vertical"/>
     </ScrollView>
-
-
 </RelativeLayout>
 
 

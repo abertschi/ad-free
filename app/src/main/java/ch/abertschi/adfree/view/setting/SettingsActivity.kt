@@ -91,9 +91,9 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
         settingsTitle?.text = Html.fromHtml(text)
 
-        val tryMeText = view?.findViewById(R.id.tryout_text) as TextView
-        tryMeText.typeface = typeFace
-        tryMeText?.text = Html.fromHtml("")
+//        val tryMeText = view?.findViewById(R.id.tryout_text) as TextView
+//        tryMeText.typeface = typeFace
+//        tryMeText?.text = Html.fromHtml("")
 
 
         spinner = view?.findViewById(R.id.spinner) as Spinner

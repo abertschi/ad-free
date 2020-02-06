@@ -12,7 +12,6 @@
         android:layout_marginBottom="20dp"
         android:inputType="textMultiLine|textNoSuggestions"
         android:scrollHorizontally="false"
-
         android:text="configure audio volume"
         android:textColor="#C4BCAF"
         android:textSize="@dimen/normal_text_size"

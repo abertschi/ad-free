@@ -74,9 +74,6 @@
             android:id="@+id/delay_unmute_seekbar"
             android:progress="0">
 
-
-
-
         </android.support.v7.widget.AppCompatSeekBar>
 
         <TextView
