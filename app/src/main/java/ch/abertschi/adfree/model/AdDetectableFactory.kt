@@ -2,32 +2,48 @@ package ch.abertschi.adfree.model
 
 import android.content.Context
 import ch.abertschi.adfree.detector.*
-import ch.abertschi.adfree.model.PreferencesFactory
 
 class AdDetectableFactory(var context: Context,
                           val prefs: PreferencesFactory) {
 
-    private var adDetectors: List<AdDetectable> = listOf<AdDetectable>(
+    private var enableMap = HashMap<AdDetectable, Boolean>()
+
+    private var adDetectors: List<AdDetectable> = listOf(
             NotificationActionDetector()
             , SpotifyTitleDetector(TrackRepository(this.context, prefs))
             , NotificationBundleAndroidTextDetector()
             , MiuiNotificationDetector()
             , ScDetector()
-//                , SpotifyNotificationDebugTracer(context.getExternalFilesDir(null))
+            , SpotifyNotificationDebugTracer(context.getExternalFilesDir(null))
+            , ScNotificationDebugTracer(context.getExternalFilesDir(null))
     )
 
-
-    fun loadMetadata() {
-        prefs.loadAdDetectables(adDetectors)
+    init {
+        loadMeta()
     }
 
-    fun saveMetadataForDetectable(d: AdDetectable) {
-        prefs.saveAdDetectable(d)
+    private fun loadMeta() {
+        adDetectors.forEach { enableMap[it] = prefs.isAdDetectableEnabled(it) }
     }
 
-    fun saveMetadata() {
-        prefs.saveAdDetectables(adDetectors)
+    fun persistMeta() {
+        enableMap.entries.forEach { prefs.saveAdDetectableEnable(it.value, it.key) }
     }
 
-    fun getDetectors() = adDetectors
+    fun isEnabled(d: AdDetectable): Boolean {
+        return enableMap[d] ?: true
+    }
+
+    fun setEnable(enable: Boolean, d: AdDetectable) {
+        enableMap[d] = enable
+    }
+
+    fun getEnabledDetectors() = adDetectors.filter { isEnabled(it) }
+
+    fun getAllDetectors() = adDetectors
+
+    fun getVisibleDetectors() =
+        if (prefs.isDebugDetectors()) {
+            getAllDetectors()
+        } else adDetectors.filter { !it.getMeta().debugOnly }
 }

@@ -6,12 +6,10 @@
 
 package ch.abertschi.adfree.ad
 
-import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
 
 /**
@@ -29,7 +27,7 @@ class AdDetector(val detectors: AdDetectableFactory,
     fun applyDetectors(payload: AdPayload) {
         if (!go) return
 
-        val activeDetectors = detectors.getDetectors().filter { it.canHandle(payload) }
+        val activeDetectors = detectors.getEnabledDetectors().filter { it.canHandle(payload) }
         if (activeDetectors.isNotEmpty()) {
             info {
                 "detected a spotify notification with ${activeDetectors.size} " +

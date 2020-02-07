@@ -39,7 +39,7 @@ open class AudioPlayer(val context: Context,
     }
 
     fun playWithCachingProxy(url: String) {
-//        httpProxy = httpProxy ?: HttpProxyCacheServer(context)
+//        httpProxy = httpProxy ?: HttpProxyCacheServer(view)
 //        val proxyUrl = httpProxy!!.getProxyUrl(url)
         playAudio(url)
     }

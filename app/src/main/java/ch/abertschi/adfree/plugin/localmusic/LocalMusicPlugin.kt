@@ -38,6 +38,10 @@ class LocalMusicPlugin(val context: Context,
     private var view: LocalMusicView? = null
     private var player: AudioPlayer = AudioPlayer(context, prefs, audioController)
 
+    companion object {
+        val PICK_DIRECTORY = 100
+    }
+
     override fun hasSettingsView(): Boolean = true
 
     override fun settingsView(context: Context, action: PluginActivityAction): View? {
@@ -48,6 +52,7 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun play() {
+
         val file = getRandomTrackfromUri(prefs.getLocalMusicDirectory())
         if (file == null) view?.showNoAudioTracksFoundMessage()
         else {
@@ -60,14 +65,14 @@ class LocalMusicPlugin(val context: Context,
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
 
-                    val content = when (prefs.getPlayUntilEnd()) {
-                        true -> "playing until end - touch to stop"
-                        else -> "touch to unmute ad"
-                    }
+                            val content = when (prefs.getPlayUntilEnd()) {
+                                true -> "playing until end - touch to stop"
+                                else -> "touch to unmute ad"
+                            }
 
-                    ad.notificationChannel.updateAdNotification(title = name,
-                            content = content)
-                }
+                            ad.notificationChannel.updateAdNotification(title = name,
+                                    content = content)
+                        }
             }
         }
     }
@@ -77,15 +82,15 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun requestStop(onStoped: () -> Unit) {
-        runAndCatchException({
+        runAndCatchException {
             player.requestStop(onStoped)
-        })
+        }
     }
 
     override fun forceStop(onStoped: () -> Unit) {
-        runAndCatchException({
+        runAndCatchException {
             player.forceStop(onStoped)
-        })
+        }
     }
 
     override fun onPluginLoaded() {
@@ -102,15 +107,16 @@ class LocalMusicPlugin(val context: Context,
         if (prefs.getPlayUntilEnd()) {
             requestStop(onStoped)
         } else {
-            runAndCatchException({
+            runAndCatchException {
                 player.stop(onStoped)
-            })
+            }
         }
     }
 
     override fun title(): String = "local music"
 
     private fun getRandomTrackfromUri(path: String): File? {
+        info { path }
         val musicDir = File(path)
         val allFiles = ArrayList<File>()
         val dirs = LinkedList<File>()
@@ -148,6 +154,10 @@ class LocalMusicPlugin(val context: Context,
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PICK_DIRECTORY) {
+            prefs.setLocalMusicDirectory(data?.data.toString())
+        }
+        info { prefs.getLocalMusicDirectory()}
     }
 
     private fun runAndCatchException(function: () -> Unit): Unit {

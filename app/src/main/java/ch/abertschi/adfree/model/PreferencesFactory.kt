@@ -30,6 +30,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
 
     private val prefsDelaySound = "DELAY_SOUND"
     private val prefsAlwaysOnNoti = "ALWAYS_ON_NOTI"
+    private val prefsIsDebugDetectors = "DEBUG_DETECTORS_ENABLED"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -76,7 +77,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
             prefs.getInt(prefsStreamMusicAudioVolume, 100)
 
     fun getLocalMusicDirectory(): String =
-            prefs.getString(prefsLocalMusic, "/storage/sdcard0/Music")
+            prefs.getString(prefsLocalMusic, "/storage/sdcard0/Music")!!
 
     fun setLocalMusicDirectory(value: String) =
             prefs.edit().putString(prefsLocalMusic, value).commit()
@@ -105,25 +106,16 @@ class PreferencesFactory(context: Context) : AnkoLogger {
             prefs.edit().putInt(prefsDelaySound, s).commit()
 
 
-    fun saveAdDetectable(d: AdDetectable) {
-        val edit = prefs.edit()
-        edit.putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName,
-                d.getMeta().enabled).commit()
+    fun isAdDetectableEnabled(d: AdDetectable) =
+            prefs.getBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName,
+                    d.getMeta().enabledByDef)
 
-
+    fun saveAdDetectableEnable(enable: Boolean, d: AdDetectable) {
+        prefs.edit().putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName, enable).commit()
     }
 
-    fun saveAdDetectables(d: List<AdDetectable>) {
-        d.forEach {
-            saveAdDetectable(it)
-        }
-    }
+    fun isDebugDetectors() = prefs.getBoolean(prefsIsDebugDetectors, false)
 
-    fun loadAdDetectables(d: List<AdDetectable>) {
-        d.forEach {
-            it.getMeta().enabled =
-                    prefs.getBoolean(prefsAdDetectableMetaPrefix + it.javaClass.canonicalName,
-                            it.getMeta().enabled)
-        }
-    }
+    fun setDebugDetectors(isDebug: Boolean) =
+            prefs.edit().putBoolean(prefsIsDebugDetectors, isDebug).commit()
 }

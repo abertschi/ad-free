@@ -1,5 +1,6 @@
 package ch.abertschi.adfree.view.mod
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SwitchCompat
@@ -87,9 +88,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         val alert = AlertDialog.Builder(this)
         alert.setTitle("> delay unmute")
         alert.setView(delayLayout)
-
         delayDialog = alert.create()
-
         alwaysOnSwitch = findViewById<SwitchCompat>(R.id.always_on_switch)
 
         val seek = delayLayout.findViewById(R.id.delay_unmute_seekbar) as SeekBar
@@ -107,6 +106,11 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         presenter.onCreate(this)
     }
 
+    fun showDetectorCount(active: Int, total: Int) {
+        findViewById<TextView>(R.id.active_detectors_subtitle).text =
+                "choose active detectors ($active / $total)"
+    }
+
     fun showDelayUnmute() {
         delayDialog.show()
         delayDialog.window.setBackgroundDrawableResource(R.color.colorBackground)
@@ -116,6 +120,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         val view = delayLayout.findViewById(R.id.unmutetext2) as TextView
         val text = "${p} seconds"
         view.text = text
+
         val seek = delayLayout.findViewById(R.id.delay_unmute_seekbar) as SeekBar
         seek.progress = p
         findViewById<TextView>(R.id.delay_unmute_mod_subtitle).text = text
@@ -128,7 +133,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun setNotificationEnabled(b: Boolean) {
         alwaysOnSwitch?.isChecked = b
-        info { "always On: " + b }
+        info { "always On: $b" }
     }
 
     fun showPowerEnabled() {
@@ -146,8 +151,5 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         findViewById<TextView>(R.id.mod_status_service).text = "notification service is disconnected"
 
     }
-
-//    fun showChooseDetectors() {
-
 }
 

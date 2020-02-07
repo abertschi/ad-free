@@ -1,6 +1,5 @@
 package ch.abertschi.adfree.view.mod
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
@@ -17,8 +16,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
 
     override fun onStatusChanged(status: ListenerStatus) {
         context.runOnUiThread {
-            info { status }
-            info { "from presenter" }
+            info { "notification listener changed status: $status" }
             if (status == ListenerStatus.CONNECTED) {
                 view.showNotifiationListenerConnected()
             } else{
@@ -41,6 +39,8 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         notificationStatusManager.addObserver(this)
         notificationStatusManager.restartNotificationListener() // always restart on launch
         onStatusChanged(notificationStatusManager.getStatus())
+
+//        view.showDetectorCount()
     }
 
     fun onToggleAlwaysOnChanged() {
@@ -49,7 +49,8 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         view.setNotificationEnabled(newVal)
         notificationStatusManager.restartNotificationListener()
         if (!newVal) {
-            (view.applicationContext as AdFreeApplication).notificationChannel.hideAlwaysOnNotification()
+            (view.applicationContext as AdFreeApplication)
+                    .notificationChannel.hideAlwaysOnNotification()
         }
     }
 
@@ -72,7 +73,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
     }
 
     fun onLaunchActiveDetectorsView() {
-        val myIntent = Intent(this.context, ActiveDetectorsActivity::class.java)
+        val myIntent = Intent(this.context, ActiveDetectorActivity::class.java)
         this.context.startActivity(myIntent)
     }
 

@@ -8,10 +8,10 @@ import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
 
-class SpotifyNotificationDebugTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
+class ScNotificationDebugTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
 
-    val SPOTIFY_PACKAGE = "com.spotify"
-    val FILENAME = "adfree-spotify.txt"
+    val SOUNDCLOUD_PACKAGE = "com.soundcloud.android"
+    val FILENAME = "adfree-soundcloud.txt"
 
     override fun canHandle(payload: AdPayload): Boolean {
         if (storageFolder == null) {
@@ -19,7 +19,7 @@ class SpotifyNotificationDebugTracer(val storageFolder: File?) : AdDetectable, A
             return false
         }
 
-        if (payload?.statusbarNotification?.key?.toLowerCase()?.contains(SPOTIFY_PACKAGE) == true) {
+        if (payload?.statusbarNotification?.key?.toLowerCase()?.contains(SOUNDCLOUD_PACKAGE) == true) {
             recordNotification(payload.statusbarNotification!!)
         }
         return false
@@ -39,7 +39,7 @@ class SpotifyNotificationDebugTracer(val storageFolder: File?) : AdDetectable, A
     }
 
     override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Spotify tracer",
-            "dump spotify notifications to a file. This is for debugging only. ", false,
+            = AdDetectorMeta("Soundcloud tracer",
+            "dump soundcloud notifications to a file. This is for debugging only and drains more battery", false,
             debugOnly = true)
 }

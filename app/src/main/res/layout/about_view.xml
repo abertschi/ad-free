@@ -21,22 +21,22 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:id="@+id/version"
-            style="@style/AppTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:scrollHorizontally="false"
-            android:text=""
-            android:textAlignment="textEnd"
-            android:textColor="#C4BCAF"
-            android:textSize="@dimen/normal_text_small"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/version"-->
+<!--            style="@style/AppTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:scrollHorizontally="false"-->
+<!--            android:text=""-->
+<!--            android:textAlignment="textEnd"-->
+<!--            android:textColor="#C4BCAF"-->
+<!--            android:textSize="@dimen/normal_text_small"-->
+<!--            />-->
 
         <ImageView
             style="@style/AppTextView"
@@ -49,7 +49,6 @@
             android:layout_marginRight="0dp"
             android:layout_marginTop="0dp"
             android:scrollHorizontally="false"
-
             android:textAlignment="textEnd"
             android:textColor="#C4BCAF"
             android:textSize="@dimen/title_text_size"

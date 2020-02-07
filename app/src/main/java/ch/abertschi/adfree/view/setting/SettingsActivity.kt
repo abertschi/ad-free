@@ -37,14 +37,6 @@ import org.jetbrains.anko.toast
 
 class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
 
-    override fun signalizeTryOut() {
-        // TODO: crashes
-//        YoYo.with(Techniques.Shake)
-//                .duration(800)
-//                .repeat(0)
-//                .playOn(activity?.findViewById(R.id.try_plugin_button))
-    }
-
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
     private var settingsTitle: TextView? = null
@@ -157,4 +149,11 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         callablesOnActivityResult.add(callable)
     }
 
+    override fun signalizeTryOut() {
+        // TODO: crashes
+//        YoYo.with(Techniques.Shake)
+//                .duration(800)
+//                .repeat(0)
+//                .playOn(activity?.findViewById(R.id.try_plugin_button))
+    }
 }

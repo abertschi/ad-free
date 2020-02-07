@@ -14,9 +14,7 @@ import java.io.File
 import java.io.FileOutputStream
 import android.app.Service
 import android.content.Intent
-import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.*
-
 
 /**
  * Created by abertschi on 11.12.16.
@@ -25,6 +23,23 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         val context = applicationContext as AdFreeApplication
+
+
+// TODO: feature for google cast
+//        if (sbn.key.contains("com.google.android.gms")) {
+//            info { sbn.key }
+//            val act = sbn.notification.actions.get(1)
+//
+//            info { act.title }
+//            act?.run {
+//                if (act.title.contains("Unmute")) {
+//                    act.actionIntent.send()
+//                    info { "send intent" }
+//                }
+//            }
+//            recordNotification(sbn)
+//            info { "debug this" }
+//        }
         context.adDetector.applyDetectors(AdPayload(sbn))
     }
 
@@ -32,18 +47,14 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
         super.onListenerDisconnected()
         val context = applicationContext as AdFreeApplication
         context.notificationStatus.notifyStatusChanged(ListenerStatus.DISCONNECTED)
-
-//        toast("onListenerDisconnected")
     }
 
     override fun onListenerHintsChanged(hints: Int) {
         super.onListenerHintsChanged(hints)
-//        toast("onListenerHintsChanged")
     }
 
     override fun onListenerConnected() {
         super.onListenerConnected()
-//        info {"Service Reader Connected"}
         val context = applicationContext as AdFreeApplication
         context.notificationStatus.notifyStatusChanged(ListenerStatus.CONNECTED)
 
@@ -55,7 +66,6 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        toast("onStartCommand")
         return Service.START_STICKY
     }
 

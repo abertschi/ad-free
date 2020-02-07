@@ -93,11 +93,11 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 
 //    fun showBlockingNotification(dismissCallable: () -> Unit) {
 //        val dismissIntent = PendingIntent
-//                .getService(context, 0, Intent(context
+//                .getService(view, 0, Intent(view
 //                        , NotificationInteractionService::class.java).setAction(actionDismiss)
 //                        , PendingIntent.FLAG_ONE_SHOT)
 //
-//        val notification = NotificationCompat.Builder(context)
+//        val notification = NotificationCompat.Builder(view)
 //                .setContentTitle("Ad detected")
 //                .setContentText("Touch to unmute")
 //                .setSmallIcon(R.mipmap.icon)
@@ -111,7 +111,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 //        synchronized(actionDismissCallables) {
 //            actionDismissCallables.add(dismissCallable)
 //        }
-//        val manager = NotificationManagerCompat.from(context)
+//        val manager = NotificationManagerCompat.from(view)
 //        manager.notify(blockingNotificationId, notification)
 //    }
 

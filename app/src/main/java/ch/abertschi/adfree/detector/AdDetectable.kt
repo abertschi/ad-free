@@ -20,4 +20,5 @@ interface AdDetectable {
     fun flagAsMusic(payload: AdPayload): Boolean = false
 }
 
-data class AdDetectorMeta(val title: String, val description: String, var enabled: Boolean = true)
+data class AdDetectorMeta(val title: String, val description: String, var enabledByDef: Boolean = true,
+                          var debugOnly: Boolean = false)

@@ -16,19 +16,25 @@ import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.view.ViewSettings
-import com.github.angads25.filepicker.model.DialogConfigs
-import com.github.angads25.filepicker.model.DialogProperties
-import com.github.angads25.filepicker.view.FilePickerDialog
+
+
+
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
 import java.io.File
+import android.support.v4.app.ActivityCompat.startActivityForResult
+import android.content.DialogInterface
+
+import android.support.v7.app.AlertDialog
 
 
 /**
  * Created by abertschi on 29.08.17.
  */
 class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger {
+
+    private lateinit var audioDirDialog: AlertDialog
 
     var presenter: LocalMusicPlugin? = null
 
@@ -71,32 +77,33 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
             presenter.chooseDirectory()
         }
 
-        action.addOnActivityResult({ requestCode, resultCode, data ->
+        action.addOnActivityResult { requestCode, resultCode, data ->
             presenter.onActivityResult(requestCode, resultCode, data)
-        })
+        }
 
+        audioDirDialog = AlertDialog.Builder(context)
+                .setTitle("Audio directory")
+                .setView(LayoutInflater.from(this.context).inflate(R.layout.choose_audio_dir, null))
+                .setPositiveButton(android.R.string.yes) { dialog, which ->
+                    showDirectoryChooser()
+                }
+                .setOnDismissListener {
+                    showDirectoryChooser()
+                }
+                .create()
         return viewInstance
     }
 
+    private fun showDirectoryChooser() {
+        val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        i.addCategory(Intent.CATEGORY_DEFAULT)
+        val chooser = Intent.createChooser(i, "Choose directory")
+        startActivityForResult(chooser, LocalMusicPlugin.PICK_DIRECTORY, null)
+    }
+
     fun showFolderSelectionDialog(default: File) {
-        val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.SINGLE_MODE
-        properties.selection_type = DialogConfigs.DIR_SELECT
-        properties.root = default
-        properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
-        properties.offset = File(DialogConfigs.DEFAULT_DIR)
-        properties.extensions = null
-
-        val dialog = FilePickerDialog(context, properties)
-        dialog.setTitle("Select a Folder")
-
-        dialog.setDialogSelectionListener { files ->
-            val f = mutableListOf<String>()
-            files?.forEach { f.add(it) }
-            presenter!!.onDirectorySelected(f)
-        }
-        dialog.show()
-
+        audioDirDialog.show()
+        audioDirDialog.window?.setBackgroundDrawableResource(R.color.colorBackground)
     }
 
     fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {

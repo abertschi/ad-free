@@ -8,7 +8,6 @@ package ch.abertschi.adfree
 
 import android.app.Application
 import ch.abertschi.adfree.ad.AdDetector
-import ch.abertschi.adfree.detector.*
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
@@ -17,15 +16,8 @@ import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
-
-import android.content.ComponentName
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.os.Build
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.service.notification.ConditionProviderService.requestRebind
-import android.support.annotation.RequiresApi
 import ch.abertschi.adfree.model.*
-import org.jetbrains.anko.warn
+
 
 
 /**
@@ -56,8 +48,6 @@ class AdFreeApplication : Application(), AnkoLogger {
         notificationStatus = NotificationStatusManager(applicationContext)
 
         adDetectors = AdDetectableFactory(applicationContext, prefs)
-        adDetectors.loadMetadata()
-
 
         audioManager = AudioController(applicationContext, prefs)
         remoteManager = RemoteManager(prefs)
@@ -70,8 +60,8 @@ class AdFreeApplication : Application(), AnkoLogger {
         notificationChannel = NotificationChannel(notificationUtils, prefs)
 
         adPlugins = listOf(MutePlugin(),
-                InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel),
-                LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel)
+                LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel),
+                InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel)
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
