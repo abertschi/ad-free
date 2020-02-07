@@ -11,12 +11,13 @@ import ch.abertschi.adfree.model.PreferencesFactory
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.runOnUiThread
+import android.os.AsyncTask
 
-class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLogger,
+
+class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoLogger,
         NotificationStatusObserver {
 
     private lateinit var context: Context
-
     private lateinit var notificationStatusManager: NotificationStatusManager
     private lateinit var detectorFactory: AdDetectableFactory
 
@@ -26,7 +27,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
             info { "notification listener changed status: $status" }
             if (status == ListenerStatus.CONNECTED) {
                 view.showNotifiationListenerConnected()
-            } else{
+            } else {
                 view.showNotificationListenerDisconnected()
             }
         }
@@ -43,10 +44,13 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         notificationStatusManager = (context.applicationContext as AdFreeApplication).notificationStatus
         notificationStatusManager.addObserver(this)
         notificationStatusManager.restartNotificationListener() // always restart on launch
-        onStatusChanged(notificationStatusManager.getStatus())
-        showDetectorCount()
-    }
 
+        showDetectorCount()
+
+        AsyncTask.execute {
+            onStatusChanged(notificationStatusManager.getStatus())
+        }
+    }
 
 
     private fun showDetectorCount() {
@@ -68,6 +72,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
     fun onDelayUnmute() {
         view.showDelayUnmute()
     }
+
     fun onDelayChanged(delay: Int) {
         prefs.setDelaySeconds(delay)
         view.setDelayValue(delay)

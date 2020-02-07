@@ -38,7 +38,6 @@ class ActiveDetectorActivity : AppCompatActivity(), AnkoLogger {
 
         presenter = ActiveDetectorPresenter(this)
 
-
         findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
         findViewById<TextView>(R.id.detectors_activity_title).onClick { presenter.onTabTitle() }
         initRecycleView()
@@ -92,8 +91,8 @@ class MyAdapter(private val detectors: List<AdDetectable>, private val presenter
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.title.text = "> " + detectors[position].getMeta().title
         holder.subtitle.text = detectors[position].getMeta().description
-//                " (${detectors[position].javaClass.simpleName})"
         holder.switch.isChecked = presenter.isEnabled(detectors[position])
+
         holder.switch.setOnCheckedChangeListener { _, isChecked ->
             presenter.onDetectorToggled(isChecked, detectors[position])
             info(detectors[position].javaClass.canonicalName)

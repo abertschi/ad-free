@@ -8,6 +8,8 @@ package ch.abertschi.adfree.plugin.localmusic
 
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.view.View
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
@@ -25,6 +27,8 @@ import org.jetbrains.anko.info
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
+import android.provider.MediaStore
+
 
 /**
  * Created by abertschi on 01.05.17.
@@ -52,8 +56,8 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun play() {
-
-        val file = getRandomTrackfromUri(prefs.getLocalMusicDirectory())
+        val dir = getRealPathFromURI(this.context, Uri.parse(prefs.getLocalMusicDirectory()))
+        val file = getRandomTrackfromUri(dir.toString())
         if (file == null) view?.showNoAudioTracksFoundMessage()
         else {
             info { "playing " + file.absolutePath }
@@ -157,7 +161,7 @@ class LocalMusicPlugin(val context: Context,
         if (requestCode == PICK_DIRECTORY) {
             prefs.setLocalMusicDirectory(data?.data.toString())
         }
-        info { prefs.getLocalMusicDirectory()}
+        info { prefs.getLocalMusicDirectory() }
     }
 
     private fun runAndCatchException(function: () -> Unit): Unit {
@@ -182,5 +186,22 @@ class LocalMusicPlugin(val context: Context,
             else -> yesNoModel.getRandomNo()
         }
         view?.setPlayUntilEndTo(keyword)
+    }
+
+
+    fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
+        var cursor: Cursor? = null
+        try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+            cursor!!.moveToFirst()
+            val column_index = cursor!!.getColumnIndex(proj[0])
+            return cursor!!.getString(column_index)
+        } finally {
+            if (cursor != null) {
+                cursor!!.close()
+            }
+        }
+        return null
     }
 }

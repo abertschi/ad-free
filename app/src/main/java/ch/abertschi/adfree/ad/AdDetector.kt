@@ -10,6 +10,7 @@ import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
 import org.jetbrains.anko.info
 
 /**
@@ -29,21 +30,21 @@ class AdDetector(val detectors: AdDetectableFactory,
 
         val activeDetectors = detectors.getEnabledDetectors().filter { it.canHandle(payload) }
         if (activeDetectors.isNotEmpty()) {
-            info {
-                "detected a spotify notification with ${activeDetectors.size} " +
-                        "active ad-detectors"
+            debug {
+                "detected an ad-free notification with ${activeDetectors.size} " +
+                        "active ad-detectors: $activeDetectors"
             }
 
             var isMusic = false
             var isAd = false
 
-            activeDetectors.filter { it.flagAsMusic(payload) }.forEach {
+            activeDetectors.filter { it.flagAsMusic(payload) }.forEach { _ ->
                 isMusic = true
             }
 
             if (!isMusic) {
                 activeDetectors.filter { it.flagAsAdvertisement(payload) }
-                        .forEach { isAd = true }
+                        .forEach { _ -> isAd = true }
             }
 
             if (!init) {
