@@ -6,6 +6,7 @@ import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.ListenerStatus
 import ch.abertschi.adfree.NotificationStatusManager
 import ch.abertschi.adfree.NotificationStatusObserver
+import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.PreferencesFactory
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -13,6 +14,12 @@ import org.jetbrains.anko.runOnUiThread
 
 class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLogger,
         NotificationStatusObserver {
+
+    private lateinit var context: Context
+
+    private lateinit var notificationStatusManager: NotificationStatusManager
+    private lateinit var detectorFactory: AdDetectableFactory
+
 
     override fun onStatusChanged(status: ListenerStatus) {
         context.runOnUiThread {
@@ -25,22 +32,26 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
         }
     }
 
-    private lateinit var context: Context
-
-    private lateinit var notificationStatusManager: NotificationStatusManager
-
     fun onCreate(context: Context) {
         info { "new presenter" }
         view.setEnableToggle(prefs.isBlockingEnabled())
         view.setNotificationEnabled(prefs.isAlwaysOnNotificationEnabled())
         view.setDelayValue(prefs.getDelaySeconds())
         this.context = context
+
+        detectorFactory = (context.applicationContext as AdFreeApplication).adDetectors
         notificationStatusManager = (context.applicationContext as AdFreeApplication).notificationStatus
         notificationStatusManager.addObserver(this)
         notificationStatusManager.restartNotificationListener() // always restart on launch
         onStatusChanged(notificationStatusManager.getStatus())
+        showDetectorCount()
+    }
 
-//        view.showDetectorCount()
+
+
+    private fun showDetectorCount() {
+        view.showDetectorCount(detectorFactory.getEnabledDetectors().size,
+                detectorFactory.getVisibleDetectors().size)
     }
 
     fun onToggleAlwaysOnChanged() {
@@ -79,5 +90,9 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory): AnkoLo
 
     fun onLaunchNotificationListenerSystemSettings() {
         context.startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+    }
+
+    fun onResume() {
+        showDetectorCount()
     }
 }

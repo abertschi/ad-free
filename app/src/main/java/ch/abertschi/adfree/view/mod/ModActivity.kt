@@ -108,7 +108,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showDetectorCount(active: Int, total: Int) {
         findViewById<TextView>(R.id.active_detectors_subtitle).text =
-                "choose active detectors ($active / $total)"
+                "choose active detectors ( $active/$total )"
     }
 
     fun showDelayUnmute() {
@@ -140,6 +140,11 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         this.applicationContext?.runOnUiThread {
             toast("ad-free enabled")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
     }
 
     fun showNotifiationListenerConnected() {
