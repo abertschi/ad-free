@@ -1,8 +1,7 @@
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()  [![codebeat badge](https://codebeat.co/badges/1fc357d9-4c2e-46f6-b847-d295e4de78eb)](https://codebeat.co/projects/github-com-abertschi-ad-free-master)
 # ad-free
 
-ad-free is a research project attempting to show flaws in the way how audio advertisement is shown on Android. It is a proof-of-concept of a modularized Ad Blocker written in Kotlin with a modern and simplistic user interface.
-It does not interfere with music players and only uses context information provided by the Android runtime.
+ad-free is a research project attempting to show flaws in the way how audio advertisement is shown on Android. It is a proof-of-concept of a modularized audio ad blocker written in Kotlin with a modern and simplistic user interface.
 
 https://adfree.abertschi.ch
 
@@ -13,7 +12,7 @@ https://adfree.abertschi.ch
 - Turn off sound when advertisement is playing
 - Play arbitrary audio instead of advertisements
 - Plugin based design
-- Supports Spotify
+- Currently support for Spotify
 
 ## Download
 [Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.  
@@ -65,8 +64,7 @@ featured in [Adult Swim's Rick and Morty TV
 series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP)._
 
 Due to legal reasons and a rise in popularity, this feature is no
-longer supported. Download audio tracks on your own and use the local
-music plugin instead. Stay schwifty! 
+longer supported. [See here](https://github.com/abertschi/ad-free/blob/master/rick_and_morty.md).
 
 ### Play local music
 Play music tracks stored on your phone while advertisement is playing.
