@@ -49,32 +49,32 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         val factory = LayoutInflater.from(this)
         delayLayout = factory.inflate(R.layout.mod_delay_unmute, null)
 
-        enabledSwitch = findViewById<SwitchCompat>(R.id.enableAdfreeSwitch)
+        enabledSwitch = findViewById(R.id.enableAdfreeSwitch)
 
-//        findViewById<View>(R.id.enableText).onClick { presenter.onEnableToggleChanged() }
-//        findViewById<View>(R.id.enableSubtext).onClick { presenter.onEnableToggleChanged() }
-//        findViewById<View>(R.id.enabledLayout).onClick { presenter.onEnableToggleChanged() }
-//        findViewById<View>(R.id.enableAdfreeSwitch).onClick { presenter.onEnableToggleChanged() }
-//
-//
-//        findViewById<View>(R.id.delay_unmute_mod_layout).onClick { presenter.onDelayUnmute() }
-//        findViewById<View>(R.id.delay_unmute_mod_title).onClick { presenter.onDelayUnmute() }
-//        findViewById<View>(R.id.delay_unmute_mod_subtitle).onClick { presenter.onDelayUnmute() }
-//
-//        findViewById<View>(R.id.always_on_layout).onClick { presenter.onToggleAlwaysOnChanged() }
-//        findViewById<View>(R.id.always_on_text).onClick { presenter.onToggleAlwaysOnChanged() }
-//        findViewById<View>(R.id.always_on_subtext).onClick { presenter.onToggleAlwaysOnChanged() }
-//        findViewById<View>(R.id.always_on_switch).onClick { presenter.onToggleAlwaysOnChanged() }
-//
-//        findViewById<View>(R.id.active_detectors_layout).onClick { presenter.onLaunchActiveDetectorsView() }
-//        findViewById<View>(R.id.active_detectors_title).onClick { presenter.onLaunchActiveDetectorsView() }
-//        findViewById<View>(R.id.active_detectors_subtitle).onClick { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.enableText).onClick { presenter.onEnableToggleChanged() }
+        findViewById<View>(R.id.enableSubtext).onClick { presenter.onEnableToggleChanged() }
+        findViewById<View>(R.id.enabledLayout).onClick { presenter.onEnableToggleChanged() }
+        findViewById<View>(R.id.enableAdfreeSwitch).onClick { presenter.onEnableToggleChanged() }
+
+
+        findViewById<View>(R.id.delay_unmute_mod_layout).onClick { presenter.onDelayUnmute() }
+        findViewById<View>(R.id.delay_unmute_mod_title).onClick { presenter.onDelayUnmute() }
+        findViewById<View>(R.id.delay_unmute_mod_subtitle).onClick { presenter.onDelayUnmute() }
+
+        findViewById<View>(R.id.always_on_layout).onClick { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.always_on_text).onClick { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.always_on_subtext).onClick { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.always_on_switch).onClick { presenter.onToggleAlwaysOnChanged() }
+
+        findViewById<View>(R.id.active_detectors_layout).onClick { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.active_detectors_title).onClick { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.active_detectors_subtitle).onClick { presenter.onLaunchActiveDetectorsView() }
 
         findViewById<TextView>(R.id.mod_status_service).onClick {
             presenter.onLaunchNotificationListenerSystemSettings()
         }
 
-        val versionView = findViewById<TextView>(R.id.mod_version1) as TextView
+        val versionView = findViewById<TextView>(R.id.mod_version1)
         versionView.text =
                 "> version ${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
 
@@ -157,4 +157,3 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     }
 }
-
