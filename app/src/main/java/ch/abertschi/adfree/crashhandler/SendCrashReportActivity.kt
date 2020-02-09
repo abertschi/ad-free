@@ -14,6 +14,7 @@ import org.jetbrains.anko.warn
 import java.io.File
 import java.lang.Exception
 import android.content.Intent
+import org.jetbrains.anko.info
 
 // TODO: refator this into presenter and view
 class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
@@ -41,7 +42,6 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         }
     }
 
-
     fun parseIntent(i: Intent?) {
         logfile = i?.extras?.getString(EXTRA_LOGFILE)
         summary = i?.extras?.getString(EXTRA_SUMMARY) ?: ""
@@ -52,8 +52,10 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
         try {
             val file = File(applicationContext.filesDir, logfile)
             val log = file.readText()
+            info { "sending report with $file $log" }
             launchSendIntent(summary!!)
         } catch (e: Exception) {
+            warn { e }
 
         }
     }
@@ -109,6 +111,7 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoL
     }
 
     override fun onClick(v: View) {
+        info { "clicking view for crashreport" }
         logfile?.let {
             try {
                 sendReport()

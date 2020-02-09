@@ -12,6 +12,10 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.runOnUiThread
 import android.os.AsyncTask
+import android.app.AlarmManager
+import android.app.PendingIntent
+
+
 
 
 class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoLogger,

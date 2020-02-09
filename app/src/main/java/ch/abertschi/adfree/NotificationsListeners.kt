@@ -5,7 +5,6 @@
  */
 
 package ch.abertschi.adfree
-
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adfree.detector.AdPayload
@@ -14,6 +13,7 @@ import java.io.File
 import java.io.FileOutputStream
 import android.app.Service
 import android.content.Intent
+
 import org.jetbrains.anko.*
 
 /**
@@ -62,10 +62,11 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
             val pair = context.notificationChannel.buildAlwaysOnNotification()
             startForeground(pair.second, pair.first)
         }
-        alarmManager.nextAlarmClock
+//        alarmManager.nextAlarmClock
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        info { "onstartCommand" }
         return Service.START_STICKY
     }
 

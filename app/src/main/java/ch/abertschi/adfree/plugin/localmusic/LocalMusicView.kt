@@ -6,9 +6,12 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
+import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -17,18 +20,12 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.view.ViewSettings
 
-
-
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
 import java.io.File
-import android.support.v4.app.ActivityCompat.startActivityForResult
-import android.content.DialogInterface
 
 import android.support.v7.app.AlertDialog
-
-
 /**
  * Created by abertschi on 29.08.17.
  */
@@ -101,13 +98,19 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         startActivityForResult(chooser, LocalMusicPlugin.PICK_DIRECTORY, null)
     }
 
-    fun showFolderSelectionDialog(default: File) {
+    fun showFolderSelectionDialog() {
         audioDirDialog.show()
         audioDirDialog.window?.setBackgroundDrawableResource(R.color.colorBackground)
     }
 
     fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
         action.startActivityForResult(intent, requestCode, options)
+    }
+
+    fun showErrorInChoosingDirectory(hint: String = "") {
+        context.applicationContext.runOnUiThread {
+            longToast("Whoops, error with chosen directory. Choose a different one. $hint")
+        }
     }
 
     fun showNoAudioTracksFoundMessage() {
@@ -125,5 +128,11 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     fun setPlayUntilEndTo(keyword: String) {
         val playUntilEndAnswerText = "<font color=#FFFFFF>$keyword</font>"
         playUntilEndAnswer?.text = Html.fromHtml(playUntilEndAnswerText)
+    }
+
+    fun showNeedStoragePermissions() {
+        context.applicationContext.runOnUiThread {
+            longToast("Storage permissions needed")
+        }
     }
 }

@@ -1,7 +1,10 @@
 package ch.abertschi.adfree
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.service.notification.ConditionProviderService
@@ -12,6 +15,8 @@ import org.jetbrains.anko.info
 
 
 class NotificationStatusManager(val context: Context) : AnkoLogger {
+
+    private val TIMER_INTERVAL_MS: Long = 60 * 1000
 
     private var lastStatus: ListenerStatus = ListenerStatus.UNKNOWN
 
@@ -38,6 +43,15 @@ class NotificationStatusManager(val context: Context) : AnkoLogger {
 
         info { "Notification Listener Status : ${lastStatus}" }
         return lastStatus
+    }
+
+    fun forceTimedRestart() {
+        // TODO: option to remove timer once enabled?
+        val serviceintent = Intent(this.context, NotificationsListeners::class.java)
+        val pendingintent = PendingIntent.getService(this.context, 0, serviceintent, 0)
+        val alarm = this.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarm.cancel(pendingintent)
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), TIMER_INTERVAL_MS, pendingintent)
     }
 
 

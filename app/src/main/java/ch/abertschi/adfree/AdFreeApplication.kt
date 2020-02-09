@@ -7,6 +7,7 @@
 package ch.abertschi.adfree
 
 import android.app.Application
+import android.os.AsyncTask
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
@@ -17,7 +18,8 @@ import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
 import ch.abertschi.adfree.model.*
-
+import com.thoughtworks.xstream.mapper.Mapper
+import java.lang.NullPointerException
 
 
 /**
@@ -71,5 +73,11 @@ class AdFreeApplication : Application(), AnkoLogger {
         adDetector.addObserver(adStateController)
 
         notificationStatus.restartNotificationListener()
+
+        AsyncTask.execute {
+            if (prefs.isAlwaysOnNotificationEnabled()) {
+             notificationStatus.forceTimedRestart()
+            }
+        }
     }
 }

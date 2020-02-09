@@ -4,6 +4,16 @@
     <dimen name="normal_text_size">30sp</dimen>
     <dimen name="normal_text_small">20sp</dimen>
     <dimen name="plugin_spinner_height">80dp</dimen>
-    <dimen name="margin_view">40dp</dimen>
-    <dimen name="margin_home_views">20dp</dimen>
+
+    <dimen name="margin_view">30dp</dimen>
+    <dimen name="margin_home_views">40dp</dimen>
+
+    <dimen name="margin_title_subtitle">4dp</dimen>
+
+    <!--    the spinner has a paddingLeft of 10dp -->
+    <dimen name="margin_home_views_settings">30dp</dimen>
+    <dimen name="margin_home_views_settings_tryout">20dp</dimen>
+
+
+
 </resources>

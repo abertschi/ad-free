@@ -6,10 +6,9 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.view.View
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
@@ -27,7 +26,12 @@ import org.jetbrains.anko.info
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
-import android.provider.MediaStore
+import android.provider.DocumentsContract
+import java.lang.Exception
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.content.pm.PackageManager
+import android.os.Build.VERSION
+import android.support.v4.content.ContextCompat.checkSelfPermission
 
 
 /**
@@ -56,8 +60,8 @@ class LocalMusicPlugin(val context: Context,
     }
 
     override fun play() {
-        val dir = getRealPathFromURI(this.context, Uri.parse(prefs.getLocalMusicDirectory()))
-        val file = getRandomTrackfromUri(dir.toString())
+        val file = getRandomTrackfromUri(prefs.getLocalMusicDirectory())
+        info { file }
         if (file == null) view?.showNoAudioTracksFoundMessage()
         else {
             info { "playing " + file.absolutePath }
@@ -68,7 +72,6 @@ class LocalMusicPlugin(val context: Context,
                 Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
-
                             val content = when (prefs.getPlayUntilEnd()) {
                                 true -> "playing until end - touch to stop"
                                 else -> "touch to unmute ad"
@@ -120,13 +123,14 @@ class LocalMusicPlugin(val context: Context,
     override fun title(): String = "local music"
 
     private fun getRandomTrackfromUri(path: String): File? {
-        info { path }
+        info { "choosing random track in $path" }
         val musicDir = File(path)
         val allFiles = ArrayList<File>()
         val dirs = LinkedList<File>()
         dirs.add(musicDir)
         while (!dirs.isEmpty()) {
-            val listFiles = dirs.poll().listFiles() ?: continue
+            val d = dirs.poll()
+            val listFiles = d.listFiles() ?: continue
             for (f in listFiles) {
                 if (f.isDirectory) {
                     dirs.add(f)
@@ -147,19 +151,31 @@ class LocalMusicPlugin(val context: Context,
     }
 
     fun chooseDirectory() {
-        val f = File("/")
-        view?.showFolderSelectionDialog(f)
-    }
-
-    fun onDirectorySelected(files: MutableList<String>) {
-        files?.firstOrNull().let {
-            prefs.setLocalMusicDirectory(it!!)
+        if (!hasStoragePermissions()) {
+            requestStoragePermissions()
+//            view?.showNeedStoragePermissions()
+        } else {
+            view?.showFolderSelectionDialog()
         }
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PICK_DIRECTORY) {
-            prefs.setLocalMusicDirectory(data?.data.toString())
+        if (requestCode == PICK_DIRECTORY && resultCode == Activity.RESULT_OK) {
+            val uri = data?.getData()
+            val docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
+                    DocumentsContract.getTreeDocumentId(uri))
+
+            var path: String? = null
+            try {
+                path = getPath(this.context, docUri)
+            } catch (e: Exception) {
+                view?.showErrorInChoosingDirectory(e.message ?: "")
+            }
+            if (path != null && File(path).exists()) {
+                prefs.setLocalMusicDirectory(path)
+            } else {
+                view?.showErrorInChoosingDirectory()
+            }
         }
         info { prefs.getLocalMusicDirectory() }
     }
@@ -180,28 +196,30 @@ class LocalMusicPlugin(val context: Context,
     }
 
     fun loadPlayUntilEndFlag() {
-        val status = prefs.getPlayUntilEnd()
-        val keyword = when (status) {
+        val keyword = when (prefs.getPlayUntilEnd()) {
             true -> yesNoModel.getRandomYes()
             else -> yesNoModel.getRandomNo()
         }
         view?.setPlayUntilEndTo(keyword)
     }
 
-
-    fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
-        var cursor: Cursor? = null
-        try {
-            val proj = arrayOf(MediaStore.Images.Media.DATA)
-            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
-            cursor!!.moveToFirst()
-            val column_index = cursor!!.getColumnIndex(proj[0])
-            return cursor!!.getString(column_index)
-        } finally {
-            if (cursor != null) {
-                cursor!!.close()
+    private fun hasStoragePermissions(): Boolean {
+        return if (VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(context, READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                true
+            } else {
+                info("Permission is revoked")
+                false
             }
+        } else {
+            info("Permission is granted1")
+            true
         }
-        return null
     }
+
+    private fun requestStoragePermissions() {
+        view?.action!!.activity().requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 2)
+    }
+
 }
