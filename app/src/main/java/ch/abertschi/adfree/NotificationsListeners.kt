@@ -62,7 +62,7 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
             val pair = context.notificationChannel.buildAlwaysOnNotification()
             startForeground(pair.second, pair.first)
         }
-//        alarmManager.nextAlarmClock
+        alarmManager.nextAlarmClock
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
