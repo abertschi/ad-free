@@ -26,7 +26,7 @@ class AdDetector(val detectors: AdDetectableFactory,
     private var init: Boolean = false
 
     fun applyDetectors(payload: AdPayload) {
-        if (!go) return
+        if (!go || !detectors.isAdfreeEnabled()) return
 
         val activeDetectors = detectors.getEnabledDetectors().filter { it.canHandle(payload) }
         if (activeDetectors.isNotEmpty()) {
@@ -74,7 +74,7 @@ class AdDetector(val detectors: AdDetectableFactory,
 
     private fun fetchRemote() {
         remoteManager.getRemoteSettingsObservable()
-                .subscribe({ go = it.enabled })
+                .subscribe { go = it.enabled}
     }
 
     fun notifyObservers(event: AdEvent) {

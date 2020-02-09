@@ -8,12 +8,15 @@ class AdDetectableFactory(var context: Context,
 
     private var enableMap = HashMap<AdDetectable, Boolean>()
 
+    private var isGloballyEnabled = true
+
     private var adDetectors: List<AdDetectable> = listOf(
             NotificationActionDetector()
             , SpotifyTitleDetector(TrackRepository(this.context, prefs))
             , NotificationBundleAndroidTextDetector()
             , MiuiNotificationDetector()
             , ScDetector()
+            , DummySpotifyDetector()
             , SpotifyNotificationDebugTracer(context.getExternalFilesDir(null))
             , ScNotificationDebugTracer(context.getExternalFilesDir(null))
     )
@@ -23,11 +26,19 @@ class AdDetectableFactory(var context: Context,
     }
 
     private fun loadMeta() {
+        isGloballyEnabled = prefs.isBlockingEnabled()
         adDetectors.forEach { enableMap[it] = prefs.isAdDetectableEnabled(it) }
     }
 
     fun persistMeta() {
         enableMap.entries.forEach { prefs.saveAdDetectableEnable(it.value, it.key) }
+    }
+
+    fun isAdfreeEnabled() = isGloballyEnabled
+
+    fun setAdfreeEnabled(e: Boolean) {
+        isGloballyEnabled = e
+        prefs.setBlockingEnabled(e)
     }
 
     fun isEnabled(d: AdDetectable): Boolean {

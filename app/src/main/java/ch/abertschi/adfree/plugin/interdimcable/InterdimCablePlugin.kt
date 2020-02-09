@@ -105,17 +105,17 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
             val item = list[(Math.random() * list.size).toInt()]
 
             val url = BASE_URL + item.path + GITHUB_RAW_SUFFIX
-            runAndCatchException({
+            runAndCatchException {
                 player.playWithCachingProxy(url)
                 val title = item.name ?: item.path?.split("/")?.last()
 
                 Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    notificationChannel.updateAdNotification(
-                            title = title)
-                }
-            })
+                            notificationChannel.updateAdNotification(
+                                    title = title)
+                        }
+            }
         } else {
             interdimCableView?.showNoChannelsError()
         }

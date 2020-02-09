@@ -35,13 +35,14 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoL
 
     fun onCreate(context: Context) {
         info { "new presenter" }
-        view.setEnableToggle(prefs.isBlockingEnabled())
-        view.setNotificationEnabled(prefs.isAlwaysOnNotificationEnabled())
-        view.setDelayValue(prefs.getDelaySeconds())
-        this.context = context
-
         detectorFactory = (context.applicationContext as AdFreeApplication).adDetectors
         notificationStatusManager = (context.applicationContext as AdFreeApplication).notificationStatus
+        this.context = context
+
+        view.setEnableToggle(detectorFactory.isAdfreeEnabled())
+        view.setNotificationEnabled(prefs.isAlwaysOnNotificationEnabled())
+        view.setDelayValue(prefs.getDelaySeconds())
+
         notificationStatusManager.addObserver(this)
         notificationStatusManager.restartNotificationListener() // always restart on launch
 
@@ -81,7 +82,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoL
 
     fun onEnableToggleChanged() {
         val newVal = !prefs.isBlockingEnabled()
-        prefs.setBlockingEnabled(newVal)
+        detectorFactory.setAdfreeEnabled(newVal)
         view.setEnableToggle(newVal)
         if (newVal) {
             view.showPowerEnabled()
