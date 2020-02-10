@@ -171,7 +171,12 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
             presenter.onGoogleCastToggle()
         }
         findViewById<View>(R.id.google_cast_title).onClick { presenter.onGoogleCastToggle() }
-        findViewById<View>(R.id.google_cast_subtitle).onClick { presenter.onGoogleCastToggle() }
+        findViewById<View>(R.id.google_cast_subtitle).onClick {
+            // info { "on notification listener connected" }
+            val browserIntent = Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://support.google.com/chromecast/answer/7206638?hl=en"))
+            this.startActivity(browserIntent)
+        }
         findViewById<View>(R.id.google_cast_switch).onClick { presenter.onGoogleCastToggle() }
     }
 }

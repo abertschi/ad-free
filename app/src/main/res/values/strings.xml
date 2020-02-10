@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ad-free</string>
     <string name="enjoy">enjoy your <b>ad-free</b> music experience</string>
+    <string name="chromecast_subtitle">requires chromecast audio to announce current playback as system notification. see option <u>let others control your cast media</u> in google home app (experimental).</string>
     <string-array name="test">
     </string-array>
 </resources>

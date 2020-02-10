@@ -247,7 +247,7 @@
                             android:layout_marginTop="@dimen/margin_title_subtitle"
                             android:inputType="textMultiLine|textNoSuggestions"
                             android:scrollHorizontally="false"
-                            android:text="prevent ad-free form being killed by Android OS. leave disabled unless you run into issues."
+                            android:text="prevents ad-free form being killed by Android OS. leave disabled unless you run into issues."
                             android:textColor="#C4BCAF"
                             android:textSize="@dimen/normal_text_small" />
                     </LinearLayout>
@@ -312,7 +312,7 @@
                             android:layout_marginTop="@dimen/margin_title_subtitle"
                             android:inputType="textMultiLine|textNoSuggestions"
                             android:scrollHorizontally="false"
-                            android:text="this requires chromecast audio to announce current playback as system notification. google home app required (experimental)."
+                            android:text="@string/chromecast_subtitle"
                             android:textColor="#C4BCAF"
                             android:textSize="@dimen/normal_text_small" />
                     </LinearLayout>

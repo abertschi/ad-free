@@ -56,6 +56,7 @@ class NotificationStatusManager(val context: Context) : AnkoLogger {
 
 
     fun restartNotificationListener() {
+        info { "restarting notification listener" }
         restartComponentService()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val componentName = ComponentName(context.applicationContext,

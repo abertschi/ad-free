@@ -29,12 +29,14 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
     }
 
     override fun onListenerDisconnected() {
+        info { "on notification listener disconnected" }
         super.onListenerDisconnected()
         val context = applicationContext as AdFreeApplication
         context.notificationStatus.notifyStatusChanged(ListenerStatus.DISCONNECTED)
     }
 
     override fun onListenerConnected() {
+        info { "on notification listener connected" }
         super.onListenerConnected()
         val context = applicationContext as AdFreeApplication
         context.notificationStatus.notifyStatusChanged(ListenerStatus.CONNECTED)
