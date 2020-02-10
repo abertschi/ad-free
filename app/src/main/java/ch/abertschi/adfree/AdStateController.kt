@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit
 class AdStateController(private val audioController: AudioController,
                         private val adPluginHandler: PluginHandler,
                         private val notificationChannel: NotificationChannel,
+                        private val castManager: GoogleCastManager,
                         private val prefs: PreferencesFactory) :
         AdObserver, AnkoLogger {
 
@@ -54,6 +55,7 @@ class AdStateController(private val audioController: AudioController,
         activeState = EventType.SHOWCASE
         adPluginHandler.forceStopPlugin {
             audioController.muteMusicStream()
+            castManager.muteAudio()
             notificationChannel.showDefaultAdNotification {
                 observable.requestIgnoreAd()
             }
@@ -71,6 +73,7 @@ class AdStateController(private val audioController: AudioController,
 
         adPluginHandler.forceStopPlugin {
             audioController.unmuteMusicStream()
+            castManager.unmuteAudio()
             notificationChannel.hideDefaultAdNotification()
         }
     }
@@ -83,6 +86,7 @@ class AdStateController(private val audioController: AudioController,
             adPluginHandler.stopPlugin {
                 notificationChannel.hideDefaultAdNotification()
                 audioController.unmuteMusicStream()
+                castManager.unmuteAudio()
             }
         }
 
@@ -106,6 +110,7 @@ class AdStateController(private val audioController: AudioController,
         }
 
         audioController.muteMusicStream()
+        castManager.muteAudio()
         adPluginHandler.runPlugin()
         notificationChannel.showDefaultAdNotification {
             observable.requestIgnoreAd()

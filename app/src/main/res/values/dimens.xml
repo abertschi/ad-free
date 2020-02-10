@@ -5,6 +5,8 @@
     <dimen name="normal_text_small">15sp</dimen>
     <dimen name="plugin_spinner_height">50dp</dimen>
     <dimen name="margin_title_subtitle">4dp</dimen>
+    <dimen name="margin_right_subtitle_switch">65dp</dimen>
+
     <dimen name="margin_home_views">30dp</dimen>
 
     <!--    the spinner has a paddingLeft of 10dp -->

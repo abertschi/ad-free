@@ -38,11 +38,11 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
         tabCounterForDebug ++
         if (tabCounterForDebug > tabCounterForDebugThreshold) {
             tabCounterForDebug = 0
-            if (prefs.isDebugDetectors()) {
-                prefs.setDebugDetectors(false)
+            if (prefs.isDeveloperModeEnabled()) {
+                prefs.setDeveloperMode(false)
                 view.hideEnabledDebug()
             } else {
-                prefs.setDebugDetectors(true)
+                prefs.setDeveloperMode(true)
                 view.showEnabledDebug()
             }
         }

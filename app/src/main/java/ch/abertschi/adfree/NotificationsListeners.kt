@@ -23,23 +23,8 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         val context = applicationContext as AdFreeApplication
-
-
-// TODO: feature for google cast
-//        if (sbn.key.contains("com.google.android.gms")) {
-//            info { sbn.key }
-//            val act = sbn.notification.actions.get(1)
-//
-//            info { act.title }
-//            act?.run {
-//                if (act.title.contains("Unmute")) {
-//                    act.actionIntent.send()
-//                    info { "send intent" }
-//                }
-//            }
-//            recordNotification(sbn)
-//            info { "debug this" }
-//        }
+        val cast = context.googleCast
+        if (cast.isEnabled()) cast.updateNotification(sbn)
         context.adDetector.applyDetectors(AdPayload(sbn))
     }
 

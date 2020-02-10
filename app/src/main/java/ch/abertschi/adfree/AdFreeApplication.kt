@@ -40,6 +40,7 @@ class AdFreeApplication : Application(), AnkoLogger {
     lateinit var yesNoModel: YesNoModel
     lateinit var remoteManager: RemoteManager
     lateinit var notificationStatus: NotificationStatusManager
+    lateinit var googleCast: GoogleCastManager
 
     override fun onCreate() {
         super.onCreate()
@@ -47,6 +48,7 @@ class AdFreeApplication : Application(), AnkoLogger {
 
         prefs = PreferencesFactory(applicationContext)
 
+        googleCast = GoogleCastManager(prefs)
         notificationStatus = NotificationStatusManager(applicationContext)
 
         adDetectors = AdDetectableFactory(applicationContext, prefs)
@@ -68,7 +70,7 @@ class AdFreeApplication : Application(), AnkoLogger {
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
         adStateController = AdStateController(audioManager,
-                pluginHandler, notificationChannel, prefs)
+                pluginHandler, notificationChannel, googleCast, prefs)
 
         adDetector.addObserver(adStateController)
 

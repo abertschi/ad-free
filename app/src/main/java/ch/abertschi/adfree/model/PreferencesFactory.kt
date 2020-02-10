@@ -31,6 +31,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsDelaySound = "DELAY_SOUND"
     private val prefsAlwaysOnNoti = "ALWAYS_ON_NOTI"
     private val prefsIsDebugDetectors = "DEBUG_DETECTORS_ENABLED"
+    private val prefsGoogleCast = "CAST_ENABLED"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -55,6 +56,10 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     }
 
     fun isFirstRun(): Boolean = prefs.getBoolean(prefsFirstRun, false)
+
+    fun isGoogleCastEnabled(): Boolean = prefs.getBoolean(prefsGoogleCast, false)
+
+    fun setGoogleCastEnabled(e: Boolean) = prefs.edit().putBoolean(prefsGoogleCast, e).commit()
 
     fun storeVoiceCallAudioVolume(volume: Int)
             = prefs.edit().putInt(prefsAudioVolume, volume).commit()
@@ -90,7 +95,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     }
 
     fun setActivePlugin(plugin: String) {
-        prefs.edit().putString(prefsActivePlugin, plugin).commit()
+        prefs.edit().putString(prefsActivePlugin, plugin).apply()
     }
 
     fun isAlwaysOnNotificationEnabled() =
@@ -111,11 +116,11 @@ class PreferencesFactory(context: Context) : AnkoLogger {
                     d.getMeta().enabledByDef)
 
     fun saveAdDetectableEnable(enable: Boolean, d: AdDetectable) {
-        prefs.edit().putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName, enable).commit()
+        prefs.edit().putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName, enable).apply()
     }
 
-    fun isDebugDetectors() = prefs.getBoolean(prefsIsDebugDetectors, false)
+    fun isDeveloperModeEnabled() = prefs.getBoolean(prefsIsDebugDetectors, false)
 
-    fun setDebugDetectors(isDebug: Boolean) =
+    fun setDeveloperMode(isDebug: Boolean) =
             prefs.edit().putBoolean(prefsIsDebugDetectors, isDebug).commit()
 }

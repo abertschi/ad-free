@@ -131,6 +131,10 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         findViewById<TextView>(R.id.enableSubtext)?.text = if (b) "enabled" else "disabled"
     }
 
+    fun setGoogleCastToggle(b: Boolean) {
+        findViewById<SwitchCompat>(R.id.google_cast_switch).isChecked = b
+    }
+
     fun setNotificationEnabled(b: Boolean) {
         alwaysOnSwitch?.isChecked = b
         info { "always On: $b" }
@@ -154,6 +158,20 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showNotificationListenerDisconnected() {
         findViewById<TextView>(R.id.mod_status_service).text = "notification service is disconnected"
+    }
 
+    fun hideDeveloperModeFeatures() {
+        val view = findViewById<View>(R.id.google_cast_layout)
+        view.visibility = View.GONE
+    }
+    fun showDeveloperModeFeatures() {
+        val view = findViewById<View>(R.id.google_cast_layout)
+        view.visibility = View.VISIBLE
+        view.onClick {
+            presenter.onGoogleCastToggle()
+        }
+        findViewById<View>(R.id.google_cast_title).onClick { presenter.onGoogleCastToggle() }
+        findViewById<View>(R.id.google_cast_subtitle).onClick { presenter.onGoogleCastToggle() }
+        findViewById<View>(R.id.google_cast_switch).onClick { presenter.onGoogleCastToggle() }
     }
 }

@@ -55,7 +55,7 @@ class AdDetectableFactory(var context: Context,
     fun getAllDetectors() = adDetectors
 
     fun getVisibleDetectors() =
-        if (prefs.isDebugDetectors()) {
+        if (prefs.isDeveloperModeEnabled()) {
             getAllDetectors()
         } else adDetectors.filter { !it.getMeta().debugOnly }
 }

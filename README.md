@@ -20,15 +20,15 @@ https://adfree.abertschi.ch
 <a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" width="220"/></a>
 
 ## Legality
-This app is secure, free and open and does not seek a comercial interest. It does not
+This app is free and opensource and does not seek a comercial interest. It does not
 collect user data. It is a proof-of-concept to show
 flaws in the way how audio advertisement is often implemented on
-Android.
-Ad-free's algorithms are described below and it's source code is freely available.
+Android. Ad-free's algorithms are described below and it's source code is freely available.
 It does not alter or "hack" protection measures of music players, and only
 gathers context information provided by the Android
 runtime. Nontheless, ad-free may be against terms of services of music
-players. Use it at your own risk.
+players. Muting commercials may not be supported and may result in a
+temporary ban. Use at your own risk.
 
 ## Implementation notes
 ### Ad detection
