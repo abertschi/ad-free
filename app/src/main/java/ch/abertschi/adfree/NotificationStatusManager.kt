@@ -27,8 +27,7 @@ class NotificationStatusManager(val context: Context) : AnkoLogger {
     }
 
     fun notifyStatusChanged(s: ListenerStatus) {
-        info { "Notification Listener Status Changed: ${s}" }
-        info { observers }
+        info { "Notification Listener Status Changed: $s" }
         lastStatus = s
         observers.forEach { it.onStatusChanged(s) }
     }
@@ -48,10 +47,11 @@ class NotificationStatusManager(val context: Context) : AnkoLogger {
     fun forceTimedRestart() {
         // TODO: option to remove timer once enabled?
         val serviceintent = Intent(this.context, NotificationsListeners::class.java)
-        val pendingintent = PendingIntent.getService(this.context, 0, serviceintent, 0)
+        val pendingintent = PendingIntent.getService(this.context, 0, serviceintent, PendingIntent.FLAG_CANCEL_CURRENT)
         val alarm = this.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.cancel(pendingintent)
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), TIMER_INTERVAL_MS, pendingintent)
+        info { "Setting wakeup with alarmmanager every $TIMER_INTERVAL_MS ms" }
     }
 
 

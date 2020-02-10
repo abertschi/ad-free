@@ -26,6 +26,7 @@ import org.jetbrains.anko.runOnUiThread
 import java.io.File
 
 import android.support.v7.app.AlertDialog
+
 /**
  * Created by abertschi on 29.08.17.
  */

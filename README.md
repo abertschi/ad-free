@@ -50,11 +50,19 @@ Detector which checks for properties set in the notification bundle.
 ### Ad blocking
 [AudioManager](https://developer.android.com/reference/android/media/AudioManager.html),
 Android's Audio System provides several streams on which audio can be
-played. Music players play audio on the stream [STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC). In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls a configured [AdPlugin](./app/src/main/java/ch/abertschi/adfree/plugin/AdPlugin.kt). `AdPlugins` aim to replace advertisement. They play music on an alternative stream and are therefore not affected by the mute of _STREAM MUSIC_.
+played. Music players play audio on the stream
+[STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC).
+In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls
+a configured [AdPlugin](./app/src/main/java/ch/abertschi/adfree/plugin/AdPlugin.kt). `AdPlugins`
+aim to replace advertisement. They play music on an alternative stream and are
+therefore not affected by the mute of _STREAM MUSIC_.
 
 ## Plugins
 ### Mute Audio
 As the title of this plugin suggests, it only mutes adertisments without playing sound.
+
+### Play local music
+Play music tracks stored on your phone while advertisement is playing.
 
 ### Interdimensional Cable (discontinued)
 _[Interdimensional
@@ -65,9 +73,6 @@ series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiAT
 
 Due to legal reasons and a rise in popularity, this feature is no
 longer supported. [See here](https://github.com/abertschi/ad-free/blob/master/rick_and_morty.md).
-
-### Play local music
-Play music tracks stored on your phone while advertisement is playing.
 
 ## Release notes
 - See [Changelog](./CHANGELOG.md)

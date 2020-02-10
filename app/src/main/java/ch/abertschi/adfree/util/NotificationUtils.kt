@@ -74,10 +74,10 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 
         updateNotificationMap[id] = builder
         val notification = builder.build()
-//        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
-//                Notification.FLAG_ONGOING_EVENT)
-//            notification.flags = notification.flags or
-//                    Notification.FLAG_ONGOING_EVENT
+        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
+                Notification.FLAG_ONGOING_EVENT)
+            notification.flags = notification.flags or
+                    Notification.FLAG_ONGOING_EVENT
 
 
         synchronized(actionDismissCallables) {

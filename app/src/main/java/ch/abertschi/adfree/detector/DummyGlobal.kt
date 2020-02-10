@@ -8,13 +8,15 @@ package ch.abertschi.adfree.detector
 
 import org.jetbrains.anko.AnkoLogger
 
-class DummySpotifyDetector:
-        AbstractStatusBarDetector(), AnkoLogger {
+class DummyGlobal:
+        AdDetectable, AnkoLogger {
+
+    override fun canHandle(p: AdPayload) = true
 
     override fun flagAsAdvertisement(payload: AdPayload) = true
 
     override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Dummy spotify", "flag all spotify notifications as ads. " +
+            = AdDetectorMeta("Dummy global", "flag all android notifications as ads. " +
             "use this to test if notification listener works. for debugging only.",
             enabledByDef = false, debugOnly = true)
 }

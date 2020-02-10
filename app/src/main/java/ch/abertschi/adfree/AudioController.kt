@@ -41,7 +41,7 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         musicStreamVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
 
 //        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
-        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
     }
 
 
