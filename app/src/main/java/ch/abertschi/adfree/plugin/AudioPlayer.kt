@@ -34,8 +34,8 @@ open class AudioPlayer(val context: Context,
      */
     var trackPreparationDelayCallable: (() -> Unit)? = null
 
-    fun play(url: String) {
-        playAudio(url)
+    fun play(url: String, loop: Boolean = false) {
+        playAudio(url, loop)
     }
 
     fun playWithCachingProxy(url: String) {
@@ -44,12 +44,13 @@ open class AudioPlayer(val context: Context,
         playAudio(url)
     }
 
-    private fun playAudio(url: String) {
+    private fun playAudio(url: String, loop: Boolean = false) {
         initializeMediaPlayerObservable(context, url).subscribe { player ->
             this.player = player
             player.setOnErrorListener { _, what, _ ->
                 throw RuntimeException("Problem with audio player, code: $what")
             }
+            player.isLooping = loop
             player.start()
             isPlaying = true
         }

@@ -55,7 +55,10 @@ class LocalMusicPlugin(val context: Context,
     override fun settingsView(context: Context, action: PluginActivityAction): View? {
         view = view ?: LocalMusicView(context, action)
         val settingsView = view!!.onCreate(this)
-        loadPlayUntilEndFlag()
+        view?.showLoopEnabled(prefs.getLoopMusicPlayback())
+        view?.showPlayUntilEndEnabled(prefs.getPlayUntilEnd())
+        view?.showAudioDirectoryPath(prefs.getLocalMusicDirectory())
+        showLoopIfAllowed()
         return settingsView
     }
 
@@ -68,7 +71,7 @@ class LocalMusicPlugin(val context: Context,
             val ad = context.applicationContext as AdFreeApplication
             val name = file.absolutePath.split("/").last()
             runAndCatchException {
-                player.play(file.absolutePath)
+                player.play(file.absolutePath, prefs.getLoopMusicPlayback())
                 Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe {
@@ -146,11 +149,11 @@ class LocalMusicPlugin(val context: Context,
         return if (allFiles.size == 0) null else allFiles[(Math.random() * allFiles.size).toInt()]
     }
 
-    fun configureAudioVolume() {
+    fun onConfigureAudioVolume() {
         audioController.showVoiceCallVolume()
     }
 
-    fun chooseDirectory() {
+    fun onChooseDirectory() {
         if (!hasStoragePermissions()) {
             requestStoragePermissions()
 //            view?.showNeedStoragePermissions()
@@ -172,12 +175,13 @@ class LocalMusicPlugin(val context: Context,
                 view?.showErrorInChoosingDirectory(e.message ?: "")
             }
             if (path != null && File(path).exists()) {
+                view?.showAudioDirectoryPath(path)
                 prefs.setLocalMusicDirectory(path)
+                info { "changing directory to ${prefs.getLocalMusicDirectory()}" }
             } else {
                 view?.showErrorInChoosingDirectory()
             }
         }
-        info { prefs.getLocalMusicDirectory() }
     }
 
     private fun runAndCatchException(function: () -> Unit): Unit {
@@ -189,19 +193,37 @@ class LocalMusicPlugin(val context: Context,
         }
     }
 
-    fun changePlayUntilEndFlag() {
-        val status = prefs.getPlayUntilEnd()
-        prefs.setPlayUntilEnd(!status)
-        loadPlayUntilEndFlag()
+    fun onPlayUntilEndChanged() {
+        val playUntilEnd = !prefs.getPlayUntilEnd()
+        prefs.setPlayUntilEnd(playUntilEnd)
+        view?.showPlayUntilEndEnabled(playUntilEnd)
+
+        val loopMusic = prefs.getLoopMusicPlayback()
+        view?.hideLoopMusic(playUntilEnd)
+        if (playUntilEnd && loopMusic) {
+            prefs.setLoopMusicPlayback(!loopMusic)
+            view?.showLoopEnabled(!loopMusic)
+        }
     }
 
-    fun loadPlayUntilEndFlag() {
-        val keyword = when (prefs.getPlayUntilEnd()) {
-            true -> yesNoModel.getRandomYes()
-            else -> yesNoModel.getRandomNo()
-        }
-        view?.setPlayUntilEndTo(keyword)
+    private fun showLoopIfAllowed() {
+        val playUntilEnd = prefs.getPlayUntilEnd()
+        view?.hideLoopMusic(playUntilEnd)
     }
+
+    fun onLoopPlaybackChanged() {
+        val status = !prefs.getLoopMusicPlayback()
+        prefs.setLoopMusicPlayback(status)
+        view?.showLoopEnabled(status)
+    }
+
+//    fun loadPlayUntilEndFlag() {
+//        val keyword = when (prefs.getPlayUntilEnd()) {
+//            true -> yesNoModel.getRandomYes()
+//            else -> yesNoModel.getRandomNo()
+//        }
+//        view?.setPlayUntilEndTo(keyword)
+//    }
 
     private fun hasStoragePermissions(): Boolean {
         return if (VERSION.SDK_INT >= 23) {

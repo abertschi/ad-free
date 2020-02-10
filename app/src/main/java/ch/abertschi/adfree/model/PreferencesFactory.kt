@@ -32,6 +32,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     private val prefsAlwaysOnNoti = "ALWAYS_ON_NOTI"
     private val prefsIsDebugDetectors = "DEBUG_DETECTORS_ENABLED"
     private val prefsGoogleCast = "CAST_ENABLED"
+    private val prefsLoopPlayback: String = "location_local_music_loop"
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
@@ -74,6 +75,11 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     fun getPlayUntilEnd(): Boolean =
             prefs.getBoolean(prefsPlayUntilEnd, false)
 
+    fun setLoopMusicPlayback(flag: Boolean)
+            = prefs.edit().putBoolean(prefsLoopPlayback, flag).commit()
+
+    fun getLoopMusicPlayback(): Boolean =
+            prefs.getBoolean(prefsLoopPlayback, false)
 
     fun storeStreamMusicAudioVolume(volume: Int)
             = prefs.edit().putInt(prefsStreamMusicAudioVolume, volume).commit()
@@ -82,7 +88,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
             prefs.getInt(prefsStreamMusicAudioVolume, 100)
 
     fun getLocalMusicDirectory(): String =
-            prefs.getString(prefsLocalMusic, "/storage/sdcard0/Music")!!
+            prefs.getString(prefsLocalMusic, "not set yet")!!
 
     fun setLocalMusicDirectory(value: String) =
             prefs.edit().putString(prefsLocalMusic, value).commit()

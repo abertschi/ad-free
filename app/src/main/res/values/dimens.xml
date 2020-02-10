@@ -10,8 +10,10 @@
     <dimen name="margin_home_views">30dp</dimen>
 
     <!--    the spinner has a paddingLeft of 10dp -->
+    <dimen name="margin_home_views_settings_spinner_margin">10dp</dimen>
     <dimen name="margin_home_views_settings">20dp</dimen>
     <dimen name="margin_home_views_settings_tryout">10dp</dimen>
+    <dimen name="margin_home_views_settings_plugin_top">10dp</dimen>
 
 
     <dimen name="margin_view">20dp</dimen>

@@ -6,26 +6,21 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
-import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
-import ch.abertschi.adfree.view.ViewSettings
 
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
-import java.io.File
 
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.SwitchCompat
 
 /**
  * Created by abertschi on 29.08.17.
@@ -33,6 +28,7 @@ import android.support.v7.app.AlertDialog
 class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger {
 
     private lateinit var audioDirDialog: AlertDialog
+    private lateinit var viewInstance: View
 
     var presenter: LocalMusicPlugin? = null
 
@@ -41,39 +37,39 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     fun onCreate(presenter: LocalMusicPlugin): View? {
         this.presenter = presenter
         val inflater = LayoutInflater.from(context)
-        var viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
+        viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
 
-        val typeFace = ViewSettings.instance(context).typeFace
+        viewInstance.findViewById<View>(R.id.layout_play_until_end)
+                .setOnClickListener { presenter.onPlayUntilEndChanged() }
+        viewInstance.findViewById<View>(R.id.local_music_title_play_until_end)
+                .setOnClickListener { presenter.onPlayUntilEndChanged() }
+        viewInstance.findViewById<View>(R.id.local_music_play_until_end_subtext)
+                .setOnClickListener { presenter.onPlayUntilEndChanged() }
+        viewInstance.findViewById<View>(R.id.local_music_play_until_end_switch)
+                .setOnClickListener { presenter.onPlayUntilEndChanged() }
 
-        var setVolumeView = viewInstance?.findViewById(R.id.plugin_localmusic_audio_volume_text) as TextView
-        setVolumeView?.typeface = typeFace
-        val t = "> configure <font color=#FFFFFF>audio volume</font>"
-        setVolumeView?.text = Html.fromHtml(t)
+        viewInstance.findViewById<View>(R.id.layout_loop)
+                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+        viewInstance.findViewById<View>(R.id.local_music_title_loop)
+                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+        viewInstance.findViewById<View>(R.id.local_music_loop_subtext)
+                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+        viewInstance.findViewById<View>(R.id.local_music_loop_switch)
+                .setOnClickListener { presenter.onLoopPlaybackChanged() }
 
-        var chooseDirectoryView = viewInstance?.
-                findViewById(R.id.plugin_localmusic_choose_audio_directory_text) as TextView
-        chooseDirectoryView?.typeface = typeFace
-        val text = "> choose <font color=#FFFFFF>audio directory</font>"
-        chooseDirectoryView?.text = Html.fromHtml(text)
+        viewInstance.findViewById<View>(R.id.layout_configure_audio)
+                .setOnClickListener { presenter.onConfigureAudioVolume() }
+        viewInstance.findViewById<View>(R.id.configure_audio_title)
+                .setOnClickListener { presenter.onConfigureAudioVolume() }
+        viewInstance.findViewById<View>(R.id.configure_audio_subtitle)
+                .setOnClickListener { presenter.onConfigureAudioVolume() }
 
-        var playUntilEnd = viewInstance?.
-                findViewById(R.id.plugin_localmusic_play_till_end) as TextView
-        playUntilEnd?.typeface = typeFace
-
-        val playUntilEndText = "> play until end "
-        playUntilEnd?.text = Html.fromHtml(playUntilEndText)
-
-        playUntilEndAnswer = viewInstance?.
-                findViewById(R.id.plugin_localmusic_play_till_end_answer) as TextView
-
-        playUntilEndAnswer?.typeface = typeFace
-        playUntilEndAnswer.setOnClickListener { presenter.changePlayUntilEndFlag() }
-        playUntilEnd.setOnClickListener { presenter.changePlayUntilEndFlag() }
-
-        setVolumeView.setOnClickListener { presenter.configureAudioVolume() }
-        chooseDirectoryView.setOnClickListener {
-            presenter.chooseDirectory()
-        }
+        viewInstance.findViewById<View>(R.id.layout_music_dir).setOnClickListener {
+            presenter.onChooseDirectory()}
+        viewInstance.findViewById<View>(R.id.music_dir_title).setOnClickListener {
+            presenter.onChooseDirectory()}
+        viewInstance.findViewById<View>(R.id.music_dir_subtitle).setOnClickListener {
+            presenter.onChooseDirectory()}
 
         action.addOnActivityResult { requestCode, resultCode, data ->
             presenter.onActivityResult(requestCode, resultCode, data)
@@ -90,6 +86,14 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
                 }
                 .create()
         return viewInstance
+    }
+
+    fun showPlayUntilEndEnabled(e: Boolean) {
+        viewInstance.findViewById<SwitchCompat>(R.id.local_music_play_until_end_switch).isChecked = e
+    }
+
+    fun showLoopEnabled(e: Boolean) {
+        viewInstance.findViewById<SwitchCompat>(R.id.local_music_loop_switch).isChecked = e
     }
 
     private fun showDirectoryChooser() {
@@ -125,15 +129,19 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
             longToast("Whoops, there was an error with audio")
         }
     }
-
-    fun setPlayUntilEndTo(keyword: String) {
-        val playUntilEndAnswerText = "<font color=#FFFFFF>$keyword</font>"
-        playUntilEndAnswer?.text = Html.fromHtml(playUntilEndAnswerText)
-    }
-
     fun showNeedStoragePermissions() {
         context.applicationContext.runOnUiThread {
             longToast("Storage permissions needed")
         }
     }
+
+    fun hideLoopMusic(hide: Boolean) {
+        viewInstance.findViewById<View>(R.id.layout_loop).visibility =
+                if (hide) View.GONE else View.VISIBLE
+    }
+
+    fun showAudioDirectoryPath(s: String) {
+        viewInstance.findViewById<TextView>(R.id.music_dir_subtitle).text = s
+    }
+
 }

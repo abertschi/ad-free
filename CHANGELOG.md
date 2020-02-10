@@ -9,10 +9,11 @@
   notification listener service in foreground (#51)
 - overhaul of music plugin, use system own ACTION_OPEN_DOCUMENT_TREE
   dialog to choose music directory (#44)
+- add option to loop local music plugin until end of ad (#48)  
 - change how audio is muted. use setStreamVolume instead of
   adjustStreamVolume (#41)
-- UI optimized for tablets
 - increase minSdkVersion to 23/ Android 6.0 (#18)
+- UI optimized for tablets
 
 ### v1.2.1/33,  2019-11-9
 - update fdroid metadata: screenshots, changelog
