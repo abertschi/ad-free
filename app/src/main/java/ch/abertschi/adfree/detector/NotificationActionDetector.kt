@@ -19,4 +19,7 @@ class NotificationActionDetector : AbstractStatusBarDetector() {
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
             = payload.statusbarNotification.notification.actions.size <= 3
 
+    override fun getMeta(): AdDetectorMeta
+            = AdDetectorMeta("Notification actions", "spotify generic inspection of notification actions")
+
 }

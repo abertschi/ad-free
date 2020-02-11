@@ -11,7 +11,6 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
-import com.danikula.videocache.HttpProxyCacheServer
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -29,29 +28,29 @@ open class AudioPlayer(val context: Context,
     private var isPlaying: Boolean = false
     private var onStopCallables: ArrayList<() -> Unit> = ArrayList()
     private var player: MediaPlayer? = null
-    private var httpProxy: HttpProxyCacheServer? = null
 
     /**
      * a callable that is called when a track takes longer to load.
      */
     var trackPreparationDelayCallable: (() -> Unit)? = null
 
-    fun play(url: String) {
-        playAudio(url)
+    fun play(url: String, loop: Boolean = false) {
+        playAudio(url, loop)
     }
 
     fun playWithCachingProxy(url: String) {
-        httpProxy = httpProxy ?: HttpProxyCacheServer(context)
-        val proxyUrl = httpProxy!!.getProxyUrl(url)
-        playAudio(proxyUrl)
+//        httpProxy = httpProxy ?: HttpProxyCacheServer(view)
+//        val proxyUrl = httpProxy!!.getProxyUrl(url)
+        playAudio(url)
     }
 
-    private fun playAudio(url: String) {
+    private fun playAudio(url: String, loop: Boolean = false) {
         initializeMediaPlayerObservable(context, url).subscribe { player ->
             this.player = player
             player.setOnErrorListener { _, what, _ ->
-                throw RuntimeException("Problem with audio player, code: " + what)
+                throw RuntimeException("Problem with audio player, code: $what")
             }
+            player.isLooping = loop
             player.start()
             isPlaying = true
         }
@@ -68,10 +67,10 @@ open class AudioPlayer(val context: Context,
     }
 
     fun stop(onStoped: () -> Unit) {
-        audioController.fadeOffVoiceCallVolume({
+        audioController.fadeOffVoiceCallVolume {
             closePlayer()
-            onStoped?.invoke()
-        })
+            onStoped.invoke()
+        }
     }
 
     private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>

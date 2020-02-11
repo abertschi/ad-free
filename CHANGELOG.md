@@ -1,5 +1,20 @@
 # Changelog / Ad-Free
 
+### v2.0/34, 2020-02-10
+- add option to choose what detectors are active (#50)
+- add option to delay unmute for a few seconds (#39)
+- add option for always-on notification to prevent ad-free from being killed by
+  OS. needed for devices such as MIUI. this includes a boot_completed
+  receiver, alarmservice timer and runs the
+  notification listener service in foreground (#51)
+- overhaul of music plugin, use system own ACTION_OPEN_DOCUMENT_TREE
+  dialog to choose music directory (#44)
+- add option to loop local music plugin until end of ad (#48)  
+- change how audio is muted. use setStreamVolume instead of
+  adjustStreamVolume (#41)
+- increase minSdkVersion to 23/ Android 6.0 (#18)
+- UI optimized for tablets
+
 ### v1.2.1/33,  2019-11-9
 - update fdroid metadata: screenshots, changelog
 - no functional changes

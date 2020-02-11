@@ -54,16 +54,6 @@ class AboutActivity : Fragment(), AboutView {
 
         textView?.text = Html.fromHtml(text)
 
-
-        val versionView = view?.findViewById(R.id.version) as TextView
-        versionView.typeface = typeFace
-        versionView.text = "v${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
-        versionView.onClick {
-            val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md"))
-            this.context!!.startActivity(browserIntent)
-        }
-
         view.findViewById<ImageView>(R.id.twitter).onClick {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
@@ -75,5 +65,10 @@ class AboutActivity : Fragment(), AboutView {
                     Uri.parse("http://abertschi.ch?rel=adfree"))
             this.context!!.startActivity(browserIntent)
         }
+
+        view.findViewById<ImageView>(R.id.moresettings).onClick {
+            presenter.showMoreSettings()
+        }
+
     }
 }

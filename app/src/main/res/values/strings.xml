@@ -1,16 +1,7 @@
 <resources>
-    <string name="app_name">Ad Free</string>
-    <string name="enjoy">enjoy your <b>ad free</b> music experience</string>
-    <string name="country_prompt">Choose a country</string>
-
+    <string name="app_name">ad-free</string>
+    <string name="enjoy">enjoy your <b>ad-free</b> music experience</string>
+    <string name="chromecast_subtitle">requires chromecast audio to announce current playback as system notification. see option <u>let others control your cast media</u> in google home app (experimental).</string>
     <string-array name="test">
-        <item>MUTE AUDIO</item>
-        <item>PLAY LOCAL MUSIC</item>
-        <item>SOUNDCLOUD</item>
-        <item>INTERDIMENSIONAL CABLE</item>
-        <item>JOKE TIME</item>
-        <item>CHUCK NORRIS</item>
-        <item>MEH</item>
-        <item>SUGGEST SOMETHING ...</item>
     </string-array>
 </resources>

@@ -5,7 +5,7 @@ ad-free is a research project attempting to show flaws in the way how audio adve
 
 https://adfree.abertschi.ch
 
-<img src=".github/cover2.png" width="900">
+<img src=".github/screens3.sized.png" width="900">
 
 ## Features
 - No ROOT required
@@ -20,15 +20,15 @@ https://adfree.abertschi.ch
 <a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" width="220"/></a>
 
 ## Legality
-This app is secure, free and open and does not seek a comercial interest. It does not
+This app is free and opensource and does not seek a comercial interest. It does not
 collect user data. It is a proof-of-concept to show
 flaws in the way how audio advertisement is often implemented on
-Android.
-Ad-free's algorithms are described below and it's source code is freely available.
+Android. Ad-free's algorithms are described below and it's source code is freely available.
 It does not alter or "hack" protection measures of music players, and only
 gathers context information provided by the Android
 runtime. Nontheless, ad-free may be against terms of services of music
-players. Use it at your own risk.
+players. Muting commercials may not be supported and may result in a
+temporary ban. Use at your own risk.
 
 ## Implementation notes
 ### Ad detection
@@ -50,11 +50,19 @@ Detector which checks for properties set in the notification bundle.
 ### Ad blocking
 [AudioManager](https://developer.android.com/reference/android/media/AudioManager.html),
 Android's Audio System provides several streams on which audio can be
-played. Music players play audio on the stream [STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC). In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls a configured [AdPlugin](./app/src/main/java/ch/abertschi/adfree/plugin/AdPlugin.kt). `AdPlugins` aim to replace advertisement. They play music on an alternative stream and are therefore not affected by the mute of _STREAM MUSIC_.
+played. Music players play audio on the stream
+[STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC).
+In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls
+a configured [AdPlugin](./app/src/main/java/ch/abertschi/adfree/plugin/AdPlugin.kt). `AdPlugins`
+aim to replace advertisement. They play music on an alternative stream and are
+therefore not affected by the mute of _STREAM MUSIC_.
 
 ## Plugins
 ### Mute Audio
 As the title of this plugin suggests, it only mutes adertisments without playing sound.
+
+### Play local music
+Play music tracks stored on your phone while advertisement is playing.
 
 ### Interdimensional Cable (discontinued)
 _[Interdimensional
@@ -65,9 +73,6 @@ series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiAT
 
 Due to legal reasons and a rise in popularity, this feature is no
 longer supported. [See here](https://github.com/abertschi/ad-free/blob/master/rick_and_morty.md).
-
-### Play local music
-Play music tracks stored on your phone while advertisement is playing.
 
 ## Release notes
 - See [Changelog](./CHANGELOG.md)

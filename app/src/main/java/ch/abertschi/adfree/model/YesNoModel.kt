@@ -16,6 +16,7 @@ import java.nio.charset.Charset
 /**
  * Created by abertschi on 01.09.17.
  */
+@Deprecated("no longer needed")
 class YesNoModel(val context: Context) : AnkoLogger {
 
     var yes: List<String> = listOf()

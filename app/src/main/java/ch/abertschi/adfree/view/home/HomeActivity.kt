@@ -31,8 +31,6 @@ import org.jetbrains.anko.toast
 class HomeActivity : Fragment(), HomeView, AnkoLogger {
 
     lateinit var typeFace: Typeface
-
-    lateinit var powerButton: SwitchCompat
     lateinit var enjoySloganText: TextView
     lateinit var homePresenter: HomePresenter
 
@@ -46,14 +44,14 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
 
         homePresenter = HomeModul(this.activity!!, this).provideSettingsPresenter()
         
-        powerButton = view?.findViewById(R.id.switch1) as SwitchCompat
+
         typeFace = ViewSettings.instance(this.context!!).typeFace
 
         enjoySloganText = view.findViewById(R.id.enjoy) as TextView
 
-        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            homePresenter.enabledStatusChanged(isChecked)
-        }
+//        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
+//            homePresenter.enabledStatusChanged(isChecked)
+//        }
         homePresenter.onCreate(this.context!!)
 
         // TODO: this is debug code
@@ -74,17 +72,9 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         super.onResume()
     }
 
-    override fun showStatusEnabled() {
-        context?.applicationContext?.runOnUiThread {
-            context?.toast("Ad Free enabled")
-        }
-    }
-
-
     override fun showPermissionRequired() {
         val text = "touch here to grant permission"
         setSloganText(text)
-        powerButton.visibility = View.GONE
         enjoySloganText.setOnClickListener {
             showNotificationPermissionSettings()
         }
@@ -103,10 +93,9 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         val text = "<font color=#FFFFFF>enjoy</font> your <font color=#FFFFFF>ad-free</font> music experience."
         setSloganText(text)
         enjoySloganText.setOnClickListener(null)
-        powerButton.visibility = View.VISIBLE
     }
 
-    override fun setPowerState(state: Boolean) {
-        powerButton.isChecked = state
-    }
+//    override fun setPowerState(state: Boolean) {
+//        powerButton.isChecked = state
+//    }
 }

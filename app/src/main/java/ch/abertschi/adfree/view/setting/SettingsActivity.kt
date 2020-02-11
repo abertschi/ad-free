@@ -7,12 +7,14 @@
 package ch.abertschi.adfree.view.setting
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -26,8 +28,6 @@ import ch.abertschi.adfree.di.SettingsModul
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.ViewSettings
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.onItemSelectedListener
 import org.jetbrains.anko.toast
@@ -38,14 +38,7 @@ import org.jetbrains.anko.toast
  */
 
 class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
-
-    override fun signalizeTryOut() {
-        // TODO: crashes
-//        YoYo.with(Techniques.Shake)
-//                .duration(800)
-//                .repeat(0)
-//                .playOn(activity?.findViewById(R.id.try_plugin_button))
-    }
+    override fun activity(): Fragment = this
 
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
@@ -92,11 +85,6 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
                 "<font color=#FFFFFF>being played ?</font>"
 
         settingsTitle?.text = Html.fromHtml(text)
-
-        val tryMeText = view?.findViewById(R.id.tryout_text) as TextView
-        tryMeText.typeface = typeFace
-        tryMeText?.text = Html.fromHtml("")
-
 
         spinner = view?.findViewById(R.id.spinner) as Spinner
         spinnerAdapter = PluginSpinnerAdapter(this.activity!!, R.layout.replacer_setting_item,
@@ -159,4 +147,11 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         callablesOnActivityResult.add(callable)
     }
 
+    override fun signalizeTryOut() {
+        // TODO: crashes
+//        YoYo.with(Techniques.Shake)
+//                .duration(800)
+//                .repeat(0)
+//                .playOn(activity?.findViewById(R.id.try_plugin_button))
+    }
 }

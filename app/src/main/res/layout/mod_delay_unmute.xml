@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="25dp"
+    android:background="#252A2E"
+    android:paddingRight="25dp"
+    android:paddingBottom="30dp">
+
+
+    <LinearLayout
+        android:id="@+id/enabledLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/dialog_delay_unmute_title"-->
+        <!--            style="@style/AppTextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentLeft="true"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:gravity="top|left"-->
+        <!--            android:inputType="textMultiLine|textNoSuggestions"-->
+
+        <!--            android:scrollHorizontally="false"-->
+
+        <!--            android:text="> delay unmute"-->
+        <!--            android:textColor="#FFFFFF"-->
+        <!--            android:textSize="@dimen/normal_text_size" />-->
+
+
+        <TextView
+            android:id="@+id/enableSubtext"
+            style="@style/AppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:text="change how long advertisement stays muted before playback continues"
+            android:textColor="#C4BCAF"
+            android:textSize="@dimen/normal_text_small" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/delayText2"-->
+        <!--            style="@style/AppTextView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:inputType="textMultiLine|textNoSuggestions"-->
+        <!--            android:scrollHorizontally="false"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:text="current delay: 0s"-->
+        <!--            android:textColor="#C4BCAF"-->
+        <!--            android:textSize="@dimen/normal_text_small" />-->
+
+        <android.support.v7.widget.AppCompatSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:max="6"
+            android:min="0"
+            android:id="@+id/delay_unmute_seekbar"
+            android:progress="0">
+
+        </android.support.v7.widget.AppCompatSeekBar>
+
+        <TextView
+            android:id="@+id/unmutetext2"
+            style="@style/AppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:scrollHorizontally="false"
+            android:text="0 seconds"
+            android:textAlignment="center"
+            android:textColor="#C4BCAF"
+            android:textSize="@dimen/normal_text_small" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -23,7 +23,7 @@ import org.jetbrains.anko.info
  */
 class NotificationUtils(val context: Context) : AnkoLogger {
 
-    companion object {
+    public companion object {
         val actionDismiss = "actionDismiss"
         val blockingNotificationId = 1
         val textgNotificationId = 2
@@ -51,8 +51,11 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         }
     }
 
+
     fun showTextNotification(id: Int, title: String, content: String = "",
-                             dismissCallable: () -> Unit = {}) {
+                             dismissCallable: () -> Unit = {},
+                             priority: Int = NotificationCompat.PRIORITY_HIGH, notifiy: Boolean = true): Notification {
+
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
                         , NotificationInteractionService::class.java).setAction(actionDismiss)
@@ -60,17 +63,21 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(title)
-                .setContentText(content)
                 .setSmallIcon(R.mipmap.icon)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(priority)
                 .setContentIntent(dismissIntent)
+
+        if (content != "") {
+            builder.setContentText(content)
+        }
 
 
         updateNotificationMap[id] = builder
         val notification = builder.build()
-        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
-                Notification.FLAG_ONGOING_EVENT)
-
+//        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
+//                Notification.FLAG_ONGOING_EVENT)
+//            notification.flags = notification.flags or
+//                    Notification.FLAG_ONGOING_EVENT
 
 
         synchronized(actionDismissCallables) {
@@ -78,16 +85,19 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         }
 
         val manager = NotificationManagerCompat.from(context)
-        manager.notify(id, notification)
+        if (notifiy) {
+            manager.notify(id, notification)
+        }
+        return notification
     }
 
 //    fun showBlockingNotification(dismissCallable: () -> Unit) {
 //        val dismissIntent = PendingIntent
-//                .getService(context, 0, Intent(context
+//                .getService(view, 0, Intent(view
 //                        , NotificationInteractionService::class.java).setAction(actionDismiss)
 //                        , PendingIntent.FLAG_ONE_SHOT)
 //
-//        val notification = NotificationCompat.Builder(context)
+//        val notification = NotificationCompat.Builder(view)
 //                .setContentTitle("Ad detected")
 //                .setContentText("Touch to unmute")
 //                .setSmallIcon(R.mipmap.icon)
@@ -101,7 +111,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 //        synchronized(actionDismissCallables) {
 //            actionDismissCallables.add(dismissCallable)
 //        }
-//        val manager = NotificationManagerCompat.from(context)
+//        val manager = NotificationManagerCompat.from(view)
 //        manager.notify(blockingNotificationId, notification)
 //    }
 
@@ -119,12 +129,12 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         val id = CHANNEL_ID
         val name = "Ad blocking"
         val description = "Ad blocking notification"
-        val importance = NotificationManager.IMPORTANCE_LOW
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(id, name, importance)
         // Configure the notification channel.
         channel.description = description
-        channel.setShowBadge(false)
-        channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+//        channel.setShowBadge(false)
+        channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         notificationManager.createNotificationChannel(channel)
     }
 

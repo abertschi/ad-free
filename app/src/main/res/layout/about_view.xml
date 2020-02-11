@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#252A2E"
+    android:padding="@dimen/margin_home_views"
     android:orientation="vertical"
     >
 
@@ -20,22 +21,51 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:id="@+id/version"
+<!--        <TextView-->
+<!--            android:id="@+id/version"-->
+<!--            style="@style/AppTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:inputType="textMultiLine|textNoSuggestions"-->
+<!--            android:scrollHorizontally="false"-->
+<!--            android:text=""-->
+<!--            android:textAlignment="textEnd"-->
+<!--            android:textColor="#C4BCAF"-->
+<!--            android:textSize="@dimen/normal_text_small"-->
+<!--            />-->
+
+        <ImageView
             style="@style/AppTextView"
+            android:id="@+id/moresettings"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
+
             android:layout_alignParentTop="true"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="30dp"
-            android:inputType="textMultiLine|textNoSuggestions"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
             android:scrollHorizontally="false"
-            android:text="version"
             android:textAlignment="textEnd"
             android:textColor="#C4BCAF"
-            android:textSize="@dimen/normal_text_small"
+            android:textSize="@dimen/title_text_size"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/dots_48"
             />
+<!--        todo adjust color-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/website"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="top|right"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@mipmap/web"-->
+<!--            />-->
+<!--        -->
 
         <!--<TextView-->
             <!--android:id="@+id/more_settings"-->
@@ -59,7 +89,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
+        android:layout_margin="0dp"
         android:gravity="center_vertical"
         tools:context="ch.abertschi.adfree.view.setting.SettingsActivity"
         tools:layout_editor_absoluteX="8dp"
@@ -80,10 +110,10 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:scrollHorizontally="false"
+                android:textAlignment="textStart"
                 android:text=""
                 android:textColor="#C4BCAF"
                 android:textSize="@dimen/title_text_size"
-
                 />
 
         </LinearLayout>

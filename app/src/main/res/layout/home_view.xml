@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="#252A2E"
     android:id="@+id/container"
+    android:padding="@dimen/margin_home_views"
 
     >
 
@@ -14,23 +15,9 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
 
         android:gravity="center_vertical"
-        tools:context="ch.abertschi.adfree.view.home.HomeActivity"
-
-
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            />
+        tools:context="ch.abertschi.adfree.view.home.HomeActivity">
 
 
         <TextView
@@ -43,6 +30,7 @@
             android:scrollHorizontally="false"
             android:text="@string/enjoy"
             android:textColor="#C4BCAF"
+            android:textAlignment="textStart"
             android:textSize="@dimen/title_text_size"
             android:textStyle="italic"/>
 

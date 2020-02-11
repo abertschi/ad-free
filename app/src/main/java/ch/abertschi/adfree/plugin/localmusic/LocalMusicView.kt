@@ -9,98 +9,129 @@ package ch.abertschi.adfree.plugin.localmusic
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
-import ch.abertschi.adfree.view.ViewSettings
-import com.github.angads25.filepicker.model.DialogConfigs
-import com.github.angads25.filepicker.model.DialogProperties
-import com.github.angads25.filepicker.view.FilePickerDialog
+
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
-import java.io.File
 
+import android.support.v7.app.AlertDialog
+import android.support.v7.widget.SwitchCompat
+import ch.abertschi.adfree.view.ViewSettings
 
 /**
  * Created by abertschi on 29.08.17.
  */
 class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger {
 
-    var presenter: LocalMusicPlugin? = null
+    private lateinit var audioDirDialog: AlertDialog
+    private lateinit var viewInstance: View
 
-    private lateinit var playUntilEndAnswer: TextView
+    private lateinit var presenter: LocalMusicPlugin
 
     fun onCreate(presenter: LocalMusicPlugin): View? {
         this.presenter = presenter
         val inflater = LayoutInflater.from(context)
-        var viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
-
-        val typeFace = ViewSettings.instance(context).typeFace
-
-        var setVolumeView = viewInstance?.findViewById(R.id.plugin_localmusic_audio_volume_text) as TextView
-        setVolumeView?.typeface = typeFace
-        val t = "> configure <font color=#FFFFFF>audio volume</font>"
-        setVolumeView?.text = Html.fromHtml(t)
-
-        var chooseDirectoryView = viewInstance?.
-                findViewById(R.id.plugin_localmusic_choose_audio_directory_text) as TextView
-        chooseDirectoryView?.typeface = typeFace
-        val text = "> choose <font color=#FFFFFF>audio directory</font>"
-        chooseDirectoryView?.text = Html.fromHtml(text)
-
-        var playUntilEnd = viewInstance?.
-                findViewById(R.id.plugin_localmusic_play_till_end) as TextView
-        playUntilEnd?.typeface = typeFace
-
-        val playUntilEndText = "> play until end "
-        playUntilEnd?.text = Html.fromHtml(playUntilEndText)
-
-        playUntilEndAnswer = viewInstance?.
-                findViewById(R.id.plugin_localmusic_play_till_end_answer) as TextView
-
-        playUntilEndAnswer?.typeface = typeFace
-        playUntilEndAnswer.setOnClickListener { presenter.changePlayUntilEndFlag() }
-        playUntilEnd.setOnClickListener { presenter.changePlayUntilEndFlag() }
-
-        setVolumeView.setOnClickListener { presenter.configureAudioVolume() }
-        chooseDirectoryView.setOnClickListener {
-            presenter.chooseDirectory()
-        }
-
-        action.addOnActivityResult({ requestCode, resultCode, data ->
-            presenter.onActivityResult(requestCode, resultCode, data)
-        })
-
+        viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
+        setupUi()
+        audioDirDialog = AlertDialog.Builder(context)
+                .setTitle("Audio directory")
+                .setView(LayoutInflater.from(this.context).inflate(R.layout.choose_audio_dir, null))
+                .setPositiveButton(android.R.string.yes) { dialog, which ->
+                    showDirectoryChooser()
+                }
+                .setOnDismissListener {
+                    showDirectoryChooser()
+                }
+                .create()
         return viewInstance
     }
 
-    fun showFolderSelectionDialog(default: File) {
-        val properties = DialogProperties()
-        properties.selection_mode = DialogConfigs.SINGLE_MODE
-        properties.selection_type = DialogConfigs.DIR_SELECT
-        properties.root = default
-        properties.error_dir = File(DialogConfigs.DEFAULT_DIR)
-        properties.offset = File(DialogConfigs.DEFAULT_DIR)
-        properties.extensions = null
-
-        val dialog = FilePickerDialog(context, properties)
-        dialog.setTitle("Select a Folder")
-
-        dialog.setDialogSelectionListener { files ->
-            val f = mutableListOf<String>()
-            files?.forEach { f.add(it) }
-            presenter!!.onDirectorySelected(f)
+    private fun setupUi() {
+        viewInstance.findViewById<View>(R.id.layout_play_until_end).run {
+            setOnClickListener { presenter.onPlayUntilEndChanged() }
         }
-        dialog.show()
+        viewInstance.findViewById<TextView>(R.id.local_music_title_play_until_end).run {
+            setOnClickListener { presenter.onPlayUntilEndChanged() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<TextView>(R.id.local_music_play_until_end_subtext).run {
+            setOnClickListener { presenter.onPlayUntilEndChanged() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<View>(R.id.local_music_play_until_end_switch)
+                .setOnClickListener { presenter.onPlayUntilEndChanged() }
 
+        viewInstance.findViewById<View>(R.id.layout_loop)
+                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+        viewInstance.findViewById<TextView>(R.id.local_music_title_loop).run {
+            setOnClickListener { presenter.onLoopPlaybackChanged() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<TextView>(R.id.local_music_loop_subtext).run {
+            setOnClickListener { presenter.onLoopPlaybackChanged() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<View>(R.id.local_music_loop_switch)
+                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+        viewInstance.findViewById<View>(R.id.layout_configure_audio)
+                .setOnClickListener { presenter.onConfigureAudioVolume() }
+        viewInstance.findViewById<TextView>(R.id.configure_audio_title).run {
+            setOnClickListener { presenter.onConfigureAudioVolume() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<TextView>(R.id.configure_audio_subtitle).run {
+            setOnClickListener { presenter.onConfigureAudioVolume() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<View>(R.id.layout_music_dir).setOnClickListener {
+            presenter.onChooseDirectory()
+        }
+        viewInstance.findViewById<TextView>(R.id.music_dir_title).run {
+            setOnClickListener { presenter.onChooseDirectory() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        viewInstance.findViewById<TextView>(R.id.music_dir_subtitle).run {
+            setOnClickListener { presenter.onChooseDirectory() }
+            typeface = ViewSettings.instance(context).typeFace
+        }
+        action.addOnActivityResult { requestCode, resultCode, data ->
+            presenter.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    fun showPlayUntilEndEnabled(e: Boolean) {
+        viewInstance.findViewById<SwitchCompat>(R.id.local_music_play_until_end_switch).isChecked = e
+    }
+
+    fun showLoopEnabled(e: Boolean) {
+        viewInstance.findViewById<SwitchCompat>(R.id.local_music_loop_switch).isChecked = e
+    }
+
+    private fun showDirectoryChooser() {
+        val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+        i.addCategory(Intent.CATEGORY_DEFAULT)
+        val chooser = Intent.createChooser(i, "Choose directory")
+        startActivityForResult(chooser, LocalMusicPlugin.PICK_DIRECTORY, null)
+    }
+
+    fun showFolderSelectionDialog() {
+        audioDirDialog.show()
+        audioDirDialog.window?.setBackgroundDrawableResource(R.color.colorBackground)
     }
 
     fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
         action.startActivityForResult(intent, requestCode, options)
+    }
+
+    fun showErrorInChoosingDirectory(hint: String = "") {
+        context.applicationContext.runOnUiThread {
+            longToast("Whoops, error with chosen directory. Choose a different one. $hint")
+        }
     }
 
     fun showNoAudioTracksFoundMessage() {
@@ -115,8 +146,19 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         }
     }
 
-    fun setPlayUntilEndTo(keyword: String) {
-        val playUntilEndAnswerText = "<font color=#FFFFFF>$keyword</font>"
-        playUntilEndAnswer?.text = Html.fromHtml(playUntilEndAnswerText)
+    fun showNeedStoragePermissions() {
+        context.applicationContext.runOnUiThread {
+            longToast("Storage permissions needed")
+        }
     }
+
+    fun hideLoopMusic(hide: Boolean) {
+        viewInstance.findViewById<View>(R.id.layout_loop).visibility =
+                if (hide) View.GONE else View.VISIBLE
+    }
+
+    fun showAudioDirectoryPath(s: String) {
+        viewInstance.findViewById<TextView>(R.id.music_dir_subtitle).text = s
+    }
+
 }

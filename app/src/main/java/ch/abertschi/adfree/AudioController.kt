@@ -30,7 +30,7 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
     fun isMusicStreamMuted(): Boolean = musicStreamIsMuted
 
     fun muteMusicStream() {
-        debug("current volume " + musicStreamVolume)
+        debug("current volume $musicStreamVolume")
         info("muting audio")
 
         if (musicStreamIsMuted) {
@@ -40,7 +40,8 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         musicStreamVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC)
 
-        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
+//        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0)
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
     }
 
 
@@ -51,18 +52,20 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : Ank
         }
         musicStreamIsMuted = false
         val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
+//        am.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0)
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, musicStreamVolume, 0)
     }
 
     fun showVoiceCallVolume() {
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, prefs.loadVoiceCallAudioVolume(), AudioManager.FLAG_SHOW_UI)
-        Observable.just(true).delay(8000, TimeUnit.MILLISECONDS)
+        Observable.just(true)
+                .delay(8000, TimeUnit.MILLISECONDS)
                 .subscribeOn(io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
             val volume = am.getStreamVolume(AudioManager.STREAM_VOICE_CALL)
             prefs.storeVoiceCallAudioVolume(volume)
-            info("Storing audio volume with value " + volume)
+            info("Storing audio volume with value $volume")
         }
     }
 

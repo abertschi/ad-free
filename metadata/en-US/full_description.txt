@@ -1,17 +1,15 @@
-Ad-Free is an ad blocker for Spotify.
-You can pick from one of three options to play instead of the ad:
+ad-free is an ad audio blocker for Android.
 
-1. Mute audio
-2. Local music files
-3. Interdimensional Cable from Rick and Morty
+This app is a research project attempting to show flaws in the way how
+audio advertisement is shown on Android. It is a proof-of-concept of a
+modularized audio ad blocker written in Kotlin with a modern and
+simplistic user interface.
 
-Features:
-
-* Mute audio when advertisement is playing
-* Play arbitrary audio instead of Spotify advertisement
-* No ROOT required
-* Privacy focused, we do not spy on you
-* Plugin based design, easily extend it for more support.
-
+- Support for Spotify
+- No ROOT required
+- Plugin based design
+- Mute audio when ads are playing
+- Play arbitrary audio
 
 Browse https://adfree.abertschi.ch for more information.
+

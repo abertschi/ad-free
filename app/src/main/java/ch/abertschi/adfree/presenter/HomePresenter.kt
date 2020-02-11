@@ -30,7 +30,7 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     fun onCreate(context: Context) {
         isInit = true
         showPermissionRequiredIfNecessary(context)
-        homeView.setPowerState(preferencesFactory.isBlockingEnabled())
+//        homeView.setPowerState(preferencesFactory.isBlockingEnabled())
     }
 
     fun onResume(context: Context) {
@@ -47,12 +47,12 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
         return true
     }
 
-    fun enabledStatusChanged(status: Boolean) {
-        if (status && !preferencesFactory.isBlockingEnabled()) {
-            homeView.showStatusEnabled()
-        }
-        preferencesFactory.setBlockingEnabled(status)
-    }
+//    fun enabledStatusChanged(status: Boolean) {
+//        if (status && !preferencesFactory.isBlockingEnabled()) {
+//            homeView.showPowerEnabled()
+//        }
+//        preferencesFactory.setBlockingEnabled(status)
+//    }
 
     private fun showPermissionRequiredIfNecessary(context: Context) {
         if (hasNotificationPermission(context)) {
@@ -62,3 +62,8 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
         }
     }
 }
+
+// presenter onChanged(val)
+// view:
+// setState(v)
+// showX

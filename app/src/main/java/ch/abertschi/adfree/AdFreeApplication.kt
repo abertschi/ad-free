@@ -7,12 +7,8 @@
 package ch.abertschi.adfree
 
 import android.app.Application
+import android.os.AsyncTask
 import ch.abertschi.adfree.ad.AdDetector
-import ch.abertschi.adfree.detector.*
-import ch.abertschi.adfree.model.PreferencesFactory
-import ch.abertschi.adfree.model.RemoteManager
-import ch.abertschi.adfree.model.TrackRepository
-import ch.abertschi.adfree.model.YesNoModel
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
@@ -21,6 +17,9 @@ import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
+import ch.abertschi.adfree.model.*
+import com.thoughtworks.xstream.mapper.Mapper
+import java.lang.NullPointerException
 
 
 /**
@@ -30,7 +29,7 @@ import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
 class AdFreeApplication : Application(), AnkoLogger {
 
     lateinit var prefs: PreferencesFactory
-    lateinit var adDetectors: List<AdDetectable>
+    lateinit var adDetectors: AdDetectableFactory
     lateinit var adDetector: AdDetector
     lateinit var audioManager: AudioController
     lateinit var pluginHandler: PluginHandler
@@ -40,6 +39,8 @@ class AdFreeApplication : Application(), AnkoLogger {
     lateinit var notificationChannel: NotificationChannel
     lateinit var yesNoModel: YesNoModel
     lateinit var remoteManager: RemoteManager
+    lateinit var notificationStatus: NotificationStatusManager
+    lateinit var googleCast: GoogleCastManager
 
     override fun onCreate() {
         super.onCreate()
@@ -47,14 +48,10 @@ class AdFreeApplication : Application(), AnkoLogger {
 
         prefs = PreferencesFactory(applicationContext)
 
-        adDetectors = listOf<AdDetectable>(
-                  NotificationActionDetector()
-                , SpotifyTitleDetector(TrackRepository(this, prefs))
-                , NotificationBundleAndroidTextDetector()
-                , ScDetector()
-                , MiuiNotificationDetector()
-//                , SpotifyNotificationTracer(getExternalFilesDir(null)) // TODO: for debug
-        )
+        googleCast = GoogleCastManager(prefs)
+        notificationStatus = NotificationStatusManager(applicationContext)
+
+        adDetectors = AdDetectableFactory(applicationContext, prefs)
 
         audioManager = AudioController(applicationContext, prefs)
         remoteManager = RemoteManager(prefs)
@@ -64,17 +61,25 @@ class AdFreeApplication : Application(), AnkoLogger {
         yesNoModel.getRandomYes()
 
         notificationUtils = NotificationUtils(applicationContext)
-        notificationChannel = NotificationChannel(notificationUtils)
+        notificationChannel = NotificationChannel(notificationUtils, prefs)
 
         adPlugins = listOf(MutePlugin(),
-                InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel),
-                LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel)
+                LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel),
+                InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel)
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
         adStateController = AdStateController(audioManager,
-                pluginHandler, notificationChannel)
+                pluginHandler, notificationChannel, googleCast, prefs)
 
         adDetector.addObserver(adStateController)
+
+        notificationStatus.restartNotificationListener()
+
+        AsyncTask.execute {
+            if (prefs.isAlwaysOnNotificationEnabled()) {
+             notificationStatus.forceTimedRestart()
+            }
+        }
     }
 }

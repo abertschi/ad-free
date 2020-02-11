@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginRight="@dimen/margin_right_subtitle_switch"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/det_title"
+                style="@style/AppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:scrollHorizontally="false"
+                android:text="> title"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/normal_text_size" />
+
+            <TextView
+                android:id="@+id/det_subtitle"
+                style="@style/AppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_title_subtitle"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:scrollHorizontally="false"
+                android:text="subtitle"
+                android:textColor="#C4BCAF"
+
+                android:textSize="@dimen/normal_text_small" />
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/det_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_gravity="right|center"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp"
+            android:gravity="center_horizontal|center_vertical" />
+
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/mod_det_seperation"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="#08C4BCAF" />
+
+</LinearLayout>

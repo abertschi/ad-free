@@ -48,4 +48,6 @@ class NotificationBundleAndroidTextDetector : AbstractStatusBarDetector(), AnkoL
             error("Can not access notification bundle with reflection, $e")
         }
     }
+    override fun getMeta(): AdDetectorMeta
+            = AdDetectorMeta("Notification bundle", "spotify generic inspection of notification bundle")
 }

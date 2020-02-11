@@ -6,21 +6,43 @@
 
 package ch.abertschi.adfree
 
+import android.app.Notification
+import android.content.Context
+import android.support.v4.app.NotificationManagerCompat
+import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.util.NotificationUtils
+import android.support.v4.content.ContextCompat.startActivity
+import android.content.Intent
+import ch.abertschi.adfree.view.mod.ModActivity
+
 
 /**
  * Created by abertschi on 01.09.17.
  */
-class NotificationChannel(val notificationUtils: NotificationUtils) {
+class NotificationChannel(val notificationUtils: NotificationUtils,
+                          val prefs: PreferencesFactory) {
 
     private val defaultAdNotificationId: Int = 1000
+    private val alwaysOnNotificationId: Int = 1001
+
+    fun buildAlwaysOnNotification(): Pair<Notification, Int> {
+        val not = notificationUtils.showTextNotification(alwaysOnNotificationId,
+                "ad-free is running",
+                "ads are monitored", {}, notifiy = false)
+
+        return Pair(not , alwaysOnNotificationId)
+    }
+
+    fun hideAlwaysOnNotification() {
+        notificationUtils.hideNotification(alwaysOnNotificationId)
+    }
 
     fun hideDefaultAdNotification() {
         notificationUtils.hideNotification(defaultAdNotificationId)
     }
 
     fun showDefaultAdNotification(dismissCallable: () -> Unit = {}) {
-        notificationUtils.showTextNotification(defaultAdNotificationId, "Ad detected",
+        notificationUtils.showTextNotification(defaultAdNotificationId, "ad detected",
                 "touch to unmute", dismissCallable)
     }
 

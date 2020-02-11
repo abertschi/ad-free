@@ -20,4 +20,8 @@ class ScDetector : AdDetectable, AnkoLogger {
         return title != null && title == keyword
                 && subTitle == null
     }
+
+    override fun getMeta(): AdDetectorMeta
+            = AdDetectorMeta("Soundcloud", "experimental detector for soundcloud",
+            false, debugOnly = true)
 }

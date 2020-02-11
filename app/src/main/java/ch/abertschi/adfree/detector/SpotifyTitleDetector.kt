@@ -42,4 +42,7 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) :
 
     fun getTitle(payload: AdPayload): String?
             = payload?.statusbarNotification?.notification?.tickerText?.toString() ?: ""
+
+    override fun getMeta(): AdDetectorMeta
+            = AdDetectorMeta("Notification text", "spotify detector for text in notification")
 }

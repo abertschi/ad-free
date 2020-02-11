@@ -42,14 +42,10 @@ class MainActivity : FragmentActivity() {
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager!!.adapter = mPagerAdapter
 
-        val tabLayout = findViewById(R.id.tabDots) as TabLayout
+        val tabLayout = findViewById<TabLayout>(R.id.tabDots)
         tabLayout.setupWithViewPager(mPager, true)
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.navigationBarColor = Color.parseColor("#252A2E")
-        }
+        window.navigationBarColor = Color.parseColor("#252A2E")
     }
-
 
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
@@ -58,7 +54,6 @@ class MainActivity : FragmentActivity() {
                 0 -> return HomeActivity()
                 1 -> return SettingsActivity()
                 else -> return AboutActivity()
-//                else -> return DebugActivity()
             }
         }
 
