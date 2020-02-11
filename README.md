@@ -5,7 +5,7 @@ ad-free is a research project attempting to show flaws in the way how audio adve
 
 https://adfree.abertschi.ch
 
-<img src=".github/cover2.png" width="900">
+<img src=".github/screens3.sized.png" width="900">
 
 ## Features
 - No ROOT required
