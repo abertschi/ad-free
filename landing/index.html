@@ -77,7 +77,6 @@
      /* margin: 10%; */
      margin: 5%;
      float: right;
-     margin-top: 20px;
      max-width:100%;
      max-height: 80vh;
      border-radius: 8%;
@@ -158,23 +157,12 @@
    .bg_item__img {
      width: 10px;
    }
-   /*@media only
-      screen and (max-height: 500px) {
-      .text__title {
-      margin-top: 1vh;
-      }
-      }*/
 
    .showroom {
      height: 100vh;
      width: 100%;
      margin: 0 auto;
      text-align: center;
-
-     /*min-width: 700px;*/
-     /*margin-left: auto;*/
-     /*position: relative;*/
-     /*background-color: red;*/
    }
 
    .showroom__img {
@@ -183,15 +171,10 @@
    }
    
    .features {
-     /*height: 100vh;*/
-     /*height: 1000px;*/
-     /*margin-top: 300px;*/
      width: 100%;
      height: 90vh;
-     /*min-width: 700px;*/
      color: white;
      background-color: #252A2E;
-     /*background-color: red;*/
    }
 
    .features h1 {
@@ -354,43 +337,71 @@
      .text__title h1 {
        margin-top: 0;
      }
-   }
 
-   @media only screen and (max-height: 450px) {
-     .text__title {
-       margin-top: 25vh;
-     }
-
-     .text__title h1 {
-       margin-top: 0;
-     }
-     .phone__img {
-       height: 500px;
-       padding: 5%;
-       padding-right: 15%;
-       float: right;
-     }
      .header {
-       /*height: 900px;*/
+       margin-bottom: 100px;
      }
 
-     .features {
-       /*margin-top: 100px;*/
-       /*height: 500px;*/
-     }
+     
    }
+   
+   /* @media only screen and (max-height: 450px) {
+      body {
+
+      }
+
+      .text__title {
+      margin-top: 25vh;
+      }
+
+      .text__title h1 {
+      margin-top: 0;
+      } */
+     /* .phone__img { */
+       /* background-color: red; */
+       /* height: 500px;
+          padding: 5%;
+          padding-right: 15%;
+          float: right;
+          }
+          .header {
+          /*height: 900px;
+   /* } */
+
+   /* .features { */
+   /*margin-top: 100px;*/
+   /*height: 500px;*/
+   /* } */
+   /* } */
+
+   @media only screen and (max-width: 1000px) {
+     /* media query between phone and pc */
+     body {
+       /* background-color: red; */
+     }
+
+     .phone__img img {
+       max-height: 70vh;
+       border-radius: 8%;
+       margin-top: 20%;
+       margin-right: 15%;
+     }
+
+
+   }
+   
 
    @media only screen and (max-width: 800px) {
-     /*screen and (max-height: 400px) {*/
-     body {1
+     /* media query for mobile phones */
+     body {
        font-size: 25px;
      }
 
      .header {
-         width: 100%;
-         height: 200vh;
+       width: 100%;
+       height: 200vh;
        margin: 0;
-       /*background-color: red;*/
+       margin-bottom: 400px;
      }
 
      .header h1 {
@@ -427,30 +438,43 @@
      .phone {
        width: 100%;
        height: auto;
-       display: block;
-       float: left;
+
+       display: flex;
+       justify-content: center;
+
+
        margin: 0;
        padding: 0;
+       /* background-color: red; */
      }
+
+
+     .phone__img img {
+
+       height: auto;
+       max-height: 1000px;
+       margin: 0;
+       padding: 0;
+       
+
+       display:block;
+       margin:auto;
+     }
+
 
      .phone__img {
-       height: auto;
-       width: 80%;
        margin: 0;
        padding: 0;
-       float: left;
-       margin-top: 10%;
-       margin-left: 10%;
-       margin-bottom: 10%;
+       /* background-color: green; */
      }
-
+     
      .text {
        display: block;
        text-align: center;
        width: 100%;
        margin-top: 0;
        height: 600px;
-       margin-bottom: 29%; /* this may make problems! */
+       margin-bottom: 50%; /* this may make problems! */
      }
      .text__title {
        margin-top: 0;
@@ -508,7 +532,7 @@
 
       <div class='text__features'>
         <ul>
-          <li>&gt; &nbsp;Support for Spotify, Soundcloud (experimental)</li>
+          <li>&gt; &nbsp;Support for Spotify</li>
           <li>&gt; &nbsp;No ROOT required</li>
           <li>&gt; &nbsp;Plugin based design</li>
           <li>&gt; &nbsp;Mute audio when ads are playing</li>
