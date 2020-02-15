@@ -11,5 +11,11 @@ simplistic user interface.
 - Mute audio when ads are playing
 - Play arbitrary audio
 
+You can pick from one of three options to play instead of the ad:
+
+1. Mute audio
+2. Local music files
+3. Interdimensional Cable from Rick and Morty (discontinued)
+
 Browse https://adfree.abertschi.ch for more information.
 
