@@ -83,10 +83,10 @@ class AdStateController(private val audioController: AudioController,
         activeState = EventType.NO_AD
 
         val doUnmute = {
+            castManager.unmuteAudio()
             adPluginHandler.stopPlugin {
                 notificationChannel.hideDefaultAdNotification()
                 audioController.unmuteMusicStream()
-                castManager.unmuteAudio()
             }
         }
 
@@ -108,9 +108,8 @@ class AdStateController(private val audioController: AudioController,
         startTimeout {
             observable.requestNoAd()
         }
-
-        audioController.muteMusicStream()
         castManager.muteAudio()
+        audioController.muteMusicStream()
         adPluginHandler.runPlugin()
         notificationChannel.showDefaultAdNotification {
             observable.requestIgnoreAd()

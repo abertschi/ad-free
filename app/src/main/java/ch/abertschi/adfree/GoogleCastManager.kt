@@ -46,6 +46,7 @@ class GoogleCastManager(val prefs: PreferencesFactory) : AnkoLogger {
             info { sbn.groupKey }
             if (sbn.notification?.actions?.size == 4) {
                 val act = sbn.notification.actions[1]
+                info { "updating action for chromecast manager"}
                 info { act.title }
                 info { act }
                 action = act
