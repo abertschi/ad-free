@@ -20,21 +20,21 @@ import org.jetbrains.anko.info
 class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
 
     private var URL: String = ViewSettings.AD_FREE_RESOURCE_ADRESS +
-            "settings.yaml" + ViewSettings.GITHUB_RAW_SUFFIX
+            "settings-new.yaml" + ViewSettings.GITHUB_RAW_SUFFIX
 
     var remoteSettings: RemoteSetting? = null
     var configFactory: YamlRemoteConfigFactory<RemoteSetting> =
             YamlRemoteConfigFactory(URL, RemoteSetting::class.java, prefFactory)
 
     fun getRemoteSettingsObservable(): Observable<RemoteSetting> {
-        info("getRemoteSettingsObservable")
+        info("feting settings getRemoteSettingsObservable")
         remoteSettings = configFactory.loadFromLocalStore()
         return Observable.create<RemoteSetting> { source ->
             configFactory.downloadObservable()
                     .map { source -> source.first }
                     .doOnNext { remoteSettings = it }
                     .doOnNext { configFactory.storeToLocalStore(it) }
-                    .subscribe({ _ -> source.onNext(remoteSettings!!) },
+                    .subscribe({ _-> source.onNext(remoteSettings!!) },
                             { err ->
                                 info(err)
                                 //source.onError(err)

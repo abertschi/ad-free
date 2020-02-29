@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#252A2E"
-    android:id="@+id/container"
-    android:padding="@dimen/margin_home_views"
-
-    >
-
-    <FrameLayout
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#252A2E"
+        android:padding="@dimen/margin_home_views"
 
-        android:gravity="center_vertical"
-        tools:context="ch.abertschi.adfree.view.home.HomeActivity">
+        >
 
-
-        <TextView
-            android:id="@+id/enjoy"
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/AppTextView"
-            android:layout_gravity="center"
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:scrollHorizontally="false"
-            android:text="@string/enjoy"
-            android:textColor="#C4BCAF"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/title_text_size"
-            android:textStyle="italic"/>
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            tools:context="ch.abertschi.adfree.view.home.HomeActivity">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/enjoy"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="@string/enjoy"
+                    android:textAlignment="textStart"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/title_text_size"
+                    android:textStyle="italic" />
+            <TextView
+                    android:id="@+id/version_update_reminder"
+                    style="@style/AppTextView"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="a new version is available. touch here."
+                    android:textAlignment="textEnd"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
+
+        </LinearLayout>
 
     </FrameLayout>
-
-
 </LinearLayout>
 
 
