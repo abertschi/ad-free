@@ -20,7 +20,7 @@ import org.jetbrains.anko.info
 class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
 
     private var URL: String = ViewSettings.AD_FREE_RESOURCE_ADRESS +
-            "settings-new.yaml" + ViewSettings.GITHUB_RAW_SUFFIX
+            "settings.yaml" + ViewSettings.GITHUB_RAW_SUFFIX
 
     var remoteSettings: RemoteSetting? = null
     var configFactory: YamlRemoteConfigFactory<RemoteSetting> =
