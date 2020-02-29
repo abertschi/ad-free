@@ -1,7 +1,7 @@
 # Changelog / Ad-Free
 
 
-### v2.1/35, 2020-02-29 (unreleased)
+### v2.1/35, 2020-02-29
 - show in-app update message if new version released
 - new git tags are prefixed with v
 
