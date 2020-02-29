@@ -1,3 +1,4 @@
+Release 2.0:
 - add option to choose which detectors are active (#50)
 - add option to delay unmute for a few seconds (#39)
 - add option for always-on notification to prevent ad-free from being killed by
