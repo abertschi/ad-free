@@ -14,7 +14,8 @@
     different apk signature.
 - new git tags follow pattern v<version-string>
 
-sha1sum: dcbb57df570b262f87bc7f6d84924a1d67b37301  v2.1-ad-free-app-release.apk
+sha1sum: ab6ece9da4e2cd1df430b832bac9123972d11a1a  v2.1-ad-free-app-release.apk
+
   
 ### v2.0/34, 2020-02-10
 - add option to choose which detectors are active (#50)
