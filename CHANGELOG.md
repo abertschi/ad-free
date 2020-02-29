@@ -1,5 +1,22 @@
 # Changelog / Ad-Free
 
+### v2.1/35, 2020-02-29
+- issue with fdroid store, ad-free disappearded from store
+  https://gitlab.com/fdroid/fdroid-website/issues/456. Provide
+  temporarily release
+  with different signature (non-fdroid) on github. If ad-free is not
+  distributed via fdroid, the fdroid update functionality can not be
+  used. Implement simple in-app reminder if new release is available
+  - github release is temporarily. Intended release channel is still
+    fdroid.
+  - if you have a previous version of ad-free installed, this version
+    can only be installed if previous is removed first due to
+    different apk signature.
+- new git tags follow pattern v<version-string>
+
+sha1sum: ab6ece9da4e2cd1df430b832bac9123972d11a1a  v2.1-ad-free-app-release.apk
+
+  
 ### v2.0/34, 2020-02-10
 - add option to choose which detectors are active (#50)
 - add option to delay unmute for a few seconds (#39)

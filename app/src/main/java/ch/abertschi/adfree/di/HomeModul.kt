@@ -19,7 +19,7 @@ class HomeModul(val context: Context, val homeView: HomeView) {
 
     fun provideSettingsPresenter(): HomePresenter {
         val adFree = context.applicationContext as AdFreeApplication
-        return HomePresenter(homeView, adFree.prefs)
+        return HomePresenter(homeView, adFree.prefs, adFree.remoteManager)
     }
 
 }

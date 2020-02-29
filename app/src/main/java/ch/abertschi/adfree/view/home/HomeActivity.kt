@@ -10,7 +10,6 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.SwitchCompat
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -21,18 +20,17 @@ import ch.abertschi.adfree.di.HomeModul
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.onClick
 
 /**
  * Created by abertschi on 15.04.17.
  */
 
 class HomeActivity : Fragment(), HomeView, AnkoLogger {
-
-    lateinit var typeFace: Typeface
-    lateinit var enjoySloganText: TextView
-    lateinit var homePresenter: HomePresenter
+    private lateinit var typeFace: Typeface
+    private lateinit var enjoySloganText: TextView
+    private lateinit var homePresenter: HomePresenter
+    private lateinit var updateMessageInfo: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,10 +46,8 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         typeFace = ViewSettings.instance(this.context!!).typeFace
 
         enjoySloganText = view.findViewById(R.id.enjoy) as TextView
-
-//        powerButton.setOnCheckedChangeListener { buttonView, isChecked ->
-//            homePresenter.enabledStatusChanged(isChecked)
-//        }
+        updateMessageInfo =
+                view.findViewById(R.id.version_update_reminder) as TextView
         homePresenter.onCreate(this.context!!)
 
         // TODO: this is debug code
@@ -65,6 +61,18 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
 //            }
 //            true
 //        }
+    }
+
+    override fun showUpdateMessage(show: Boolean) {
+        if (show ){
+            updateMessageInfo.visibility = View.VISIBLE
+            updateMessageInfo.onClick {
+                homePresenter.onUpdateMessageClicked()
+            }
+        } else {
+            updateMessageInfo.visibility = View.GONE
+        }
+
     }
 
     override fun onResume() {

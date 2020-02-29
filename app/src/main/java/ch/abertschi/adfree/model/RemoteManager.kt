@@ -27,14 +27,14 @@ class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
             YamlRemoteConfigFactory(URL, RemoteSetting::class.java, prefFactory)
 
     fun getRemoteSettingsObservable(): Observable<RemoteSetting> {
-        info("getRemoteSettingsObservable")
+        info("feting settings getRemoteSettingsObservable")
         remoteSettings = configFactory.loadFromLocalStore()
         return Observable.create<RemoteSetting> { source ->
             configFactory.downloadObservable()
                     .map { source -> source.first }
                     .doOnNext { remoteSettings = it }
                     .doOnNext { configFactory.storeToLocalStore(it) }
-                    .subscribe({ _ -> source.onNext(remoteSettings!!) },
+                    .subscribe({ _-> source.onNext(remoteSettings!!) },
                             { err ->
                                 info(err)
                                 //source.onError(err)

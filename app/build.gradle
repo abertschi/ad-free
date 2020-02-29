@@ -9,8 +9,8 @@ android {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 23
         targetSdkVersion 27
-        versionCode 34
-        versionName "2.0"
+        versionCode 35
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
    }
@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
     implementation 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation 'com.github.javiersantos:AppUpdater:2.6.1'
+    implementation 'com.android.support:design:27.0.+'
 
     implementation 'com.github.kittinunf.fuel:fuel:2.1.0'
     implementation 'com.github.kittinunf.fuel:fuel-android:2.1.0'
