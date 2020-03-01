@@ -12,7 +12,9 @@ https://adfree.abertschi.ch
 - Turn off sound when advertisement is playing
 - Play arbitrary audio instead of advertisements
 - Plugin based design
-- Currently support for Spotify
+- Support for Spotify
+- Support for Soundcloud (experimental)
+- Mute Google Chromecast (experimental)
 
 ## Download
 [Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.  
