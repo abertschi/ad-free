@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-08 Sun 12:25 -->
+<!-- 2020-03-08 Sun 12:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Troubleshooting ad-free</title>
@@ -233,32 +233,38 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgeaaf2b5">1. Reinstall ad-free</a></li>
-<li><a href="#org0dcef32">2. Enable autostart</a></li>
-<li><a href="#org8a64e3f">3. Disable battery saver</a></li>
-<li><a href="#org59f9ac1">4. Enable always-on notifications</a></li>
-<li><a href="#org2116a24">5. Advanced steps</a>
+<li><a href="#org3bde73f">1. About</a></li>
+<li><a href="#orgb4468d9">2. Reinstall ad-free</a></li>
+<li><a href="#orgfd207dd">3. Enable autostart</a></li>
+<li><a href="#orgd90ca7c">4. Disable battery saver</a></li>
+<li><a href="#org7fff6ce">5. Enable always-on notifications</a></li>
+<li><a href="#org3e7514c">6. Advanced steps</a>
 <ul>
-<li><a href="#org30559db">5.1. Check if notification listener works</a></li>
-<li><a href="#org212ac37">5.2. Record notifications for a new detector.</a></li>
+<li><a href="#org0b001bd">6.1. Check if notification listener works</a></li>
+<li><a href="#org1ac41f9">6.2. Record notifications for a new detector.</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<p>
-This pages describes common steps how to troubleshoot ad-free in case
-ad blocking does not work.
-</p>
 
-<p>
-Pictures below are based on version v2.1. They may slightly
-change later versions.
-</p>
-
-<div id="outline-container-orgeaaf2b5" class="outline-2">
-<h2 id="orgeaaf2b5"><span class="section-number-2">1</span> Reinstall ad-free</h2>
+<div id="outline-container-org3bde73f" class="outline-2">
+<h2 id="org3bde73f"><span class="section-number-2">1</span> About</h2>
 <div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>This page describes common steps how to troubleshoot ad-free in case
+ad blocking does not work.</li>
+
+<li>Pictures below are based on version v2.0. They may slightly change in later versions.</li>
+
+<li><a href="https://github.com/abertschi/ad-free">https://github.com/abertschi/ad-free</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb4468d9" class="outline-2">
+<h2 id="orgb4468d9"><span class="section-number-2">2</span> Reinstall ad-free</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 Remove and reinstall ad-free. Upon first usage you are asked to grant
 notification access. Whether the notification service successfully
@@ -270,16 +276,16 @@ notification access settings to re-grant access.
 
 
 <div class="figure">
-<p><img src="./res/img-not-service-conn.jpg" alt="img-not-service-conn.jpg" width="500px" />
+<p><img src="./res/img-not-service-conn.jpg" alt="img-not-service-conn.jpg" width="300px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Notification service status</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org0dcef32" class="outline-2">
-<h2 id="org0dcef32"><span class="section-number-2">2</span> Enable autostart</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgfd207dd" class="outline-2">
+<h2 id="orgfd207dd"><span class="section-number-2">3</span> Enable autostart</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 Some flavors of Android support an autostart option. Go to Android app info
 and enable auto start.
@@ -287,7 +293,7 @@ and enable auto start.
 
 
 <div class="figure">
-<p><img src="./res/app-info-autostart.jpg" alt="app-info-autostart.jpg" width="300px" />
+<p><img src="./res/app-info-autostart.jpg" alt="app-info-autostart.jpg" height="600px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>App info activity</p>
 </div>
@@ -295,9 +301,9 @@ and enable auto start.
 </div>
 
 
-<div id="outline-container-org8a64e3f" class="outline-2">
-<h2 id="org8a64e3f"><span class="section-number-2">3</span> Disable battery saver</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgd90ca7c" class="outline-2">
+<h2 id="orgd90ca7c"><span class="section-number-2">4</span> Disable battery saver</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 Remove ad-free from the list of battery saved apps. This option can be
 found in Android app info.
@@ -305,16 +311,16 @@ found in Android app info.
 
 
 <div class="figure">
-<p><img src="./res/app-info-battery-saver.jpg" alt="app-info-battery-saver.jpg" width="300px" />
+<p><img src="./res/app-info-battery-saver.jpg" alt="app-info-battery-saver.jpg" height="600px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Battery saver options</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org59f9ac1" class="outline-2">
-<h2 id="org59f9ac1"><span class="section-number-2">4</span> Enable always-on notifications</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org7fff6ce" class="outline-2">
+<h2 id="org7fff6ce"><span class="section-number-2">5</span> Enable always-on notifications</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 On some flavors of Android ad-free is being killed if the activity
 runs in background. Go to ad-free settings (three dots in about
@@ -325,7 +331,7 @@ appears as soon as the notification listener is connected an running.
 
 
 <div class="figure">
-<p><img src="./res/notification-always-on.jpg" alt="notification-always-on.jpg" width="300px" />
+<p><img src="./res/notification-always-on.jpg" alt="notification-always-on.jpg" height="400px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Always On Notification</p>
 </div>
@@ -333,13 +339,13 @@ appears as soon as the notification listener is connected an running.
 </div>
 
 
-<div id="outline-container-org2116a24" class="outline-2">
-<h2 id="org2116a24"><span class="section-number-2">5</span> Advanced steps</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org3e7514c" class="outline-2">
+<h2 id="org3e7514c"><span class="section-number-2">6</span> Advanced steps</h2>
+<div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org30559db" class="outline-3">
-<h3 id="org30559db"><span class="section-number-3">5.1</span> Check if notification listener works</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-org0b001bd" class="outline-3">
+<h3 id="org0b001bd"><span class="section-number-3">6.1</span> Check if notification listener works</h3>
+<div class="outline-text-3" id="text-6-1">
 <p>
 Enable developer mode in ad-free by clicking multiple times on the
 title in the ad detectors screen. Go to ad-free settings (three dots)
@@ -351,9 +357,9 @@ on Github; <a href="https://github.com/abertschi/ad-free/issues">https://github.
 </div>
 </div>
 
-<div id="outline-container-org212ac37" class="outline-3">
-<h3 id="org212ac37"><span class="section-number-3">5.2</span> Record notifications for a new detector.</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-org1ac41f9" class="outline-3">
+<h3 id="org1ac41f9"><span class="section-number-3">6.2</span> Record notifications for a new detector.</h3>
+<div class="outline-text-3" id="text-6-2">
 <p>
 Unlock developer mode as described above. Enable Spotify tracer and
 submit the recording file as an issue on Github. The notification dump
@@ -364,7 +370,7 @@ can help adding support for new devices.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2020-03-08 Sun 12:25</p>
+<p class="date">Created: 2020-03-08 Sun 12:58</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

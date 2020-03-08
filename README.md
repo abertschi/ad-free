@@ -33,7 +33,7 @@ players. Muting commercials may not be supported and may result in a
 temporary ban. Use at your own risk.
 
 ## Troubleshooting
-See [Troubleshooting](./troubleshooting/) section for help to get
+See [Troubleshooting](./troubleshooting/readme.org) section for help to get
 ad-free up and running.
 
 ## Changelog

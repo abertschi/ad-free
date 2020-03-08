@@ -1,10 +1,14 @@
 #+TITLE: Troubleshooting ad-free
 
-This page describes common steps how to troubleshoot ad-free in case
-ad blocking does not work.
+** About
+- This page describes common steps how to troubleshoot ad-free in case
+  ad blocking does not work.
 
-Pictures below are based on version v2.0. They may slightly
-change in later versions.
+- Pictures below are based on version v2.0. They may slightly change in later versions.
+
+- Sourcecode: https://github.com/abertschi/ad-free
+
+- Landing page: https://adfree.abertschi.ch
 
 ** Reinstall ad-free
 Remove and reinstall ad-free. Upon first usage you are asked to grant
@@ -15,8 +19,8 @@ connected_ / _notification service is disconnected_ text to launch
 notification access settings to re-grant access.
 
 #+CAPTION: Notification service status
-#+attr_html: :width 500px
-#+attr_latex: :width 500px
+#+attr_html: :width 300px
+#+attr_latex: :width 200px
 [[./res/img-not-service-conn.jpg]]
 
 ** Enable autostart
@@ -24,8 +28,8 @@ Some flavors of Android support an autostart option. Go to Android app info
 and enable auto start.
 
 #+CAPTION: App info activity
-#+attr_html: :width 300px
-#+attr_latex: :width 300px
+#+attr_html: :height 600px
+#+attr_latex: :height 300px
 [[./res/app-info-autostart.jpg]]
 
 
@@ -34,8 +38,8 @@ Remove ad-free from the list of battery saved apps. This option can be
 found in Android app info.
 
 #+CAPTION: Battery saver options
-#+attr_html: :width 300px
-#+attr_latex: :width 300px
+#+attr_html: :height 600px
+#+attr_latex: :height 300px
 [[./res/app-info-battery-saver.jpg]]
 
 ** Enable always-on notifications
@@ -46,8 +50,8 @@ should now appear in the notification drawer. This notification
 appears as soon as the notification listener is connected an running.
 
 #+CAPTION: Always On Notification
-#+attr_html: :width 300px
-#+attr_latex: :width 300px
+#+attr_html: :height 400px
+#+attr_latex: :height 300px
 [[./res/notification-always-on.jpg]]
 
 
