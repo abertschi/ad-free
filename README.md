@@ -37,8 +37,8 @@ See [Troubleshooting](./troubleshooting/) section for help to get
 ad-free up and running.
 
 ## Changelog
-- See [Changelog](./CHANGELOG.md) for a list of implemented features
-  in new releases.
+See [Changelog](./CHANGELOG.md) for a list of implemented features
+in new releases.
   
 ## Implementation notes
 ### Ad detection
