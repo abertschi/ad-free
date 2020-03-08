@@ -1,0 +1,68 @@
+#+TITLE: Troubleshooting ad-free
+
+This pages describes common steps how to troubleshoot ad-free in case
+ad blocking does not work.
+
+Pictures below are based on version v2.1. They may slightly
+change later versions.
+
+** Reinstall ad-free
+Remove and reinstall ad-free. Upon first usage you are asked to grant
+notification access. Whether the notification service successfully
+connected can be seen in settings (three dots in about fragment) in
+the version segment. You can touch the _notification service is
+connected_ / _notification service is disconnected_ text to launch
+notification access settings to re-grant access.
+
+#+CAPTION: Notification service status
+#+attr_html: :width 500px
+#+attr_latex: :width 500px
+[[./res/img-not-service-conn.jpg]]
+
+** Enable autostart
+Some flavors of Android support an autostart option. Go to Android app info
+and enable auto start.
+
+#+CAPTION: App info activity
+#+attr_html: :width 300px
+#+attr_latex: :width 300px
+[[./res/app-info-autostart.jpg]]
+
+
+** Disable battery saver
+Remove ad-free from the list of battery saved apps. This option can be
+found in Android app info.
+
+#+CAPTION: Battery saver options
+#+attr_html: :width 300px
+#+attr_latex: :width 300px
+[[./res/app-info-battery-saver.jpg]]
+
+** Enable always-on notifications
+On some flavors of Android ad-free is being killed if the activity
+runs in background. Go to ad-free settings (three dots in about
+fragment) and enable always-on option. A foreground notification
+should now appear in the notification drawer. This notification
+appears as soon as the notification listener is connected an running.
+
+#+CAPTION: Always On Notification
+#+attr_html: :width 300px
+#+attr_latex: :width 300px
+[[./res/notification-always-on.jpg]]
+
+
+** Advanced steps
+*** Check if notification listener works
+Enable developer mode in ad-free by clicking multiple times on the
+title in the ad detectors screen. Go to ad-free settings (three dots)
+/ ad detectors. Enable the detector _Dummy global_ which flags each
+incoming notification as advertisement. If audio is not being blocked
+then there is an issue with the notification listener. File an issue
+on Github; https://github.com/abertschi/ad-free/issues.
+
+*** Record notifications for a new detector.
+Unlock developer mode as described above. Enable Spotify tracer and
+submit the recording file as an issue on Github. The notification dump
+can help adding support for new devices.
+
+

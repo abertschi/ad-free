@@ -30,6 +30,14 @@ runtime. Nontheless, ad-free may be against terms of services of music
 players. Muting commercials may not be supported and may result in a
 temporary ban. Use at your own risk.
 
+## Troubleshooting
+See [Troubleshooting](./troubleshooting/) section for help to get
+ad-free up and running.
+
+## Changelog
+- See [Changelog](./CHANGELOG.md) for a list of implemented features
+  in new releases.
+  
 ## Implementation notes
 ### Ad detection
 Advertisement detectors are modularized into implementations of [AdDetectable](./app/src/main/java/ch/abertschi/adfree/detector/AdDetectable.kt). An instance of `AdDetectable` can determine if a track being played is advertisement or not.
@@ -74,17 +82,10 @@ series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiAT
 Due to legal reasons and a rise in popularity, this feature is no
 longer supported. [See here](https://github.com/abertschi/ad-free/blob/master/rick_and_morty.md).
 
-## Release notes
-- See [Changelog](./CHANGELOG.md)
-
 ## Credits
 - The bird and website icons used in this app are made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
 
 - This app is written in Kotlin. [Kotlin](https://github.com/JetBrains/kotlin) by Jetbrains is lisenced by the Apache Lisence 2.0
-
-- [AppUpdater](https://github.com/javiersantos/AppUpdater) by javiersantos is licensed by the Apache License 2.0
-
-- [Videocache](https://github.com/danikula/AndroidVideoCache/blob/master/LICENSE) is made by danikula and is licensed by the Apache License 2.0
 
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid) by the RxAndroid authors is licensed by the Apache License 2.0
 - [Fuel](https://github.com/kittinunf/Fuel) is made by Kittinun Vantasin and is licensed by MIT
