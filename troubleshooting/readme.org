@@ -1,2 +1,2 @@
 * Troubleshooting
-- https://rawgit.com/abertschi/adfree/troubleshooting/troubleshooting.html
+- https://abertschi.github.io/ad-free/troubleshooting/troubleshooting.html

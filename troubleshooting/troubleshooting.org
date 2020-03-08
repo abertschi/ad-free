@@ -1,10 +1,10 @@
 #+TITLE: Troubleshooting ad-free
 
-This pages describes common steps how to troubleshoot ad-free in case
+This page describes common steps how to troubleshoot ad-free in case
 ad blocking does not work.
 
-Pictures below are based on version v2.1. They may slightly
-change later versions.
+Pictures below are based on version v2.0. They may slightly
+change in later versions.
 
 ** Reinstall ad-free
 Remove and reinstall ad-free. Upon first usage you are asked to grant
