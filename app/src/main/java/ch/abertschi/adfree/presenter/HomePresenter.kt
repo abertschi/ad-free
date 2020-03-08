@@ -78,4 +78,12 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
                 Uri.parse(remoteSetting?.versionUrl))
         this.homeView.startActivity(browserIntent)
     }
+
+    fun onTroubleshooting() {
+        val url = "https://abertschi.github.io/ad-free/troubleshooting/troubleshooting.html"
+        val browserIntent = Intent(Intent.ACTION_VIEW,
+                Uri.parse(url))
+        this.homeView.startActivity(browserIntent)
+
+    }
 }

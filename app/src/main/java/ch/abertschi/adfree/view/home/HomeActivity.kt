@@ -48,6 +48,11 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
         enjoySloganText = view.findViewById(R.id.enjoy) as TextView
         updateMessageInfo =
                 view.findViewById(R.id.version_update_reminder) as TextView
+
+        view.findViewById<TextView>(R.id.troubleshooting).onClick {
+            homePresenter.onTroubleshooting()
+        }
+
         homePresenter.onCreate(this.context!!)
 
         // TODO: this is debug code

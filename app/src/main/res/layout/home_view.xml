@@ -35,17 +35,34 @@
                     android:textColor="#C4BCAF"
                     android:textSize="@dimen/title_text_size"
                     android:textStyle="italic" />
+
             <TextView
-                    android:id="@+id/version_update_reminder"
+                    android:id="@+id/troubleshooting"
                     style="@style/AppTextView"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:inputType="textMultiLine|textNoSuggestions"
                     android:scrollHorizontally="false"
-                    android:text="a new version is available. touch here."
+                    android:text="> troubleshooting"
+                    android:textAlignment="textEnd"
+                    android:textColor="#C4BCAF"
+                    android:textSize="@dimen/normal_text_small" />
+
+
+            <TextView
+                    android:id="@+id/version_update_reminder"
+                    style="@style/AppTextView"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> a new version is available"
                     android:textAlignment="textEnd"
                     android:textColor="#C4BCAF"
                     android:textSize="@dimen/normal_text_small" />
