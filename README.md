@@ -72,7 +72,7 @@ therefore not affected by the mute of _STREAM MUSIC_.
 As the title of this plugin suggests, it only mutes adertisments without playing sound.
 
 ### Play local music
-Play music tracks (currently ``.mp3``, ``.wav``, and ``.m4a``) stored on your phone while advertisement is playing.
+Play music tracks stored on your phone while advertisement is playing. At the moment ``.mp3``, ``.wav``, and ``.m4a`` are supported.
 
 ### Interdimensional Cable (discontinued)
 _[Interdimensional
