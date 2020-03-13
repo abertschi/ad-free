@@ -10,7 +10,7 @@ https://adfree.abertschi.ch
 ## Features
 - No ROOT required
 - Turn off sound when advertisement is playing
-- Play arbitrary audio instead of advertisements
+- Play arbitrary audio instead of advertisements 
 - Plugin based design
 - Support for Spotify
 - Support for Soundcloud (experimental)
@@ -72,7 +72,7 @@ therefore not affected by the mute of _STREAM MUSIC_.
 As the title of this plugin suggests, it only mutes adertisments without playing sound.
 
 ### Play local music
-Play music tracks stored on your phone while advertisement is playing.
+Play music tracks (currently ``.mp3``, ``.wav``, and ``.m4a``) stored on your phone while advertisement is playing.
 
 ### Interdimensional Cable (discontinued)
 _[Interdimensional
