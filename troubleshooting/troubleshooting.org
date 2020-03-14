@@ -1,14 +1,21 @@
 #+TITLE: Troubleshooting ad-free
+#+HTML_HEAD: <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63061525-5"></script>
+#+HTML_HEAD_EXTRA: <script> window.dataLayer = window.dataLayer || [];
+#+HTML_HEAD_EXTRA:  function gtag(){dataLayer.push(arguments);}
+#+HTML_HEAD_EXTRA:  gtag('js', new Date());
+#+HTML_HEAD_EXTRA:  gtag('config', 'UA-63061525-5');
+#+HTML_HEAD_EXTRA: </script>
+
 
 ** About
-- This page describes common steps how to troubleshoot ad-free in case
+This page describes common steps how to troubleshoot ad-free in case
   ad blocking does not work.
 
 - Pictures below are based on version v2.0. They may slightly change in later versions.
 
-- Sourcecode: https://github.com/abertschi/ad-free
-
 - Landing page: https://adfree.abertschi.ch
+
+- Sourcecode: https://github.com/abertschi/ad-free
 
 ** Reinstall ad-free
 Remove and reinstall ad-free. Upon first usage you are asked to grant
