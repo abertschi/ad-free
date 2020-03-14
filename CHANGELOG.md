@@ -1,4 +1,6 @@
 # Changelog / Ad-Free
+### v2.2/36, 2020-03-14
+- add troubleshooting steps (#54)
 
 
 ### v2.1/35, 2020-02-29
