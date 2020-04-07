@@ -25,7 +25,7 @@ https://adfree.abertschi.ch
 This app is free and opensource and does not seek a comercial interest. It does not
 collect user data. It is a proof-of-concept to show
 flaws in the way how audio advertisement is often implemented on
-Android. Ad-free's algorithms are described below and it's source code is freely available.
+Android. Ad-free's algorithms are described below and its source code is freely available.
 It does not alter or "hack" protection measures of music players, and only
 gathers context information provided by the Android
 runtime. Nontheless, ad-free may be against terms of services of music
