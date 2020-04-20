@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-14 Sat 12:46 -->
+<!-- 2020-04-20 Mon 22:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Troubleshooting ad-free</title>
@@ -160,6 +160,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,50 +199,28 @@ gtag('js', new Date());
 gtag('config', 'UA-63061525-5');
 </script>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -239,15 +230,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcb3f4ee">1. About</a></li>
-<li><a href="#org73b082d">2. Reinstall ad-free</a></li>
-<li><a href="#org9ebc39f">3. Enable autostart</a></li>
-<li><a href="#org010a8a0">4. Disable battery saver</a></li>
-<li><a href="#org455fe99">5. Enable always-on notifications</a></li>
-<li><a href="#org0613963">6. Advanced steps</a>
+<li><a href="#org83c3687">1. About</a></li>
+<li><a href="#org7cbf2a2">2. Reinstall ad-free</a></li>
+<li><a href="#orgc498c8a">3. Enable autostart</a></li>
+<li><a href="#orgcad97dc">4. Disable battery saver</a></li>
+<li><a href="#orgb3b7366">5. Enable always-on notifications</a></li>
+<li><a href="#orge30dd4d">6. Advanced steps</a>
 <ul>
-<li><a href="#org8778f1a">6.1. Check if notification listener works</a></li>
-<li><a href="#org1b88f13">6.2. Record notifications for a new detector.</a></li>
+<li><a href="#orged31413">6.1. Check if notification listener works</a></li>
+<li><a href="#org65f7c04">6.2. Record notifications for a new detector.</a></li>
+</ul>
+</li>
+<li><a href="#org7984419">7. Miscellaneous</a>
+<ul>
+<li><a href="#org2a73c01">7.1. Issues with Bluetooth Headphones</a></li>
 </ul>
 </li>
 </ul>
@@ -255,26 +251,26 @@ for the JavaScript code in this tag.
 </div>
 
 
-<div id="outline-container-orgcb3f4ee" class="outline-2">
-<h2 id="orgcb3f4ee"><span class="section-number-2">1</span> About</h2>
+<div id="outline-container-org83c3687" class="outline-2">
+<h2 id="org83c3687"><span class="section-number-2">1</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This page describes common steps how to troubleshoot ad-free in case
-  ad blocking does not work.
+ad blocking does not work.
 </p>
 
 <ul class="org-ul">
 <li>Pictures below are based on version v2.0. They may slightly change in later versions.</li>
 
-<li>Sourcecode: <a href="https://github.com/abertschi/ad-free">https://github.com/abertschi/ad-free</a></li>
-
 <li>Landing page: <a href="https://adfree.abertschi.ch">https://adfree.abertschi.ch</a></li>
+
+<li>Sourcecode: <a href="https://github.com/abertschi/ad-free">https://github.com/abertschi/ad-free</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org73b082d" class="outline-2">
-<h2 id="org73b082d"><span class="section-number-2">2</span> Reinstall ad-free</h2>
+<div id="outline-container-org7cbf2a2" class="outline-2">
+<h2 id="org7cbf2a2"><span class="section-number-2">2</span> Reinstall ad-free</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Remove and reinstall ad-free. Upon first usage you are asked to grant
@@ -294,8 +290,8 @@ notification access settings to re-grant access.
 </div>
 </div>
 
-<div id="outline-container-org9ebc39f" class="outline-2">
-<h2 id="org9ebc39f"><span class="section-number-2">3</span> Enable autostart</h2>
+<div id="outline-container-orgc498c8a" class="outline-2">
+<h2 id="orgc498c8a"><span class="section-number-2">3</span> Enable autostart</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Some flavors of Android support an autostart option. Go to Android app info
@@ -312,8 +308,8 @@ and enable auto start.
 </div>
 
 
-<div id="outline-container-org010a8a0" class="outline-2">
-<h2 id="org010a8a0"><span class="section-number-2">4</span> Disable battery saver</h2>
+<div id="outline-container-orgcad97dc" class="outline-2">
+<h2 id="orgcad97dc"><span class="section-number-2">4</span> Disable battery saver</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Remove ad-free from the list of battery saved apps. This option can be
@@ -329,8 +325,8 @@ found in Android app info.
 </div>
 </div>
 
-<div id="outline-container-org455fe99" class="outline-2">
-<h2 id="org455fe99"><span class="section-number-2">5</span> Enable always-on notifications</h2>
+<div id="outline-container-orgb3b7366" class="outline-2">
+<h2 id="orgb3b7366"><span class="section-number-2">5</span> Enable always-on notifications</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 On some flavors of Android ad-free is being killed if the activity
@@ -350,12 +346,12 @@ appears as soon as the notification listener is connected an running.
 </div>
 
 
-<div id="outline-container-org0613963" class="outline-2">
-<h2 id="org0613963"><span class="section-number-2">6</span> Advanced steps</h2>
+<div id="outline-container-orge30dd4d" class="outline-2">
+<h2 id="orge30dd4d"><span class="section-number-2">6</span> Advanced steps</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org8778f1a" class="outline-3">
-<h3 id="org8778f1a"><span class="section-number-3">6.1</span> Check if notification listener works</h3>
+<div id="outline-container-orged31413" class="outline-3">
+<h3 id="orged31413"><span class="section-number-3">6.1</span> Check if notification listener works</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Enable developer mode in ad-free by clicking multiple times on the
@@ -368,8 +364,8 @@ on Github; <a href="https://github.com/abertschi/ad-free/issues">https://github.
 </div>
 </div>
 
-<div id="outline-container-org1b88f13" class="outline-3">
-<h3 id="org1b88f13"><span class="section-number-3">6.2</span> Record notifications for a new detector.</h3>
+<div id="outline-container-org65f7c04" class="outline-3">
+<h3 id="org65f7c04"><span class="section-number-3">6.2</span> Record notifications for a new detector.</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Unlock developer mode as described above. Enable Spotify tracer and
@@ -379,10 +375,25 @@ can help adding support for new devices.
 </div>
 </div>
 </div>
+
+
+<div id="outline-container-org7984419" class="outline-2">
+<h2 id="org7984419"><span class="section-number-2">7</span> Miscellaneous</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-org2a73c01" class="outline-3">
+<h3 id="org2a73c01"><span class="section-number-3">7.1</span> Issues with Bluetooth Headphones</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+See <a href="https://github.com/abertschi/ad-free/issues/64">https://github.com/abertschi/ad-free/issues/64</a> for troubleshooting steps.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2020-03-14 Sat 12:46</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2020-04-20 Mon 22:39</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

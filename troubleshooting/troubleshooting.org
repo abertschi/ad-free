@@ -9,7 +9,7 @@
 
 ** About
 This page describes common steps how to troubleshoot ad-free in case
-  ad blocking does not work.
+ad blocking does not work.
 
 - Pictures below are based on version v2.0. They may slightly change in later versions.
 
@@ -77,3 +77,6 @@ submit the recording file as an issue on Github. The notification dump
 can help adding support for new devices.
 
 
+** Miscellaneous
+*** Issues with Bluetooth Headphones
+See https://github.com/abertschi/ad-free/issues/64 for troubleshooting steps.
