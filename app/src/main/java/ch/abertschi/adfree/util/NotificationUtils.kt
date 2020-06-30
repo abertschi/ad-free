@@ -63,7 +63,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(title)
-                .setSmallIcon(R.mipmap.icon)
+                .setSmallIcon(R.mipmap.adfree_logo)
                 .setPriority(priority)
                 .setContentIntent(dismissIntent)
 
