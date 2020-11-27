@@ -8,7 +8,7 @@ To keep listening to "Two brothers" and such, download
 interdimensional cable on your own and use the local
 music plugin to play local audio tracks instead.
 
-During the weekend of 19-11-17, ad-free got alot of traffic on it's
+During the weekend of 19-11-17, ad-free received much of traffic on its
 download page. As I don't track downloads or usage data by design,
 traffic on the download site is just a proxy. Nontheless, the rise in
 popularity made me decide to discontinue the interdimensional cable
