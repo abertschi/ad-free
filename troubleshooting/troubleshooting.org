@@ -61,8 +61,32 @@ appears as soon as the notification listener is connected an running.
 #+attr_latex: :height 300px
 [[./res/notification-always-on.jpg]]
 
+** Avoiding false-positives
+A false-positive may be resolved with a new ad-detector. You can try to
+screenshot the Spotify notification which caused the false-positive and file an
+issue on Github.
+
+Alternatively, we recommend to disable non-playback related notifications in the Android app settings for Spotify.
+
+#+CAPTION: Disable non-playback related notifications
+#+attr_html: :height 700px
+#+attr_latex: :height 300px
+[[./res/spotify-notifications.jpg]]
+
+
 
 ** Advanced steps
+*** Enable Developer Mode
+Ad-free supports a developer mode to test experimental features. Enable
+developer mode in ad-free by clicking multiple times on the title in the ad
+detectors screen. Go to ad-free settings (three dots) / ad detectors.
+
+#+CAPTION: Enable developer mode
+#+attr_html: :height 700px
+#+attr_latex: :height 300px
+[[./res/dev-mode.jpg]]
+
+
 *** Check if notification listener works
 Enable developer mode in ad-free by clicking multiple times on the
 title in the ad detectors screen. Go to ad-free settings (three dots)
