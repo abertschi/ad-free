@@ -17,6 +17,12 @@ ad blocking does not work.
 
 - Sourcecode: https://github.com/abertschi/ad-free
 
+
+#+attr_html: :height 300px
+#+attr_latex: :height 300px
+[[./res/logo.png]]
+
+
 ** Reinstall ad-free
 Remove and reinstall ad-free. Upon first usage you are asked to grant
 notification access. Whether the notification service successfully
