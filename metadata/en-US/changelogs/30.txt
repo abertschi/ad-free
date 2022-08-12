@@ -1,3 +1,0 @@
-- Update fdroid store information
-- Introduce more supported audio formats for local music: mp3, wav, m4a
-- internal: update build tools

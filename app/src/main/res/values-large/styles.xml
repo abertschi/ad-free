@@ -1,5 +1,0 @@
-<resources>
-    <style name="AppTextView" parent="AppTheme">
-        <item name="android:gravity">left</item>
-    </style>
-</resources>

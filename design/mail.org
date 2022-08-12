@@ -1,6 +1,0 @@
-* Issue
-https://github.com/abertschi/ad-free/issues/63
-
-* Author
-Janis Bitta design(at)jbitta.de
-
