@@ -1,10 +1,7 @@
 package ch.abertschi.adfree.view.mod
 
 import ch.abertschi.adfree.AdFreeApplication
-import ch.abertschi.adfree.detector.AbstractDebugTracer
-import ch.abertschi.adfree.detector.AdDetectable
-import ch.abertschi.adfree.detector.ScNotificationDebugTracer
-import ch.abertschi.adfree.detector.SpotifyNotificationDebugTracer
+import ch.abertschi.adfree.detector.*
 import org.jetbrains.anko.AnkoLogger
 
 class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
@@ -25,6 +22,10 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
     fun showAdditionalInfoFor(d: AdDetectable, enable: Boolean) {
         if (d is AbstractDebugTracer && enable) {
             view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available, check permissions"))
+        }
+
+        if (d is TextDetector && enable) {
+            // launch activity
         }
     }
 }

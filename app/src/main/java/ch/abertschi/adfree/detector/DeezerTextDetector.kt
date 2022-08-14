@@ -3,14 +3,22 @@ package ch.abertschi.adfree.detector
 import android.app.Notification
 import org.jetbrains.anko.AnkoLogger
 
-class ScDetector : AdDetectable, AnkoLogger {
+class DeezerTextDetector : AdDetectable, AnkoLogger {
 
-    private val keyword: String = "advertisement"
-    private val pack = "com.soundcloud.android"
+    private val keyword: String = "deezer"
+    private val pack = "deezer.android"
 
     override fun canHandle(payload: AdPayload): Boolean {
         return payload?.statusbarNotification?.key?.toLowerCase()?.contains(pack) ?: false
     }
+
+//    Format:
+//    <string>android.title</string>
+//    <string>Deezer</string>
+//    <string>android.reduced.images</string>
+//    <boolean>true</boolean>
+//    <string>android.subText</string>
+//    <null/>
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         val extras = payload.statusbarNotification?.notification?.extras
@@ -22,9 +30,9 @@ class ScDetector : AdDetectable, AnkoLogger {
     }
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
-        "Soundcloud", "experimental detector for soundcloud (english)",
-        false,
-        category = "Soundcloud",
+        "Deezer", "notification text based detector for deezer",
+        true,
+        category = "Deezer",
         debugOnly = false
     )
 }

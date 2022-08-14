@@ -43,6 +43,7 @@ class AdFreeApplication : Application(), AnkoLogger {
     lateinit var remoteManager: RemoteManager
     lateinit var notificationStatus: NotificationStatusManager
     lateinit var googleCast: GoogleCastManager
+    lateinit var textRepository: TextRepository
 
     lateinit var mainActivity: Activity
 
@@ -51,6 +52,7 @@ class AdFreeApplication : Application(), AnkoLogger {
         Thread.setDefaultUncaughtExceptionHandler(CrashExceptionHandler(this))
 
         prefs = PreferencesFactory(applicationContext)
+        textRepository =  TextRepository(this, prefs)
 
         googleCast = GoogleCastManager(prefs)
         notificationStatus = NotificationStatusManager(applicationContext)
