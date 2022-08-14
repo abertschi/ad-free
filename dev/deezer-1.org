@@ -1,0 +1,338 @@
+<android.service.notification.StatusBarNotification>
+  <groupKey>0|deezer.android.app|412|null|10299</groupKey>
+  <id>412</id>
+  <initialPid>27029</initialPid>
+  <key>0|deezer.android.app|412|null|10299</key>
+  <notification>
+    <actions>
+      <android.app.Notification_-Action>
+        <actionIntent>
+          <mTarget class="android.content.IIntentSender$Stub$Proxy">
+            <mRemote class="android.os.BinderProxy"/>
+          </mTarget>
+          <mWhitelistToken class="android.os.BinderProxy"/>
+        </actionIntent>
+        <icon>2131232521</icon>
+        <mAllowGeneratedReplies>true</mAllowGeneratedReplies>
+        <mExtras>
+          <mFlags>1537</mFlags>
+          <mParcelledByNative>false</mParcelledByNative>
+          <mParcelledData>
+            <mClassCookies>
+              <mArray>
+                <java-class>android.app.PendingIntent</java-class>
+                <android.os.BinderProxy reference="../../../../../actionIntent/mWhitelistToken"/>
+                <null/>
+                <null/>
+                <null/>
+                <null/>
+                <null/>
+                <null/>
+              </mArray>
+              <mHashes>
+                <int>84567626</int>
+                <int>0</int>
+                <int>0</int>
+                <int>0</int>
+              </mHashes>
+              <mIdentityHashCode>false</mIdentityHashCode>
+              <mSize>1</mSize>
+            </mClassCookies>
+            <mNativePtr>496108840144</mNativePtr>
+            <mNativeSize>0</mNativeSize>
+            <mOwnsNativeParcelObject>true</mOwnsNativeParcelObject>
+            <mReadWriteHelper/>
+          </mParcelledData>
+        </mExtras>
+        <mIcon>
+          <mInt1>2131232521</mInt1>
+          <mInt2>0</mInt2>
+          <mString1></mString1>
+          <mType>2</mType>
+        </mIcon>
+        <mSemanticAction>0</mSemanticAction>
+        <title class="string">Play</title>
+      </android.app.Notification_-Action>
+      <android.app.Notification_-Action>
+        <actionIntent>
+          <mTarget class="android.content.IIntentSender$Stub$Proxy">
+            <mRemote class="android.os.BinderProxy"/>
+          </mTarget>
+          <mWhitelistToken class="android.os.BinderProxy" reference="../../../android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+        </actionIntent>
+        <icon>2131231878</icon>
+        <mAllowGeneratedReplies>true</mAllowGeneratedReplies>
+        <mExtras>
+          <mFlags>1537</mFlags>
+          <mParcelledByNative>false</mParcelledByNative>
+          <mParcelledData>
+            <mClassCookies reference="../../../../android.app.Notification_-Action/mExtras/mParcelledData/mClassCookies"/>
+            <mNativePtr>496108837696</mNativePtr>
+            <mNativeSize>0</mNativeSize>
+            <mOwnsNativeParcelObject>true</mOwnsNativeParcelObject>
+            <mReadWriteHelper reference="../../../../android.app.Notification_-Action/mExtras/mParcelledData/mReadWriteHelper"/>
+          </mParcelledData>
+        </mExtras>
+        <mIcon>
+          <mInt1>2131231878</mInt1>
+          <mInt2>0</mInt2>
+          <mString1></mString1>
+          <mType>2</mType>
+        </mIcon>
+        <mSemanticAction>0</mSemanticAction>
+        <title class="string">disconnect</title>
+      </android.app.Notification_-Action>
+    </actions>
+    <allPendingIntents>
+      <mArray>
+        <android.app.PendingIntent>
+          <mTarget class="android.content.IIntentSender$Stub$Proxy">
+            <mRemote class="android.os.BinderProxy" reference="../../../../../actions/android.app.Notification_-Action[2]/actionIntent/mTarget/mRemote"/>
+          </mTarget>
+          <mWhitelistToken class="android.os.BinderProxy" reference="../../../../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+        </android.app.PendingIntent>
+        <android.app.PendingIntent>
+          <mTarget class="android.content.IIntentSender$Stub$Proxy">
+            <mRemote class="android.os.BinderProxy"/>
+          </mTarget>
+          <mWhitelistToken class="android.os.BinderProxy" reference="../../../../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+        </android.app.PendingIntent>
+        <android.app.PendingIntent>
+          <mTarget class="android.content.IIntentSender$Stub$Proxy">
+            <mRemote class="android.os.BinderProxy" reference="../../../../../actions/android.app.Notification_-Action/actionIntent/mTarget/mRemote"/>
+          </mTarget>
+          <mWhitelistToken class="android.os.BinderProxy" reference="../../../../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+        </android.app.PendingIntent>
+        <android.app.PendingIntent>
+          <mTarget class="android.content.IIntentSender$Stub$Proxy">
+            <mRemote class="android.os.BinderProxy"/>
+          </mTarget>
+          <mWhitelistToken class="android.os.BinderProxy" reference="../../../../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+        </android.app.PendingIntent>
+      </mArray>
+      <mHashes>
+        <int>39717480</int>
+        <int>75557670</int>
+        <int>133030759</int>
+        <int>229002881</int>
+      </mHashes>
+      <mIdentityHashCode>false</mIdentityHashCode>
+      <mSize>4</mSize>
+    </allPendingIntents>
+    <audioAttributes>
+      <mContentType>4</mContentType>
+      <mFlags>2048</mFlags>
+      <mFormattedTags></mFormattedTags>
+      <mSource>-1</mSource>
+      <mTags/>
+      <mUsage>5</mUsage>
+    </audioAttributes>
+    <audioStreamType>-1</audioStreamType>
+    <category>transport</category>
+    <color>0</color>
+    <contentIntent>
+      <mTarget class="android.content.IIntentSender$Stub$Proxy">
+        <mRemote class="android.os.BinderProxy" reference="../../../allPendingIntents/mArray/android.app.PendingIntent[4]/mTarget/mRemote"/>
+      </mTarget>
+      <mWhitelistToken class="android.os.BinderProxy" reference="../../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+    </contentIntent>
+    <creationTime>1660507675822</creationTime>
+    <defaults>0</defaults>
+    <deleteIntent>
+      <mTarget class="android.content.IIntentSender$Stub$Proxy">
+        <mRemote class="android.os.BinderProxy" reference="../../../allPendingIntents/mArray/android.app.PendingIntent[2]/mTarget/mRemote"/>
+      </mTarget>
+      <mWhitelistToken class="android.os.BinderProxy" reference="../../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+    </deleteIntent>
+    <extras>
+      <mFlags>1281</mFlags>
+      <mMap>
+        <mArray>
+          <string>android.title</string>
+          <string>Deezer</string>
+          <string>android.reduced.images</string>
+          <boolean>true</boolean>
+          <string>android.subText</string>
+          <null/>
+          <string>android.template</string>
+          <string>android.app.Notification$MediaStyle</string>
+          <string>android.showChronometer</string>
+          <boolean>false</boolean>
+          <string>android.text</string>
+          <null/>
+          <string>android.progress</string>
+          <int>0</int>
+          <string>android.progressMax</string>
+          <int>0</int>
+          <string>android.appInfo</string>
+          <android.content.pm.ApplicationInfo>
+            <banner>0</banner>
+            <icon>2131689472</icon>
+            <labelRes>2131886111</labelRes>
+            <logo>0</logo>
+            <name>deezer.android.app.DZMidlet</name>
+            <packageName>deezer.android.app</packageName>
+            <showUserIcon>-10000</showUserIcon>
+            <appComponentFactory>androidx.core.app.CoreComponentFactory</appComponentFactory>
+            <category>1</category>
+            <className>deezer.android.app.DZMidlet</className>
+            <compatibleWidthLimitDp>0</compatibleWidthLimitDp>
+            <compileSdkVersion>31</compileSdkVersion>
+            <compileSdkVersionCodename>12</compileSdkVersionCodename>
+            <credentialProtectedDataDir>/data/user/0/deezer.android.app</credentialProtectedDataDir>
+            <dataDir>/data/user/0/deezer.android.app</dataDir>
+            <descriptionRes>0</descriptionRes>
+            <deviceProtectedDataDir>/data/user_de/0/deezer.android.app</deviceProtectedDataDir>
+            <enabled>true</enabled>
+            <enabledSetting>0</enabledSetting>
+            <flags>551042660</flags>
+            <fullBackupContent>0</fullBackupContent>
+            <installLocation>0</installLocation>
+            <largestWidthLimitDp>0</largestWidthLimitDp>
+            <longVersionCode>7000903</longVersionCode>
+            <mHiddenApiPolicy>-1</mHiddenApiPolicy>
+            <maxAspectRatio>0.0</maxAspectRatio>
+            <minSdkVersion>23</minSdkVersion>
+            <nativeLibraryDir>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/lib/arm64</nativeLibraryDir>
+            <nativeLibraryRootDir>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/lib</nativeLibraryRootDir>
+            <nativeLibraryRootRequiresIsa>true</nativeLibraryRootRequiresIsa>
+            <networkSecurityConfigRes>2132148230</networkSecurityConfigRes>
+            <primaryCpuAbi>arm64-v8a</primaryCpuAbi>
+            <privateFlags>-1946155760</privateFlags>
+            <processName>deezer.android.app</processName>
+            <publicSourceDir>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/base.apk</publicSourceDir>
+            <requiresSmallestWidthDp>0</requiresSmallestWidthDp>
+            <resourceDirs>
+              <string>/system/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk</string>
+            </resourceDirs>
+            <scanPublicSourceDir>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==</scanPublicSourceDir>
+            <scanSourceDir>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==</scanSourceDir>
+            <seInfo>default:targetSdkVersion=30</seInfo>
+            <seInfoUser>:complete</seInfoUser>
+            <sourceDir>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/base.apk</sourceDir>
+            <splitClassLoaderNames>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+            </splitClassLoaderNames>
+            <splitNames>
+              <string>config.arm64_v8a</string>
+              <string>config.de</string>
+              <string>config.en</string>
+              <string>config.es</string>
+              <string>config.xxhdpi</string>
+            </splitNames>
+            <splitPublicSourceDirs>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.arm64_v8a.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.de.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.en.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.es.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.xxhdpi.apk</string>
+            </splitPublicSourceDirs>
+            <splitSourceDirs>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.arm64_v8a.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.de.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.en.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.es.apk</string>
+              <string>/data/app/~~wutItAyQPNs1NvNE0Z4c-Q==/deezer.android.app-fYdk1X5ZGAfQafw7DlSqbQ==/split_config.xxhdpi.apk</string>
+            </splitSourceDirs>
+            <storageUuid>41217664-9172-527a-b3d5-edabb50a7d69</storageUuid>
+            <targetSandboxVersion>1</targetSandboxVersion>
+            <targetSdkVersion>30</targetSdkVersion>
+            <taskAffinity>deezer.android.app</taskAffinity>
+            <theme>2131952224</theme>
+            <uiOptions>0</uiOptions>
+            <uid>10299</uid>
+            <versionCode>7000903</versionCode>
+          </android.content.pm.ApplicationInfo>
+          <string>android.showWhen</string>
+          <boolean>false</boolean>
+          <string>android.largeIcon</string>
+          <android.graphics.drawable.Icon>
+            <mInt1>0</mInt1>
+            <mInt2>0</mInt2>
+            <mObj1 class="android.graphics.Bitmap">
+              <mDensity>420</mDensity>
+              <mHeight>336</mHeight>
+              <mNativePtr>495303330256</mNativePtr>
+              <mRecycled>false</mRecycled>
+              <mRequestPremultiplied>true</mRequestPremultiplied>
+              <mWidth>336</mWidth>
+            </mObj1>
+            <mType>1</mType>
+          </android.graphics.drawable.Icon>
+          <string>android.infoText</string>
+          <null/>
+          <string>android.mediaSession</string>
+          <android.media.session.MediaSession_-Token>
+            <mBinder class="android.media.session.ISessionController$Stub$Proxy">
+              <mRemote class="android.os.BinderProxy"/>
+            </mBinder>
+          </android.media.session.MediaSession_-Token>
+          <string>android.progressIndeterminate</string>
+          <boolean>false</boolean>
+          <string>android.remoteInputHistory</string>
+          <null/>
+          <string>android.compactActions</string>
+          <int-array>
+            <int>0</int>
+            <int>1</int>
+          </int-array>
+        </mArray>
+        <mHashes>
+          <int>-2079427047</int>
+          <int>-1991887865</int>
+          <int>-1730887922</int>
+          <int>-1349298919</int>
+          <int>-1229235702</int>
+          <int>-1036913332</int>
+          <int>-1028830516</int>
+          <int>-1003200776</int>
+          <int>-656621072</int>
+          <int>-366494602</int>
+          <int>-102440555</int>
+          <int>150183834</int>
+          <int>252699441</int>
+          <int>752074063</int>
+          <int>882527919</int>
+          <int>1264827833</int>
+        </mHashes>
+        <mIdentityHashCode>false</mIdentityHashCode>
+        <mSize>16</mSize>
+      </mMap>
+      <mParcelledByNative>false</mParcelledByNative>
+    </extras>
+    <flags>0</flags>
+    <icon>2131232475</icon>
+    <iconLevel>0</iconLevel>
+    <ledARGB>0</ledARGB>
+    <ledOffMS>0</ledOffMS>
+    <ledOnMS>0</ledOnMS>
+    <mBadgeIcon>0</mBadgeIcon>
+    <mChannelId>playback</mChannelId>
+    <mGroupAlertBehavior>0</mGroupAlertBehavior>
+    <mLargeIcon reference="../extras/mMap/mArray/android.graphics.drawable.Icon"/>
+    <mSmallIcon>
+      <mInt1>2131232475</mInt1>
+      <mInt2>0</mInt2>
+      <mString1>deezer.android.app</mString1>
+      <mType>2</mType>
+    </mSmallIcon>
+    <mTimeout>0</mTimeout>
+    <mUsesStandardHeader>false</mUsesStandardHeader>
+    <mWhitelistToken class="android.os.BinderProxy" reference="../actions/android.app.Notification_-Action/actionIntent/mWhitelistToken"/>
+    <number>0</number>
+    <priority>1</priority>
+    <visibility>1</visibility>
+    <when>1660507675820</when>
+  </notification>
+  <opPkg>deezer.android.app</opPkg>
+  <pkg>deezer.android.app</pkg>
+  <postTime>1660507675827</postTime>
+  <uid>10299</uid>
+  <user>
+    <mHandle>0</mHandle>
+  </user>
+</android.service.notification.StatusBarNotification>
