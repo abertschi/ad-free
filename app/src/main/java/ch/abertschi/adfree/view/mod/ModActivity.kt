@@ -32,8 +32,10 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
     private var enabledSwitch: SwitchCompat? = null
     private var alwaysOnSwitch: SwitchCompat? = null
     private lateinit var presenter: ModPresenter
+    private var onCreateActive = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        onCreateActive = true;
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mod_activity)
 
@@ -95,15 +97,21 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                presenter.onDelayChanged(progress)
+                if (!onCreateActive){
+                    presenter.onDelayChanged(progress)
+                }
+
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                presenter.onDelayChanged(seekBar!!.progress)
+                if (!onCreateActive) {
+                    presenter.onDelayChanged(seekBar!!.progress)
+                }
             }
         })
 
         presenter.onCreate(this)
+        onCreateActive = false;
     }
 
     fun showDetectorCount(active: Int, total: Int) {
