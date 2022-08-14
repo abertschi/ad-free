@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+# requires jdk 11 or later
+
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 readonly PROJ_ROOT=$SCRIPT_DIR/../
 readonly BUILD_DIR=$SCRIPT_DIR/build
