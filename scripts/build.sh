@@ -27,6 +27,7 @@ if [[ ! -d $SDK_DIR ]]; then
 fi
 
 export ANDROID_HOME=$PWD/sdk-tools-linux
+unset ANDROID_SDK_ROOT
 export PATH=$PATH:$PWD/sdk-tools-linux/platform-tools/
 
 cd $PROJ_ROOT
