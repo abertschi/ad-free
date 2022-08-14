@@ -68,12 +68,6 @@ class SettingsPresenter(val settingView: SettingsView,
             setActivePlugin(index)
         }
         setPluginView()
-
-        Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe {
-            settingView?.signalizeTryOut()
-        }
     }
 
     fun tryPlugin() {

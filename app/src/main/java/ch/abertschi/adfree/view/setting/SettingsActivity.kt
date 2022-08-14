@@ -14,7 +14,6 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +22,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.SettingsModul
 import ch.abertschi.adfree.plugin.PluginActivityAction
@@ -38,7 +38,10 @@ import org.jetbrains.anko.toast
  */
 
 class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
-    override fun activity(): Fragment = this
+    override fun activity(): Activity {
+        var app = context.applicationContext as AdFreeApplication
+        return app.mainActivity
+    }
 
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
@@ -52,8 +55,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
     lateinit var settingPresenter: SettingsPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater?.inflate(R.layout.setting_view, container, false)
     }
 
@@ -62,8 +67,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     }
 
     override fun setPluginView(view: View) {
-        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
         pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view) as LinearLayout
         clearPluginView()
@@ -87,8 +94,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         settingsTitle?.text = Html.fromHtml(text)
 
         spinner = view?.findViewById(R.id.spinner) as Spinner
-        spinnerAdapter = PluginSpinnerAdapter(this.activity!!, R.layout.replacer_setting_item,
-                settingPresenter.getStringEntriesOfModel(), spinner!!, view)
+        spinnerAdapter = PluginSpinnerAdapter(
+            this.activity!!, R.layout.replacer_setting_item,
+            settingPresenter.getStringEntriesOfModel(), spinner!!, view
+        )
         spinner?.adapter = spinnerAdapter
 
         spinner?.onItemSelectedListener {
@@ -103,10 +112,10 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
             settingPresenter.tryPlugin()
         }
         view.findViewById<LinearLayout>(R.id.setting_spinner_item_container)
-                ?.setOnTouchListener { v, event ->
-                    spinner?.performClick()
-                    false
-                }
+            ?.setOnTouchListener { v, event ->
+                spinner?.performClick()
+                false
+            }
 
         settingPresenter.onCreate()
         init = true
@@ -122,14 +131,17 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        super.startActivityForResult(intent, requestCode, options)
+        // Fragment may be detached. avoid illegal state exception
+        // by using last activity to perform action
+        var act = this.activity as Activity
+        act.startActivityForResult(intent, requestCode, options)
     }
 
     override fun getContext(): Context = this.activity!!
 
     override fun showSuggestNewPlugin() {
         val browserIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
         this.context.startActivity(browserIntent)
     }
 
@@ -142,16 +154,13 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         callablesOnActivityResult.forEach { it(requestCode, resultCode, data) }
     }
 
-    override fun addOnActivityResult(callable: (requestCode: Int, resultCode: Int, data: Intent?)
-    -> Unit) {
+    override fun addOnActivityResult(
+        callable: (requestCode: Int, resultCode: Int, data: Intent?)
+        -> Unit
+    ) {
         callablesOnActivityResult.add(callable)
     }
 
     override fun signalizeTryOut() {
-        // TODO: crashes
-//        YoYo.with(Techniques.Shake)
-//                .duration(800)
-//                .repeat(0)
-//                .playOn(activity?.findViewById(R.id.try_plugin_button))
     }
 }

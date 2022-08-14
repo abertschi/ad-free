@@ -6,7 +6,9 @@
 
 package ch.abertschi.adfree
 
+import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.AsyncTask
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.plugin.AdPlugin
@@ -41,6 +43,8 @@ class AdFreeApplication : Application(), AnkoLogger {
     lateinit var remoteManager: RemoteManager
     lateinit var notificationStatus: NotificationStatusManager
     lateinit var googleCast: GoogleCastManager
+
+    lateinit var mainActivity: Activity
 
     override fun onCreate() {
         super.onCreate()

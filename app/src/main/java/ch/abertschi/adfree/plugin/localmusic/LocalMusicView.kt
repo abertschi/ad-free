@@ -23,14 +23,14 @@ import org.jetbrains.anko.runOnUiThread
 
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SwitchCompat
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.view.ViewSettings
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 29.08.17.
  */
-class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger, Application.ActivityLifecycleCallbacks {
-
-    private lateinit var audioDirDialog: AlertDialog
+class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger {
     private lateinit var viewInstance: View
 
     private lateinit var presenter: LocalMusicPlugin
@@ -40,19 +40,6 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         val inflater = LayoutInflater.from(context)
         viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
         setupUi()
-        audioDirDialog = AlertDialog.Builder(context)
-            .setTitle("Audio directory")
-            .setView(LayoutInflater.from(this.context).inflate(R.layout.choose_audio_dir, null))
-            .setPositiveButton(android.R.string.yes) { dialog, which ->
-                showDirectoryChooser()
-            }
-            .setOnDismissListener {
-                showDirectoryChooser()
-            }
-            .create()
-        if (context is Activity) {
-            context.application.registerActivityLifecycleCallbacks(this)
-        }
         return viewInstance
     }
 
@@ -125,8 +112,7 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     }
 
     fun showFolderSelectionDialog() {
-        audioDirDialog.show()
-        audioDirDialog.window?.setBackgroundDrawableResource(R.color.colorBackground)
+        showDirectoryChooser()
     }
 
     fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
@@ -165,31 +151,4 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     fun showAudioDirectoryPath(s: String) {
         viewInstance.findViewById<TextView>(R.id.music_dir_subtitle).text = s
     }
-
-    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-    }
-
-    override fun onActivityStarted(activity: Activity?) {
-
-    }
-
-    override fun onActivityResumed(activity: Activity?) {
-
-    }
-
-    override fun onActivityPaused(activity: Activity?) {
-        audioDirDialog.dismiss()
-    }
-
-    override fun onActivityStopped(activity: Activity?) {
-        audioDirDialog.dismiss()
-    }
-
-    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-    }
-
-    override fun onActivityDestroyed(activity: Activity?) {
-        audioDirDialog.dismiss()
-    }
-
 }
