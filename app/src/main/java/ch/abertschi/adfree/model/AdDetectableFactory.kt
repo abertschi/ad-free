@@ -54,8 +54,13 @@ class AdDetectableFactory(var context: Context,
 
     fun getAllDetectors() = adDetectors
 
+    fun getDetectorsForCategory(c: String) = getVisibleDetectors().filter { it.getMeta().category == c }
+
     fun getVisibleDetectors() =
         if (prefs.isDeveloperModeEnabled()) {
             getAllDetectors()
         } else adDetectors.filter { !it.getMeta().debugOnly }
+
+    fun getVisibleCategories() =
+        getVisibleDetectors().map {it.getMeta().category}.toHashSet().toList()
 }

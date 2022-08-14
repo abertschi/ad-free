@@ -104,7 +104,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoL
     }
 
     fun onLaunchActiveDetectorsView() {
-        val myIntent = Intent(this.context, ActiveDetectorActivity::class.java)
+        val myIntent = Intent(this.context, CategoriesActivity::class.java)
         this.context.startActivity(myIntent)
     }
 

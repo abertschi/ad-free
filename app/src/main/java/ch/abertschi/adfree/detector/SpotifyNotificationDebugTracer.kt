@@ -41,5 +41,6 @@ class SpotifyNotificationDebugTracer(val storageFolder: File?) : AdDetectable, A
     override fun getMeta(): AdDetectorMeta
             = AdDetectorMeta("Spotify tracer",
             "dump spotify notifications to a file. This is for debugging only. ", false,
+            category = "Developer",
             debugOnly = true)
 }

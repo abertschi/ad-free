@@ -28,7 +28,7 @@ class NotificationBundleAndroidTextDetector : AbstractStatusBarDetector(), AnkoL
                 val androidText: CharSequence? = bundle?.get("android.text") as CharSequence?
                 flagAsAd = androidText == null
                         && payload!!.statusbarNotification!!.notification!!
-                        .tickerText?.isNotEmpty() ?: false
+                    .tickerText?.isNotEmpty() ?: false
             }
             return flagAsAd
 
@@ -48,6 +48,9 @@ class NotificationBundleAndroidTextDetector : AbstractStatusBarDetector(), AnkoL
             error("Can not access notification bundle with reflection, $e")
         }
     }
-    override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Notification bundle", "spotify generic inspection of notification bundle")
+
+    override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
+        "Notification bundle", "spotify generic inspection of notification bundle",
+        category = "Spotify"
+    )
 }

@@ -10,10 +10,8 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
 
     private val detectorFactory = (view.applicationContext as AdFreeApplication).adDetectors
     private val prefs = (view.applicationContext as AdFreeApplication).prefs
-    private var tabCounterForDebug = 0
-    private val tabCounterForDebugThreshold = 5
 
-    fun getDetectors(): List<AdDetectable> = detectorFactory.getVisibleDetectors()
+    fun getDetectors(category: String) = detectorFactory.getDetectorsForCategory(category)
 
     fun isEnabled(d: AdDetectable) = detectorFactory.isEnabled(d)
 
@@ -33,19 +31,4 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
             view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available"))
         }
     }
-
-    fun onTabTitle() {
-        tabCounterForDebug ++
-        if (tabCounterForDebug > tabCounterForDebugThreshold) {
-            tabCounterForDebug = 0
-            if (prefs.isDeveloperModeEnabled()) {
-                prefs.setDeveloperMode(false)
-                view.hideEnabledDebug()
-            } else {
-                prefs.setDeveloperMode(true)
-                view.showEnabledDebug()
-            }
-        }
-    }
-
 }

@@ -41,5 +41,6 @@ class ScNotificationDebugTracer(val storageFolder: File?) : AdDetectable, AnkoLo
     override fun getMeta(): AdDetectorMeta
             = AdDetectorMeta("Soundcloud tracer",
             "dump soundcloud notifications to a file. This is for debugging only and drains more battery", false,
+            category = "Developer",
             debugOnly = true)
 }

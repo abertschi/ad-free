@@ -16,5 +16,6 @@ class DummySpotifyDetector:
     override fun getMeta(): AdDetectorMeta
             = AdDetectorMeta("Dummy spotify", "flag all spotify notifications as ads. " +
             "use this to test if notification listener works. for debugging only.",
+            category = "Developer",
             enabledByDef = false, debugOnly = true)
 }

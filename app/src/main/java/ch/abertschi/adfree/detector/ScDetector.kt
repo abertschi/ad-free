@@ -14,14 +14,17 @@ class ScDetector : AdDetectable, AnkoLogger {
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         val extras = payload.statusbarNotification?.notification?.extras
-        val title : String? = extras?.getString(Notification.EXTRA_TITLE)?.trim()?.toLowerCase()
+        val title: String? = extras?.getString(Notification.EXTRA_TITLE)?.trim()?.toLowerCase()
         val subTitle: String? = extras?.getString(Notification.EXTRA_SUB_TEXT)
 
         return title != null && title == keyword
                 && subTitle == null
     }
 
-    override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Soundcloud", "experimental detector for soundcloud",
-            false, debugOnly = true)
+    override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
+        "Soundcloud", "experimental detector for soundcloud",
+        false,
+        category = "Soundcloud",
+        debugOnly = false
+    )
 }

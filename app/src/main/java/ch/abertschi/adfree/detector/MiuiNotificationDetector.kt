@@ -11,8 +11,8 @@ import org.jetbrains.anko.warn
  */
 class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
 
-    override fun canHandle(payload: AdPayload): Boolean
-            = super.canHandle(payload) && payload?.statusbarNotification?.notification != null
+    override fun canHandle(payload: AdPayload): Boolean =
+        super.canHandle(payload) && payload?.statusbarNotification?.notification != null
 
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
@@ -37,7 +37,7 @@ class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
                     flagAsAd = count != null && count == 0
                 }
             }
-        } catch(e: java.lang.Exception) {
+        } catch (e: java.lang.Exception) {
             warn("Cant apply miui listener, $e")
         }
         return flagAsAd
@@ -65,6 +65,8 @@ class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
         return null
     }
 
-    override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("MIUI notification", "spotify detector for MIUI devices")
+    override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
+        "MIUI notification", "spotify detector for MIUI devices",
+        category = "Spotify"
+    )
 }
