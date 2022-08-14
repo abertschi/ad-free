@@ -22,12 +22,19 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+     - name: Get current date
+       id: date
+       run: echo "::set-output name=date::$(date +'%Y-%m-%d_%H-%M_%S')" 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
+     - uses: actions/checkout@v3
+     - uses: actions/setup-java@v3
+       with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
-      - run: |
+     - run: |
           chmod +x "${GITHUB_WORKSPACE}/scripts/build.sh"
           "${GITHUB_WORKSPACE}/scripts/build.sh"
+     - uses: actions/upload-artifact@v3
+       with:
+          path: app/build/outputs/apk/debug/app-debug.apk
+          name: ad-free-debug-${{ steps.date.outputs.date }}.apk
