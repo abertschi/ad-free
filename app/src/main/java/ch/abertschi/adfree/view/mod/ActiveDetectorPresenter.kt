@@ -1,6 +1,7 @@
 package ch.abertschi.adfree.view.mod
 
 import ch.abertschi.adfree.AdFreeApplication
+import ch.abertschi.adfree.detector.AbstractDebugTracer
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.ScNotificationDebugTracer
 import ch.abertschi.adfree.detector.SpotifyNotificationDebugTracer
@@ -21,14 +22,9 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
         showAdditionalInfoFor(detector, enable)
     }
 
-    // TODO: once this gets more advanced, wrap into view/model
     fun showAdditionalInfoFor(d: AdDetectable, enable: Boolean) {
-        if (d is SpotifyNotificationDebugTracer && enable) {
-            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available"))
-        }
-
-        if (d is ScNotificationDebugTracer && enable) {
-            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available"))
+        if (d is AbstractDebugTracer && enable) {
+            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available, check permissions"))
         }
     }
 }

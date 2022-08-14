@@ -20,6 +20,11 @@ class AdDetectableFactory(var context: Context,
             , DummySpotifyDetector()
             , SpotifyNotificationDebugTracer(context.getExternalFilesDir(null))
             , ScNotificationDebugTracer(context.getExternalFilesDir(null))
+            , DeezerDebugTracer(context.getExternalFilesDir(null))
+            , AccuRadioDebugTracer(context.getExternalFilesDir(null))
+            , TidalDebugTracer(context.getExternalFilesDir(null))
+            , SpotifyLiteDebugTracer(context.getExternalFilesDir(null))
+
     )
 
     init {
