@@ -2,39 +2,138 @@ package ch.abertschi.adfree.view.mod
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.Html
-
-import android.widget.TextView
-
-import android.view.LayoutInflater
-import ch.abertschi.adfree.R
-import org.jetbrains.anko.*
-
-import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
-
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SwitchCompat
+import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.Html
+import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ScrollView
+import android.widget.TextView
+import ch.abertschi.adfree.R
+import ch.abertschi.adfree.model.TextRepositoryData
+import org.jetbrains.anko.*
 
 
 class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
-    private lateinit var presenter: CategoriesPresenter
+    private lateinit var presenter: GenericTextDetectorPresenter
+    private lateinit var viewAdapter: DetectorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mod_active_detectors)
-
-        val textView = findViewById<TextView>(R.id.detectors_activity_title)
+        setContentView(R.layout.mod_text_detector)
+        val textView = findViewById<TextView>(R.id.textdetector_activity_title)
         val text =
-            "configure <font color=#FFFFFF>find ads</font>. " +
-                    "choose what's active."
+            "the <font color=#FFFFFF>text detector</font> flags a notification based on the presence of text."
         textView.text = Html.fromHtml(text)
+        findViewById<ScrollView>(R.id.mod_text_scroll).scrollTo(0, 0)
 
-//        presenter = CategoriesPresenter(this)
+        presenter = GenericTextDetectorPresenter(this, this)
 
-        findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
-        findViewById<TextView>(R.id.detectors_activity_title).onClick { presenter.onTabTitle() }
+        var viewManager = LinearLayoutManager(this)
+        viewAdapter = DetectorAdapter(presenter.getData(), presenter)
+        var recyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view).apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
+        findViewById<TextView>(R.id.det_title_text).setOnClickListener {
+            presenter.addNewEntry()
+        }
+        findViewById<TextView>(R.id.det_subtitle_text).setOnClickListener {
+            presenter.addNewEntry()
+        }
+        findViewById<TextView>(R.id.det_title_help).setOnClickListener {
+            presenter.browseHelp()
+        }
+        findViewById<TextView>(R.id.det_subtitle_help).setOnClickListener {
+            presenter.browseHelp()
+        }
     }
+
+    fun insertData() {
+        viewAdapter.notifyDataSetChanged();
+    }
+
+    private class DetectorAdapter(
+        private val data: List<TextRepositoryData>,
+        private val presenter: GenericTextDetectorPresenter
+    ) :
+        RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AnkoLogger {
+
+        class MyViewHolder(
+            val view: View,
+            val title: EditText,
+            val subtitle: EditText,
+            val more: ImageView,
+            val sepView: View
+        ) : RecyclerView.ViewHolder(view)
+
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): MyViewHolder {
+
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.mod_text_detector_view_element, parent, false)
+            val title = view.findViewById(R.id.det_title) as EditText
+            val subtitle = view.findViewById(R.id.det_subtitle) as EditText
+            val more = view.findViewById<ImageView>(R.id.det_more) as ImageView
+            val sep = view.findViewById<View>(R.id.mod_det_seperation)
+            return MyViewHolder(view, title, subtitle, more, sep)
+        }
+
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+            var entry = data[position]
+            holder.title.setText(entry.packageName)
+            holder.subtitle.setText(entry.content.joinToString(separator = "\n"))
+
+            holder.title.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    entry.packageName = s.toString()
+                    presenter.updateEntry(entry)
+                }
+            })
+            holder.subtitle.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    entry.content = s.toString().split("\n")
+                    presenter.updateEntry(entry)
+                }
+            })
+
+            holder.sepView.visibility =
+                if (position == data.size - 1) View.INVISIBLE else View.VISIBLE
+        }
+
+        override fun getItemCount() = data.size
+    }
+
 }
+

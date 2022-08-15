@@ -2,6 +2,7 @@ package ch.abertschi.adfree.detector
 
 import android.app.Notification
 import ch.abertschi.adfree.model.TextRepository
+import ch.abertschi.adfree.model.TextRepositoryData
 import org.jetbrains.anko.AnkoLogger
 
 class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger {
@@ -10,9 +11,13 @@ class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger 
         var notificationKey: String? = payload?.statusbarNotification?.key?.toLowerCase()
             ?: return false
         var canHandle = false;
-        for (key in repo.getAllKeys()) {
+        for (entry in repo.getAllEntries()) {
+            val key = entry.packageName
+            if (key.isEmpty() || key.isBlank()) {
+                continue
+            }
             if (notificationKey?.contains(key.toLowerCase().trim()) == true) {
-                payload.matchedPackageKeys.add(key)
+                payload.matchedTextDetectorEntries.add(entry)
                 canHandle = true;
             }
         }
@@ -26,8 +31,8 @@ class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger 
             extras?.getString(Notification.EXTRA_SUB_TEXT)?.trim()?.toLowerCase()
 
 
-        for (key in payload.matchedPackageKeys) {
-            for (entryLine in repo.getEntry(key)) {
+        for (entry in payload.matchedTextDetectorEntries) {
+            for (entryLine in entry.content) {
                 if (entryLine.trim().isEmpty()) {
                     continue
                 }
@@ -46,6 +51,6 @@ class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger 
         "Generic text base detector", "flag a notification based on the presence of text",
         false,
         category = "General",
-        debugOnly = false
+        debugOnly = true
     )
 }

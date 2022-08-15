@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252A2E"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_view">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textdetector_activity_title"
+            style="@style/AppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:scrollHorizontally="false"
+            android:text="The text detector flags a notification based on the presence of text."
+            android:textColor="#C4BCAF"
+            android:textSize="@dimen/title_text_size" />
+
+<!--        <TextView-->
+<!--                android:id="@+id/textdetector_activity_subtitle"-->
+<!--                style="@style/AppTextView"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="textMultiLine|textNoSuggestions"-->
+<!--                android:scrollHorizontally="false"-->
+<!--                android:text=""-->
+<!--                android:textColor="#C4BCAF"-->
+<!--                android:textSize="@dimen/normal_text_size" />-->
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="@dimen/margin_right_subtitle_switch"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/det_title_text"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> Add Entry"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/normal_text_size" />
+
+            <TextView
+                    android:id="@+id/det_subtitle_text"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_title_subtitle"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="Add a new entry for the text detector"
+                    android:textColor="#C4BCAF"
+
+                    android:textSize="@dimen/normal_text_small" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="@dimen/margin_right_subtitle_switch"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/det_title_help"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="> Browse Help"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/normal_text_size" />
+
+            <TextView
+                    android:id="@+id/det_subtitle_help"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_title_subtitle"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:scrollHorizontally="false"
+                    android:text="Browse help page for more information"
+                    android:textColor="#C4BCAF"
+
+                    android:textSize="@dimen/normal_text_small" />
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/mod_text_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:scrollbars="none">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/detector_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="50dp" />
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

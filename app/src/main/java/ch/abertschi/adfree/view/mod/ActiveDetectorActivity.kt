@@ -95,6 +95,17 @@ class DetectorAdapter(
         holder.subtitle.text = detectors[position].getMeta().description
         holder.switch.isChecked = presenter.isEnabled(detectors[position])
 
+        holder.title.onClick {
+            holder.switch.toggle()
+        }
+        holder.subtitle.onClick {
+            holder.switch.toggle()
+        }
+
+        holder.view.onClick {
+            holder.switch.toggle()
+        }
+
         holder.switch.setOnCheckedChangeListener { _, isChecked ->
             presenter.onDetectorToggled(isChecked, detectors[position])
             info(detectors[position].javaClass.canonicalName)

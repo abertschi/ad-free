@@ -1,5 +1,6 @@
 package ch.abertschi.adfree.view.mod
 
+import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.detector.*
 import org.jetbrains.anko.AnkoLogger
@@ -26,6 +27,8 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
 
         if (d is TextDetector && enable) {
             // launch activity
+            val myIntent = Intent(this.view, GenericTextDetectorActivity::class.java)
+            this.view.startActivity(myIntent)
         }
     }
 }

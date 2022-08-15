@@ -7,6 +7,7 @@
 package ch.abertschi.adfree.detector
 
 import android.service.notification.StatusBarNotification
+import ch.abertschi.adfree.model.TextRepositoryData
 
 /**
  * Created by abertschi on 15.04.17.
@@ -19,5 +20,5 @@ data class AdPayload(val statusbarNotification: StatusBarNotification) {
      */
     val ignoreKeys: ArrayList<String> = ArrayList()
 
-    val matchedPackageKeys: ArrayList<String> = ArrayList()
+    val matchedTextDetectorEntries: ArrayList<TextRepositoryData> = ArrayList()
 }

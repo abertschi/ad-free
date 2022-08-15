@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-12 Fri 10:52 -->
+<!-- 2022-08-15 Mon 15:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Troubleshooting ad-free</title>
@@ -207,22 +207,27 @@ gtag('config', 'UA-63061525-5');
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org16b2156">1. About</a></li>
-<li><a href="#orgdadba5f">2. Reinstall ad-free</a></li>
-<li><a href="#orge75756a">3. Enable autostart</a></li>
-<li><a href="#orga2d76ff">4. Disable battery saver</a></li>
-<li><a href="#org791924c">5. Enable always-on notifications</a></li>
-<li><a href="#orgbd610a3">6. Avoiding false-positives</a></li>
-<li><a href="#org4a45866">7. Advanced steps</a>
+<li><a href="#orgabf4d5a">1. About</a></li>
+<li><a href="#orge95e69e">2. Reinstall ad-free</a></li>
+<li><a href="#org559fbaa">3. Enable autostart</a></li>
+<li><a href="#orgc91a44d">4. Disable battery saver</a></li>
+<li><a href="#org9b6a701">5. Enable always-on notifications</a></li>
+<li><a href="#org5efa5dd">6. Avoiding false-positives</a></li>
+<li><a href="#org383d013">7. Ad-Detectors</a>
 <ul>
-<li><a href="#org493284e">7.1. Enable Developer Mode</a></li>
-<li><a href="#org0ae1b85">7.2. Check if notification listener works</a></li>
-<li><a href="#orgb453b98">7.3. Record notifications for a new detector.</a></li>
+<li><a href="#generic-text-detector">7.1. Generic Text Detector (experimental)</a></li>
 </ul>
 </li>
-<li><a href="#org7a64494">8. Miscellaneous</a>
+<li><a href="#orgd520073">8. Advanced steps</a>
 <ul>
-<li><a href="#org21f6552">8.1. Issues with Bluetooth Headphones</a></li>
+<li><a href="#org4206ffd">8.1. Enable Developer Mode</a></li>
+<li><a href="#org61b11c1">8.2. Check if notification listener works</a></li>
+<li><a href="#org4d393d1">8.3. Record notifications for a new detector.</a></li>
+</ul>
+</li>
+<li><a href="#org1c2017a">9. Miscellaneous</a>
+<ul>
+<li><a href="#orgf8b4577">9.1. Issues with Bluetooth Headphones</a></li>
 </ul>
 </li>
 </ul>
@@ -230,8 +235,8 @@ gtag('config', 'UA-63061525-5');
 </div>
 
 
-<div id="outline-container-org16b2156" class="outline-2">
-<h2 id="org16b2156"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-orgabf4d5a" class="outline-2">
+<h2 id="orgabf4d5a"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This page describes common steps how to troubleshoot ad-free in case
@@ -245,19 +250,13 @@ ad blocking does not work.
 
 <li>Sourcecode: <a href="https://github.com/abertschi/ad-free">https://github.com/abertschi/ad-free</a></li>
 </ul>
-
-
-
-<div id="org7101fa1" class="figure">
-<p><img src="./res/logo.png" alt="logo.png" height="300px" />
-</p>
-</div>
 </div>
 </div>
 
 
-<div id="outline-container-orgdadba5f" class="outline-2">
-<h2 id="orgdadba5f"><span class="section-number-2">2.</span> Reinstall ad-free</h2>
+
+<div id="outline-container-orge95e69e" class="outline-2">
+<h2 id="orge95e69e"><span class="section-number-2">2.</span> Reinstall ad-free</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Remove and reinstall ad-free. Upon first usage you are asked to grant
@@ -269,7 +268,7 @@ notification access settings to re-grant access.
 </p>
 
 
-<div id="org04f19d9" class="figure">
+<div id="orge47403f" class="figure">
 <p><img src="./res/img-not-service-conn.jpg" alt="img-not-service-conn.jpg" width="300px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Notification service status</p>
@@ -277,8 +276,8 @@ notification access settings to re-grant access.
 </div>
 </div>
 
-<div id="outline-container-orge75756a" class="outline-2">
-<h2 id="orge75756a"><span class="section-number-2">3.</span> Enable autostart</h2>
+<div id="outline-container-org559fbaa" class="outline-2">
+<h2 id="org559fbaa"><span class="section-number-2">3.</span> Enable autostart</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Some flavors of Android support an autostart option. Go to Android app info
@@ -286,7 +285,7 @@ and enable auto start.
 </p>
 
 
-<div id="org4d92b80" class="figure">
+<div id="org21b6b8b" class="figure">
 <p><img src="./res/app-info-autostart.jpg" alt="app-info-autostart.jpg" height="600px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>App info activity</p>
@@ -295,8 +294,8 @@ and enable auto start.
 </div>
 
 
-<div id="outline-container-orga2d76ff" class="outline-2">
-<h2 id="orga2d76ff"><span class="section-number-2">4.</span> Disable battery saver</h2>
+<div id="outline-container-orgc91a44d" class="outline-2">
+<h2 id="orgc91a44d"><span class="section-number-2">4.</span> Disable battery saver</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Remove ad-free from the list of battery saved apps. This option can be
@@ -304,7 +303,7 @@ found in Android app info.
 </p>
 
 
-<div id="org51c3b48" class="figure">
+<div id="org14cea2d" class="figure">
 <p><img src="./res/app-info-battery-saver.jpg" alt="app-info-battery-saver.jpg" height="600px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Battery saver options</p>
@@ -312,8 +311,8 @@ found in Android app info.
 </div>
 </div>
 
-<div id="outline-container-org791924c" class="outline-2">
-<h2 id="org791924c"><span class="section-number-2">5.</span> Enable always-on notifications</h2>
+<div id="outline-container-org9b6a701" class="outline-2">
+<h2 id="org9b6a701"><span class="section-number-2">5.</span> Enable always-on notifications</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 On some flavors of Android ad-free is being killed if the activity
@@ -324,7 +323,7 @@ appears as soon as the notification listener is connected an running.
 </p>
 
 
-<div id="org3f36f0c" class="figure">
+<div id="org199eae7" class="figure">
 <p><img src="./res/notification-always-on.jpg" alt="notification-always-on.jpg" height="400px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Always On Notification</p>
@@ -332,8 +331,8 @@ appears as soon as the notification listener is connected an running.
 </div>
 </div>
 
-<div id="outline-container-orgbd610a3" class="outline-2">
-<h2 id="orgbd610a3"><span class="section-number-2">6.</span> Avoiding false-positives</h2>
+<div id="outline-container-org5efa5dd" class="outline-2">
+<h2 id="org5efa5dd"><span class="section-number-2">6.</span> Avoiding false-positives</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 A false-positive may be resolved with a new ad-detector. You can try to
@@ -346,7 +345,7 @@ Alternatively, we recommend to disable non-playback related notifications in the
 </p>
 
 
-<div id="org4fe8603" class="figure">
+<div id="org999f8f5" class="figure">
 <p><img src="./res/spotify-notifications.jpg" alt="spotify-notifications.jpg" height="700px" />
 </p>
 <p><span class="figure-number">Figure 5: </span>Disable non-playback related notifications</p>
@@ -354,15 +353,55 @@ Alternatively, we recommend to disable non-playback related notifications in the
 </div>
 </div>
 
-
-
-<div id="outline-container-org4a45866" class="outline-2">
-<h2 id="org4a45866"><span class="section-number-2">7.</span> Advanced steps</h2>
+<div id="outline-container-org383d013" class="outline-2">
+<h2 id="org383d013"><span class="section-number-2">7.</span> Ad-Detectors</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org493284e" class="outline-3">
-<h3 id="org493284e"><span class="section-number-3">7.1.</span> Enable Developer Mode</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-generic-text-detector" class="outline-3">
+<h3 id="generic-text-detector"><span class="section-number-3">7.1.</span> Generic Text Detector (experimental)</h3>
+<div class="outline-text-3" id="text-generic-text-detector">
+<p>
+The generic text detector flags a notification based on the presence of some user defined text.
+</p>
+
+
+<div id="org9e82976" class="figure">
+<p><img src="./res/generic-text-detector.jpg" alt="generic-text-detector.jpg" height="700px" />
+</p>
+<p><span class="figure-number">Figure 6: </span>UI of generic text detector</p>
+</div>
+
+
+<p>
+With <span class="underline">Add Entry</span>, a new entry is created. The package name corresponds to the name of the android package of the music player. The package name is typically found in the <span class="underline">App Info</span> activity of the Home screen launcher. Everything <b>containing</b> the entered package name will trigger the detector.
+</p>
+
+
+<div id="org8da34e9" class="figure">
+<p><img src="./res/package.jpg" alt="package.jpg" height="700px" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Find out package name of music player</p>
+</div>
+
+<p>
+The second text field contains a list of line-separated strings, which are matched against the notification. The example in the image above will match every text found in the notification of packages containing <span class="underline">com.spotify</span> which <b>contain</b> either <span class="underline">Advertisement</span> or <span class="underline">Werbung</span>.
+</p>
+
+<p>
+If you found new matching rules, please share it for others in the issue <a href="https://github.com/abertschi/ad-free/issues/83">https://github.com/abertschi/ad-free/issues/83</a>.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd520073" class="outline-2">
+<h2 id="orgd520073"><span class="section-number-2">8.</span> Advanced steps</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-org4206ffd" class="outline-3">
+<h3 id="org4206ffd"><span class="section-number-3">8.1.</span> Enable Developer Mode</h3>
+<div class="outline-text-3" id="text-8-1">
 <p>
 Ad-free supports a developer mode to test experimental features. Enable
 developer mode in ad-free by clicking multiple times on the title in the ad
@@ -370,18 +409,18 @@ detectors screen. Go to ad-free settings (three dots) / ad detectors.
 </p>
 
 
-<div id="org392ecf3" class="figure">
+<div id="orgc4bb964" class="figure">
 <p><img src="./res/dev-mode.jpg" alt="dev-mode.jpg" height="700px" />
 </p>
-<p><span class="figure-number">Figure 6: </span>Enable developer mode</p>
+<p><span class="figure-number">Figure 8: </span>Enable developer mode</p>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org0ae1b85" class="outline-3">
-<h3 id="org0ae1b85"><span class="section-number-3">7.2.</span> Check if notification listener works</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-org61b11c1" class="outline-3">
+<h3 id="org61b11c1"><span class="section-number-3">8.2.</span> Check if notification listener works</h3>
+<div class="outline-text-3" id="text-8-2">
 <p>
 Enable developer mode in ad-free by clicking multiple times on the
 title in the ad detectors screen. Go to ad-free settings (three dots)
@@ -393,9 +432,9 @@ on Github; <a href="https://github.com/abertschi/ad-free/issues">https://github.
 </div>
 </div>
 
-<div id="outline-container-orgb453b98" class="outline-3">
-<h3 id="orgb453b98"><span class="section-number-3">7.3.</span> Record notifications for a new detector.</h3>
-<div class="outline-text-3" id="text-7-3">
+<div id="outline-container-org4d393d1" class="outline-3">
+<h3 id="org4d393d1"><span class="section-number-3">8.3.</span> Record notifications for a new detector.</h3>
+<div class="outline-text-3" id="text-8-3">
 <p>
 Unlock developer mode as described above. Enable Spotify tracer and
 submit the recording file as an issue on Github. The notification dump
@@ -406,13 +445,13 @@ can help adding support for new devices.
 </div>
 
 
-<div id="outline-container-org7a64494" class="outline-2">
-<h2 id="org7a64494"><span class="section-number-2">8.</span> Miscellaneous</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-org1c2017a" class="outline-2">
+<h2 id="org1c2017a"><span class="section-number-2">9.</span> Miscellaneous</h2>
+<div class="outline-text-2" id="text-9">
 </div>
-<div id="outline-container-org21f6552" class="outline-3">
-<h3 id="org21f6552"><span class="section-number-3">8.1.</span> Issues with Bluetooth Headphones</h3>
-<div class="outline-text-3" id="text-8-1">
+<div id="outline-container-orgf8b4577" class="outline-3">
+<h3 id="orgf8b4577"><span class="section-number-3">9.1.</span> Issues with Bluetooth Headphones</h3>
+<div class="outline-text-3" id="text-9-1">
 <p>
 See <a href="https://github.com/abertschi/ad-free/issues/64">https://github.com/abertschi/ad-free/issues/64</a> for troubleshooting steps.
 </p>
@@ -422,7 +461,7 @@ See <a href="https://github.com/abertschi/ad-free/issues/64">https://github.com/
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Andrin Bertschi</p>
-<p class="date">Created: 2022-08-12 Fri 10:52</p>
+<p class="date">Created: 2022-08-15 Mon 15:39</p>
 </div>
 </body>
 </html>
