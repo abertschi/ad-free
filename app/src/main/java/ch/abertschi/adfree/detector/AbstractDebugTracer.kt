@@ -33,6 +33,8 @@ abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, Ank
         val stream = FileOutputStream(file, true)
         try {
             stream.write(XStream().toXML(sbn).toByteArray())
+        } catch (e: Exception) {
+            info(e)
         } finally {
             stream.close()
         }

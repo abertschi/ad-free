@@ -60,9 +60,9 @@ class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger 
     }
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
-        "Generic text base detector", "flag a notification based on the presence of text",
+        "Text detector", "flag a notification based on the presence of text",
         false,
         category = "General",
-        debugOnly = true
+        debugOnly = false
     )
 }

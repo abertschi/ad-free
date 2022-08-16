@@ -27,8 +27,8 @@ class NotificationChannel(val notificationUtils: NotificationUtils,
 
     fun buildAlwaysOnNotification(): Pair<Notification, Int> {
         val not = notificationUtils.showTextNotification(alwaysOnNotificationId,
-                "ad-free is running",
-                "ads are monitored", {}, notifiy = false)
+                "ad-free",
+                "Enjoy ad-free music", {}, notifiy = false)
 
         return Pair(not , alwaysOnNotificationId)
     }
@@ -42,7 +42,7 @@ class NotificationChannel(val notificationUtils: NotificationUtils,
     }
 
     fun showDefaultAdNotification(dismissCallable: () -> Unit = {}) {
-        notificationUtils.showTextNotification(defaultAdNotificationId, "ad detected",
+        notificationUtils.showTextNotification(defaultAdNotificationId, "Advertisement detected",
                 "touch to unmute", dismissCallable)
     }
 

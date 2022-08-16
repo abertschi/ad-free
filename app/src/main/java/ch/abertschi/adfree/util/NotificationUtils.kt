@@ -67,6 +67,9 @@ class NotificationUtils(val context: Context) : AnkoLogger {
                 .setPriority(priority)
                 .setContentIntent(dismissIntent)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder.setSmallIcon(R.drawable.ic_icon_logo)
+        }
         if (content != "") {
             builder.setContentText(content)
         }
