@@ -86,7 +86,8 @@ class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Best effort detector",
-        "Parses various text fields of notification of all supported media players", false,
+        "Parses various text fields of notification of all supported media players",
+        false,
         category = "General",
         debugOnly = false
     )

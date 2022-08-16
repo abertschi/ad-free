@@ -23,7 +23,7 @@ class ScDetector : AdDetectable, AnkoLogger {
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Soundcloud", "experimental detector for soundcloud (english)",
-        false,
+        true,
         category = "Soundcloud",
         debugOnly = false
     )
