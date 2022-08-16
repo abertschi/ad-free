@@ -75,6 +75,14 @@
 
                     android:textSize="@dimen/normal_text_small" />
 
+            <View
+                    android:id="@+id/mod_det_seperation"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#08C4BCAF" />
+
 
         </LinearLayout>
 
@@ -82,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
-                android:layout_marginTop="15dp"
+
                 android:layout_marginRight="@dimen/margin_right_subtitle_switch"
                 android:orientation="vertical">
 
