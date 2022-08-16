@@ -11,7 +11,7 @@ package ch.abertschi.adfree.detector
  *
  * Detector which checks for number of control buttons
  */
-class NotificationActionDetector : AbstractStatusBarDetector() {
+class NotificationActionDetector : AbstractSpStatusBarDetector() {
 
     override fun canHandle(payload: AdPayload): Boolean =
         super.canHandle(payload) && payload?.statusbarNotification?.notification?.actions != null

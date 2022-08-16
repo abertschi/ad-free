@@ -9,7 +9,7 @@ import org.jetbrains.anko.warn
 /**
  * Perform inspection of miui notification bundles
  */
-class MiuiNotificationDetector : AbstractStatusBarDetector(), AnkoLogger {
+class MiuiNotificationDetector : AbstractSpStatusBarDetector(), AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean =
         super.canHandle(payload) && payload?.statusbarNotification?.notification != null

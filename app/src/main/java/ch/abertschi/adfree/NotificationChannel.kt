@@ -28,7 +28,8 @@ class NotificationChannel(val notificationUtils: NotificationUtils,
     fun buildAlwaysOnNotification(): Pair<Notification, Int> {
         val not = notificationUtils.showTextNotification(alwaysOnNotificationId,
                 "ad-free",
-                "Enjoy ad-free music", {}, notifiy = false)
+                "Enjoy ad-free music", {
+            }, notifiy = false)
 
         return Pair(not , alwaysOnNotificationId)
     }

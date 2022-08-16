@@ -54,7 +54,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 
     fun showTextNotification(id: Int, title: String, content: String = "",
                              dismissCallable: () -> Unit = {},
-                             priority: Int = NotificationCompat.PRIORITY_HIGH, notifiy: Boolean = true): Notification {
+                             priority: Int = NotificationCompat.PRIORITY_DEFAULT, notifiy: Boolean = true): Notification {
 
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context

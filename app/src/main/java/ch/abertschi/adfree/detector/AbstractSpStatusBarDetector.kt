@@ -11,7 +11,7 @@ import org.jetbrains.anko.AnkoLogger
 /**
  * Created by abertschi on 13.12.16.
  */
-abstract class AbstractStatusBarDetector : AdDetectable, AnkoLogger {
+abstract class AbstractSpStatusBarDetector : AdDetectable, AnkoLogger {
 
     companion object {
         private val SPOTIFY_PACKAGE = "com.spotify"

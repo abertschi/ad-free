@@ -28,7 +28,9 @@ class AdDetectableFactory(
         AccuRadioDebugTracer(context.getExternalFilesDir(null)),
         TidalDebugTracer(context.getExternalFilesDir(null)),
         SpotifyLiteDebugTracer(context.getExternalFilesDir(null)),
-        TextDetector((context.applicationContext as AdFreeApplication).textRepository)
+        UserDefinedTextDetector((context.applicationContext as AdFreeApplication).textRepository),
+        SpLiteTextDetector(),
+        SpLiteTextEnglishDetector()
     )
 
     init {

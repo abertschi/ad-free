@@ -8,7 +8,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
 import java.util.*
 
-class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger {
+class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean {
         var notificationKey: String? =
@@ -60,7 +60,7 @@ class TextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger 
     }
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
-        "Text detector", "flag a notification based on the presence of text",
+        "User defined text", "flag a notification based on the presence of text",
         false,
         category = "General",
         debugOnly = false

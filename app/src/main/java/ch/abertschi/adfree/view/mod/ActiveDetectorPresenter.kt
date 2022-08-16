@@ -25,7 +25,7 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
             view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available, check permissions"))
         }
 
-        if (d is TextDetector && enable) {
+        if (d is UserDefinedTextDetector && enable) {
             // launch activity
             val myIntent = Intent(this.view, GenericTextDetectorActivity::class.java)
             this.view.startActivity(myIntent)

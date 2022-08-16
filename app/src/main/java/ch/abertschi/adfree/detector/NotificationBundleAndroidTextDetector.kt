@@ -15,7 +15,7 @@ import org.jetbrains.anko.warn
 /**
  * Created by abertschi on 17.04.17.
  */
-class NotificationBundleAndroidTextDetector : AbstractStatusBarDetector(), AnkoLogger {
+class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean = super.canHandle(payload)
             && payload?.statusbarNotification?.notification != null
