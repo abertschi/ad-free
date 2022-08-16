@@ -1,6 +1,7 @@
 package ch.abertschi.adfree.view.mod
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -34,13 +35,13 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
 
         presenter = GenericTextDetectorPresenter(this, this)
 
+
         var viewManager = LinearLayoutManager(this)
         viewAdapter = DetectorAdapter(presenter.getData(), presenter)
         var recyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view).apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
-
         findViewById<TextView>(R.id.det_title_text).setOnClickListener {
             presenter.addNewEntry()
         }
@@ -53,6 +54,25 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         findViewById<TextView>(R.id.det_subtitle_help).setOnClickListener {
             presenter.browseHelp()
         }
+    }
+
+    fun showOptionDialog(entry: TextRepositoryData) {
+
+        val d = AlertDialog.Builder(this)
+            .setTitle("Options")
+            .setView(LayoutInflater.from(this).inflate(R.layout.delete_dialog, null))
+            .setPositiveButton(android.R.string.yes) { dialog, which ->
+                presenter.deleteEntry(entry)
+            }
+            .setNegativeButton(android.R.string.no) { dialog, which ->
+                dialog.dismiss()
+            }
+            .setOnDismissListener {
+                it.dismiss()
+            }
+            .create()
+            d.window?.setBackgroundDrawableResource(R.color.colorBackground)
+        d.show()
     }
 
     fun insertData() {
@@ -90,6 +110,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
             var entry = data[position]
+            holder.more.onClick { presenter.onMoreClicked(entry) }
             holder.title.setText(entry.packageName)
             holder.subtitle.setText(entry.content.joinToString(separator = "\n"))
 

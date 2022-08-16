@@ -115,21 +115,22 @@
 
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/mod_text_scroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:scrollbars="none">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/detector_recycle_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="50dp" />
-        </ScrollView>
 
     </LinearLayout>
+    <ScrollView
+            android:id="@+id/mod_text_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:scrollbars="vertical">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/detector_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp" />
+    </ScrollView>
 
 </LinearLayout>
 

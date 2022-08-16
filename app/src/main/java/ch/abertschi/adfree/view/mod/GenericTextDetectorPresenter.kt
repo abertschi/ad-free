@@ -30,8 +30,11 @@ class GenericTextDetectorPresenter(val ctx: Context, val view: GenericTextDetect
     }
 
     fun updateEntry(d: TextRepositoryData) {
-        textRepository.updateEntry(d)
+        if (data.contains(d)){
+            textRepository.updateEntry(d)
+        }
     }
+
 
     fun deleteEntry(d: TextRepositoryData) {
         textRepository.removeEntry(d)
@@ -44,5 +47,9 @@ class GenericTextDetectorPresenter(val ctx: Context, val view: GenericTextDetect
         val browserIntent = Intent(Intent.ACTION_VIEW,
             Uri.parse(url))
         this.view.startActivity(browserIntent)
+    }
+
+    fun onMoreClicked(entry: TextRepositoryData) {
+        view.showOptionDialog(entry)
     }
 }
