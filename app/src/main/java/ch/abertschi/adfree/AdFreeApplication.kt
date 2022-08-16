@@ -52,7 +52,7 @@ class AdFreeApplication : Application(), AnkoLogger {
         Thread.setDefaultUncaughtExceptionHandler(CrashExceptionHandler(this))
 
         prefs = PreferencesFactory(applicationContext)
-        textRepository =  TextRepository(this, prefs)
+        textRepository = TextRepository(this, prefs)
 
         googleCast = GoogleCastManager(prefs)
         notificationStatus = NotificationStatusManager(applicationContext)
@@ -69,22 +69,26 @@ class AdFreeApplication : Application(), AnkoLogger {
         notificationUtils = NotificationUtils(applicationContext)
         notificationChannel = NotificationChannel(notificationUtils, prefs)
 
-        adPlugins = listOf(MutePlugin(),
-                LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel),
-                InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel)
+        adPlugins = listOf(
+            MutePlugin(), LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel)
+
+            // XXX: We no longer support Interdimensional cable
+//                ,InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel)
+
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
-        adStateController = AdStateController(audioManager,
-                pluginHandler, notificationChannel, googleCast, prefs)
-
+        adStateController = AdStateController(
+            audioManager,
+            pluginHandler, notificationChannel, googleCast, prefs
+        )
         adDetector.addObserver(adStateController)
 
         notificationStatus.restartNotificationListener()
 
         AsyncTask.execute {
             if (prefs.isAlwaysOnNotificationEnabled()) {
-             notificationStatus.forceTimedRestart()
+                notificationStatus.forceTimedRestart()
             }
         }
     }

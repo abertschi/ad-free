@@ -44,7 +44,7 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
         remoteSetting = s
         info { "current version code: " + BuildConfig.VERSION_CODE }
         info { "setting version code: " + s.versionCode }
-        info { s.toString() }
+//        info { s.toString() }
         if (s.versionCode > BuildConfig.VERSION_CODE && s.versionNotify) {
             info { "new version available. showing ui element to update" }
             homeView.showUpdateMessage(true)
