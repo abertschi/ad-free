@@ -2,7 +2,7 @@ package ch.abertschi.adfree.detector
 
 import java.lang.IllegalStateException
 
-class BestEffortTextDetector : AbstractNotificationBundleTextDetector() {
+class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
 
     open override fun canHandle(payload: AdPayload): Boolean {
         var key: String = payload?.statusbarNotification?.key?.toLowerCase() ?: return false
@@ -14,12 +14,46 @@ class BestEffortTextDetector : AbstractNotificationBundleTextDetector() {
         return false
     }
 
-    override fun getPackage(): String {
+    companion object {
+        val cues = listOf<String>(
+            "werbung",
+            "advertisement",
+            "advertising",
+            "publicité",
+            "pubblicità",
+            "publicidad",
+            "reklame",
+            "reklaamimine",
+            "reklaami",
+            "διαφήμισης",
+            "διαφήμιση",
+            "iklan",
+            "reklama",
+            "reklama",
+            "ogłoszenie",
+            "reklama",
+            "publicidade",
+            "реклама",
+            "reklam",
+            "reklamcılık"
+
+        )
+
+        val packages = listOf(
+            "com.spotify",
+            "com.slipstream.accuradio",
+            "deezer.android",
+            "com.soundcloud.android",
+            "com.aspiro.tidal"
+        )
+    }
+
+    override fun getPackageName(): String {
         throw IllegalStateException("not used")
     }
 
-    fun getPackageList(): List<String> {
-        return listOf<String>()
+    private fun getPackageList(): List<String> {
+        return packages
     }
 
     override fun detectAsAdvertisement(
@@ -40,9 +74,20 @@ class BestEffortTextDetector : AbstractNotificationBundleTextDetector() {
         return false
     }
 
-    private fun tryMatch(first: String?): Boolean {
-        if (first == null) return false
-
+    private fun tryMatch(s: String?): Boolean {
+        if (s == null) return false
+        for (c in cues) {
+            if (s.contains(c)) {
+                return true
+            }
+        }
         return false
     }
+
+    override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
+        "Best effort detector",
+        "Parses various text fields of notification of all supported media players", false,
+        category = "General",
+        debugOnly = false
+    )
 }

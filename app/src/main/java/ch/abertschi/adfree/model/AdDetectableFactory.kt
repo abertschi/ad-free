@@ -26,11 +26,13 @@ class AdDetectableFactory(
         DeezerDebugTracer(context.getExternalFilesDir(null)),
         DeezerTextDetector(),
         AccuRadioDebugTracer(context.getExternalFilesDir(null)),
+        AccuradioDetector(),
         TidalDebugTracer(context.getExternalFilesDir(null)),
         SpotifyLiteDebugTracer(context.getExternalFilesDir(null)),
         UserDefinedTextDetector((context.applicationContext as AdFreeApplication).textRepository),
         SpLiteTextDetector(),
-        SpLiteTextEnglishDetector()
+        SpLiteTextEnglishDetector(),
+        BestEffortTextDetector()
     )
 
     init {

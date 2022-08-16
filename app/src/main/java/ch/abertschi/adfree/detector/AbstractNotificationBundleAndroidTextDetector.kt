@@ -5,14 +5,7 @@ import android.os.Bundle
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
 
-abstract class AbstractNotificationBundleTextDetector : AdDetectable, AnkoLogger {
-
-    open override fun canHandle(payload: AdPayload): Boolean {
-        return payload?.statusbarNotification?.key?.toLowerCase()
-            ?.contains(getPackage().toLowerCase()) ?: false
-    }
-
-    abstract fun getPackage(): String
+abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector() {
 
     open fun extractString(extras: Bundle?, key: String): Pair<String?, Boolean> {
         return try {

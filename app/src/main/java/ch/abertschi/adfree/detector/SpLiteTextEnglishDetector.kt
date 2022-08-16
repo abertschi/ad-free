@@ -7,7 +7,7 @@ import org.jetbrains.anko.warn
 
 class SpLiteTextEnglishDetector : AdDetectable, AnkoLogger, SpLiteTextDetector() {
 
-    override fun getPackage() = "com.spotify.lite"
+    override fun getPackageName() = "com.spotify.lite"
 
     override fun detectAsAdvertisement(
         payload: AdPayload,
