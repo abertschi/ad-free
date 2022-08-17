@@ -66,7 +66,7 @@ class AdDetector(
                 init = true
             }
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
-            val event = AdEvent(eventType, flaggedAsAdBy, flaggedAsMusicBy)
+            val event = AdEvent(eventType, flaggedAsAdBy, flaggedAsMusicBy, payload.formatPayload())
             submitEvent(event)
         }
     }

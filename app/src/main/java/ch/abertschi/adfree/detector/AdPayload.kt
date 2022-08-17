@@ -21,4 +21,11 @@ data class AdPayload(val statusbarNotification: StatusBarNotification) {
     val ignoreKeys: ArrayList<String> = ArrayList()
 
     val matchedTextDetectorEntries: ArrayList<TextRepositoryData> = ArrayList()
+
+    fun formatPayload(): String {
+        val b = StringBuffer()
+            .append("Notification ")
+            .append(statusbarNotification.key)
+        return b.toString()
+    }
 }
