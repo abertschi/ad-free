@@ -5,8 +5,8 @@ audio advertisement is shown on Android. It is a proof-of-concept of a
 modularized audio ad blocker written in Kotlin with a modern and
 simplistic user interface.
 
-- Support for Spotify
-- No ROOT required
+- Support for Spotify, Soundcloud, Deezer, Accuradio
+- No root required
 - Plugin based design
 - Mute audio when ads are playing
 - Play arbitrary audio
