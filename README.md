@@ -26,7 +26,7 @@ https://adfree.abertschi.ch
 
 ## Legality
 This app is free and open-source and does not seek a commercial interest. It
-does not collect user data. It is a proof-of-concept to show flaws in the way
+does not collect user data. It is a proof-of-concept for research purposes to show flaws in the way
 how audio advertisement is often implemented on Android. It does not alter or
 "hack" protection measures of music players, and only gathers context
 information provided by the Android runtime. Nonetheless, ad-free may be against
