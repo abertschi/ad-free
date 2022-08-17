@@ -1,7 +1,8 @@
 # Changelog / Ad-Free
 
-### v2.3/37, pending
+### v3.0/40
 - add new logo (#63)
+- support for spotify lite, soundcloud, accuradio, deezer
 
 ### v2.2/36, 2020-03-14
 - add troubleshooting steps (#54)
