@@ -39,22 +39,21 @@
 <!--            />-->
 
         <ImageView
-            style="@style/AppTextView"
-            android:id="@+id/moresettings"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+                android:id="@+id/moresettings"
+                style="@style/AppTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
 
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="0dp"
-            android:layout_marginTop="0dp"
-            android:scrollHorizontally="false"
-            android:textAlignment="textEnd"
-            android:textColor="#C4BCAF"
-            android:textSize="@dimen/title_text_size"
-            android:scaleType="fitEnd"
-            android:src="@mipmap/dots_48"
-            />
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"
+                android:scaleType="fitEnd"
+                android:scrollHorizontally="false"
+                android:src="@mipmap/dots_48"
+                android:textAlignment="textEnd"
+                android:textColor="#C4BCAF"
+                android:textSize="@dimen/title_text_size" />
 <!--        todo adjust color-->
 
 <!--        <ImageView-->

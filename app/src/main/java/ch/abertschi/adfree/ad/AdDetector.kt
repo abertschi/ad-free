@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.ad
 
+import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
@@ -16,8 +17,10 @@ import org.jetbrains.anko.info
 /**
  * Created by abertschi on 13.08.17.
  */
-class AdDetector(val detectors: AdDetectableFactory,
-                 val remoteManager: RemoteManager) : AnkoLogger, AdObservable {
+class AdDetector(
+    val detectors: AdDetectableFactory,
+    val remoteManager: RemoteManager
+) : AnkoLogger, AdObservable {
 
     private var observers: MutableList<AdObserver> = ArrayList()
 
@@ -38,13 +41,24 @@ class AdDetector(val detectors: AdDetectableFactory,
             var isMusic = false
             var isAd = false
 
-            activeDetectors.filter { it.flagAsMusic(payload) }.forEach { _ ->
-                isMusic = true
+            val flaggedAsAdBy = ArrayList<AdDetectable>(activeDetectors.size)
+            val flaggedAsMusicBy = ArrayList<AdDetectable>(activeDetectors.size)
+
+            activeDetectors.filter { it.flagAsMusic(payload) }.forEach { detector ->
+                run {
+                    isMusic = true
+                    flaggedAsMusicBy.add(detector)
+                }
             }
 
             if (!isMusic) {
                 activeDetectors.filter { it.flagAsAdvertisement(payload) }
-                        .forEach { _ -> isAd = true }
+                    .forEach { detector ->
+                        run {
+                            isAd = true
+                            flaggedAsAdBy.add(detector)
+                        }
+                    }
             }
 
             if (!init) {
@@ -52,7 +66,7 @@ class AdDetector(val detectors: AdDetectableFactory,
                 init = true
             }
             val eventType = if (isAd) EventType.IS_AD else EventType.NO_AD
-            val event = AdEvent(eventType)
+            val event = AdEvent(eventType, flaggedAsAdBy, flaggedAsMusicBy)
             submitEvent(event)
         }
     }
@@ -74,7 +88,7 @@ class AdDetector(val detectors: AdDetectableFactory,
 
     private fun fetchRemote() {
         remoteManager.getRemoteSettingsObservable()
-                .subscribe { go = it.enabled}
+            .subscribe { go = it.enabled }
     }
 
     fun notifyObservers(event: AdEvent) {

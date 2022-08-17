@@ -11,15 +11,17 @@ package ch.abertschi.adfree.detector
  *
  * Detector which checks for number of control buttons
  */
-class NotificationActionDetector : AbstractStatusBarDetector() {
+class NotificationActionDetector : AbstractSpStatusBarDetector() {
 
-    override fun canHandle(payload: AdPayload): Boolean
-            = super.canHandle(payload) && payload?.statusbarNotification?.notification?.actions != null
+    override fun canHandle(payload: AdPayload): Boolean =
+        super.canHandle(payload) && payload?.statusbarNotification?.notification?.actions != null
 
-    override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = payload.statusbarNotification.notification.actions.size <= 3
+    override fun flagAsAdvertisement(payload: AdPayload): Boolean =
+        payload.statusbarNotification.notification.actions.size <= 3
 
-    override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Notification actions", "spotify generic inspection of notification actions")
+    override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
+        "Notification actions", "spotify generic inspection of notification actions",
+        category = "Spotify"
+    )
 
 }

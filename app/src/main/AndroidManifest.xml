@@ -47,6 +47,18 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+                android:name=".view.mod.GenericTextDetectorActivity"
+                android:screenOrientation="portrait">
+        </activity>
+
+
+
+        <activity
+                android:name=".view.mod.CategoriesActivity"
+                android:screenOrientation="portrait">
+        </activity>
+
 
         <activity
             android:name=".view.mod.ModActivity"

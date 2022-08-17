@@ -1,19 +1,16 @@
 package ch.abertschi.adfree.view.mod
 
+import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
-import ch.abertschi.adfree.detector.AdDetectable
-import ch.abertschi.adfree.detector.ScNotificationDebugTracer
-import ch.abertschi.adfree.detector.SpotifyNotificationDebugTracer
+import ch.abertschi.adfree.detector.*
 import org.jetbrains.anko.AnkoLogger
 
 class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
 
     private val detectorFactory = (view.applicationContext as AdFreeApplication).adDetectors
     private val prefs = (view.applicationContext as AdFreeApplication).prefs
-    private var tabCounterForDebug = 0
-    private val tabCounterForDebugThreshold = 5
 
-    fun getDetectors(): List<AdDetectable> = detectorFactory.getVisibleDetectors()
+    fun getDetectors(category: String) = detectorFactory.getDetectorsForCategory(category)
 
     fun isEnabled(d: AdDetectable) = detectorFactory.isEnabled(d)
 
@@ -23,29 +20,15 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
         showAdditionalInfoFor(detector, enable)
     }
 
-    // TODO: once this gets more advanced, wrap into view/model
     fun showAdditionalInfoFor(d: AdDetectable, enable: Boolean) {
-        if (d is SpotifyNotificationDebugTracer && enable) {
-            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available"))
+        if (d is AbstractDebugTracer && enable) {
+            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available, check permissions"))
         }
 
-        if (d is ScNotificationDebugTracer && enable) {
-            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available"))
-        }
-    }
-
-    fun onTabTitle() {
-        tabCounterForDebug ++
-        if (tabCounterForDebug > tabCounterForDebugThreshold) {
-            tabCounterForDebug = 0
-            if (prefs.isDeveloperModeEnabled()) {
-                prefs.setDeveloperMode(false)
-                view.hideEnabledDebug()
-            } else {
-                prefs.setDeveloperMode(true)
-                view.showEnabledDebug()
-            }
+        if (d is UserDefinedTextDetector && enable) {
+            // launch activity
+            val myIntent = Intent(this.view, GenericTextDetectorActivity::class.java)
+            this.view.startActivity(myIntent)
         }
     }
-
 }

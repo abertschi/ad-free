@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.view.home.HomeActivity
 import ch.abertschi.adfree.view.setting.AboutActivity
@@ -38,6 +39,7 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+
         mPager = findViewById(R.id.pager) as ViewPager
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager!!.adapter = mPagerAdapter
@@ -45,6 +47,10 @@ class MainActivity : FragmentActivity() {
         val tabLayout = findViewById<TabLayout>(R.id.tabDots)
         tabLayout.setupWithViewPager(mPager, true)
         window.navigationBarColor = Color.parseColor("#252A2E")
+
+        // XXX: Workaround, global access to activity to prevent detached fragments
+        var app = applicationContext as AdFreeApplication
+        app.mainActivity = this
     }
 
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {

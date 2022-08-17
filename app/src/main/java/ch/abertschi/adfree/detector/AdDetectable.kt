@@ -21,4 +21,4 @@ interface AdDetectable {
 }
 
 data class AdDetectorMeta(val title: String, val description: String, var enabledByDef: Boolean = true,
-                          var debugOnly: Boolean = false)
+                          var debugOnly: Boolean = false, var category: String = "General")

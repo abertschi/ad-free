@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'groovyx.android'
 apply plugin: 'kotlin-android'
 
 
@@ -9,8 +8,8 @@ android {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 23
         targetSdkVersion 27
-        versionCode 36
-        versionName "2.2"
+        versionCode 40
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
    }
@@ -32,8 +31,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:27.0.0'
@@ -62,15 +61,15 @@ dependencies {
         exclude group: 'xmlpull', module: 'xmlpull'
     }
 
-    testCompile 'org.codehaus.groovy:groovy:2.4.11:grooid'
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
+    testImplementation 'org.codehaus.groovy:groovy:2.4.11:grooid'
+    testImplementation('org.spockframework:spock-core:1.1-groovy-2.4') {
         exclude group: 'org.codehaus.groovy'
         exclude group: 'junit'
     }
 
-    testCompile 'org.mockito:mockito-core:2.6.3'
+    testImplementation 'org.mockito:mockito-core:2.6.3'
 
-    testCompile 'org.mockito:mockito-android:2.6.3'
+    testImplementation 'org.mockito:mockito-android:2.6.3'
 }
 repositories {
     mavenCentral()

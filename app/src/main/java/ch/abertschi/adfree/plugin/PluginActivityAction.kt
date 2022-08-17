@@ -21,5 +21,5 @@ interface PluginActivityAction {
 
     fun addOnActivityResult(callable: (requestCode: Int, resultCode: Int, data: Intent?) -> Unit)
 
-    fun activity(): Fragment
+    fun activity(): Activity
 }

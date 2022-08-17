@@ -26,7 +26,7 @@ import org.jetbrains.anko.onClick
  * Created by abertschi on 15.04.17.
  */
 
-class HomeActivity : Fragment(), HomeView, AnkoLogger {
+class HomeActivity() : Fragment(), HomeView, AnkoLogger {
     private lateinit var typeFace: Typeface
     private lateinit var enjoySloganText: TextView
     private lateinit var homePresenter: HomePresenter

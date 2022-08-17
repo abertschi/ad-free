@@ -6,6 +6,8 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,14 +23,14 @@ import org.jetbrains.anko.runOnUiThread
 
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SwitchCompat
+import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.view.ViewSettings
+import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 29.08.17.
  */
 class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger {
-
-    private lateinit var audioDirDialog: AlertDialog
     private lateinit var viewInstance: View
 
     private lateinit var presenter: LocalMusicPlugin
@@ -38,16 +40,6 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         val inflater = LayoutInflater.from(context)
         viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
         setupUi()
-        audioDirDialog = AlertDialog.Builder(context)
-                .setTitle("Audio directory")
-                .setView(LayoutInflater.from(this.context).inflate(R.layout.choose_audio_dir, null))
-                .setPositiveButton(android.R.string.yes) { dialog, which ->
-                    showDirectoryChooser()
-                }
-                .setOnDismissListener {
-                    showDirectoryChooser()
-                }
-                .create()
         return viewInstance
     }
 
@@ -64,10 +56,10 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
             typeface = ViewSettings.instance(context).typeFace
         }
         viewInstance.findViewById<View>(R.id.local_music_play_until_end_switch)
-                .setOnClickListener { presenter.onPlayUntilEndChanged() }
+            .setOnClickListener { presenter.onPlayUntilEndChanged() }
 
         viewInstance.findViewById<View>(R.id.layout_loop)
-                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+            .setOnClickListener { presenter.onLoopPlaybackChanged() }
         viewInstance.findViewById<TextView>(R.id.local_music_title_loop).run {
             setOnClickListener { presenter.onLoopPlaybackChanged() }
             typeface = ViewSettings.instance(context).typeFace
@@ -77,9 +69,9 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
             typeface = ViewSettings.instance(context).typeFace
         }
         viewInstance.findViewById<View>(R.id.local_music_loop_switch)
-                .setOnClickListener { presenter.onLoopPlaybackChanged() }
+            .setOnClickListener { presenter.onLoopPlaybackChanged() }
         viewInstance.findViewById<View>(R.id.layout_configure_audio)
-                .setOnClickListener { presenter.onConfigureAudioVolume() }
+            .setOnClickListener { presenter.onConfigureAudioVolume() }
         viewInstance.findViewById<TextView>(R.id.configure_audio_title).run {
             setOnClickListener { presenter.onConfigureAudioVolume() }
             typeface = ViewSettings.instance(context).typeFace
@@ -120,8 +112,7 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     }
 
     fun showFolderSelectionDialog() {
-        audioDirDialog.show()
-        audioDirDialog.window?.setBackgroundDrawableResource(R.color.colorBackground)
+        showDirectoryChooser()
     }
 
     fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
@@ -154,11 +145,10 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
 
     fun hideLoopMusic(hide: Boolean) {
         viewInstance.findViewById<View>(R.id.layout_loop).visibility =
-                if (hide) View.GONE else View.VISIBLE
+            if (hide) View.GONE else View.VISIBLE
     }
 
     fun showAudioDirectoryPath(s: String) {
         viewInstance.findViewById<TextView>(R.id.music_dir_subtitle).text = s
     }
-
 }

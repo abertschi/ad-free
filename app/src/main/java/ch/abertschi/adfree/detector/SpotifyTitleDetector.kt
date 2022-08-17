@@ -18,7 +18,7 @@ import org.jetbrains.anko.AnkoLogger
  */
 // TODO: add option to tag ads manually
 class SpotifyTitleDetector(val trackRepository: TrackRepository) :
-        AbstractStatusBarDetector(), AnkoLogger {
+        AbstractSpStatusBarDetector(), AnkoLogger {
 
     private val keywords = listOf(
             "Spotify —"
@@ -44,5 +44,5 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) :
             = payload?.statusbarNotification?.notification?.tickerText?.toString() ?: ""
 
     override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Notification text", "spotify detector for text in notification")
+            = AdDetectorMeta("Notification text", "spotify detector for text in notification", category = "Spotify")
 }
