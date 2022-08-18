@@ -18,6 +18,7 @@ ad blocking does not work.
 - Sourcecode: https://github.com/abertschi/ad-free
 
 
+
 ** Reinstall ad-free
 Remove and reinstall ad-free. Upon first usage you are asked to grant
 notification access. Whether the notification service successfully
@@ -74,6 +75,29 @@ Alternatively, we recommend to disable non-playback related notifications in the
 #+attr_latex: :height 300px
 [[./res/spotify-notifications.jpg]]
 
+** Ad-Detectors
+*** Generic Text Detector (experimental)
+:PROPERTIES:
+:CUSTOM_ID: generic-text-detector
+:END:
+The generic text detector flags a notification based on the presence of some user defined text.
+
+#+CAPTION: UI of generic text detector
+#+attr_html: :height 700px
+#+attr_latex: :height 300px
+[[./res/generic-text-detector.jpg]]
+
+
+With _Add Entry_, a new entry is created. The package name corresponds to the name of the android package of the music player. The package name is typically found in the _App Info_ activity of the Home screen launcher. Everything *containing* the entered package name will trigger the detector.
+
+#+CAPTION: Find out package name of music player
+#+attr_html: :height 700px
+#+attr_latex: :height 300px
+[[./res/package.jpg]]
+
+The second text field contains a list of line-separated strings, which are matched against the notification. The example in the image above will match every text found in the notification of packages containing _com.spotify_ which *contain* either _Advertisement_ or _Werbung_.
+
+If you found new matching rules, please share it for others in the issue https://github.com/abertschi/ad-free/issues/83.
 
 
 ** Advanced steps
