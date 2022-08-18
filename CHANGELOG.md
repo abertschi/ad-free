@@ -1,4 +1,6 @@
 # Changelog / Ad-Free
+### v3.1/41
+- Fix bug with local music plugin: folder selection
 
 ### v3.0/40
 - add new logo (#63)
