@@ -10,10 +10,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +29,12 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.SettingsModul
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
+import ch.abertschi.adfree.view.MainActivity
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.onItemSelectedListener
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.warn
 
 
 /**
@@ -43,6 +47,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         return app.mainActivity
     }
 
+    private lateinit var storedAppContext: AdFreeApplication
     private lateinit var typeFace: Typeface
     private var rootView: View? = null
     private var settingsTitle: TextView? = null
@@ -82,11 +87,13 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         super.onCreate(savedInstanceState)
         this.rootView = view
 
-        typeFace = ViewSettings.instance(this.activity!!).typeFace
+        storedAppContext = activity?.applicationContext as AdFreeApplication
+
+        typeFace = ViewSettings.instance(this.tryActivity()!!).typeFace
         settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
         settingsTitle?.typeface = typeFace
 
-        settingPresenter = SettingsModul(this.activity!!, this).provideSettingsPresenter()
+        settingPresenter = SettingsModul(this.tryActivity()!!, this).provideSettingsPresenter()
 
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
                 "<font color=#FFFFFF>being played ?</font>"
@@ -95,7 +102,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
         spinner = view?.findViewById(R.id.spinner) as Spinner
         spinnerAdapter = PluginSpinnerAdapter(
-            this.activity!!, R.layout.replacer_setting_item,
+            this.tryActivity()!!, R.layout.replacer_setting_item,
             settingPresenter.getStringEntriesOfModel(), spinner!!, view
         )
         spinner?.adapter = spinnerAdapter
@@ -131,22 +138,36 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        // Fragment may be detached. avoid illegal state exception
-        // by using last activity to perform action
-        var act = this.activity as Activity
-        act.startActivityForResult(intent, requestCode, options)
+        tryActivity()
+        super.startActivityForResult(intent, requestCode, options)
     }
 
-    override fun getContext(): Context = this.activity!!
+    override fun getContext(): Context = tryActivity()
+
+    private fun tryActivity(): FragmentActivity {
+        // XXX: Workaround, issues with FragmentActivity
+        // At some point in life cycle, namely if we close main activity and relaunch,
+        // fragment is no longer attached to an activity and we fail with null pointer
+        // As a workaround we restart the application in these cases
+        // Is there a solution for this? handling fragments is known to be cumbersome...
+        if (this.activity == null || !this.isAdded) {
+            val intent = Intent(storedAppContext, MainActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            storedAppContext.startActivity(intent)
+            warn { "Fragment not attached to Activity. subsequent calls will fail. we restart app" }
+            Runtime.getRuntime().exit(0)
+        }
+        return this.activity!!
+    }
 
     override fun showSuggestNewPlugin() {
         val browserIntent =
             Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
-        this.context.startActivity(browserIntent)
+        this.tryActivity().startActivity(browserIntent)
     }
 
     override fun showTryOutMessage() {
-        this.activity?.toast("Trying out plugin")
+        this.tryActivity().toast("Trying out plugin")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
