@@ -28,6 +28,10 @@ android {
         }
         debug { java.srcDirs = ['src/debug/java', 'src/test/groovy/'] }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -52,8 +56,7 @@ dependencies {
     implementation 'com.github.bmoliveira:snake-yaml:v1.18-android'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-// Because RxAndroid releases are few and far between, it is recommended you also
-// explicitly depend on RxJava's latest version for bug fixes and new features.
+
     implementation 'io.reactivex.rxjava2:rxjava:2.0.9'
     implementation 'com.github.angads25:filepicker:1.1.1'
 
