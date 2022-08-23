@@ -29,7 +29,7 @@ This app is free and open-source and does not seek a commercial interest. It
 does not collect user data. It is a proof-of-concept for research purposes to show flaws in the way
 how audio advertisement is often implemented on Android. It does not alter or
 "hack" protection measures of music players, and only gathers context
-information provided by the Android runtime. Nonetheless, ad-free may be against
+information provided by the Android runtime. It simply turns off phone volume when it detects advertisements. Nonetheless, ad-free may be against
 terms of services of music players. Muting commercials may not be supported and
 may result in a temporary ban. Use at your own risk.
 
