@@ -12,12 +12,12 @@ https://adfree.abertschi.ch
 <img src=".github/screens3.sized.png" width="900">
 
 ## Features
-- No root required
-- Turn off sound when advertisement is playing
-- Play arbitrary audio instead of advertisements
+- Lower phone volume when advertisement is playing
+- Play other audio when advertisement is plaing
 - Support for Spotify, Spotify Lite, Soundcloud, Deezer, Accuradio
 - Mute Google Chromecast (experimental)
 - Plugin based design
+- No root required
 
 ## Download
 [Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.  
