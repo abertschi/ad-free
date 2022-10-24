@@ -13,7 +13,7 @@ https://adfree.abertschi.ch
 
 ## Features
 - Lower phone volume when advertisement is playing
-- Play other audio when advertisement is plaing
+- Play other audio when advertisement is playing
 - Support for Spotify, Spotify Lite, Soundcloud, Deezer, Accuradio
 - Mute Google Chromecast (experimental)
 - Plugin based design
