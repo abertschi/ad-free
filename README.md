@@ -7,7 +7,8 @@ ad-free is a research project attempting to show flaws in the way how audio
  advertisement is shown on Android. It is a proof-of-concept of a modularized
  audio ad blocker written in Kotlin with a modern and simplistic user interface.
 
-https://adfree.abertschi.ch
+Landing Page: https://adfree.abertschi.ch  
+Blog Post: https://abertschi.ch/blog/2022/building-adfree/ 
 
 <img src=".github/screens3.sized.png" width="900">
 
@@ -24,6 +25,22 @@ https://adfree.abertschi.ch
 
 <a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" width="220"/></a>
 
+## Troubleshooting
+See [Troubleshooting](./troubleshooting/readme.org) section for help to get
+ad-free up and running.
+
+## Changelog
+See [Changelog](./CHANGELOG.md) for a list of implemented features
+in new releases.
+  
+## Credits
+- Many thanks to Janis Bitta design(at)jbitta.de for creating the logo
+- The bird and website icons used in this app are made by <a
+  href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
+  href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> and are
+  licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
+  title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
+
 ## Legality
 This app is free and open-source and does not seek a commercial interest. It
 does not collect user data. It is a proof-of-concept for research purposes to show flaws in the way
@@ -33,63 +50,6 @@ information provided by the Android runtime. It simply turns down phone volume w
 terms of services of music players. Muting commercials may not be supported and
 may result in a temporary ban. Use at your own risk.
 
-## Troubleshooting
-See [Troubleshooting](./troubleshooting/readme.org) section for help to get
-ad-free up and running.
-
-## Changelog
-See [Changelog](./CHANGELOG.md) for a list of implemented features
-in new releases.
-  
-## Implementation notes
-### Ad detection
-Advertisement detectors are modularized into implementations of
-[AdDetectable](./app/src/main/java/ch/abertschi/adfree/detector/AdDetectable.kt).
-An instance of `AdDetectable` can determine if a track being played is
-advertisement or not.
-
-Ad Free registers an
-[NotificationListenerService](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html)
-and is therefore able to parse all incoming notifications on Android.
-Notifications are parsed by implementations of `AdDetectable`
-[More](https://github.com/abertschi/ad-free/tree/master/app/src/main/java/ch/abertschi/adfree/detector)
-
-### Ad blocking
-[AudioManager](https://developer.android.com/reference/android/media/AudioManager.html),
-Android's Audio System provides several streams on which audio can be played.
-Music players play audio on the stream
-[STREAM_MUSIC](https://developer.android.com/reference/android/media/AudioManager.html#STREAM_MUSIC).
-In case of ad detection, Ad Free mutes _STREAM MUSIC_ and calls a configured
-[AdPlugin](./app/src/main/java/ch/abertschi/adfree/plugin/AdPlugin.kt).
-`AdPlugins` aim to replace advertisement. They play music on an alternative
-stream and are therefore not affected by the mute of _STREAM MUSIC_.
-
-## Plugins
-### Mute Audio
-As the title of this plugin suggests, it only mutes advertisements without
-playing sound.
-
-### Play local music
-Play music tracks stored on your phone while advertisement is playing. At the
-moment ``.mp3``, ``.wav``, and ``.m4a`` are supported.
-
-### Interdimensional Cable (discontinued)
-_[Interdimensional
-Cable](./app/src/main/java/ch/abertschi/adfree/plugin/interdimcable/InterdimCablePlugin.kt)
-replaces advertisements with interdimensional cable advertisements featured in
-[Adult Swim's Rick and Morty TV
-series](https://www.youtube.com/watch?v=sBvV1miNoA8&index=12&list=PLNu47mcqeyiATtjW5pIRWlpXBu4pUezdP)._
-
-This feature is no longer supported. [See
-here](https://github.com/abertschi/ad-free/blob/master/rick_and_morty.md).
-
-## Credits
-- Many thanks to Janis Bitta design(at)jbitta.de for creating the logo
-- The bird and website icons used in this app are made by <a
-  href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
-  href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> and are
-  licensed by <a href="http://creativecommons.org/licenses/by/3.0/"
-  title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
 
 ## Licence
 This project is lisenced by the Apache Lisence 2.0
