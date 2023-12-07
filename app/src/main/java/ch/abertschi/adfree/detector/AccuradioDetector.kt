@@ -89,10 +89,10 @@ class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
-        info(payload)
-        val contentView = payload.statusbarNotification?.notification?.contentView
-        val bigView = payload.statusbarNotification?.notification?.bigContentView
-        val tickerView = payload.statusbarNotification?.notification?.tickerView
+        // XXX: Support old deprecated fields
+        val contentView = payload.statusbarNotification.notification?.contentView
+        val bigView = payload.statusbarNotification.notification?.bigContentView
+        val tickerView = payload.statusbarNotification.notification?.tickerView
 
         for (v in listOf(contentView, bigView, tickerView)) {
             if (inspectContentViews(v)) {
