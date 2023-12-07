@@ -55,10 +55,9 @@ class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector
         }
     }
 
-    override fun flagAsAdvertisement(payload: AdPayload): Boolean {
+
+    private fun inspectContentViews(contentView: RemoteViews?): Boolean {
         try {
-            val contentView = payload.statusbarNotification?.notification?.contentView
-            info(payload)
             if (contentView != null) {
                 val actions = extractObject(contentView, "mActions") as List<*>?
                 if (actions != null) {
@@ -87,5 +86,19 @@ class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector
             warn(e)
         }
         return false
+    }
+
+    override fun flagAsAdvertisement(payload: AdPayload): Boolean {
+        info(payload)
+        val contentView = payload.statusbarNotification?.notification?.contentView
+        val bigView = payload.statusbarNotification?.notification?.bigContentView
+        val tickerView = payload.statusbarNotification?.notification?.tickerView
+
+        for (v in listOf(contentView, bigView, tickerView)) {
+            if (inspectContentViews(v)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
