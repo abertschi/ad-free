@@ -4,6 +4,7 @@ import android.app.Notification
 import android.os.Bundle
 import ch.abertschi.adfree.model.TextRepository
 import ch.abertschi.adfree.model.TextRepositoryData
+import com.thoughtworks.xstream.XStream
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
 import java.util.*
@@ -38,8 +39,9 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
         }
     }
 
-    override fun flagAsAdvertisement(payload: AdPayload): Boolean {
-        val extras = payload.statusbarNotification?.notification?.extras
+    // Use a fixed approach and search for predefined fields
+    private fun flagAsAdvertisementFixed(payload: AdPayload): Boolean {
+        val extras = payload.statusbarNotification.notification?.extras
         val title = extractString(extras, Notification.EXTRA_TITLE)
         val subTitle = extractString(extras, Notification.EXTRA_SUB_TEXT)
 
@@ -58,6 +60,28 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
         }
         return false;
     }
+
+    private fun flagAsAdvertisementDynamic(payload: AdPayload): Boolean {
+        /*
+         * XXX: This implementation is inefficient but simple.
+         * Will a reflection approach be better?
+         */
+        val str = XStream().toXML(payload)!!.toLowerCase()
+        for (entry in payload.matchedTextDetectorEntries) {
+            for (entryLine in entry.content) {
+                if (entryLine.trim().isEmpty()) {
+                    continue
+                }
+                if (str.contains(entryLine.trim().toLowerCase())) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    override fun flagAsAdvertisement(payload: AdPayload)  =
+        if (repo.useReflectionForMatch()) flagAsAdvertisementDynamic(payload)
+        else flagAsAdvertisementFixed(payload)
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "User defined text", "flag a notification based on the presence of text",
