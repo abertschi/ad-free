@@ -80,8 +80,7 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
         return false
     }
     override fun flagAsAdvertisement(payload: AdPayload)  =
-        if (repo.useReflectionForMatch()) flagAsAdvertisementDynamic(payload)
-        else flagAsAdvertisementFixed(payload)
+        flagAsAdvertisementFixed(payload) || flagAsAdvertisementDynamic(payload)
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "User defined text", "flag a notification based on the presence of text",
