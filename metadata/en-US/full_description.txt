@@ -1,4 +1,4 @@
-ad-free is an ad audio blocker for Android.
+Ad-free is an ad audio blocker for Android.
 
 This app is a research project attempting to show flaws in the way how
 audio advertisement is shown on Android. It is a proof-of-concept of a
