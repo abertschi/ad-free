@@ -8,8 +8,8 @@ android {
         applicationId "ch.abertschi.adfree"
         minSdkVersion 23
         targetSdkVersion 27
-        versionCode 41
-        versionName "3.1"
+        versionCode 42
+        versionName "3.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
    }

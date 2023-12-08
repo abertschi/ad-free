@@ -1,4 +1,9 @@
 # Changelog / Ad-Free
+
+### v3.2/42 (2023-12-08)
+- Improve Accuradio Detector to support bigContentView, tickerView and contentView (#93, thanks to @unseenlarks)
+- Use generic reflection approach UserDefinedText Detector to search for user defined ad texts
+
 ### v3.1/41
 - Fix bug with local music plugin: folder selection
 

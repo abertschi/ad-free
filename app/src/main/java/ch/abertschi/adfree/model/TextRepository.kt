@@ -39,6 +39,7 @@ class TextRepository : AnkoLogger {
     private val context: Context
     private val ID_KEY: String = "k_"
     private val ID_KEYS: String = "keys"
+    private val ID_USE_REFLECTION_FOR_MATCH = "_use_reflection"
 
     private var dataEntries: ArrayList<TextRepositoryData>
 
@@ -56,6 +57,8 @@ class TextRepository : AnkoLogger {
         return sharedPreferences.getStringSet(ID_KEYS, HashSet<String>())
     }
 
+
+
     private fun getEntryByFormattedKey(key: String): TextRepositoryData? {
         var dataStr: String = sharedPreferences.getString(key, null) ?: return null
         return TextRepositoryData.deserialzeFromString(dataStr)
@@ -70,6 +73,18 @@ class TextRepository : AnkoLogger {
             }
         }
         return entries
+    }
+
+    /*
+     * Boolean to indicate if a generic reflection based
+     * approach should be used to find a matching text entry in all fields of the payload
+     */
+    fun useReflectionForMatch(): Boolean {
+        return sharedPreferences.getBoolean(ID_USE_REFLECTION_FOR_MATCH, false)
+    }
+
+    fun setReflectionForMatch(useIt: Boolean) {
+        sharedPreferences.edit().putBoolean(ID_USE_REFLECTION_FOR_MATCH, useIt).apply()
     }
 
     fun getAllEntries(): ArrayList<TextRepositoryData> {

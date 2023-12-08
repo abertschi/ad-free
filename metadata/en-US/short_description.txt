@@ -1,1 +1,1 @@
-ad-free is a modularized audio ad blocker for Spotify and more on Android.
+Ad-free is a modularized audio ad blocker for Spotify and more on Android.
