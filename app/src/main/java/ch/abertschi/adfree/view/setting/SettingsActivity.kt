@@ -20,6 +20,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
@@ -32,7 +33,6 @@ import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.MainActivity
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.onItemSelectedListener
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.warn
 
@@ -107,14 +107,22 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         )
         spinner?.adapter = spinnerAdapter
 
-        spinner?.onItemSelectedListener {
-            onItemSelected { adapterView, view, i, l ->
-                run {
-                    if (init) settingPresenter.onPluginSelected(i)
-                    spinnerAdapter?.notifyDataSetChanged()
-                }
+        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (init) settingPresenter.onPluginSelected(position)
+                spinnerAdapter?.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // no-op
             }
         }
+
         view.findViewById<ImageView>(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }

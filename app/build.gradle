@@ -28,10 +28,11 @@ android {
         }
         debug { java.srcDirs = ['src/debug/java', 'src/test/groovy/'] }
     }
-
-    lintOptions {
+    namespace 'ch.abertschi.adfree'
+    lint {
         abortOnError false
     }
+
 }
 
 dependencies {
@@ -44,9 +45,7 @@ dependencies {
 //    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'org.jetbrains.anko:anko-sdk23:0.9.1' // sdk19, sdk21, sdk23 are also available
-    implementation 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
-    implementation 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
+
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'com.android.support:design:27.0.+'
 
@@ -69,11 +68,12 @@ dependencies {
         exclude group: 'org.codehaus.groovy'
         exclude group: 'junit'
     }
-
     testImplementation 'org.mockito:mockito-core:2.6.3'
-
     testImplementation 'org.mockito:mockito-android:2.6.3'
+    //    implementation 'org.jetbrains.anko:anko-commons:0.10.8'
+    implementation "com.jakewharton.timber:timber:5.0.1"
 }
 repositories {
     mavenCentral()
+    jcenter()
 }

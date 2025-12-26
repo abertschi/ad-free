@@ -95,14 +95,14 @@ class DetectorAdapter(
         holder.subtitle.text = detectors[position].getMeta().description
         holder.switch.isChecked = presenter.isEnabled(detectors[position])
 
-        holder.title.onClick {
+        holder.title.setOnClickListener {
             holder.switch.toggle()
         }
-        holder.subtitle.onClick {
+        holder.subtitle.setOnClickListener {
             holder.switch.toggle()
         }
 
-        holder.view.onClick {
+        holder.view.setOnClickListener {
             holder.switch.toggle()
         }
 

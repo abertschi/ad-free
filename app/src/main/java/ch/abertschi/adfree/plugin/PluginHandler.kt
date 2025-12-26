@@ -48,7 +48,7 @@ class PluginHandler(val prefs: PreferencesFactory,
     fun requestPluginStop(onStoped: () -> Unit) = activePlugin?.requestStop(onStoped)
 
     fun stopPlugin(onStoped: () -> Unit) {
-        info { "Stopping plugin " + activePlugin?.javaClass.canonicalName }
+        info { "Stopping plugin " + activePlugin?.javaClass?.canonicalName }
         activePlugin?.stop(onStoped)
     }
 
