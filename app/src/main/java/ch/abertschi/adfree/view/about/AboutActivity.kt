@@ -24,7 +24,7 @@ import ch.abertschi.adfree.di.AboutModul
 import ch.abertschi.adfree.presenter.AboutPresenter
 import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.view.about.AboutView
-import org.jetbrains.anko.onClick
+
 
 /**
  * Created by abertschi on 21.04.17.
@@ -54,19 +54,19 @@ class AboutActivity : Fragment(), AboutView {
 
         textView?.text = Html.fromHtml(text)
 
-        view.findViewById<ImageView>(R.id.twitter).onClick {
+        view.findViewById<ImageView>(R.id.twitter).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
             this.context!!.startActivity(browserIntent)
         }
 
-        view.findViewById<ImageView>(R.id.website).onClick {
+        view.findViewById<ImageView>(R.id.website).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://abertschi.ch?rel=adfree"))
             this.context!!.startActivity(browserIntent)
         }
 
-        view.findViewById<ImageView>(R.id.moresettings).onClick {
+        view.findViewById<ImageView>(R.id.moresettings).setOnClickListener {
             presenter.showMoreSettings()
         }
 

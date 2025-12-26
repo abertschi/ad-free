@@ -21,6 +21,7 @@ import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
 import ch.abertschi.adfree.model.*
 import com.thoughtworks.xstream.mapper.Mapper
+import timber.log.Timber
 import java.lang.NullPointerException
 
 
@@ -49,6 +50,11 @@ class AdFreeApplication : Application(), AnkoLogger {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
         Thread.setDefaultUncaughtExceptionHandler(CrashExceptionHandler(this))
 
         prefs = PreferencesFactory(applicationContext)

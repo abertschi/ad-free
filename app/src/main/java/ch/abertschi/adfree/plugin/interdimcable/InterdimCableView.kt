@@ -43,26 +43,26 @@ class InterdimCableView(val context: Context) {
     }
 
     fun showInternetError() {
-        context.applicationContext.runOnUiThread {
-            longToast("Unable to download intermidmensional ads. Did you check your internet?")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Unable to download intermidmensional ads. Did you check your internet?")
         }
     }
 
     fun showDownloadingTrack() {
-        context.runOnUiThread {
-            longToast("Downloading track ...")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Downloading track ...")
         }
     }
 
     fun showAudioError() {
-        context.runOnUiThread {
-            longToast("Whooops, there was an error with audio")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Whooops, there was an error with audio")
         }
     }
 
     fun showNoChannelsError() {
-        context.runOnUiThread {
-            longToast("No channels to play. You can not listen to interdimensional tv :(")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("No channels to play. You can not listen to interdimensional tv :(")
         }
     }
 }

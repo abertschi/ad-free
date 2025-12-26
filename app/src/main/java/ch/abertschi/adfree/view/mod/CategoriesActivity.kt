@@ -39,7 +39,7 @@ class CategoriesActivity : AppCompatActivity(), AnkoLogger {
         presenter = CategoriesPresenter(this)
 
         findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
-        findViewById<TextView>(R.id.detectors_activity_title).onClick { presenter.onTabTitle() }
+        findViewById<TextView>(R.id.detectors_activity_title).setOnClickListener { presenter.onTabTitle() }
         initRecycleView()
     }
 

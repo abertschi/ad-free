@@ -20,7 +20,7 @@ import ch.abertschi.adfree.di.HomeModul
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.onClick
+
 
 /**
  * Created by abertschi on 15.04.17.
@@ -49,7 +49,7 @@ class HomeActivity() : Fragment(), HomeView, AnkoLogger {
         updateMessageInfo =
                 view.findViewById(R.id.version_update_reminder) as TextView
 
-        view.findViewById<TextView>(R.id.troubleshooting).onClick {
+        view.findViewById<TextView>(R.id.troubleshooting).setOnClickListener {
             homePresenter.onTroubleshooting()
         }
 
@@ -71,7 +71,7 @@ class HomeActivity() : Fragment(), HomeView, AnkoLogger {
     override fun showUpdateMessage(show: Boolean) {
         if (show ){
             updateMessageInfo.visibility = View.VISIBLE
-            updateMessageInfo.onClick {
+            updateMessageInfo.setOnClickListener {
                 homePresenter.onUpdateMessageClicked()
             }
         } else {

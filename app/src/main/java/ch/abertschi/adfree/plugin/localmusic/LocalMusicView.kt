@@ -120,26 +120,26 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     }
 
     fun showErrorInChoosingDirectory(hint: String = "") {
-        context.applicationContext.runOnUiThread {
-            longToast("Whoops, error with chosen directory. Choose a different one. $hint")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Whoops, error with chosen directory. Choose a different one. $hint")
         }
     }
 
     fun showNoAudioTracksFoundMessage() {
-        context.applicationContext.runOnUiThread {
-            longToast("Whoops, no music found in current audio directory")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Whoops, no music found in current audio directory")
         }
     }
 
     fun showAudioError() {
-        context.applicationContext.runOnUiThread {
-            longToast("Whoops, there was an error with audio")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Whoops, there was an error with audio")
         }
     }
 
     fun showNeedStoragePermissions() {
-        context.applicationContext.runOnUiThread {
-            longToast("Storage permissions needed")
+        (context as? android.app.Activity)?.runOnUiThread {
+            context.longToast("Storage permissions needed")
         }
     }
 
