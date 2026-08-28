@@ -66,4 +66,6 @@ output.json
 /caches/
 /android/.tmp
 /.tmp
-android/FakeDependency.jar
+android/FakeDependency.jar/files/
+/files/
+/android/

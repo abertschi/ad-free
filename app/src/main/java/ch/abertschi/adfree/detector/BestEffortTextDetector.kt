@@ -77,7 +77,7 @@ class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
     private fun tryMatch(s: String?): Boolean {
         if (s == null) return false
         for (c in cues) {
-            if (s.contains(c)) {
+            if (s.lowercase().contains(c.lowercase())) {
                 return true
             }
         }
@@ -87,7 +87,7 @@ class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Best effort detector",
         "Parses various text fields of notification of all supported media players",
-        false,
+        true,
         category = "General",
         debugOnly = false
     )
