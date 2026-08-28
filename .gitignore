@@ -58,3 +58,10 @@ phone.psd
 output.json
 /private/
 /local-only/
+/wrapper/
+/notifications/
+/native/
+/kotlin-profile/
+/daemon/
+/caches/
+/android/
