@@ -3,6 +3,8 @@
 ### v4.0/50 (2026-08-28)
 - Fix build and freeze build dependencies with Docker
 - Keep compile and target SDK at 27 to avoid app rewrite
+- Fix spotify and general detector: Consider lower+upper case in text
+- Fix spotify detector: Internal notification layout change
 
 ### v3.2/42 (2023-12-08)
 - Improve Accuradio Detector to support bigContentView, tickerView and contentView (#93, thanks to @unseenlarks)
