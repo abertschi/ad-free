@@ -64,4 +64,6 @@ output.json
 /kotlin-profile/
 /daemon/
 /caches/
-/android/
+/android/.tmp
+/.tmp
+android/FakeDependency.jar
