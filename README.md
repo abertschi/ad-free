@@ -26,7 +26,7 @@ Blog Post: https://abertschi.ch/blog/2022/building-adfree/
 <a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" width="220"/></a>
 
 ## Build
-See [build.sh](./build.md) for build instructions
+See [build.md](./build.md) for build instructions
 
 ## Troubleshooting
 See [Troubleshooting](./troubleshooting/readme.org) section for help to get
